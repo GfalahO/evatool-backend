@@ -30,6 +30,5 @@ public class ImpactModule {
         Stakeholder stakeholder = new Stakeholder();
         System.out.println(stakeholder.toString());
 
-
     }
 }

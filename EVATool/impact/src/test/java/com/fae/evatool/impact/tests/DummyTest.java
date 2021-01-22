@@ -7,6 +7,6 @@ public class DummyTest {
 
     @Test
     public void testAlwaysPasses() {
-        Assertions.assertEquals(1, 1);
+        Assertions.assertEquals(2, 1);
     }
 }
