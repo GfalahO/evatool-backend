@@ -29,6 +29,10 @@ public class ImpactDimension {
         return this.id;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return this.name;
     }
