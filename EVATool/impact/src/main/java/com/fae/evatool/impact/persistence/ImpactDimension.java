@@ -1,24 +1,21 @@
 package com.fae.evatool.impact.persistence;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 @Entity
-public class Dimension {
+public class ImpactDimension {
     @Id
-    @Column(name = "UUID", nullable = false)
     @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description", nullable = false)
     private String description;
 
-    public Dimension(String name, String description) {
+    public ImpactDimension(String name, String description) {
         this.name = name;
         this.description = description;
     }
@@ -26,6 +23,10 @@ public class Dimension {
     @Override
     public String toString() {
         return String.format("Dimension[id=%s, name=%s, description=%s]", this.id, this.name, this.description);
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public String getName() {

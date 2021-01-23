@@ -12,7 +12,7 @@ public class ImpactModule {
         System.out.println("Impact Module started successfully.");
 
         // Manual Tests.
-        Dimension safetyDimension = new Dimension("Safety", "...");
+        ImpactDimension safetyDimension = new ImpactDimension("Safety", "...");
         System.out.println(safetyDimension.toString());
 
         Impact goal1 = new Impact(1, "...");

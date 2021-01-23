@@ -17,7 +17,7 @@ public class Impact {
     private String reason;
 
     @ManyToOne
-    private Dimension dimension;
+    private ImpactDimension dimension;
 
     @ManyToMany
     private Set<Requirement> requirements;
@@ -51,7 +51,7 @@ public class Impact {
         return this.reason;
     }
 
-    public Dimension getDimension() {
+    public ImpactDimension getDimension() {
         return this.dimension;
     }
 
