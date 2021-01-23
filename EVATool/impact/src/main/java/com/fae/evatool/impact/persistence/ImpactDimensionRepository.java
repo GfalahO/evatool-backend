@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 //public interface DimensionRepository<Dimension, String> extends JpaRepository {
-public interface DimensionRepository extends CrudRepository<ImpactDimension, String> {
+public interface ImpactDimensionRepository extends CrudRepository<ImpactDimension, String> {
 
     public ImpactDimension findByName(String name);
 
