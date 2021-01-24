@@ -1,18 +1,20 @@
-package com.fae.evatool.impact.persistence;
+package com.fae.evatool.impact.persistence.entity;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Set;
 
-// Really required?
+// Really required? "Only in Dashboard". Remove entity?
 @Entity
 public class Scenario {
     @Id
-    @Column(name = "UUID", nullable = false)
     @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
+
     // Relationship defines this attribute?
-    @Column(name = "applicability", nullable = false)
     private boolean applicability;
 
     @ManyToMany

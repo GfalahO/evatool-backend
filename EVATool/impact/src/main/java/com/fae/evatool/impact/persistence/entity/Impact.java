@@ -1,4 +1,7 @@
-package com.fae.evatool.impact.persistence;
+package com.fae.evatool.impact.persistence.entity;
+
+import com.sun.istack.NotNull;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -6,31 +9,31 @@ import java.util.Set;
 @Entity
 public class Impact {
     @Id
-    @Column(name = "UUID", nullable = false)
     @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
-    @Column(name = "value", nullable = false)
-    private int value;
+    private double value;
 
-    @Column(name = "reason", nullable = false)
     private String reason;
 
     @ManyToOne
-    private ImpactDimension dimension;
+    private Dimension dimension;
 
     @ManyToMany
     private Set<Requirement> requirements;
 
-    @ManyToMany
-    private Set<Scenario> scenarios;
+    //@ManyToMany
+    //private Set<Scenario> scenarios;
 
     @OneToMany
     private Set<Stakeholder> stakeholders;
 
-    public Impact(int value, String reason) { // Add dimension as mandatory parameter? -> #1
-        this.value = value;
+    public Impact(double value, String reason, Dimension dimension) { // Add dimension as mandatory parameter? -> #1
+        //this.value = value;
+        setValue(value);
         this.reason = reason;
+        this.dimension = dimension;
     }
 
     @Override
@@ -43,7 +46,15 @@ public class Impact {
         return this.id;
     }
 
-    public int getValue() {
+    public void setValue(double value) {
+        if (value < -1.0 || value > 1.0) {
+            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+        } else {
+            this.value = value;
+        }
+    }
+
+    public double getValue() {
         return this.value;
     }
 
@@ -51,7 +62,7 @@ public class Impact {
         return this.reason;
     }
 
-    public ImpactDimension getDimension() {
+    public Dimension getDimension() {
         return this.dimension;
     }
 
@@ -59,11 +70,11 @@ public class Impact {
         return this.requirements;
     }
 
-    public Set<Scenario> getScenarios() {
-        return this.scenarios;
-    }
+    //public Set<Scenario> getScenarios() {
+    //    return this.scenarios;
+    //}
 
-    public Set<Stakeholder> getStakeholders(){
+    public Set<Stakeholder> getStakeholders() {
         return this.stakeholders;
     }
 }

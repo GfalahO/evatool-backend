@@ -1,11 +1,11 @@
-package com.fae.evatool.impact.persistence;
+package com.fae.evatool.impact.persistence.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity
-public class ImpactDimension {
+public class Dimension {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -15,7 +15,7 @@ public class ImpactDimension {
 
     private String description;
 
-    public ImpactDimension(String name, String description) {
+    public Dimension(String name, String description) {
         this.name = name;
         this.description = description;
     }
