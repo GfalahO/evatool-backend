@@ -50,6 +50,24 @@ public class RequirementRepositoryTests {
     }
 
     @Test
+    public void testAddImpact_ReturnUnsavedRequirements_Reversed() {
+        // given
+        var requirement = getRequirement();
+        var impact1 = getImpact();
+        var impact2 = getImpact();
+
+        // when
+        requirement.addImpact(impact1);
+        requirement.addImpact(impact2);
+        impact1.addRequirement(requirement);
+        impact2.addRequirement(requirement);
+
+        // then
+        Assert.assertEquals(requirement, impact1.getRequirements().get(0));
+        Assert.assertEquals(requirement, impact2.getRequirements().get(0));
+    }
+
+    @Test
     public void testAddImpact_ReturnSavedRequirements_Reversed() {
         // given
         var requirement = getRequirement();
