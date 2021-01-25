@@ -20,6 +20,10 @@ public class Requirement {
     @ManyToMany
     private List<Impact> impacts = new ArrayList<>();
 
+    public Requirement() {
+
+    }
+
     @Override
     public String toString() {
         //return String.format("Requirement[id=%s, #impacts=%d]", this.id, this.impacts.size());

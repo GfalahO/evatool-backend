@@ -22,6 +22,10 @@ public class Dimension {
     @NotNull
     private String description;
 
+    public Dimension() {
+
+    }
+
     public Dimension(String name, String description) {
         this.name = name;
         this.description = description;

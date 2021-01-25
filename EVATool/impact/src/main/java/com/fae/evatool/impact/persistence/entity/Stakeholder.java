@@ -21,6 +21,10 @@ public class Stakeholder {
     @NotNull
     private String name; // Required for UI.
 
+    public Stakeholder() {
+
+    }
+
     public Stakeholder(String name) {
         this.name = name;
     }

@@ -20,6 +20,10 @@ public class Analysis {
     @OneToMany
     private List<Impact> impacts = new ArrayList<>();
 
+    public Analysis() {
+        
+    }
+
     @Override
     public String toString() {
         //return String.format("Project[id=%s, #impacts=%d]", this.id, this.impacts.size());
