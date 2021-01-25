@@ -6,10 +6,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static com.fae.evatool.impact.tests.persistence.TestDataGenerator.getDimension;
 import static com.fae.evatool.impact.tests.persistence.TestDataGenerator.getImpact;
 
 public class ImpactTests {
+    @Test
+    public void testToString_DefaultObject_DoesNotThrowException(){
+        // given
+        var impact = getImpact();
+
+        // when
+
+        // then
+        var s = impact.toString();
+    }
+
     @ParameterizedTest
     @ValueSource(doubles = {-1.0, -0.5, 0.0, 0.5, 1.0})
     public void testSetValue_LegalValueDoesNotThrowException(double value) {

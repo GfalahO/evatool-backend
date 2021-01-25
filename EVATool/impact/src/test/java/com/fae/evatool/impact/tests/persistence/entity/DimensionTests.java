@@ -8,6 +8,17 @@ import static com.fae.evatool.impact.tests.persistence.TestDataGenerator.getImpa
 
 public class DimensionTests {
     @Test
+    public void testToString_DefaultObject_DoesNotThrowException(){
+        // given
+        var dimension = getDimension();
+
+        // when
+
+        // then
+        var s = dimension.toString();
+    }
+
+    @Test
     public void testSetName_IllegalValueThrowsException() {
         // given
         var dimension = getDimension();

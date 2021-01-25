@@ -7,6 +7,17 @@ import static com.fae.evatool.impact.tests.persistence.TestDataGenerator.getStak
 
 public class StakeholderTests {
     @Test
+    public void testToString_DefaultObject_DoesNotThrowException() {
+        // given
+        var stakeholder = getStakeholder();
+
+        // when
+
+        // then
+        var s = stakeholder.toString();
+    }
+
+    @Test
     public void testSetName_IllegalValueThrowsException() {
         // given
         var stakeholder = getStakeholder();
