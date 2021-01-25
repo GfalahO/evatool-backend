@@ -3,6 +3,8 @@ package com.fae.evatool.impact.persistence.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +15,7 @@ public class Analysis {
     private String id;
 
     @OneToMany
-    private Set<Impact> impacts;
+    private List<Impact> impacts = new ArrayList<>();
 
     @Override
     public String toString() {

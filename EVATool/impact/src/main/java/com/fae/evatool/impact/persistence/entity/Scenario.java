@@ -3,6 +3,8 @@ package com.fae.evatool.impact.persistence.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 // Really required? "Only in Dashboard". Remove entity?
@@ -18,7 +20,7 @@ public class Scenario {
     private boolean applicability;
 
     @ManyToMany
-    private Set<Impact> impacts;
+    private List<Impact> impacts = new ArrayList<>();
 
     // Attributes for UI?
 
@@ -34,7 +36,7 @@ public class Scenario {
         return this.applicability;
     }
 
-    public Set<Impact> getImpacts() {
+    public List<Impact> getImpacts() {
         return this.impacts;
     }
 }

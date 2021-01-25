@@ -4,6 +4,8 @@ import com.sun.istack.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,13 +23,13 @@ public class Impact {
     private Dimension dimension;
 
     @ManyToMany
-    private Set<Requirement> requirements;
+    private List<Requirement> requirements = new ArrayList<>();
 
     //@ManyToMany
     //private Set<Scenario> scenarios;
 
     @OneToMany
-    private Set<Stakeholder> stakeholders;
+    private List<Stakeholder> stakeholders = new ArrayList<>();
 
     public Impact(double value, String reason, Dimension dimension) { // Add dimension as mandatory parameter? -> #1
         //this.value = value;
@@ -66,7 +68,7 @@ public class Impact {
         return this.dimension;
     }
 
-    public Set<Requirement> getRequirements() {
+    public List<Requirement> getRequirements() {
         return this.requirements;
     }
 
@@ -74,7 +76,7 @@ public class Impact {
     //    return this.scenarios;
     //}
 
-    public Set<Stakeholder> getStakeholders() {
+    public List<Stakeholder> getStakeholders() {
         return this.stakeholders;
     }
 }
