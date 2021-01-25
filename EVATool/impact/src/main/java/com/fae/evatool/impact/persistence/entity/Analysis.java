@@ -21,13 +21,14 @@ public class Analysis {
     private List<Impact> impacts = new ArrayList<>();
 
     public Analysis() {
-        
+
     }
 
     @Override
     public String toString() {
-        //return String.format("Project[id=%s, #impacts=%d]", this.id, this.impacts.size());
-        return String.format("Project[id=%s]", this.id);
+        return String.format(
+                "Project[id=%s, #impacts=%d]",
+                this.id, this.impacts.size());
     }
 
     public void addImpact(Impact impact) {

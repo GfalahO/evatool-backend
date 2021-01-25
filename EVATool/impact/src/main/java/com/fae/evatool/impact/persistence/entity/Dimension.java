@@ -33,7 +33,9 @@ public class Dimension {
 
     @Override
     public String toString() {
-        return String.format("Dimension[id=%s, name=%s, description=%s]", this.id, this.name, this.description);
+        return String.format(
+                "Dimension[id=%s, name=%s, description=%s]",
+                this.id, this.name, this.description);
     }
 
     public void setName(String name) {

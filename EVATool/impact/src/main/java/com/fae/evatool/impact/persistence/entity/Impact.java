@@ -53,8 +53,9 @@ public class Impact {
 
     @Override
     public String toString() {
-        // Add # requirements, scenarios and Stakeholder...
-        return String.format("Impact[id=%s, value=%d, reason=%s, dimension=%s]", this.id, this.value, this.reason, this.dimension.toString());
+        return String.format(
+                "Impact[id=%s, value=%f, reason=%s, dimension=%s, #requirements=%d, #stakeholders=%d]",
+                this.id, this.value, this.reason, this.dimension.toString(), requirements.size(), stakeholders.size());
     }
 
     public void setValue(double value) {

@@ -26,8 +26,9 @@ public class Requirement {
 
     @Override
     public String toString() {
-        //return String.format("Requirement[id=%s, #impacts=%d]", this.id, this.impacts.size());
-        return String.format("Requirement[id=%s]", this.id);
+        return String.format(
+                "Requirement[id=%s, #impacts=%d]",
+                this.id, this.impacts.size());
     }
 
     public void addImpact(Impact impact) {

@@ -31,8 +31,9 @@ public class Stakeholder {
 
     @Override
     public String toString() {
-        //return String.format("Stakeholder[id=%s, #impacts=&d]", this.id, this.impacts.size());
-        return String.format("Stakeholder[id=%s]", this.id);
+        return String.format(
+                "Stakeholder[id=%s]",
+                this.id);
     }
 
     public void setName(String name) {
