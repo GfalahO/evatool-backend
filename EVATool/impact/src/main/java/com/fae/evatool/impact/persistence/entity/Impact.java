@@ -31,6 +31,10 @@ public class Impact {
     @OneToMany
     private List<Stakeholder> stakeholders = new ArrayList<>();
 
+    public Impact(){
+
+    }
+
     public Impact(double value, String reason, Dimension dimension) { // Add dimension as mandatory parameter? -> #1
         //this.value = value;
         setValue(value);
