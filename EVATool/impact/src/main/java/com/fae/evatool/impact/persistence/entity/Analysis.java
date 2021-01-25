@@ -23,11 +23,11 @@ public class Analysis {
         return String.format("Project[id=%s]", this.id);
     }
 
-    public String getId(){
+    public String getId() {
         return this.id;
     }
 
-    public void addImpact(Impact impact){
+    public void addImpact(Impact impact) {
         this.impacts.add(impact);
     }
 
