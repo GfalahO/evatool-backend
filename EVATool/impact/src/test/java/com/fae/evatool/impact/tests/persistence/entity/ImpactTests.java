@@ -33,4 +33,26 @@ public class ImpactTests {
         // then
         Assert.assertThrows(IllegalArgumentException.class, () -> impact.setValue(value));
     }
+
+    @Test
+    public void testSetReason_IllegalValueThrowsException() {
+        // given
+        var impact = getImpact();
+
+        // when
+
+        // then
+        Assert.assertThrows(IllegalArgumentException.class, () -> impact.setReason(null));
+    }
+
+    @Test
+    public void testSetDimension_IllegalValueThrowsException() {
+        // given
+        var impact = getImpact();
+
+        // when
+
+        // then
+        Assert.assertThrows(IllegalArgumentException.class, () -> impact.setDimension(null));
+    }
 }
