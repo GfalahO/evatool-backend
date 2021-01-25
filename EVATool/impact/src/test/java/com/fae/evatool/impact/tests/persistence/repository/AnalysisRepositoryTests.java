@@ -14,7 +14,7 @@ public class AnalysisRepositoryTests {
     private AnalysisRepository analysisRepository;
 
     @Test
-    public void testFindById_ExistingDimension_ReturnDimension() {
+    public void testFindById_ExistingAnalysis_ReturnAnalysis() {
         // given
         var analysis = getAnalysis();
         analysisRepository.save(analysis);

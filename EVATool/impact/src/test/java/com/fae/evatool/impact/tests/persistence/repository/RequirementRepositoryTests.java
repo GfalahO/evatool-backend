@@ -14,7 +14,7 @@ public class RequirementRepositoryTests {
     private RequirementRepository requirementRepository;
 
     @Test
-    public void testFindById_ExistingDimension_ReturnDimension() {
+    public void testFindById_ExistingRequirement_ReturnRequirement() {
         // given
         var requirement = getRequirement();
         requirementRepository.save(requirement);

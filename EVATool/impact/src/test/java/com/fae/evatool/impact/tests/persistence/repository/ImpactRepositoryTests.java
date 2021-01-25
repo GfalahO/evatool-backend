@@ -14,7 +14,7 @@ public class ImpactRepositoryTests {
     private ImpactRepository impactRepository;
 
     @Test
-    public void testFindById_ExistingDimension_ReturnDimension() {
+    public void testFindById_ExistingImpact_ReturnImpact() {
         // given
         var impact = getImpact();
         impactRepository.save(impact);
