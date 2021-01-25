@@ -12,7 +12,7 @@ import static com.fae.evatool.impact.tests.persistence.TestDataGenerator.getImpa
 public class ImpactTests {
     @ParameterizedTest
     @ValueSource(doubles = {-1.0, -0.5, 0.0, 0.5, 1.0})
-    public void testSetValue_LegalValue_LegalValueDoesNotThrowException(double value) {
+    public void testSetValue_LegalValueDoesNotThrowException(double value) {
         // given
         var impact = getImpact();
 
@@ -23,8 +23,8 @@ public class ImpactTests {
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = {-Double.MAX_VALUE -1.000001, -1.1, -1.5, -2.0, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
-    public void testSetValue_LegalValue_IllegalValueThrowsException(double value) {
+    @ValueSource(doubles = {-Double.MAX_VALUE - 1.000001, -1.1, -1.5, -2.0, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
+    public void testSetValue_IllegalValueThrowsException(double value) {
         // given
         var impact = getImpact();
 
