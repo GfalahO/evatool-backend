@@ -72,6 +72,10 @@ public class Impact {
         return this.dimension;
     }
 
+    public void addRequirement(Requirement requirement){
+        this.requirements.add(requirement);
+    }
+
     public List<Requirement> getRequirements() {
         return this.requirements;
     }

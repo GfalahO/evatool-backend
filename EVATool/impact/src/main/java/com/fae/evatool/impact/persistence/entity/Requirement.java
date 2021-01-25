@@ -27,6 +27,10 @@ public class Requirement {
         return this.id;
     }
 
+    public void addImpact(Impact impact){
+        this.impacts.add(impact);
+    }
+
     public List<Impact> getImpacts() {
         return this.impacts;
     }
