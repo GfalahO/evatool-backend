@@ -36,8 +36,8 @@ public class AnalysisRepositoryTests {
         // when
         var impact1 = getImpact();
         var impact2 = getImpact();
-        analysis.addImpact(impact1);
-        analysis.addImpact(impact2);
+        analysis.getImpacts().add(impact1);
+        analysis.getImpacts().add(impact2);
         analysisRepository.save(analysis); // Why does this line require Impact to have a default constructor?
         var found = analysisRepository.findById(analysis.getId()).orElse(null);
 

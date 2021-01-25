@@ -79,10 +79,6 @@ public class Impact {
         this.dimension = dimension;
     }
 
-    public void addRequirement(Requirement requirement) {
-        this.requirements.add(requirement);
-    }
-
     //public Set<Scenario> getScenarios() {
     //    return this.scenarios;
     //}

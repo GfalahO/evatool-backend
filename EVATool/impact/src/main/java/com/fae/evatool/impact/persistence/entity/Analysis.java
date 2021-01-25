@@ -30,8 +30,4 @@ public class Analysis {
                 "Project[id=%s, #impacts=%d]",
                 this.id, this.impacts.size());
     }
-
-    public void addImpact(Impact impact) {
-        this.impacts.add(impact);
-    }
 }

@@ -40,8 +40,8 @@ public class RequirementRepositoryTests {
         // when
         var impact1 = getImpact();
         var impact2 = getImpact();
-        requirement.addImpact(impact1);
-        requirement.addImpact(impact2);
+        requirement.getImpacts().add(impact1);
+        requirement.getImpacts().add(impact2);
         requirementRepository.save(requirement); // Why does this line require Impact to have a default constructor?
         var found = requirementRepository.findById(requirement.getId()).orElse(null);
 
@@ -57,10 +57,10 @@ public class RequirementRepositoryTests {
         var impact2 = getImpact();
 
         // when
-        requirement.addImpact(impact1);
-        requirement.addImpact(impact2);
-        impact1.addRequirement(requirement);
-        impact2.addRequirement(requirement);
+        requirement.getImpacts().add(impact1);
+        requirement.getImpacts().add(impact2);
+        impact1.getRequirements().add(requirement);
+        impact2.getRequirements().add(requirement);
 
         // then
         Assert.assertEquals(requirement, impact1.getRequirements().get(0));
@@ -75,10 +75,10 @@ public class RequirementRepositoryTests {
         var impact2 = getImpact();
 
         // Is this how many to many relationships are created?
-        requirement.addImpact(impact1);
-        requirement.addImpact(impact2);
-        impact1.addRequirement(requirement);
-        impact2.addRequirement(requirement);
+        requirement.getImpacts().add(impact1);
+        requirement.getImpacts().add(impact2);
+        impact1.getRequirements().add(requirement);
+        impact2.getRequirements().add(requirement);
 
         // when
         impactRepository.save(impact1);
