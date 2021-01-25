@@ -26,4 +26,17 @@ public class StakeholderRepositoryTests {
         // then
         Assert.assertEquals(stakeholder.getId(), found.getId());
     }
+
+    @Test
+    public void testFindByName_ExistingStakeholder_ReturnStakeholder() {
+        // given
+        var stakeholder = getStakeholder();
+        stakeholderRepository.save(stakeholder);
+
+        // when
+        var found = stakeholderRepository.findByName(stakeholder.getName()).orElse(null);
+
+        // then
+        Assert.assertEquals(stakeholder.getName(), found.getName());
+    }
 }
