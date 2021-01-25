@@ -1,20 +1,24 @@
 package com.fae.evatool.impact.persistence.entity;
 
 import com.sun.istack.NotNull;
+import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity
 public class Dimension {
+    @Getter
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
+    @Getter
     @NotNull
     private String name;
 
+    @Getter
     @NotNull
     private String description;
 
@@ -28,10 +32,6 @@ public class Dimension {
         return String.format("Dimension[id=%s, name=%s, description=%s]", this.id, this.name, this.description);
     }
 
-    public String getId() {
-        return this.id;
-    }
-
     public void setName(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null."); // More elegant solution with field reference in exception string?
@@ -39,18 +39,10 @@ public class Dimension {
         this.name = name;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public void setDescription(String description) {
         if (description == null) {
             throw new IllegalArgumentException("Description cannot be null.");
         }
         this.description = description;
-    }
-
-    public String getDescription() {
-        return this.description;
     }
 }

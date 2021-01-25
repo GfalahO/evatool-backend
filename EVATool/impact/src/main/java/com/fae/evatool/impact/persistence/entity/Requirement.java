@@ -1,5 +1,6 @@
 package com.fae.evatool.impact.persistence.entity;
 
+import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,11 +10,13 @@ import java.util.Set;
 
 @Entity
 public class Requirement {
+    @Getter
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
 
+    @Getter
     @ManyToMany
     private List<Impact> impacts = new ArrayList<>();
 
@@ -23,15 +26,7 @@ public class Requirement {
         return String.format("Requirement[id=%s]", this.id);
     }
 
-    public String getId(){
-        return this.id;
-    }
-
-    public void addImpact(Impact impact){
+    public void addImpact(Impact impact) {
         this.impacts.add(impact);
-    }
-
-    public List<Impact> getImpacts() {
-        return this.impacts;
     }
 }
