@@ -1,18 +1,17 @@
-package com.fae.evatool.impact.persistence.event;
+package com.fae.evatool.impact.persistence.events.stakeholder.insert;
 
 import com.fae.evatool.impact.persistence.repository.StakeholderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StakeholderInsertListener implements ApplicationListener<StakeholderInsertEvent> {
+public class StakeholderInsertedEventListener implements ApplicationListener<StakeholderInsertedEvent> {
     @Autowired
     private StakeholderRepository stakeholderRepository;
 
     @Override
-    public void onApplicationEvent(final StakeholderInsertEvent event) {
+    public void onApplicationEvent(final StakeholderInsertedEvent event) {
         var stakeholder = event.getStakeholder();
         stakeholderRepository.save(stakeholder);
         //stakeholderRepository.flush();

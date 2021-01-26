@@ -1,14 +1,13 @@
 package com.fae.evatool.impact.tests.persistence.event;
 
-import com.fae.evatool.impact.persistence.event.StakeholderInsertEvent;
-import com.fae.evatool.impact.persistence.event.StakeholderInsertListener;
-import com.fae.evatool.impact.persistence.event.StakeholderInsertPublisher;
+import com.fae.evatool.impact.persistence.events.stakeholder.insert.StakeholderInsertedEvent;
+import com.fae.evatool.impact.persistence.events.stakeholder.insert.StakeholderInsertedEventListener;
+import com.fae.evatool.impact.persistence.events.stakeholder.insert.StakeholderInsertedEventPublisher;
 import com.fae.evatool.impact.persistence.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.ApplicationEventPublisher;
 
 import static com.fae.evatool.impact.tests.persistence.TestDataGenerator.getStakeholder;
 import static org.mockito.ArgumentMatchers.any;
@@ -16,15 +15,15 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class StakeholderInsertEventMockTests {
+public class StakeholderInsertedEventMockTests {
     @Autowired
     private StakeholderRepository stakeholderRepository;
 
     @Autowired
-    private StakeholderInsertPublisher publisher;
+    private StakeholderInsertedEventPublisher publisher;
 
     @MockBean
-    private StakeholderInsertListener listener;
+    private StakeholderInsertedEventListener listener;
 
     @Test
     public void testOnApplicationEvent_ReceivesPublishedEventOnce() {
@@ -35,6 +34,6 @@ public class StakeholderInsertEventMockTests {
         publisher.onStakeholderInserted(stakeholder);
 
         // then
-        verify(listener, times(1)).onApplicationEvent(any(StakeholderInsertEvent.class));
+        verify(listener, times(1)).onApplicationEvent(any(StakeholderInsertedEvent.class));
     }
 }
