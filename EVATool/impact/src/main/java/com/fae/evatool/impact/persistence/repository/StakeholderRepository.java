@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface StakeholderRepository extends CrudRepository<Stakeholder, String> {
-//public interface StakeholderRepository extends JpaRepository<Stakeholder, String> {
 
     public Optional<Stakeholder> findByName(String name);
 

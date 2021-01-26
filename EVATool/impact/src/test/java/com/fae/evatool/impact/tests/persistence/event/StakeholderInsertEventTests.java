@@ -2,6 +2,7 @@ package com.fae.evatool.impact.tests.persistence.event;
 
 import com.fae.evatool.impact.persistence.event.StakeholderInsertEvent;
 import com.fae.evatool.impact.persistence.event.StakeholderInsertListener;
+import com.fae.evatool.impact.persistence.event.StakeholderInsertPublisher;
 import com.fae.evatool.impact.persistence.repository.StakeholderRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ public class StakeholderInsertEventTests {
     private StakeholderRepository stakeholderRepository;
 
     @Autowired
-    private ApplicationEventPublisher publisher;
+    private StakeholderInsertPublisher publisher;
 
     @Autowired
     private StakeholderInsertListener listener;
@@ -26,10 +27,9 @@ public class StakeholderInsertEventTests {
     public void testOnApplicationEvent_StakeholderIdIsNotNull() {
         // given
         var stakeholder = getStakeholder();
-        var stakeholderInsertEvent = new StakeholderInsertEvent(publisher, stakeholder);
 
         // when
-        publisher.publishEvent(stakeholderInsertEvent);
+        publisher.onStakeholderInserted(stakeholder);
 
         // then
         Assert.assertNotNull(stakeholder.getId());
@@ -39,10 +39,9 @@ public class StakeholderInsertEventTests {
     public void testOnApplicationEvent_ReturnInsertedStakeholder() {
         // given
         var stakeholder = getStakeholder();
-        var stakeholderInsertEvent = new StakeholderInsertEvent(publisher, stakeholder);
 
         // when
-        publisher.publishEvent(stakeholderInsertEvent);
+        publisher.onStakeholderInserted(stakeholder);
         var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
         // then

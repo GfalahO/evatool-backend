@@ -2,6 +2,7 @@ package com.fae.evatool.impact.tests.persistence.event;
 
 import com.fae.evatool.impact.persistence.event.StakeholderInsertEvent;
 import com.fae.evatool.impact.persistence.event.StakeholderInsertListener;
+import com.fae.evatool.impact.persistence.event.StakeholderInsertPublisher;
 import com.fae.evatool.impact.persistence.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class StakeholderInsertEventMockTests {
     private StakeholderRepository stakeholderRepository;
 
     @Autowired
-    private ApplicationEventPublisher publisher;
+    private StakeholderInsertPublisher publisher;
 
     @MockBean
     private StakeholderInsertListener listener;
@@ -29,10 +30,9 @@ public class StakeholderInsertEventMockTests {
     public void testOnApplicationEvent_ReceivesPublishedEventOnce() {
         // given
         var stakeholder = getStakeholder();
-        var stakeholderInsertEvent = new StakeholderInsertEvent(publisher, stakeholder);
 
         // when
-        publisher.publishEvent(stakeholderInsertEvent);
+        publisher.onStakeholderInserted(stakeholder);
 
         // then
         verify(listener, times(1)).onApplicationEvent(any(StakeholderInsertEvent.class));
