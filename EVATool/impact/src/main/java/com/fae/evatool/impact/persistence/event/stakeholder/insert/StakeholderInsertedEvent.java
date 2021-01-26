@@ -1,4 +1,4 @@
-package com.fae.evatool.impact.persistence.events.stakeholder.insert;
+package com.fae.evatool.impact.persistence.event.stakeholder.insert;
 
 import com.fae.evatool.impact.persistence.entity.Stakeholder;
 import lombok.Getter;

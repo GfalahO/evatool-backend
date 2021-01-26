@@ -1,7 +1,7 @@
 package com.fae.evatool.impact.tests.persistence.event;
 
-import com.fae.evatool.impact.persistence.events.stakeholder.insert.StakeholderInsertedEventListener;
-import com.fae.evatool.impact.persistence.events.stakeholder.insert.StakeholderInsertedEventPublisher;
+import com.fae.evatool.impact.persistence.event.stakeholder.insert.StakeholderInsertedEventListener;
+import com.fae.evatool.impact.persistence.event.stakeholder.insert.StakeholderInsertedEventPublisher;
 import com.fae.evatool.impact.persistence.repository.StakeholderRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

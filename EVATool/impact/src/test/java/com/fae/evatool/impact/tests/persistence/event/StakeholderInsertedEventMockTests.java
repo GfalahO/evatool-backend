@@ -1,8 +1,8 @@
 package com.fae.evatool.impact.tests.persistence.event;
 
-import com.fae.evatool.impact.persistence.events.stakeholder.insert.StakeholderInsertedEvent;
-import com.fae.evatool.impact.persistence.events.stakeholder.insert.StakeholderInsertedEventListener;
-import com.fae.evatool.impact.persistence.events.stakeholder.insert.StakeholderInsertedEventPublisher;
+import com.fae.evatool.impact.persistence.event.stakeholder.insert.StakeholderInsertedEvent;
+import com.fae.evatool.impact.persistence.event.stakeholder.insert.StakeholderInsertedEventListener;
+import com.fae.evatool.impact.persistence.event.stakeholder.insert.StakeholderInsertedEventPublisher;
 import com.fae.evatool.impact.persistence.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
