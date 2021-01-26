@@ -1,4 +1,4 @@
-package com.fae.evatool.impact.tests.persistence.event;
+package com.fae.evatool.impact.tests.persistence.event.stakeholder.insert;
 
 import com.fae.evatool.impact.persistence.event.stakeholder.insert.StakeholderInsertedEvent;
 import com.fae.evatool.impact.persistence.event.stakeholder.insert.StakeholderInsertedEventListener;
@@ -16,9 +16,6 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 public class StakeholderInsertedEventMockTests {
-    @Autowired
-    private StakeholderRepository stakeholderRepository;
-
     @Autowired
     private StakeholderInsertedEventPublisher publisher;
 
