@@ -14,6 +14,5 @@ public class StakeholderInsertedEventListener implements ApplicationListener<Sta
     public void onApplicationEvent(final StakeholderInsertedEvent event) {
         var stakeholder = event.getStakeholder();
         stakeholderRepository.save(stakeholder);
-        //stakeholderRepository.flush();
     }
 }
