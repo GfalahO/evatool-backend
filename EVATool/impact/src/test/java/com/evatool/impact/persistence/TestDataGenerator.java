@@ -17,7 +17,7 @@ public class TestDataGenerator {
     }
 
     public static Impact getImpact() {
-        return new Impact(0.0, "", getDimension());
+        return new Impact(0.0, "", getDimension(), getStakeholder());
     }
 
     public static Analysis getAnalysis() {

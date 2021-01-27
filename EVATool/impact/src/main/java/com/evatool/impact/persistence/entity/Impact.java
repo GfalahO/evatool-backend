@@ -8,20 +8,24 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "IMPACT")
+@Table(name = "IMPACT")
 public class Impact {
     @Getter
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "ID")
     private String id;
 
     @Getter
     @NotNull
+    @Column(name = "VALUE")
     private double value;
 
     @Getter
     @NotNull
+    @Column(name = "REASON")
     private String reason;
 
     @Getter
@@ -30,28 +34,29 @@ public class Impact {
     private Dimension dimension;
 
     @Getter
-    @ManyToMany
-    private List<Requirement> requirements = new ArrayList<>();
+    @ManyToOne
+    private Stakeholder stakeholder; // Add to .toString, add to constructor and implement setStakeholder method + tests for it.
 
     @Getter
-    @ManyToOne
-    private Stakeholder stakeholders; // Add to .toString, add to constructor and implement setStakeholder method + tests for it.
+    @ManyToMany
+    private List<Requirement> requirements = new ArrayList<>();
 
     public Impact() {
 
     }
 
-    public Impact(double value, String reason, Dimension dimension) {
+    public Impact(double value, String reason, Dimension dimension, Stakeholder stakeholder) {
         this.setValue(value);
         this.setReason(reason);
         this.setDimension(dimension);
+        this.setStakeholder(stakeholder);
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Impact[id=%s, value=%f, reason=%s, dimension=%s, #requirements=%d]",
-                this.id, this.value, this.reason, this.dimension.toString(), requirements.size());
+                "Impact[id=%s, value=%f, reason=%s, dimension=%s, stakeholder=%s, #requirements=%d]",
+                this.id, this.value, this.reason, this.dimension.toString(), stakeholder.toString(), requirements.size());
     }
 
     public void setValue(double value) {
@@ -73,5 +78,12 @@ public class Impact {
             throw new IllegalArgumentException("Dimension cannot be null.");
         }
         this.dimension = dimension;
+    }
+
+    public void setStakeholder(Stakeholder stakeholder) {
+        if (stakeholder == null) {
+            throw new IllegalArgumentException("Stakeholder cannot be null.");
+        }
+        this.stakeholder = stakeholder;
     }
 }

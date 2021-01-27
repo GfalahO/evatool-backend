@@ -4,24 +4,26 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
+@Entity(name = "DIMENSION")
+@Table(name = "DIMENSION")
 public class Dimension {
     @Getter
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "ID")
     private String id;
 
     @Getter
     @NotNull
+    @Column(name = "NAME", unique = true)
     private String name;
 
     @Getter
     @NotNull
+    @Column(name = "DESCRIPTION")
     private String description;
 
     public Dimension() {
@@ -29,8 +31,8 @@ public class Dimension {
     }
 
     public Dimension(String name, String description) {
-        this.name = name;
-        this.description = description;
+        this.setName(name);
+        this.setDescription(description);
     }
 
     @Override
@@ -42,7 +44,7 @@ public class Dimension {
 
     public void setName(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Name cannot be null."); // More elegant solution with field reference in exception string?
+            throw new IllegalArgumentException("Name cannot be null.");
         }
         this.name = name;
     }

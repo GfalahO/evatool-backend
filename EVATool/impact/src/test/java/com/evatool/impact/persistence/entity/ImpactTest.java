@@ -63,4 +63,15 @@ public class ImpactTest {
         // then
         Assert.assertThrows(IllegalArgumentException.class, () -> impact.setDimension(null));
     }
+
+    @Test
+    public void testSetStakeholder_IllegalValueThrowsException() {
+        // given
+        var impact = TestDataGenerator.getImpact();
+
+        // when
+
+        // then
+        Assert.assertThrows(IllegalArgumentException.class, () -> impact.setStakeholder(null));
+    }
 }
