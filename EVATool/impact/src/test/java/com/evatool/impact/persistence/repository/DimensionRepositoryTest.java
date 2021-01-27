@@ -1,13 +1,11 @@
 package com.evatool.impact.persistence.repository;
 
 import com.evatool.impact.persistence.TestDataGenerator;
-import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 //@RunWith(SpringJUnit4ClassRunner.class) // Works with and without.
 @DataJpaTest
@@ -25,7 +23,7 @@ public class DimensionRepositoryTest {
         var found = dimensionRepository.findById(dimension.getId()).orElse(null);
 
         // then
-        Assert.assertEquals(dimension.getId(), found.getId());
+        assertThat(found.getId()).isEqualTo(dimension.getId());
     }
 
     @Test
@@ -38,7 +36,7 @@ public class DimensionRepositoryTest {
         var found = dimensionRepository.findByName(dimension.getName()).orElse(null);
 
         // then
-        Assert.assertEquals(dimension.getName(), found.getName());
+        assertThat(dimension.getName()).isEqualTo(found.getName());
     }
 
     @Test
@@ -52,8 +50,8 @@ public class DimensionRepositoryTest {
         // when
         dimension.setName(newName);
         //dimensionRepository.save(dimension); // This line can be commented and the test still passes
-                                               // Why does save not need to be called?
-                                               // CrudRepository saved changed with setter methods automatically.
+        // Why does save not need to be called?
+        // CrudRepository saved changed with setter methods automatically.
         var changedDimension = dimensionRepository.findById(dimension.getId()).orElse(null);
 
         // then
@@ -71,7 +69,7 @@ public class DimensionRepositoryTest {
         var found = dimensionRepository.findById(dimension.getId()).orElse(null);
 
         // then
-        Assert.assertEquals(null, found);
+        assertThat(found).isNull();
     }
 
     @Test
@@ -82,7 +80,7 @@ public class DimensionRepositoryTest {
         // when
 
         // then
-        Assert.assertEquals(null, dimension.getId());
+        assertThat(dimension.getId()).isNull();
     }
 
     @Test
@@ -94,6 +92,6 @@ public class DimensionRepositoryTest {
         // when
 
         // then
-        Assert.assertNotEquals(null, dimension.getId());
+        assertThat(dimension.getId()).isNotNull();
     }
 }

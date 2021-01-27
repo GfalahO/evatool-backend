@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.assertj.core.api.Assertions.*;
+
 @SpringBootTest
 public class StakeholderInsertedEventTest {
     @Autowired
@@ -27,7 +29,7 @@ public class StakeholderInsertedEventTest {
         publisher.onStakeholderInserted(stakeholder);
 
         // then
-        Assert.assertNotNull(stakeholder.getId());
+        assertThat (stakeholder.getId()).isNotNull();
     }
 
     @Test
@@ -40,6 +42,6 @@ public class StakeholderInsertedEventTest {
         var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
         // then
-        Assert.assertNotNull(found);
+        assertThat(found).isNotNull();
     }
 }

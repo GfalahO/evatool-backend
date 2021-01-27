@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import static org.assertj.core.api.Assertions.*;
+
 @DataJpaTest
 public class AnalysisRepositoryTest {
     @Autowired
@@ -21,7 +23,7 @@ public class AnalysisRepositoryTest {
         var found = analysisRepository.findById(analysis.getId()).orElse(null);
 
         // then
-        Assert.assertEquals(analysis.getId(), found.getId());
+        assertThat(found.getId()).isEqualTo(analysis.getId());
     }
 
     @Test
@@ -39,6 +41,6 @@ public class AnalysisRepositoryTest {
         var found = analysisRepository.findById(analysis.getId()).orElse(null);
 
         // then
-        Assert.assertEquals(found.getImpacts(), analysis.getImpacts());
+        assertThat(analysis.getImpacts()).isEqualTo(found.getImpacts());
     }
 }

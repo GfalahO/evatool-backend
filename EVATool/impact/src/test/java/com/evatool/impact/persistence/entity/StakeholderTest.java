@@ -4,6 +4,8 @@ import com.evatool.impact.persistence.TestDataGenerator;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
+
 public class StakeholderTest {
     @Test
     public void testToString_DefaultObject_DoesNotThrowException() {
@@ -24,6 +26,6 @@ public class StakeholderTest {
         // when
 
         // then
-        Assert.assertThrows(IllegalArgumentException.class, () -> stakeholder.setName(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  stakeholder.setName(null));
     }
 }

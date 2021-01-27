@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 public class StakeholderUpdatedEventTest {
@@ -28,11 +29,11 @@ public class StakeholderUpdatedEventTest {
         // when
         String newName = "newname";
         stakeholder.setName(newName);
-        //stakeholderRepository.save(stakeholder); // Should be mandatory for test to pass. Think of another way of passing the objects.
+        //stakeholderRepository.save(stakeholder);
         publisher.onStakeholderUpdated(stakeholder);
         var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
         // then
-        Assert.assertEquals(newName, found.getName());
+        assertThat(found.getName()).isEqualTo(newName);
     }
 }

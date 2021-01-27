@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import static org.assertj.core.api.Assertions.*;
+
 //@RunWith(SpringJUnit4ClassRunner.class) // Works with and without.
 @DataJpaTest
 public class StakeholderRepositoryTest {
@@ -22,7 +24,7 @@ public class StakeholderRepositoryTest {
         var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
         // then
-        Assert.assertEquals(stakeholder.getId(), found.getId());
+        assertThat(found.getId()).isEqualTo(stakeholder.getId());
     }
 
     @Test
@@ -35,6 +37,6 @@ public class StakeholderRepositoryTest {
         var found = stakeholderRepository.findByName(stakeholder.getName()).orElse(null);
 
         // then
-        Assert.assertEquals(stakeholder.getName(), found.getName());
+        assertThat(found.getName()).isEqualTo(stakeholder.getName());
     }
 }

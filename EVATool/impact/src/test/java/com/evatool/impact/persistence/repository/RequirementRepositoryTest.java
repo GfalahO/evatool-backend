@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import static org.assertj.core.api.Assertions.*;
+
 @DataJpaTest
 public class RequirementRepositoryTest {
     @Autowired
@@ -24,7 +26,7 @@ public class RequirementRepositoryTest {
         var found = requirementRepository.findById(requirement.getId()).orElse(null);
 
         // then
-        Assert.assertEquals(requirement.getId(), found.getId());
+        assertThat(found.getId()).isEqualTo(requirement.getId());
     }
 
     @Test
@@ -42,7 +44,7 @@ public class RequirementRepositoryTest {
         var found = requirementRepository.findById(requirement.getId()).orElse(null);
 
         // then
-        Assert.assertEquals(found.getImpacts(), requirement.getImpacts());
+        assertThat(found.getImpacts()).isEqualTo(requirement.getImpacts());
     }
 
     @Test
@@ -59,8 +61,8 @@ public class RequirementRepositoryTest {
         impact2.getRequirements().add(requirement);
 
         // then
-        Assert.assertEquals(requirement, impact1.getRequirements().get(0));
-        Assert.assertEquals(requirement, impact2.getRequirements().get(0));
+        assertThat(requirement).isEqualTo(impact1.getRequirements().get(0));
+        assertThat(requirement).isEqualTo(impact2.getRequirements().get(0));
     }
 
     @Test
@@ -86,7 +88,7 @@ public class RequirementRepositoryTest {
         var foundImpact2 = impactRepository.findById(impact1.getId()).orElse(null);
 
         // then
-        Assert.assertEquals(found, foundImpact1.getRequirements().get(0));
-        Assert.assertEquals(found, foundImpact2.getRequirements().get(0));
+        assertThat(found).isEqualTo(foundImpact1.getRequirements().get(0));
+        assertThat(found).isEqualTo(foundImpact2.getRequirements().get(0));
     }
 }

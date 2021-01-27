@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.*;
+
 public class ImpactTest {
     @Test
     public void testToString_DefaultObject_DoesNotThrowException() {
@@ -39,7 +41,7 @@ public class ImpactTest {
         // when
 
         // then
-        Assert.assertThrows(IllegalArgumentException.class, () -> impact.setValue(value));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->   impact.setValue(value));
     }
 
     @Test
@@ -50,7 +52,7 @@ public class ImpactTest {
         // when
 
         // then
-        Assert.assertThrows(IllegalArgumentException.class, () -> impact.setReason(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  impact.setReason(null));
     }
 
     @Test
@@ -61,7 +63,7 @@ public class ImpactTest {
         // when
 
         // then
-        Assert.assertThrows(IllegalArgumentException.class, () -> impact.setDimension(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  impact.setDimension(null));
     }
 
     @Test
@@ -72,6 +74,6 @@ public class ImpactTest {
         // when
 
         // then
-        Assert.assertThrows(IllegalArgumentException.class, () -> impact.setStakeholder(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  impact.setStakeholder(null));
     }
 }

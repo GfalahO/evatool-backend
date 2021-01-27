@@ -2,7 +2,10 @@ package com.evatool.impact.persistence.entity;
 
 import com.evatool.impact.persistence.TestDataGenerator;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class DimensionTest {
     @Test
@@ -24,7 +27,7 @@ public class DimensionTest {
         // when
 
         // then
-        Assert.assertThrows(IllegalArgumentException.class, () -> dimension.setName(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> dimension.setName(null));
     }
 
     @Test
@@ -35,6 +38,6 @@ public class DimensionTest {
         // when
 
         // then
-        Assert.assertThrows(IllegalArgumentException.class, () -> dimension.setDescription(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> dimension.setDescription(null));
     }
 }

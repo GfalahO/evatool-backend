@@ -9,6 +9,7 @@ import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 public class StakeholderInsertedEventMockTest {
