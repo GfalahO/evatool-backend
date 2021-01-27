@@ -3,6 +3,8 @@ package com.evatool.impact.persistence.event.incoming.stakeholder.insert;
 import com.evatool.impact.persistence.repository.StakeholderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 @Component

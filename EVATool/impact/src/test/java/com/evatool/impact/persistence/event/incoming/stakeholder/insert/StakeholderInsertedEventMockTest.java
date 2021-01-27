@@ -19,12 +19,13 @@ public class StakeholderInsertedEventMockTest {
     private StakeholderInsertedEventListener listener;
 
     @Test
-    public void testOnApplicationEvent_PublishEvent_ReceivesPublishedEventOnce() {
+    public void testOnApplicationEvent_PublishEvent_ReceivesPublishedEventOnce() throws InterruptedException {
         // given
         var stakeholder = getStakeholder();
 
         // when
         publisher.onStakeholderInserted(stakeholder);
+        Thread.sleep(100);
 
         // then
         verify(listener, times(1)).onApplicationEvent(any(StakeholderInsertedEvent.class));

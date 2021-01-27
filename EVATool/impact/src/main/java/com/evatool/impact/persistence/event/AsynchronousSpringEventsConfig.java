@@ -7,9 +7,7 @@ import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-// This class causes test fails.
-//@Configuration // This line is the problem.
-//@EnableAsync
+@Configuration
 public class AsynchronousSpringEventsConfig {
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {

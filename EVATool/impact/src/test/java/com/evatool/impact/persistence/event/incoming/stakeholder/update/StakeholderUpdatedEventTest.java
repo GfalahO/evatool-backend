@@ -20,7 +20,7 @@ public class StakeholderUpdatedEventTest {
     private StakeholderUpdatedEventListener listener;
 
     @Test
-    public void testOnApplicationEvent_PublishEvent_ReturnUpdatedStakeholder() {
+    public void testOnApplicationEvent_PublishEvent_ReturnUpdatedStakeholder() throws InterruptedException {
         // given
         var stakeholder = getStakeholder();
         stakeholderRepository.save(stakeholder);
@@ -30,6 +30,7 @@ public class StakeholderUpdatedEventTest {
         stakeholder.setName(newName);
         //stakeholderRepository.save(stakeholder);
         publisher.onStakeholderUpdated(stakeholder);
+        Thread.sleep(100);
         var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
         // then
