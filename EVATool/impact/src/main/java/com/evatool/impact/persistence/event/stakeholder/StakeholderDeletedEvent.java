@@ -1,4 +1,4 @@
-package com.evatool.impact.persistence.event.incoming.stakeholder;
+package com.evatool.impact.persistence.event.stakeholder;
 
 public class StakeholderDeletedEvent {
 }

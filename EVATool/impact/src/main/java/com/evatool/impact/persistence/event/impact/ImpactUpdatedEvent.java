@@ -1,4 +1,4 @@
-package com.evatool.impact.persistence.event.outgoing.Impact;
+package com.evatool.impact.persistence.event.impact;
 
 public class ImpactUpdatedEvent {
 }

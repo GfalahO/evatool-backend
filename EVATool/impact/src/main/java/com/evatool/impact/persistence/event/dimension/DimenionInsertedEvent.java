@@ -1,4 +1,4 @@
-package com.evatool.impact.persistence.event.outgoing.Dimension;
+package com.evatool.impact.persistence.event.dimension;
 
 public class DimenionInsertedEvent {
 }
