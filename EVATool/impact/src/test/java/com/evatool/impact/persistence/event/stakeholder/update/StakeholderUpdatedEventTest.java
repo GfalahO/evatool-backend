@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
 
 @SpringBootTest
-public class StakeholderUpdatedEventTests {
+public class StakeholderUpdatedEventTest {
     @Autowired
     private StakeholderRepository stakeholderRepository;
 

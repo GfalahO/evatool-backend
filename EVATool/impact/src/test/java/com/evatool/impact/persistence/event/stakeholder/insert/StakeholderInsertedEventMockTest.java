@@ -11,7 +11,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class StakeholderInsertedEventMockTests {
+public class StakeholderInsertedEventMockTest {
     @Autowired
     private StakeholderInsertedEventPublisher publisher;
 

@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 //@RunWith(SpringJUnit4ClassRunner.class) // Works with and without.
 @DataJpaTest
-public class DimensionRepositoryTests {
+public class DimensionRepositoryTest {
     @Autowired
     private DimensionRepository dimensionRepository;
 

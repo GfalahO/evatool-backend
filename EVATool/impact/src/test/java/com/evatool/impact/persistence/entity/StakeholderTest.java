@@ -4,7 +4,7 @@ import com.evatool.impact.persistence.TestDataGenerator;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
-public class StakeholderTests {
+public class StakeholderTest {
     @Test
     public void testToString_DefaultObject_DoesNotThrowException() {
         // given

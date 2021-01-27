@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class ImpactTests {
+public class ImpactTest {
     @Test
     public void testToString_DefaultObject_DoesNotThrowException() {
         // given

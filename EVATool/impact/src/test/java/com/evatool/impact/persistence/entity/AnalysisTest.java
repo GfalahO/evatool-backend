@@ -3,15 +3,15 @@ package com.evatool.impact.persistence.entity;
 import com.evatool.impact.persistence.TestDataGenerator;
 import org.junit.jupiter.api.Test;
 
-public class RequirementTests {
+public class AnalysisTest {
     @Test
     public void testToString_DefaultObject_DoesNotThrowException() {
         // given
-        var impact = TestDataGenerator.getImpact();
+        var analysis = TestDataGenerator.getAnalysis();
 
         // when
 
         // then
-        var s = impact.toString();
+        var s = analysis.toString();
     }
 }
