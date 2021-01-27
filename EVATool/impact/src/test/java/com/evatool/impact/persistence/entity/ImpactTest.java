@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ImpactTest {
     @Test
-    public void testToString_DefaultObject_DoesNotThrowException() {
+    public void testToString_DefaultObject_DoNotThrowException() {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -21,7 +21,7 @@ public class ImpactTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {-1.0, -0.5, 0.0, 0.5, 1.0})
-    public void testSetValue_LegalValue_DoesNotThrowException(double value) {
+    public void testSetValue_LegalValue_DoNotThrowException(double value) {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -33,7 +33,7 @@ public class ImpactTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {-Double.MAX_VALUE, -1.000001, -1.1, -1.5, -2.0, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
-    public void testSetValue_IllegalValue_ThrowsException(double value) {
+    public void testSetValue_IllegalValue_ThrowException(double value) {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -44,7 +44,7 @@ public class ImpactTest {
     }
 
     @Test
-    public void testSetDescription_IllegalValue_ThrowsException() {
+    public void testSetDescription_IllegalValue_ThrowException() {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -55,7 +55,7 @@ public class ImpactTest {
     }
 
     @Test
-    public void testSetDimension_IllegalValue_ThrowsException() {
+    public void testSetDimension_IllegalValue_ThrowException() {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -66,7 +66,7 @@ public class ImpactTest {
     }
 
     @Test
-    public void testSetStakeholder_IllegalValue_ThrowsException() {
+    public void testSetStakeholder_IllegalValue_ThrowException() {
         // given
         var impact = TestDataGenerator.getImpact();
 

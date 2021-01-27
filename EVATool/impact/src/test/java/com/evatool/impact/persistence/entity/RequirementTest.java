@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class RequirementTest {
     @Test
-    public void testToString_DefaultObject_DoesNotThrowException() {
+    public void testToString_DefaultObject_DoNotThrowException() {
         // given
         var impact = TestDataGenerator.getImpact();
 

@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class StakeholderTest {
     @Test
-    public void testToString_DefaultObject_DoesNotThrowException() {
+    public void testToString_DefaultObject_DoNotThrowException() {
         // given
         var stakeholder = TestDataGenerator.getStakeholder();
 
@@ -19,7 +19,7 @@ public class StakeholderTest {
     }
 
     @Test
-    public void testSetName_IllegalValue_ThrowsException() {
+    public void testSetName_IllegalValue_ThrowException() {
         // given
         var stakeholder = TestDataGenerator.getStakeholder();
 

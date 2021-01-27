@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.*;
 
 public class DimensionTest {
     @Test
-    public void testToString_DefaultObject_DoesNotThrowException() {
+    public void testToString_DefaultObject_DoNotThrowException() {
         // given
         var dimension = TestDataGenerator.getDimension();
 
@@ -20,7 +20,7 @@ public class DimensionTest {
     }
 
     @Test
-    public void testSetName_IllegalValue_ThrowsException() {
+    public void testSetName_IllegalValue_ThrowException() {
         // given
         var dimension = TestDataGenerator.getDimension();
 
@@ -31,7 +31,7 @@ public class DimensionTest {
     }
 
     @Test
-    public void testSetDescription_IllegalValue_ThrowsException() {
+    public void testSetDescription_IllegalValue_ThrowException() {
         // given
         var dimension = TestDataGenerator.getDimension();
 

@@ -1,5 +1,7 @@
-package com.evatool.impact.persistence.event.incoming.stakeholder.update;
+package com.evatool.impact.persistence.event.stakeholder;
 
+import com.evatool.impact.persistence.event.incoming.stakeholder.StakeholderUpdatedEventListener;
+import com.evatool.impact.persistence.event.incoming.stakeholder.StakeholderUpdatedEventPublisher;
 import com.evatool.impact.persistence.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

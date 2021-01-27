@@ -1,12 +1,12 @@
-package com.evatool.impact.persistence.event.incoming.stakeholder.insert;
+package com.evatool.impact.persistence.event.stakeholder;
 
 import com.evatool.impact.persistence.TestDataGenerator;
+import com.evatool.impact.persistence.event.incoming.stakeholder.StakeholderInsertedEventListener;
+import com.evatool.impact.persistence.event.incoming.stakeholder.StakeholderInsertedEventPublisher;
 import com.evatool.impact.persistence.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.*;
 

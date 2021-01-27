@@ -1,4 +1,4 @@
-package com.evatool.impact.persistence.event.incoming.stakeholder.update;
+package com.evatool.impact.persistence.event.incoming.stakeholder;
 
 import com.evatool.impact.persistence.repository.StakeholderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,12 +6,12 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StakeholderUpdatedEventListener implements ApplicationListener<StakeholderUpdatedEvent> {
+public class StakeholderInsertedEventListener implements ApplicationListener<StakeholderInsertedEvent> {
     @Autowired
     private StakeholderRepository stakeholderRepository;
 
     @Override
-    public void onApplicationEvent(final StakeholderUpdatedEvent event) {
+    public void onApplicationEvent(final StakeholderInsertedEvent event) {
         var stakeholder = event.getStakeholder();
         stakeholderRepository.save(stakeholder);
     }

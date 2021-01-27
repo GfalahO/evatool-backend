@@ -1,6 +1,9 @@
-package com.evatool.impact.persistence.event.incoming.stakeholder.update;
+package com.evatool.impact.persistence.event.stakeholder;
 
 import com.evatool.impact.persistence.TestDataGenerator;
+import com.evatool.impact.persistence.event.incoming.stakeholder.StakeholderUpdatedEvent;
+import com.evatool.impact.persistence.event.incoming.stakeholder.StakeholderUpdatedEventListener;
+import com.evatool.impact.persistence.event.incoming.stakeholder.StakeholderUpdatedEventPublisher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +22,7 @@ public class StakeholderUpdatedEventMockTest {
     private StakeholderUpdatedEventListener listener;
 
     @Test
-    public void testOnApplicationEvent_PublishEvent_ReceivesPublishedEventOnce() throws InterruptedException {
+    public void testOnApplicationEvent_PublishEvent_ReceivePublishedEventOnce() throws InterruptedException {
         // given
         var stakeholder = TestDataGenerator.getStakeholder();
 
