@@ -44,14 +44,11 @@ public class DimensionRepositoryTest {
         // given
         var dimension = TestDataGenerator.getDimension();
         dimensionRepository.save(dimension);
-        var oldName = dimension.getName();
         var newName = "care";
 
         // when
         dimension.setName(newName);
-        //dimensionRepository.save(dimension); // This line can be commented and the test still passes
-        // Why does save not need to be called?
-        // CrudRepository saved changed with setter methods automatically.
+        dimensionRepository.save(dimension);
         var changedDimension = dimensionRepository.findById(dimension.getId()).orElse(null);
 
         // then

@@ -48,24 +48,6 @@ public class RequirementRepositoryTest {
     }
 
     @Test
-    public void testAddImpact_RelationshipInserted_ReturnUnsavedRequirements() {
-        // given
-        var requirement = TestDataGenerator.getRequirement();
-        var impact1 = TestDataGenerator.getImpact();
-        var impact2 = TestDataGenerator.getImpact();
-
-        // when
-        requirement.getImpacts().add(impact1);
-        requirement.getImpacts().add(impact2);
-        impact1.getRequirements().add(requirement);
-        impact2.getRequirements().add(requirement);
-
-        // then
-        assertThat(requirement).isEqualTo(impact1.getRequirements().get(0));
-        assertThat(requirement).isEqualTo(impact2.getRequirements().get(0));
-    }
-
-    @Test
     public void testAddImpact_RelationshipInserted_ReturnSavedRequirements() {
         // given
         var requirement = TestDataGenerator.getRequirement();
