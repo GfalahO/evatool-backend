@@ -25,8 +25,8 @@ public class Impact {
 
     @Getter
     @NotNull
-    @Column(name = "REASON")
-    private String reason;
+    @Column(name = "DESCRIPTION")
+    private String description;
 
     @Getter
     @ManyToOne
@@ -45,9 +45,9 @@ public class Impact {
 
     }
 
-    public Impact(double value, String reason, Dimension dimension, Stakeholder stakeholder) {
+    public Impact(double value, String description, Dimension dimension, Stakeholder stakeholder) {
         this.setValue(value);
-        this.setReason(reason);
+        this.setDescription(description);
         this.setDimension(dimension);
         this.setStakeholder(stakeholder);
     }
@@ -55,8 +55,8 @@ public class Impact {
     @Override
     public String toString() {
         return String.format(
-                "Impact[id=%s, value=%f, reason=%s, dimension=%s, stakeholder=%s, #requirements=%d]",
-                this.id, this.value, this.reason, this.dimension.toString(), stakeholder.toString(), requirements.size());
+                "Impact[id=%s, value=%f, description=%s, dimension=%s, stakeholder=%s, #requirements=%d]",
+                this.id, this.value, this.description, this.dimension.toString(), stakeholder.toString(), requirements.size());
     }
 
     public void setValue(double value) {
@@ -66,11 +66,11 @@ public class Impact {
         this.value = value;
     }
 
-    public void setReason(String reason) {
-        if (reason == null) {
-            throw new IllegalArgumentException("Reason cannot be null.");
+    public void setDescription(String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null.");
         }
-        this.reason = reason;
+        this.description = description;
     }
 
     public void setDimension(Dimension dimension) {

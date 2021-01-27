@@ -1,12 +1,11 @@
 package com.evatool.impact.persistence.entity;
 
 import com.evatool.impact.persistence.TestDataGenerator;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ImpactTest {
     @Test
@@ -41,18 +40,18 @@ public class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->   impact.setValue(value));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setValue(value));
     }
 
     @Test
-    public void testSetReason_IllegalValue_ThrowsException() {
+    public void testSetDescription_IllegalValue_ThrowsException() {
         // given
         var impact = TestDataGenerator.getImpact();
 
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  impact.setReason(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setDescription(null));
     }
 
     @Test
@@ -63,7 +62,7 @@ public class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  impact.setDimension(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setDimension(null));
     }
 
     @Test
@@ -74,6 +73,6 @@ public class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  impact.setStakeholder(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setStakeholder(null));
     }
 }
