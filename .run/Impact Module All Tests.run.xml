@@ -1,18 +1,18 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Impact Module All Tests" type="JUnit" factoryName="JUnit">
-    <module name="impact" />
-    <extension name="coverage">
-      <pattern>
-        <option name="PATTERN" value="com.fae.evatool.impact.tests.persistence.entity.*" />
-        <option name="ENABLED" value="true" />
-      </pattern>
-    </extension>
-    <option name="PACKAGE_NAME" value="com.fae.evatool.impact.tests" />
-    <option name="MAIN_CLASS_NAME" value="" />
-    <option name="METHOD_NAME" value="" />
-    <option name="TEST_OBJECT" value="package" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
-  </configuration>
+    <configuration default="false" name="Impact Module All Tests" type="JUnit" factoryName="JUnit">
+        <module name="impact"/>
+        <extension name="coverage">
+            <pattern>
+                <option name="PATTERN" value="com.evatool.impact.persistence.entity.*"/>
+                <option name="ENABLED" value="true"/>
+            </pattern>
+        </extension>
+        <option name="PACKAGE_NAME" value="com.evatool.impact"/>
+        <option name="MAIN_CLASS_NAME" value=""/>
+        <option name="METHOD_NAME" value=""/>
+        <option name="TEST_OBJECT" value="package"/>
+        <method v="2">
+            <option name="Make" enabled="true"/>
+        </method>
+    </configuration>
 </component>
