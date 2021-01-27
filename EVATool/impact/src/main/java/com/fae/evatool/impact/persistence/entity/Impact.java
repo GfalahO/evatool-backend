@@ -35,7 +35,7 @@ public class Impact {
 
     @Getter
     @ManyToOne
-    private Stakeholder stakeholders;
+    private Stakeholder stakeholders; // Add to .toString, add to constructor and implement setStakeholder method + tests for it.
 
     public Impact() {
 
