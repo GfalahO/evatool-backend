@@ -33,7 +33,7 @@ public class ImpactTest {
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = {-Double.MAX_VALUE - 1.000001, -1.1, -1.5, -2.0, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
+    @ValueSource(doubles = {-Double.MAX_VALUE, -1.000001, -1.1, -1.5, -2.0, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
     public void testSetValue_IllegalValue_ThrowsException(double value) {
         // given
         var impact = TestDataGenerator.getImpact();
@@ -41,7 +41,7 @@ public class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->   impact.setValue(value));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setValue(value));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  impact.setReason(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setReason(null));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  impact.setDimension(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setDimension(null));
     }
 
     @Test
@@ -74,6 +74,6 @@ public class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  impact.setStakeholder(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setStakeholder(null));
     }
 }
