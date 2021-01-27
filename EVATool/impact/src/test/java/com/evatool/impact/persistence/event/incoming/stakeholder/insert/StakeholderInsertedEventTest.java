@@ -28,7 +28,7 @@ public class StakeholderInsertedEventTest {
         publisher.onStakeholderInserted(stakeholder);
 
         // then
-        assertThat (stakeholder.getId()).isNotNull();
+        assertThat(stakeholder.getId()).isNotNull();
     }
 
     @Test

@@ -32,7 +32,7 @@ public class ImpactTest {
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = {-Double.MAX_VALUE - 1.000001, -1.1, -1.5, -2.0, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
+    @ValueSource(doubles = {-Double.MAX_VALUE, -1.000001, -1.1, -1.5, -2.0, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
     public void testSetValue_IllegalValue_ThrowsException(double value) {
         // given
         var impact = TestDataGenerator.getImpact();
