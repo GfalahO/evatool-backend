@@ -1,4 +1,4 @@
-package com.evatool.impact.persistence.event.stakeholder.update;
+package com.evatool.impact.persistence.event.incoming.stakeholder.update;
 
 import com.evatool.impact.persistence.TestDataGenerator;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 public class StakeholderUpdatedEventMockTest {

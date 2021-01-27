@@ -1,4 +1,4 @@
-package com.evatool.impact.persistence.event.stakeholder.update;
+package com.evatool.impact.persistence.event.incoming.stakeholder.update;
 
 import com.evatool.impact.persistence.entity.Stakeholder;
 import org.springframework.beans.factory.annotation.Autowired;
