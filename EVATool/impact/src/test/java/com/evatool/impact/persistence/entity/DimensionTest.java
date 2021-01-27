@@ -17,7 +17,7 @@ public class DimensionTest {
     }
 
     @Test
-    public void testSetName_IllegalValueThrowsException() {
+    public void testSetName_IllegalValue_ThrowsException() {
         // given
         var dimension = TestDataGenerator.getDimension();
 
@@ -28,7 +28,7 @@ public class DimensionTest {
     }
 
     @Test
-    public void testSetDescription_IllegalValueThrowsException() {
+    public void testSetDescription_IllegalValue_ThrowsException() {
         // given
         var dimension = TestDataGenerator.getDimension();
 

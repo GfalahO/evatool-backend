@@ -25,7 +25,7 @@ public class AnalysisRepositoryTest {
     }
 
     @Test
-    public void testAddImpact_ReturnSavedImpacts() {
+    public void testAddImpact_RelationshipInserted_ReturnSavedImpacts() {
         // given
         var analysis = TestDataGenerator.getAnalysis();
         analysisRepository.save(analysis);

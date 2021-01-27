@@ -20,7 +20,7 @@ public class ImpactTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {-1.0, -0.5, 0.0, 0.5, 1.0})
-    public void testSetValue_LegalValueDoesNotThrowException(double value) {
+    public void testSetValue_LegalValue_DoesNotThrowException(double value) {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -32,7 +32,7 @@ public class ImpactTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {-Double.MAX_VALUE - 1.000001, -1.1, -1.5, -2.0, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
-    public void testSetValue_IllegalValueThrowsException(double value) {
+    public void testSetValue_IllegalValue_ThrowsException(double value) {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -43,7 +43,7 @@ public class ImpactTest {
     }
 
     @Test
-    public void testSetReason_IllegalValueThrowsException() {
+    public void testSetReason_IllegalValue_ThrowsException() {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -54,7 +54,7 @@ public class ImpactTest {
     }
 
     @Test
-    public void testSetDimension_IllegalValueThrowsException() {
+    public void testSetDimension_IllegalValue_ThrowsException() {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -65,7 +65,7 @@ public class ImpactTest {
     }
 
     @Test
-    public void testSetStakeholder_IllegalValueThrowsException() {
+    public void testSetStakeholder_IllegalValue_ThrowsException() {
         // given
         var impact = TestDataGenerator.getImpact();
 

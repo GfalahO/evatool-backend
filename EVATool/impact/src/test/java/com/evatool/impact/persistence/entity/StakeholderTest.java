@@ -17,7 +17,7 @@ public class StakeholderTest {
     }
 
     @Test
-    public void testSetName_IllegalValueThrowsException() {
+    public void testSetName_IllegalValue_ThrowsException() {
         // given
         var stakeholder = TestDataGenerator.getStakeholder();
 

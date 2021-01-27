@@ -28,7 +28,7 @@ public class RequirementRepositoryTest {
     }
 
     @Test
-    public void testAddImpact_ReturnSavedImpacts() {
+    public void testAddImpact_RelationshipInserted_ReturnSavedImpacts() {
         // given
         var requirement = TestDataGenerator.getRequirement();
         requirementRepository.save(requirement);
@@ -46,7 +46,7 @@ public class RequirementRepositoryTest {
     }
 
     @Test
-    public void testAddImpact_ReturnUnsavedRequirements_Reversed() {
+    public void testAddImpact_RelationshipInserted_ReturnUnsavedRequirements() {
         // given
         var requirement = TestDataGenerator.getRequirement();
         var impact1 = TestDataGenerator.getImpact();
@@ -64,7 +64,7 @@ public class RequirementRepositoryTest {
     }
 
     @Test
-    public void testAddImpact_ReturnSavedRequirements_Reversed() {
+    public void testAddImpact_RelationshipInserted_ReturnSavedRequirements() {
         // given
         var requirement = TestDataGenerator.getRequirement();
         var impact1 = TestDataGenerator.getImpact();

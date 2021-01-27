@@ -19,7 +19,7 @@ public class StakeholderInsertedEventTest {
     private StakeholderInsertedEventListener listener;
 
     @Test
-    public void testOnApplicationEvent_StakeholderIdIsNotNull() {
+    public void testOnApplicationEvent_PublishEvent_StakeholderIdIsNotNull() {
         // given
         var stakeholder = TestDataGenerator.getStakeholder();
 
@@ -31,7 +31,7 @@ public class StakeholderInsertedEventTest {
     }
 
     @Test
-    public void testOnApplicationEvent_ReturnInsertedStakeholder() {
+    public void testOnApplicationEvent_PublishEvent_ReturnInsertedStakeholder() {
         // given
         var stakeholder = TestDataGenerator.getStakeholder();
 

@@ -20,7 +20,7 @@ public class StakeholderUpdatedEventTest {
     private StakeholderUpdatedEventListener listener;
 
     @Test
-    public void testOnApplicationEvent_ReturnUpdatedStakeholder() {
+    public void testOnApplicationEvent_PublishEvent_ReturnUpdatedStakeholder() {
         // given
         var stakeholder = getStakeholder();
         stakeholderRepository.save(stakeholder);

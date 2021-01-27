@@ -19,7 +19,7 @@ public class StakeholderUpdatedEventMockTest {
     private StakeholderUpdatedEventListener listener;
 
     @Test
-    public void testOnApplicationEvent_ReceivesPublishedEventOnce() {
+    public void testOnApplicationEvent_PublishEvent_ReceivesPublishedEventOnce() {
         // given
         var stakeholder = TestDataGenerator.getStakeholder();
 
