@@ -34,9 +34,6 @@ public class Impact {
     @ManyToMany
     private List<Requirement> requirements = new ArrayList<>();
 
-    //@ManyToMany
-    //private Set<Scenario> scenarios;
-
     @Getter
     @OneToMany
     private List<Stakeholder> stakeholders = new ArrayList<>();
@@ -78,8 +75,4 @@ public class Impact {
         }
         this.dimension = dimension;
     }
-
-    //public Set<Scenario> getScenarios() {
-    //    return this.scenarios;
-    //}
 }

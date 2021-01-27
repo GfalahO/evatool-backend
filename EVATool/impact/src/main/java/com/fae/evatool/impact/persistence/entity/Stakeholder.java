@@ -19,7 +19,7 @@ public class Stakeholder {
 
     @Getter
     @NotNull
-    private String name; // Required for UI.
+    private String name;
 
     public Stakeholder() {
 
