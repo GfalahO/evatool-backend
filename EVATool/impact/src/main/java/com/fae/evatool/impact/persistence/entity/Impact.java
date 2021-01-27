@@ -8,8 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name="IMPACT")
-@Table(name="IMPACT")
+@Entity
 public class Impact {
     @Getter
     @Id
@@ -19,7 +18,6 @@ public class Impact {
 
     @Getter
     @NotNull
-    @Column(name="VALUE")
     private double value;
 
     @Getter
@@ -37,7 +35,7 @@ public class Impact {
 
     @Getter
     @ManyToOne
-    private Stakeholder stakeholders; // Add to .toString, add to constructor and implement setStakeholder method + tests for it.
+    private Stakeholder stakeholders;
 
     public Impact() {
 
