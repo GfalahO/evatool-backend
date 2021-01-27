@@ -7,7 +7,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Impact {
@@ -51,8 +50,8 @@ public class Impact {
     @Override
     public String toString() {
         return String.format(
-                "Impact[id=%s, value=%f, reason=%s, dimension=%s, #requirements=%d, #stakeholders=%d]",
-                this.id, this.value, this.reason, this.dimension.toString(), requirements.size(), stakeholders.toString());
+                "Impact[id=%s, value=%f, reason=%s, dimension=%s, #requirements=%d]",
+                this.id, this.value, this.reason, this.dimension.toString(), requirements.size());
     }
 
     public void setValue(double value) {
