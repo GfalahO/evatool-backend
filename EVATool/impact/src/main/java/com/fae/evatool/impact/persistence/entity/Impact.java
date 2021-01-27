@@ -52,7 +52,7 @@ public class Impact {
     public String toString() {
         return String.format(
                 "Impact[id=%s, value=%f, reason=%s, dimension=%s, #requirements=%d, #stakeholders=%d]",
-                this.id, this.value, this.reason, this.dimension.toString(), requirements.size(), stakeholders.size());
+                this.id, this.value, this.reason, this.dimension.toString(), requirements.size(), stakeholders.toString());
     }
 
     public void setValue(double value) {
