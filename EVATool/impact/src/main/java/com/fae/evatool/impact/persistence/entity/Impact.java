@@ -35,8 +35,8 @@ public class Impact {
     private List<Requirement> requirements = new ArrayList<>();
 
     @Getter
-    @OneToMany
-    private List<Stakeholder> stakeholders = new ArrayList<>();
+    @ManyToOne
+    private Stakeholder stakeholders;
 
     public Impact() {
 
