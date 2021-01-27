@@ -12,6 +12,6 @@ public class AnalysisTest {
         // when
 
         // then
-        var s = analysis.toString();
+        analysis.toString();
     }
 }

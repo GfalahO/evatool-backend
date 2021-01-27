@@ -13,7 +13,7 @@ public class DimensionTest {
         // when
 
         // then
-        var s = dimension.toString();
+        dimension.toString();
     }
 
     @Test

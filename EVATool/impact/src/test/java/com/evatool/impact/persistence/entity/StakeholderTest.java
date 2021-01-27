@@ -13,7 +13,7 @@ public class StakeholderTest {
         // when
 
         // then
-        var s = stakeholder.toString();
+        stakeholder.toString();
     }
 
     @Test

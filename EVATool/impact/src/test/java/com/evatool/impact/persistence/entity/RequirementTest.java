@@ -12,6 +12,6 @@ public class RequirementTest {
         // when
 
         // then
-        var s = impact.toString();
+        impact.toString();
     }
 }
