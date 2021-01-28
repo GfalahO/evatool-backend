@@ -79,8 +79,7 @@ public class DimensionRepositoryTest {
         // then
         assertThat(found).isNull();
     }
-
-
+    
     @Test
     public void testUniqueName_DuplicateName_ThrowException() {
         // given
