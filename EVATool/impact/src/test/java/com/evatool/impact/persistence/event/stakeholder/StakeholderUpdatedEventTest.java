@@ -1,5 +1,6 @@
 package com.evatool.impact.persistence.event.stakeholder;
 
+import com.evatool.impact.persistence.TestSettings;
 import com.evatool.impact.persistence.repository.StakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ public class StakeholderUpdatedEventTest {
     private StakeholderRepository stakeholderRepository;
 
     @Autowired
-    private StakeholderUpdatedEventPublisher publisher;
+    private StakeholderUpdatedEventPublisher stakeholderUpdatedEventPublisher;
 
     @Autowired
-    private StakeholderUpdatedEventListener listener;
+    private StakeholderUpdatedEventListener stakeholderUpdatedEventListener;
 
     @Test
     public void testOnApplicationEvent_PublishEvent_ReturnUpdatedStakeholder() throws InterruptedException {
@@ -29,7 +30,7 @@ public class StakeholderUpdatedEventTest {
         String newName = "newname";
         stakeholder.setName(newName);
         //stakeholderRepository.save(stakeholder);
-        publisher.onStakeholderUpdated(stakeholder);
+        stakeholderUpdatedEventPublisher.onStakeholderUpdated(stakeholder);
         Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
         var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
