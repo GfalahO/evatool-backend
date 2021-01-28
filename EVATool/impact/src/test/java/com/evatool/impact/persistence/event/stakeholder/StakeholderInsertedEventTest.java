@@ -26,7 +26,7 @@ public class StakeholderInsertedEventTest {
 
         // when
         publisher.onStakeholderInserted(stakeholder);
-        Thread.sleep(100);
+        Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
 
         // then
         assertThat(stakeholder.getId()).isNotNull();
@@ -39,7 +39,7 @@ public class StakeholderInsertedEventTest {
 
         // when
         publisher.onStakeholderInserted(stakeholder);
-        Thread.sleep(100);
+        Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
         var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
         // then

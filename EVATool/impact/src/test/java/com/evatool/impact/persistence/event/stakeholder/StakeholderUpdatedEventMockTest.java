@@ -25,7 +25,7 @@ public class StakeholderUpdatedEventMockTest {
 
         // when
         publisher.onStakeholderUpdated(stakeholder);
-        Thread.sleep(100);
+        Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
 
         // then
         verify(listener, times(1)).onApplicationEvent(any(StakeholderUpdatedEvent.class));

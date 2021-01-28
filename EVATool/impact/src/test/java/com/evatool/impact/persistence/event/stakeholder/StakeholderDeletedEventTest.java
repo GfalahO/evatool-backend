@@ -27,7 +27,7 @@ public class StakeholderDeletedEventTest {
 
         // when
         publisher.onStakeholderDeleted(stakeholder);
-        Thread.sleep(100);
+        Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
         var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
         // then
