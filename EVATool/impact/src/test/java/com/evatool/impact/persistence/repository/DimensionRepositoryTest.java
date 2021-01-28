@@ -85,10 +85,10 @@ public class DimensionRepositoryTest {
     public void testUniqueName_DuplicateName_ThrowException() {
         // given
         var dimension1 = TestDataGenerator.getDimension();
+        dimensionRepository.save(dimension1);
         var dimension2 = TestDataGenerator.getDimension();
 
         // when
-        dimensionRepository.save(dimension1);
 
         // then
         dimensionRepository.save(dimension2); // TODO: This should raise a unique constrained violation exception but it does not.

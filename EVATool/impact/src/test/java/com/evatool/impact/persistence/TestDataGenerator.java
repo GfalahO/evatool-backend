@@ -5,7 +5,7 @@ import com.evatool.impact.persistence.entity.*;
 public class TestDataGenerator {
 
     public static Dimension getDimension() {
-        return new Dimension("safety", "...");
+        return new Dimension("dimension", "dimension");
     }
 
     public static Stakeholder getStakeholder() {
@@ -17,7 +17,7 @@ public class TestDataGenerator {
     }
 
     public static Impact getImpact() {
-        return new Impact(0.0, "", getDimension(), getStakeholder());
+        return new Impact(0.0, "impact", getDimension(), getStakeholder());
     }
 
     public static Analysis getAnalysis() {

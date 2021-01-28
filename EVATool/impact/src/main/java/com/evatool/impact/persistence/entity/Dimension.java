@@ -7,7 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity(name = "DIMENSION")
-@Table(name = "DIMENSION", uniqueConstraints = @UniqueConstraint(columnNames = {"NAME"}))
+@Table(name = "DIMENSION")
 public class Dimension {
     @Getter
     @Id
