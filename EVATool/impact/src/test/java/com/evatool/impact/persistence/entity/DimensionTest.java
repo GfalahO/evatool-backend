@@ -20,6 +20,17 @@ public class DimensionTest {
     }
 
     @Test
+    public void testCreateEntity_CreatedStakeholder_IdIsNull() {
+        // given
+        var dimension = TestDataGenerator.getDimension();
+
+        // when
+
+        // then
+        assertThat(dimension.getId()).isNull();
+    }
+
+    @Test
     public void testSetName_IllegalValue_ThrowException() {
         // given
         var dimension = TestDataGenerator.getDimension();

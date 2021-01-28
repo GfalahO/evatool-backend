@@ -7,14 +7,13 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.*;
 
-//@RunWith(SpringJUnit4ClassRunner.class) // Works with and without.
 @DataJpaTest
 public class DimensionRepositoryTest {
     @Autowired
     private DimensionRepository dimensionRepository;
 
     @Test
-    public void testFindById_ExistingDimension_ReturnDimension() {
+    public void testFindById_InsertedDimension_ReturnDimension() {
         // given
         var dimension = TestDataGenerator.getDimension();
         dimensionRepository.save(dimension);
@@ -27,7 +26,7 @@ public class DimensionRepositoryTest {
     }
 
     @Test
-    public void testFindByName_ExistingDimension_ReturnDimension() {
+    public void testFindByName_InsertedDimension_ReturnDimension() {
         // given
         var dimension = TestDataGenerator.getDimension();
         dimensionRepository.save(dimension);
@@ -40,11 +39,23 @@ public class DimensionRepositoryTest {
     }
 
     @Test
-    public void testSave_UpdatedName_ReturnUpdatedDimension() {
+    public void testSave_InsertedDimension_IdIsNotNull() {
+        // given
+        var dimension = TestDataGenerator.getDimension();
+
+        // when
+        dimensionRepository.save(dimension);
+
+        // then
+        assertThat(dimension.getId()).isNotNull();
+    }
+
+    @Test
+    public void testSave_UpdatedDimension_ReturnUpdatedDimension() {
         // given
         var dimension = TestDataGenerator.getDimension();
         dimensionRepository.save(dimension);
-        var newName = "care";
+        var newName = "new_name";
 
         // when
         dimension.setName(newName);
@@ -56,7 +67,7 @@ public class DimensionRepositoryTest {
     }
 
     @Test
-    public void testDelete_DeleteStakeholder_ReturnNull() {
+    public void testDelete_DeletedDimension_ReturnNull() {
         // given
         var dimension = TestDataGenerator.getDimension();
         dimensionRepository.save(dimension);
@@ -69,26 +80,21 @@ public class DimensionRepositoryTest {
         assertThat(found).isNull();
     }
 
-    @Test
-    public void testCreateEntity_CreatedStakeholder_ReturnIdIsNull() {
-        // given
-        var dimension = TestDataGenerator.getDimension();
-
-        // when
-
-        // then
-        assertThat(dimension.getId()).isNull();
-    }
 
     @Test
-    public void testSave_SavedStakeholder_ReturnIdIsNotNull() {
+    public void testUniqueName_DuplicateName_ThrowException() {
         // given
-        var dimension = TestDataGenerator.getDimension();
-        dimensionRepository.save(dimension);
+        var dimension1 = TestDataGenerator.getDimension();
+        var dimension2 = TestDataGenerator.getDimension();
 
         // when
+        dimensionRepository.save(dimension1);
 
         // then
-        assertThat(dimension.getId()).isNotNull();
+        dimensionRepository.save(dimension2); // TODO: This should raise a unique constrained violation exception but it does not.
+
+        var found1 = dimensionRepository.findById(dimension1.getId()).orElse(null);
+        var found2 = dimensionRepository.findById(dimension2.getId()).orElse(null);
+        assertThat(found1.getName()).isEqualTo(found2.getName());
     }
 }

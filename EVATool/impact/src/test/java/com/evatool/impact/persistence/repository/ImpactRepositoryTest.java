@@ -14,7 +14,7 @@ public class ImpactRepositoryTest {
     private ImpactRepository impactRepository;
 
     @Test
-    public void testFindById_ExistingImpact_ReturnImpact() {
+    public void testFindById_InsertedImpact_ReturnImpact() {
         // given
         var impact = TestDataGenerator.getImpact();
         impactRepository.save(impact);
@@ -24,5 +24,47 @@ public class ImpactRepositoryTest {
 
         // then
         assertThat(found.getId()).isEqualTo(impact.getId());
+    }
+
+    @Test
+    public void testSave_InsertedImpact_IdIsNotNull() {
+        // given
+        var impact = TestDataGenerator.getImpact();
+
+        // when
+        impactRepository.save(impact);
+
+        // then
+        assertThat(impact.getId()).isNotNull();
+    }
+
+    @Test
+    public void testSave_UpdatedImpact_ReturnUpdatedDimension() {
+        // given
+        var impact = TestDataGenerator.getImpact();
+        impactRepository.save(impact);
+        var newValue = 0.125;
+
+        // when
+        impact.setValue(newValue);
+        impactRepository.save(impact);
+        var changedDimension = impactRepository.findById(impact.getId()).orElse(null);
+
+        // then
+        assertThat(changedDimension.getValue()).isEqualTo(newValue);
+    }
+
+    @Test
+    public void testDelete_DeletedImpact_ReturnNull() {
+        // given
+        var impact = TestDataGenerator.getImpact();
+        impactRepository.save(impact);
+
+        // when
+        impactRepository.delete(impact);
+        var found = impactRepository.findById(impact.getId()).orElse(null);
+
+        // then
+        assertThat(found).isNull();
     }
 }

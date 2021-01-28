@@ -19,6 +19,17 @@ public class StakeholderTest {
     }
 
     @Test
+    public void testCreateEntity_CreatedStakeholder_IdIsNull() {
+        // given
+        var stakeholder = TestDataGenerator.getStakeholder();
+
+        // when
+
+        // then
+        assertThat(stakeholder.getId()).isNull();
+    }
+
+    @Test
     public void testSetName_IllegalValue_ThrowException() {
         // given
         var stakeholder = TestDataGenerator.getStakeholder();
@@ -26,6 +37,6 @@ public class StakeholderTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() ->  stakeholder.setName(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setName(null));
     }
 }

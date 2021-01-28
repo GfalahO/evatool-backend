@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ImpactTest {
@@ -17,6 +18,17 @@ public class ImpactTest {
 
         // then
         impact.toString();
+    }
+
+    @Test
+    public void testCreateEntity_CreatedStakeholder_IdIsNull() {
+        // given
+        var impact = TestDataGenerator.getImpact();
+
+        // when
+
+        // then
+        assertThat(impact.getId()).isNull();
     }
 
     @ParameterizedTest
