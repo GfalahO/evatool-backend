@@ -17,8 +17,7 @@ public class Stakeholder {
     private String id;
 
     @Getter
-    @NotNull
-    @Column(name = "NAME") // Unique?
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     public Stakeholder() {

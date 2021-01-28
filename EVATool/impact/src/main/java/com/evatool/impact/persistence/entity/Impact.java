@@ -19,21 +19,19 @@ public class Impact {
     private String id;
 
     @Getter
-    @NotNull
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", nullable = false)
     private double value;
 
     @Getter
-    @NotNull
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
     @Getter
     @ManyToOne
-    @NotNull
     private Dimension dimension;
 
     @Getter
+    //@ManyToOne(optional = false, fetch = FetchType.EAGER) // Do this? Change tests if yes...
     @ManyToOne
     private Stakeholder stakeholder;
 
