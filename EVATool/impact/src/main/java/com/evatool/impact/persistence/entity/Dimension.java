@@ -17,7 +17,7 @@ public class Dimension {
     private String id;
 
     @Getter
-    @Column(name = "NAME", unique = true, nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @Getter

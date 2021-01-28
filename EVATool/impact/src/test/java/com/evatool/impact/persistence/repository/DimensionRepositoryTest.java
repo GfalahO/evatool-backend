@@ -79,21 +79,4 @@ public class DimensionRepositoryTest {
         // then
         assertThat(found).isNull();
     }
-    
-    @Test
-    public void testUniqueName_DuplicateName_ThrowException() {
-        // given
-        var dimension1 = TestDataGenerator.getDimension();
-        dimensionRepository.save(dimension1);
-        var dimension2 = TestDataGenerator.getDimension();
-
-        // when
-
-        // then
-        dimensionRepository.save(dimension2); // TODO: This should raise a unique constrained violation exception but it does not.
-
-        var found1 = dimensionRepository.findById(dimension1.getId()).orElse(null);
-        var found2 = dimensionRepository.findById(dimension2.getId()).orElse(null);
-        assertThat(found1.getName()).isEqualTo(found2.getName());
-    }
 }
