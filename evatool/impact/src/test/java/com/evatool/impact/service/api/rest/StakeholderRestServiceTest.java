@@ -1,5 +1,6 @@
-package com.evatool.impact.common.controller;
+package com.evatool.impact.service.api.rest;
 
+import com.evatool.impact.common.controller.StakeholderRestController;
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.service.api.rest.StakeholderRestService;
 import com.evatool.impact.service.impl.StakeholderNotFoundException;
@@ -58,7 +59,6 @@ public class StakeholderRestServiceTest {
 
     // TODO: Fix test of figure out whether its possible in this test class.
     @Test
-    @Ignore
     public void testGetStakeholderById_NoExistingStakeholder_ThrowException() throws StakeholderNotFoundException {
         // given
         var stakeholder = getStakeholder();
