@@ -34,10 +34,5 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
     public List<Stakeholder> getAllStakeholders() {
         var stakeholders = stakeholderRepository.findAll();
         return Convert.iterableToList(stakeholders);
-//        var stakeholdersList = new ArrayList();
-//        for (var stakeholder : stakeholders) {
-//            stakeholdersList.add(stakeholder);
-//        }
-//        return stakeholdersList;
     }
 }
