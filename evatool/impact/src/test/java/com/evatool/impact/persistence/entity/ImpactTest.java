@@ -38,9 +38,9 @@ public class ImpactTest {
         var impact = TestDataGenerator.getImpact();
 
         // when
+        impact.setValue(value);
 
         // then
-        impact.setValue(value);
     }
 
     @ParameterizedTest
@@ -56,7 +56,7 @@ public class ImpactTest {
     }
 
     @Test
-    public void testSetDescription_IllegalValue_ThrowException() {
+    public void testSetDescription_NullValue_ThrowException() {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -67,7 +67,7 @@ public class ImpactTest {
     }
 
     @Test
-    public void testSetDimension_IllegalValue_ThrowException() {
+    public void testSetDimension_NullValue_ThrowException() {
         // given
         var impact = TestDataGenerator.getImpact();
 
@@ -78,7 +78,7 @@ public class ImpactTest {
     }
 
     @Test
-    public void testSetStakeholder_IllegalValue_ThrowException() {
+    public void testSetStakeholder_NullValue_ThrowException() {
         // given
         var impact = TestDataGenerator.getImpact();
 
