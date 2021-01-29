@@ -1,6 +1,5 @@
 package com.evatool.impact.persistence.entity;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 

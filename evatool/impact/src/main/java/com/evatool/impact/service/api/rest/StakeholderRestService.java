@@ -11,5 +11,7 @@ public interface StakeholderRestService {
 
     public Stakeholder saveStakeholder(Stakeholder stakeholder);
 
+    public void deleteStakeholderById(String id);
+
     public List<Stakeholder> getAllStakeholders();
 }
