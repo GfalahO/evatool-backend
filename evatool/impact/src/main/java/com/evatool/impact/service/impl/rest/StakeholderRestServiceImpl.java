@@ -3,6 +3,7 @@ package com.evatool.impact.service.impl.rest;
 import com.evatool.impact.persistence.entity.Stakeholder;
 import com.evatool.impact.persistence.repository.StakeholderRepository;
 import com.evatool.impact.service.api.rest.StakeholderRestService;
+import com.evatool.impact.util.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +33,11 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
     @Override
     public List<Stakeholder> getAllStakeholders() {
         var stakeholders = stakeholderRepository.findAll();
-        var stakeholdersList = new ArrayList();
-        for (var stakeholder : stakeholders) {
-            stakeholdersList.add(stakeholder);
-        }
-        return stakeholdersList;
+        return Convert.iterableToList(stakeholders);
+//        var stakeholdersList = new ArrayList();
+//        for (var stakeholder : stakeholders) {
+//            stakeholdersList.add(stakeholder);
+//        }
+//        return stakeholdersList;
     }
 }
