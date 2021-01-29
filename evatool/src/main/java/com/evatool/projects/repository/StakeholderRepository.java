@@ -1,9 +1,8 @@
-package com.FAE.EVATool.Projects.Repository;
+package com.evatool.projects.repository;
 
-import com.FAE.EVATool.Projects.Model.Stakeholder;
+import com.evatool.projects.model.Stakeholder;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public interface StakeholderRepository extends CrudRepository<Stakeholder, UUID> {

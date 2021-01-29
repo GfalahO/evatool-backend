@@ -1,18 +1,19 @@
-package com.FAE.EVATool.Projects.Model;
-
+package com.evatool.projects.model;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
  * This class represents a User
+ *
  * @author fobaidi
  * @author MHallweg
  */
 @Entity
-@Table (name = "Project_User")
-public class User  {
+@Table(name = "Project_User")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

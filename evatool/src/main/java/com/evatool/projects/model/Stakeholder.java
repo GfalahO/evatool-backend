@@ -1,6 +1,7 @@
-package com.FAE.EVATool.Projects.Model;
+package com.evatool.projects.model;
 
 import lombok.Getter;
+
 import javax.persistence.*;
 
 /**
@@ -8,8 +9,8 @@ import javax.persistence.*;
  * @author MHallweg
  */
 @Entity
-@Table (name = "Project_Stakeholder")
-public class Stakeholder{
+@Table(name = "Project_Stakeholder")
+public class Stakeholder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,4 +1,4 @@
-package com.FAE.EVATool;
+package com.evatool;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

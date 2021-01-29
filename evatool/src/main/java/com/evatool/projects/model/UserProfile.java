@@ -1,9 +1,6 @@
-package com.FAE.EVATool.Projects.Model;
+package com.evatool.projects.model;
 
 public class UserProfile {
-
-
-
 
     // TODO: Other attributes?
 }

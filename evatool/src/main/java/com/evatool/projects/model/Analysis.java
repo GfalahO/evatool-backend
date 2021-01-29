@@ -1,7 +1,8 @@
-package com.FAE.EVATool.Projects.Model;
+package com.evatool.projects.model;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "project_analysis")
-public class Analysis   {
+public class Analysis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
