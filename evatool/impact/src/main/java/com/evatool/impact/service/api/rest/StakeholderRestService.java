@@ -1,17 +1,18 @@
 package com.evatool.impact.service.api.rest;
 
-import com.evatool.impact.persistence.entity.Stakeholder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import com.evatool.impact.common.dto.StakeholderDto;
+import com.evatool.impact.service.impl.StakeholderNotFoundException;
 
 import java.util.List;
 
 public interface StakeholderRestService {
-    public Stakeholder getStakeholderById(String id);
+    public StakeholderDto getStakeholderById(String id) throws StakeholderNotFoundException;
 
-    public Stakeholder saveStakeholder(Stakeholder stakeholder);
+    public List<StakeholderDto> getAllStakeholders();
 
-    public void deleteStakeholderById(String id);
+    public StakeholderDto insertStakeholder(StakeholderDto stakeholderDto);
 
-    public List<Stakeholder> getAllStakeholders();
+    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto) throws StakeholderNotFoundException;
+
+    public void deleteStakeholderById(String id) throws StakeholderNotFoundException;
 }

@@ -1,7 +1,8 @@
 package com.evatool.impact.common.controller;
 
-import com.evatool.impact.persistence.entity.Stakeholder;
+import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.service.api.rest.StakeholderRestService;
+import com.evatool.impact.service.impl.StakeholderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,23 +17,28 @@ public class StakeholderRestController {
     private StakeholderRestService stakeholderRestService;
 
     @GetMapping("/stakeholder/{id}")
-    public ResponseEntity<Stakeholder> getStakeholder(@PathVariable String id) {
+    public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws StakeholderNotFoundException {
         return new ResponseEntity<>(stakeholderRestService.getStakeholderById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/stakeholders")
+    public List<StakeholderDto> getAllStakeholders() {
+        return stakeholderRestService.getAllStakeholders();
+    }
+
     @PostMapping("/stakeholder")
-    public ResponseEntity<Stakeholder> saveStakeholder(@RequestBody Stakeholder stakeholder) {
-        return new ResponseEntity<>(stakeholderRestService.saveStakeholder(stakeholder), HttpStatus.CREATED);
+    public ResponseEntity<StakeholderDto> insertStakeholder(@RequestBody StakeholderDto stakeholderDto) {
+        return new ResponseEntity<>(stakeholderRestService.insertStakeholder(stakeholderDto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/stakeholder/{id}")
+    public ResponseEntity<StakeholderDto> updateStakeholder(@RequestBody StakeholderDto stakeholderDto) throws StakeholderNotFoundException {
+        return new ResponseEntity<>(stakeholderRestService.updateStakeholder(stakeholderDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/stakeholder/{id}")
-    public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) {
+    public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws StakeholderNotFoundException {
         stakeholderRestService.deleteStakeholderById(id);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/stakeholders")
-    public List<Stakeholder> getAllStakeholders() {
-        return stakeholderRestService.getAllStakeholders();
     }
 }
