@@ -10,15 +10,15 @@ on:
     branches: [ impact ]
 
 jobs:
-  test:
+  impact_build_job:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 11
-      uses: actions/setup-java@v1
-      with:
-        java-version: 11
-    - name: Build with Maven
-      run: mvn -B test --file EVATool/impact/pom.xml
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build with Maven
+        run: mvn -B clean install --file EVATool/impact/pom.xml
