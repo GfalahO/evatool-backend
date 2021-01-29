@@ -50,6 +50,7 @@ public class StakeholderRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(stakeholder.getName()));
     }
+    // TODO: Test when getting null
 
     @Test
     public void testSaveStakeholder_ChangedStakeholder_ReturnChangedStakeholder() throws Exception {
@@ -68,6 +69,8 @@ public class StakeholderRestControllerTest {
                 //.andExpect(jsonPath("$.id").exists()) // TODO: id is not getting assigned and setId should be exist.
                 .andExpect(jsonPath("$.name").value(stakeholder.getName()));
     }
+    // TODO: Test when updating?
+    // TODO: Test when inserting null
 
     @Test
     public void testDeleteStakeholder_DeletedStakeholder_ReturnNull() throws Exception {
@@ -81,6 +84,7 @@ public class StakeholderRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+    // TODO: Test delete when id does not exist
 
     @Test
     public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders() throws Exception {
@@ -101,6 +105,5 @@ public class StakeholderRestControllerTest {
                 .andExpect(jsonPath("$[0].name").value(stakeholder1.getName()))
                 .andExpect(jsonPath("$[1].name").value(stakeholder2.getName()));
     }
-
     // TODO: Parameterized test with get all stakeholders...
 }
