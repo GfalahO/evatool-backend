@@ -29,10 +29,10 @@ public class ImpactDto {
     public String toString() {
         return "ImpactDto{" +
                 "id='" + id + '\'' +
-                ", stakeholderId='" + stakeholderId + '\'' +
-                ", dimensionId='" + dimensionId + '\'' +
                 ", value=" + value +
                 ", description='" + description + '\'' +
+                ", stakeholderId='" + stakeholderId + '\'' +
+                ", dimensionId='" + dimensionId + '\'' +
                 '}';
     }
 }
