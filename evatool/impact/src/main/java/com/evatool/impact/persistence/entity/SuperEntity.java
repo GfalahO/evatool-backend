@@ -15,29 +15,20 @@ public class SuperEntity {
     @Column(name = "ID", nullable = false)
     protected String id;
 
-    public void setId(String id) {
-        if (validIdSetToNull(id)) {
-            throw new IllegalArgumentException("Existing id cannot be set to null.");
-        } else if (idIsAlreadySet()) {
+    public void setId(String id) throws IllegalArgumentException {
+        if (idExists()) {
             throw new IllegalArgumentException("Existing id cannot be set.");
-        } else if (!idIsValid(id)) {
+        } else if (id != null && !idIsValid(id)) {
             throw new IllegalArgumentException("Id must be a valid UUID.");
         }
         this.id = id;
     }
-
-    private boolean validIdSetToNull(String id) {
-        return id == null && this.id != null;
-    }
-
-    private boolean idIsAlreadySet() {
+    
+    private boolean idExists() {
         return this.id != null;
     }
 
     private boolean idIsValid(String id) {
-        if (id == null) {
-            return true;
-        }
         try {
             UUID.fromString(id);
             return true;
@@ -45,5 +36,4 @@ public class SuperEntity {
             return false;
         }
     }
-
 }
