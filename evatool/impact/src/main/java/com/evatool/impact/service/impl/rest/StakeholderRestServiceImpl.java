@@ -20,7 +20,7 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
     public StakeholderDto getStakeholderById(String id) throws StakeholderNotFoundException {
         var stakeholder = stakeholderRepository.findById(id).orElse(null);
         if (stakeholder == null) {
-            throw new StakeholderNotFoundException(String.format("Stakeholder with id '%s' not found.", stakeholder.getId()));
+            throw new StakeholderNotFoundException(String.format("Stakeholder with id '%s' not found.", id));
         }
         var stakeholderDto = stakeholder.toDto();
         return stakeholderDto;
