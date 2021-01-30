@@ -1,4 +1,4 @@
-package com.evatool.impact.common.controller;
+package com.evatool.impact.common.controller.rest;
 
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.service.api.rest.StakeholderRestService;

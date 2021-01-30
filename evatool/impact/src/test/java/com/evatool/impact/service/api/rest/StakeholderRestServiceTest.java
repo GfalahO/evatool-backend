@@ -1,6 +1,6 @@
 package com.evatool.impact.service.api.rest;
 
-import com.evatool.impact.common.controller.StakeholderRestController;
+import com.evatool.impact.common.controller.rest.StakeholderRestController;
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.common.mapper.StakeholderMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
