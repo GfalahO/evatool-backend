@@ -57,22 +57,6 @@ public class StakeholderRestServiceTest {
                 .andExpect(jsonPath("$.name").value(stakeholder.getName()));
     }
 
-    // TODO: Fix test of figure out whether its possible in this test class.
-    @Test
-    public void testGetStakeholderById_NoExistingStakeholder_ThrowException() throws StakeholderNotFoundException {
-        // given
-        var stakeholder = getStakeholder();
-
-        // when
-        when(stakeholderRestService.getStakeholderById(anyString())).thenReturn(null);
-        //when(stakeholderRestService.getStakeholderById(anyString())).thenThrow(new StakeholderNotFoundException(""));
-
-        // then
-        //assertThatExceptionOfType(StakeholderNotFoundException.class).isThrownBy(
-        //        () -> mvc.perform(get("/api/stakeholder/dummy_id"))
-        //);
-    }
-
     @Test
     public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws Exception {
         // given
