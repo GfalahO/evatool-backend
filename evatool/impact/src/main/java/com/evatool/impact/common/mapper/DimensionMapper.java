@@ -2,30 +2,16 @@ package com.evatool.impact.common.mapper;
 
 import com.evatool.impact.common.dto.DimensionDto;
 import com.evatool.impact.persistence.entity.Dimension;
+import org.modelmapper.ModelMapper;
 
 public class DimensionMapper {
+    private ModelMapper modelMapper = new ModelMapper();
 
-    public DimensionMapper() {
-
+    public Dimension fromDto(DimensionDto dimensionDto) {
+        return modelMapper.map(dimensionDto, Dimension.class);
     }
 
-    public Dimension fromDimension(DimensionDto dimensionDto) {
-        var dimension = new Dimension();
-
-        dimension.setId(dimensionDto.getId());
-        dimension.setName(dimensionDto.getName());
-        dimension.setDescription(dimensionDto.getDescription());
-
-        return dimension;
-    }
-
-    public DimensionDto toDimensionDto(Dimension dimension) {
-        var dimensionDto = new DimensionDto();
-
-        dimensionDto.setId(dimension.getId());
-        dimensionDto.setName(dimension.getName());
-        dimensionDto.setDescription(dimension.getDescription());
-
-        return dimensionDto;
+    public DimensionDto toDto(Dimension dimension) {
+        return modelMapper.map(dimension, DimensionDto.class);
     }
 }
