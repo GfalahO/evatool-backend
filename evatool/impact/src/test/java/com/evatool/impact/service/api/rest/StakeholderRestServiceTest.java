@@ -47,7 +47,7 @@ public class StakeholderRestServiceTest {
         var stakeholder = getStakeholder();
 
         // when
-        when(stakeholderRestService.getStakeholderById(anyString())).thenReturn(stakeholderMapper.toStakeholderDto(stakeholder));
+        when(stakeholderRestService.getStakeholderById(anyString())).thenReturn(stakeholderMapper.toDto(stakeholder));
 
         // then
         mvc.perform(get("/api/stakeholder/dummy_id")
@@ -65,7 +65,7 @@ public class StakeholderRestServiceTest {
         stakeholder.setId(UUID.randomUUID().toString());
 
         // when
-        when(stakeholderRestService.insertStakeholder(any(StakeholderDto.class))).thenReturn(stakeholderMapper.toStakeholderDto(stakeholder));
+        when(stakeholderRestService.insertStakeholder(any(StakeholderDto.class))).thenReturn(stakeholderMapper.toDto(stakeholder));
 
         // then
         mvc.perform(post("/api/stakeholder")
@@ -86,9 +86,9 @@ public class StakeholderRestServiceTest {
         stakeholder.setId(UUID.randomUUID().toString());
 
         // when
-        when(stakeholderRestService.insertStakeholder(any(StakeholderDto.class))).thenReturn(stakeholderMapper.toStakeholderDto(stakeholder));
+        when(stakeholderRestService.insertStakeholder(any(StakeholderDto.class))).thenReturn(stakeholderMapper.toDto(stakeholder));
         stakeholder.setName("new_name");
-        when(stakeholderRestService.updateStakeholder(any(StakeholderDto.class))).thenReturn(stakeholderMapper.toStakeholderDto(stakeholder));
+        when(stakeholderRestService.updateStakeholder(any(StakeholderDto.class))).thenReturn(stakeholderMapper.toDto(stakeholder));
 
         // then
         mvc.perform(put("/api/stakeholder/dummy_id")
@@ -122,8 +122,8 @@ public class StakeholderRestServiceTest {
 
         // when
         var allStakeholders = Arrays.asList(
-                stakeholderMapper.toStakeholderDto(stakeholder1),
-                stakeholderMapper.toStakeholderDto(stakeholder2));
+                stakeholderMapper.toDto(stakeholder1),
+                stakeholderMapper.toDto(stakeholder2));
         given(stakeholderRestService.getAllStakeholders()).willReturn(allStakeholders);
 
         // then
@@ -144,7 +144,7 @@ public class StakeholderRestServiceTest {
         for (int i = 0; i < value; i++) {
             // given
             var stakeholder = getStakeholder();
-            var stakeholderDto = stakeholderMapper.toStakeholderDto(stakeholder);
+            var stakeholderDto = stakeholderMapper.toDto(stakeholder);
             allStakeholders.add(stakeholderDto);
         }
         // when

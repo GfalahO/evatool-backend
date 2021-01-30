@@ -3,6 +3,7 @@ package com.evatool.impact.common.controller.rest;
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.service.api.rest.StakeholderRestService;
 import com.evatool.impact.service.impl.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

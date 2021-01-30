@@ -1,6 +1,9 @@
 package com.evatool.impact.persistence;
 
+import com.evatool.impact.common.dto.ImpactDto;
 import com.evatool.impact.persistence.entity.*;
+
+import java.util.UUID;
 
 public class TestDataGenerator {
 
@@ -23,4 +26,5 @@ public class TestDataGenerator {
     public static Analysis getAnalysis() {
         return new Analysis();
     }
+
 }

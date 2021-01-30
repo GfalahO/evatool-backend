@@ -13,7 +13,7 @@ public class StakeholderMapperTest {
         var stakeholder = getStakeholder();
 
         // when
-        var stakeholderDto = stakeholderMapper.toStakeholderDto(stakeholder);
+        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
 
         // then
         assertThat(stakeholderDto.getId()).isEqualTo(stakeholder.getId());
@@ -25,10 +25,10 @@ public class StakeholderMapperTest {
         // given
         var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
-        var stakeholderDto = stakeholderMapper.toStakeholderDto(stakeholder);
-        stakeholder = stakeholderMapper.fromStakeholderDto(stakeholderDto);
 
         // when
+        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
+        stakeholder = stakeholderMapper.fromDto(stakeholderDto);
 
         // then
         assertThat(stakeholder.getId()).isEqualTo(stakeholderDto.getId());

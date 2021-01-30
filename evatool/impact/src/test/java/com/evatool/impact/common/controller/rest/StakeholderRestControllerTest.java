@@ -51,7 +51,7 @@ public class StakeholderRestControllerTest {
         // given
         var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
-        var stakeholderDto = stakeholderMapper.toStakeholderDto(stakeholder);
+        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
 
         // when
         var httpEntity = new HttpEntity<StakeholderDto>(stakeholderDto);
