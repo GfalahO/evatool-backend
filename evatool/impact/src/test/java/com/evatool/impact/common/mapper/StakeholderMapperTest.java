@@ -1,14 +1,13 @@
-package com.evatool.impact.common.dto;
+package com.evatool.impact.common.mapper;
 
-import com.evatool.impact.common.mapper.StakeholderMapper;
 import org.junit.jupiter.api.Test;
 
 import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StakeholderDtoTest {
+public class StakeholderMapperTest {
     @Test
-    public void testToString_DefaultObject_DoNotThrowException() {
+    public void testStakeholderDto_NewStakeholderDto_EqualsStakeholder() {
         // given
         var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
@@ -17,6 +16,7 @@ public class StakeholderDtoTest {
         var stakeholderDto = stakeholderMapper.toStakeholderDto(stakeholder);
 
         // then
-        stakeholderDto.toString();
+        assertThat(stakeholderDto.getId()).isEqualTo(stakeholderDto.getId());
+        assertThat(stakeholderDto.getName()).isEqualTo(stakeholderDto.getName());
     }
 }

@@ -2,11 +2,8 @@ package com.evatool.impact.service.api.rest;
 
 import com.evatool.impact.common.controller.StakeholderRestController;
 import com.evatool.impact.common.dto.StakeholderDto;
-import com.evatool.impact.service.api.rest.StakeholderRestService;
-import com.evatool.impact.service.impl.StakeholderNotFoundException;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.evatool.impact.common.mapper.StakeholderMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -22,7 +19,6 @@ import java.util.UUID;
 
 import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -47,10 +43,11 @@ public class StakeholderRestServiceTest {
     @Test
     public void testGetStakeholderById_ExistingStakeholder_ReturnStakeholder() throws Exception {
         // given
+        var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
 
         // when
-        when(stakeholderRestService.getStakeholderById(anyString())).thenReturn(stakeholder.toDto());
+        when(stakeholderRestService.getStakeholderById(anyString())).thenReturn(stakeholderMapper.toStakeholderDto(stakeholder));
 
         // then
         mvc.perform(get("/api/stakeholder/dummy_id")
@@ -63,11 +60,12 @@ public class StakeholderRestServiceTest {
     @Test
     public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws Exception {
         // given
+        var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
         stakeholder.setId(UUID.randomUUID().toString());
 
         // when
-        when(stakeholderRestService.insertStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder.toDto());
+        when(stakeholderRestService.insertStakeholder(any(StakeholderDto.class))).thenReturn(stakeholderMapper.toStakeholderDto(stakeholder));
 
         // then
         mvc.perform(post("/api/stakeholder")
@@ -76,19 +74,21 @@ public class StakeholderRestServiceTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.id").value(stakeholder.getId()))
                 .andExpect(jsonPath("$.name").value(stakeholder.getName()));
     }
 
     @Test
     public void testUpdateStakeholder() throws Exception {
         // given
+        var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
         stakeholder.setId(UUID.randomUUID().toString());
 
         // when
-        when(stakeholderRestService.insertStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder.toDto());
+        when(stakeholderRestService.insertStakeholder(any(StakeholderDto.class))).thenReturn(stakeholderMapper.toStakeholderDto(stakeholder));
         stakeholder.setName("new_name");
-        when(stakeholderRestService.updateStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder.toDto());
+        when(stakeholderRestService.updateStakeholder(any(StakeholderDto.class))).thenReturn(stakeholderMapper.toStakeholderDto(stakeholder));
 
         // then
         mvc.perform(put("/api/stakeholder/dummy_id")
@@ -116,11 +116,14 @@ public class StakeholderRestServiceTest {
     @Test
     public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders() throws Exception {
         // given
+        var stakeholderMapper = new StakeholderMapper();
         var stakeholder1 = getStakeholder();
         var stakeholder2 = getStakeholder();
 
         // when
-        var allStakeholders = Arrays.asList(stakeholder1.toDto(), stakeholder2.toDto());
+        var allStakeholders = Arrays.asList(
+                stakeholderMapper.toStakeholderDto(stakeholder1),
+                stakeholderMapper.toStakeholderDto(stakeholder2));
         given(stakeholderRestService.getAllStakeholders()).willReturn(allStakeholders);
 
         // then
@@ -136,11 +139,12 @@ public class StakeholderRestServiceTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     public void testGetAllStakeholders_NExistingStakeholders_ReturnNStakeholders(int value) throws Exception {
+        var stakeholderMapper = new StakeholderMapper();
         var allStakeholders = new ArrayList<StakeholderDto>();
         for (int i = 0; i < value; i++) {
             // given
             var stakeholder = getStakeholder();
-            var stakeholderDto = stakeholder.toDto();
+            var stakeholderDto = stakeholderMapper.toStakeholderDto(stakeholder);
             allStakeholders.add(stakeholderDto);
         }
         // when

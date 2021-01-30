@@ -20,17 +20,6 @@ public class ImpactTest {
         impact.toString();
     }
 
-    @Test
-    public void testCreateEntity_CreatedStakeholder_IdIsNull() {
-        // given
-        var impact = TestDataGenerator.getImpact();
-
-        // when
-
-        // then
-        assertThat(impact.getId()).isNull();
-    }
-
     @ParameterizedTest
     @ValueSource(doubles = {-1.0, -0.5, 0.0, 0.5, 1.0})
     public void testSetValue_LegalValue_DoNotThrowException(double value) {

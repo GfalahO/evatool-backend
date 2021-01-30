@@ -1,6 +1,7 @@
 package com.evatool.impact.common.controller;
 
 import com.evatool.impact.common.dto.StakeholderDto;
+import com.evatool.impact.common.mapper.StakeholderMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,16 +44,14 @@ public class StakeholderRestControllerTest {
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-
-        // TODO: How to get exception back so this can be tested? Why does the exception not make the test fail?
-        //assertThatExceptionOfType(StakeholderNotFoundException.class).isThrownBy(() -> testRestTemplate.getForEntity("/api/stakeholder/wrong_id", StakeholderDto.class));
     }
 
     @Test
     void testInsertStakeholder_InsertStakeholder_ReturnInsertedStakeholder() {
         // given
+        var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
-        var stakeholderDto = stakeholder.toDto();
+        var stakeholderDto = stakeholderMapper.toStakeholderDto(stakeholder);
 
         // when
         var httpEntity = new HttpEntity<StakeholderDto>(stakeholderDto);
@@ -62,7 +61,6 @@ public class StakeholderRestControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getBody().getId()).isNotNull();
         UUID.fromString(responseEntity.getBody().getId());
-        //assertThat(responseEntity.getBody().getId()).isEqualTo(stakeholder.getId()); // TODO: Id should be set or is this simulating a frontend call?
         assertThat(responseEntity.getBody().getName()).isEqualTo(stakeholder.getName());
     }
 

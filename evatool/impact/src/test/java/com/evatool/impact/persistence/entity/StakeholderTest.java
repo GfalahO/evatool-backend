@@ -21,62 +21,6 @@ public class StakeholderTest {
     }
 
     @Test
-    public void testCreateEntity_CreatedStakeholder_IdIsNull() {
-        // given
-        var stakeholder = TestDataGenerator.getStakeholder();
-
-        // when
-
-        // then
-        assertThat(stakeholder.getId()).isNull();
-    }
-
-    @Test
-    public void testSetId_NullValue_ThrowException() {
-        // given
-        var stakeholder = TestDataGenerator.getStakeholder();
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setId(null));
-    }
-
-    @Test
-    public void testSetId_IllegalValue_ThrowException() {
-        // given
-        var stakeholder = TestDataGenerator.getStakeholder();
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setId("not uuid"));
-    }
-
-    @Test
-    public void testSetId_IllegalValueSequence_ThrowException() {
-        // given
-        var stakeholder = TestDataGenerator.getStakeholder();
-
-        // when
-        stakeholder.setId(UUID.randomUUID().toString());
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setId(UUID.randomUUID().toString()));
-    }
-
-    @Test
-    public void testSetId_LegalValue_DoNotThrowException() {
-        // given
-        var stakeholder = TestDataGenerator.getStakeholder();
-
-        // when
-        stakeholder.setId(UUID.randomUUID().toString());
-
-        // then
-    }
-
-    @Test
     public void testSetName_NullValue_ThrowException() {
         // given
         var stakeholder = TestDataGenerator.getStakeholder();
