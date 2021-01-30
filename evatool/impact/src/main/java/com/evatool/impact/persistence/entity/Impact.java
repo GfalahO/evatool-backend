@@ -1,8 +1,6 @@
 package com.evatool.impact.persistence.entity;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,14 +8,7 @@ import java.util.List;
 
 @Entity(name = "IMPACT")
 @Table(name = "IMPACT")
-public class Impact {
-    @Getter
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "ID", updatable = false, nullable = false)
-    private String id;
-
+public class Impact extends SuperEntity {
     @Getter
     @Column(name = "VALUE", nullable = false)
     private double value;
@@ -56,6 +47,7 @@ public class Impact {
                 "Impact[id=%s, value=%f, description=%s, dimension=%s, stakeholder=%s, #requirements=%d]",
                 this.id, this.value, this.description, this.dimension.toString(), stakeholder.toString(), requirements.size());
     }
+
 
     public void setValue(double value) {
         if (value < -1.0 || value > 1.0) {

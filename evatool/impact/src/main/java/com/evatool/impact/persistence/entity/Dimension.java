@@ -1,21 +1,14 @@
 package com.evatool.impact.persistence.entity;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity(name = "DIMENSION")
 @Table(name = "DIMENSION")
-public class Dimension {
-    @Getter
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "ID", updatable = false, nullable = false)
-    private String id;
-
+public class Dimension extends SuperEntity {
     @Getter
     @Column(name = "NAME", nullable = false)
     private String name;
