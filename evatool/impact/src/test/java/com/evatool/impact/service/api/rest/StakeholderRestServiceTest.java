@@ -8,12 +8,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -129,5 +132,25 @@ public class StakeholderRestServiceTest {
                 .andExpect(jsonPath("$[0].name").value(stakeholder1.getName()))
                 .andExpect(jsonPath("$[1].name").value(stakeholder2.getName()));
     }
-    // TODO: Parameterized test with get all stakeholders...
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+    public void testGetAllStakeholders_NExistingStakeholders_ReturnNStakeholders(int value) throws Exception {
+        var allStakeholders = new ArrayList<StakeholderDto>();
+        for (int i = 0; i < value; i++) {
+            // given
+            var stakeholder = getStakeholder();
+            var stakeholderDto = stakeholder.toDto();
+            allStakeholders.add(stakeholderDto);
+        }
+        // when
+        given(stakeholderRestService.getAllStakeholders()).willReturn(allStakeholders);
+
+        // then
+        mvc.perform(get("/api/stakeholders")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(value)));
+    }
 }
