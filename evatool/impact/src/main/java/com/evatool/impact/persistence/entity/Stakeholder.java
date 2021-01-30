@@ -2,7 +2,6 @@ package com.evatool.impact.persistence.entity;
 
 import com.evatool.impact.common.dto.StakeholderDto;
 import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -47,14 +46,12 @@ public class Stakeholder {
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null.");
         }
-        if (this.id != null) {
+        if (idIsAlreadySet()) {
             throw new IllegalArgumentException("Cannot set existing id to null.");
         }
-        //try {
-        UUID.fromString(id);
-        //} catch (IllegalArgumentException exception) {
-        //    throw new IllegalArgumentException("Id must be a valid UUID.");
-        //}
+        if (!idIsValidUuid(id)) {
+            throw new IllegalArgumentException("Id must be a valid UUID.");
+        }
         this.id = id;
     }
 
@@ -81,5 +78,18 @@ public class Stakeholder {
         stakeholder.setName(stakeholderDto.getName());
 
         return stakeholder;
+    }
+
+    private boolean idIsAlreadySet() {
+        return this.id != null;
+    }
+
+    private boolean idIsValidUuid(String id) {
+        try {
+            UUID.fromString(id);
+            return true;
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
     }
 }
