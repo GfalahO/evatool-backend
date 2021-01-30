@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getDimension;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
@@ -17,7 +18,7 @@ public class DimensionRepositoryTest {
     @Test
     public void testFindById_InsertedDimension_ReturnDimension() {
         // given
-        var dimension = TestDataGenerator.getDimension();
+        var dimension = getDimension();
         dimensionRepository.save(dimension);
 
         // when
@@ -30,7 +31,7 @@ public class DimensionRepositoryTest {
     @Test
     public void testFindByName_InsertedDimension_ReturnDimension() {
         // given
-        var dimension = TestDataGenerator.getDimension();
+        var dimension = getDimension();
         dimensionRepository.save(dimension);
 
         // when
@@ -43,7 +44,7 @@ public class DimensionRepositoryTest {
     @Test
     public void testSave_InsertedDimension_IdIsNotNull() {
         // given
-        var dimension = TestDataGenerator.getDimension();
+        var dimension = getDimension();
 
         // when
         dimensionRepository.save(dimension);
@@ -56,7 +57,7 @@ public class DimensionRepositoryTest {
     @Test
     public void testSave_InsertedDimension_IdIsUuid() {
         // given
-        var dimension = TestDataGenerator.getDimension();
+        var dimension = getDimension();
 
         // when
         dimensionRepository.save(dimension);
@@ -69,7 +70,7 @@ public class DimensionRepositoryTest {
     @Test
     public void testSave_UpdatedDimension_ReturnUpdatedDimension() {
         // given
-        var dimension = TestDataGenerator.getDimension();
+        var dimension = getDimension();
         dimensionRepository.save(dimension);
         var newName = "new_name";
 
@@ -85,7 +86,7 @@ public class DimensionRepositoryTest {
     @Test
     public void testDelete_DeletedDimension_ReturnNull() {
         // given
-        var dimension = TestDataGenerator.getDimension();
+        var dimension = getDimension();
         dimensionRepository.save(dimension);
 
         // when
