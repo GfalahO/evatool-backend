@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
@@ -18,7 +19,7 @@ public class StakeholderRepositoryTest {
     @Test
     public void testFindById_InsertedStakeholder_ReturnStakeholder() {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
         stakeholderRepository.save(stakeholder);
 
         // when
@@ -31,7 +32,7 @@ public class StakeholderRepositoryTest {
     @Test
     public void testFindByName_InsertedStakeholder_ReturnStakeholder() {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
         stakeholderRepository.save(stakeholder);
 
         // when
@@ -44,7 +45,7 @@ public class StakeholderRepositoryTest {
     @Test
     public void testSave_InsertedStakeholder_IdIsNotNull() {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
 
         // when
         stakeholderRepository.save(stakeholder);
@@ -56,7 +57,7 @@ public class StakeholderRepositoryTest {
     @Test
     public void testSave_InsertedStakeholder_IdIsUuid() {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
 
         // when
         stakeholderRepository.save(stakeholder);
@@ -68,7 +69,7 @@ public class StakeholderRepositoryTest {
     @Test
     public void testSave_UpdatedStakeholder_ReturnUpdatedDimension() {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
         stakeholderRepository.save(stakeholder);
         var newName = "new_name";
 
@@ -84,7 +85,7 @@ public class StakeholderRepositoryTest {
     @Test
     public void testDelete_DeletedStakeholder_ReturnNull() {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
         stakeholderRepository.save(stakeholder);
 
         // when

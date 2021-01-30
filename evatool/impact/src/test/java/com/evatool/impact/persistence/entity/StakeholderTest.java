@@ -6,13 +6,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.*;
 
 public class StakeholderTest {
     @Test
     public void testToString_DefaultObject_DoNotThrowException() {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
 
         // when
 
@@ -23,7 +24,7 @@ public class StakeholderTest {
     @Test
     public void testSetName_NullValue_ThrowException() {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
 
         // when
 

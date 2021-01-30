@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -29,7 +30,7 @@ public class StakeholderUpdatedEventMockTest {
     @Test
     public void testOnApplicationEvent_PublishEvent_ReceivePublishedEvent() throws InterruptedException {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
 
         // when
         stakeholderUpdatedEventPublisher.onStakeholderUpdated(stakeholder);
@@ -44,7 +45,7 @@ public class StakeholderUpdatedEventMockTest {
     public void testOnApplicationEvent_PublishEvent_ReceivePublishedEventNTimes(int value) throws InterruptedException {
         for (int i = 0; i < value; i++) {
             // given
-            var stakeholder = TestDataGenerator.getStakeholder();
+            var stakeholder = getStakeholder();
 
             // when
             stakeholderUpdatedEventPublisher.onStakeholderUpdated(stakeholder);
@@ -58,7 +59,7 @@ public class StakeholderUpdatedEventMockTest {
     @Test
     public void testOnApplicationEvent_PublishWrongEvent_DoNotReceivePublishedEvent() throws InterruptedException {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
 
         // when
         applicationEventPublisher.publishEvent(new TestEvent(this));

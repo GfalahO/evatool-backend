@@ -3,13 +3,15 @@ package com.evatool.impact.persistence.entity;
 import com.evatool.impact.persistence.TestDataGenerator;
 import org.junit.jupiter.api.Test;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getImpact;
+import static com.evatool.impact.persistence.TestDataGenerator.getRequirement;
 import static org.assertj.core.api.Assertions.*;
 
 public class RequirementTest {
     @Test
     public void testToString_DefaultObject_DoNotThrowException() {
         // given
-        var impact = TestDataGenerator.getImpact();
+        var impact = getImpact();
 
         // when
 
@@ -20,9 +22,9 @@ public class RequirementTest {
     @Test
     public void testAddImpacts_RelationshipInserted_ReturnRequirements() {
         // given
-        var requirement = TestDataGenerator.getRequirement();
-        var impact1 = TestDataGenerator.getImpact();
-        var impact2 = TestDataGenerator.getImpact();
+        var requirement = getRequirement();
+        var impact1 = getImpact();
+        var impact2 = getImpact();
 
         // when
         requirement.getImpacts().add(impact1);

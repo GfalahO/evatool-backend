@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -23,7 +24,7 @@ public class StakeholderInsertedEventTest {
     @Test
     public void testOnApplicationEvent_PublishEvent_StakeholderIdIsNotNull() throws InterruptedException {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
 
         // when
         stakeholderInsertedEventPublisher.onStakeholderInserted(stakeholder);
@@ -36,7 +37,7 @@ public class StakeholderInsertedEventTest {
     @Test
     public void testOnApplicationEvent_PublishEvent_ReturnInsertedStakeholder() throws InterruptedException {
         // given
-        var stakeholder = TestDataGenerator.getStakeholder();
+        var stakeholder = getStakeholder();
 
         // when
         stakeholderInsertedEventPublisher.onStakeholderInserted(stakeholder);

@@ -5,13 +5,14 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getDimension;
 import static org.assertj.core.api.Assertions.*;
 
 public class DimensionTest {
     @Test
     public void testToString_DefaultObject_DoNotThrowException() {
         // given
-        var dimension = TestDataGenerator.getDimension();
+        var dimension = getDimension();
 
         // when
 
@@ -22,7 +23,7 @@ public class DimensionTest {
     @Test
     public void testSetName_NullValue_ThrowException() {
         // given
-        var dimension = TestDataGenerator.getDimension();
+        var dimension = getDimension();
 
         // when
 
@@ -33,7 +34,7 @@ public class DimensionTest {
     @Test
     public void testSetDescription_NullValue_ThrowException() {
         // given
-        var dimension = TestDataGenerator.getDimension();
+        var dimension = getDimension();
 
         // when
 

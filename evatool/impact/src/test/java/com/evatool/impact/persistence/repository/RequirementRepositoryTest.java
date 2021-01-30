@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getImpact;
+import static com.evatool.impact.persistence.TestDataGenerator.getRequirement;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
@@ -19,7 +21,7 @@ public class RequirementRepositoryTest {
     @Test
     public void testFindById_ExistingRequirement_ReturnRequirement() {
         // given
-        var requirement = TestDataGenerator.getRequirement();
+        var requirement = getRequirement();
         requirementRepository.save(requirement);
 
         // when
@@ -32,12 +34,12 @@ public class RequirementRepositoryTest {
     @Test
     public void testAddImpact_RelationshipInserted_ReturnSavedImpacts() {
         // given
-        var requirement = TestDataGenerator.getRequirement();
+        var requirement = getRequirement();
         requirementRepository.save(requirement);
 
         // when
-        var impact1 = TestDataGenerator.getImpact();
-        var impact2 = TestDataGenerator.getImpact();
+        var impact1 = getImpact();
+        var impact2 = getImpact();
         requirement.getImpacts().add(impact1);
         requirement.getImpacts().add(impact2);
         requirementRepository.save(requirement); // Why does this line require Impact to have a default constructor?
@@ -50,9 +52,9 @@ public class RequirementRepositoryTest {
     @Test
     public void testAddImpact_RelationshipInserted_ReturnSavedRequirements() {
         // given
-        var requirement = TestDataGenerator.getRequirement();
-        var impact1 = TestDataGenerator.getImpact();
-        var impact2 = TestDataGenerator.getImpact();
+        var requirement = getRequirement();
+        var impact1 = getImpact();
+        var impact2 = getImpact();
 
         // Is this how many to many relationships are created?
         requirement.getImpacts().add(impact1);
