@@ -16,21 +16,28 @@ public class SuperEntity {
     protected String id;
 
     public void setId(String id) {
-        if (id == null && this.id != null) {
-            throw new IllegalArgumentException("Id cannot be null.");
+        if (validIdSetToNull(id)) {
+            throw new IllegalArgumentException("Existing id cannot be set to null.");
         } else if (idIsAlreadySet()) {
-            throw new IllegalArgumentException("Cannot set existing id.");
-        } else if (id != null && !idIsValidUuid(id)) {
+            throw new IllegalArgumentException("Existing id cannot be set.");
+        } else if (!idIsValid(id)) {
             throw new IllegalArgumentException("Id must be a valid UUID.");
         }
         this.id = id;
+    }
+
+    private boolean validIdSetToNull(String id) {
+        return id == null && this.id != null;
     }
 
     private boolean idIsAlreadySet() {
         return this.id != null;
     }
 
-    private boolean idIsValidUuid(String id) {
+    private boolean idIsValid(String id) {
+        if (id == null) {
+            return true;
+        }
         try {
             UUID.fromString(id);
             return true;
