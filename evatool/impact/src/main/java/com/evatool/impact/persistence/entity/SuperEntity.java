@@ -15,6 +15,7 @@ public class SuperEntity {
     @Column(name = "ID", nullable = false)
     protected String id;
 
+    // Allowed transitions: null -> null and null -> valid.
     public void setId(String id) throws IllegalArgumentException {
         if (idExists()) {
             throw new IllegalArgumentException("Existing id cannot be set.");
@@ -23,7 +24,7 @@ public class SuperEntity {
         }
         this.id = id;
     }
-    
+
     private boolean idExists() {
         return this.id != null;
     }
