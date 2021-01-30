@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
@@ -36,6 +38,18 @@ public class ImpactRepositoryTest {
 
         // then
         assertThat(impact.getId()).isNotNull();
+    }
+
+    @Test
+    public void testSave_InsertedImpact_IdIsUuid() {
+        // given
+        var impact = TestDataGenerator.getImpact();
+
+        // when
+        impactRepository.save(impact);
+
+        // then
+        UUID.fromString(impact.getId());
     }
 
     @Test

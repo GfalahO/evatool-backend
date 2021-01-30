@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
@@ -49,6 +51,18 @@ public class StakeholderRepositoryTest {
 
         // then
         assertThat(stakeholder.getId()).isNotNull();
+    }
+
+    @Test
+    public void testSave_InsertedStakeholder_IdIsUuid() {
+        // given
+        var stakeholder = TestDataGenerator.getStakeholder();
+
+        // when
+        stakeholderRepository.save(stakeholder);
+
+        // then
+        UUID.fromString(stakeholder.getId());
     }
 
     @Test
