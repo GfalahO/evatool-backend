@@ -18,11 +18,9 @@ public class SuperEntity {
     public void setId(String id) {
         if (id == null && this.id != null) {
             throw new IllegalArgumentException("Id cannot be null.");
-        }
-        else if (idIsAlreadySet()) {
+        } else if (idIsAlreadySet()) {
             throw new IllegalArgumentException("Cannot set existing id.");
-        }
-        else if (id != null && !idIsValidUuid(id)) {
+        } else if (id != null && !idIsValidUuid(id)) {
             throw new IllegalArgumentException("Id must be a valid UUID.");
         }
         this.id = id;
