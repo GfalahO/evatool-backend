@@ -69,8 +69,7 @@ public class StakeholderRestServiceTest {
         when(stakeholderRestService.insertStakeholder(any(Stakeholder.class))).thenReturn(stakeholder);
 
         // then
-        mvc.perform(post("/api/stakeholder")
-                .content(new ObjectMapper().writeValueAsString(stakeholder))
+        mvc.perform(post("/api/stakeholder").content(new ObjectMapper().writeValueAsString(stakeholder))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
@@ -92,8 +91,7 @@ public class StakeholderRestServiceTest {
         when(stakeholderRestService.updateStakeholder(any(Stakeholder.class))).thenReturn(stakeholder);
 
         // then
-        mvc.perform(put("/api/stakeholder/dummy_id")
-                .content(new ObjectMapper().writeValueAsString(stakeholder))
+        mvc.perform(put("/api/stakeholder/dummy_id").content(new ObjectMapper().writeValueAsString(stakeholder))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
