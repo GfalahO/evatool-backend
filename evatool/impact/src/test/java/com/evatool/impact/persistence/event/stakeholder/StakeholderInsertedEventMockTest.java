@@ -1,7 +1,6 @@
 package com.evatool.impact.persistence.event.stakeholder;
 
-import com.evatool.impact.persistence.TestDataGenerator;
-import com.evatool.impact.persistence.TestSettings;
+import com.evatool.impact.TestSettings;
 import com.evatool.impact.persistence.event.TestEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

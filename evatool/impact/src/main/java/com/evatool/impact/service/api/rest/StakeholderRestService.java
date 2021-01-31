@@ -1,8 +1,7 @@
 package com.evatool.impact.service.api.rest;
 
-import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.persistence.entity.Stakeholder;
-import com.evatool.impact.service.impl.EntityNotFoundException;
+import com.evatool.impact.service.EntityNotFoundException;
 
 import java.util.List;
 

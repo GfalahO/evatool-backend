@@ -1,15 +1,13 @@
 package com.evatool.impact.service.impl.rest;
 
-import com.evatool.impact.common.mapper.StakeholderMapper;
 import com.evatool.impact.persistence.entity.Stakeholder;
 import com.evatool.impact.persistence.repository.StakeholderRepository;
 import com.evatool.impact.service.api.rest.StakeholderRestService;
-import com.evatool.impact.service.impl.EntityNotFoundException;
+import com.evatool.impact.service.EntityNotFoundException;
 import com.evatool.impact.util.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +17,7 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
 
     @Override
     public Stakeholder getStakeholderById(String id) throws EntityNotFoundException {
+        // TODO: Throw error when id is null or not valid UUID?
         var stakeholder = stakeholderRepository.findById(id).orElse(null);
         if (stakeholder == null) {
             throw new EntityNotFoundException(String.format("Stakeholder with id '%s' not found.", id));
