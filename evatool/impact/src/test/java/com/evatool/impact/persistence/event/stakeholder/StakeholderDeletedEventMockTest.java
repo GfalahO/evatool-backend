@@ -42,7 +42,7 @@ public class StakeholderDeletedEventMockTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-    public void testOnApplicationEvent_PublishEvent_ReceivePublishedEventNTimes(int value) throws InterruptedException {
+    public void testOnApplicationEvent_PublishEvents_ReceivePublishedEvents(int value) throws InterruptedException {
         for (int i = 0; i < value; i++) {
             // given
             var stakeholder = getStakeholder();

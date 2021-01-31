@@ -137,7 +137,7 @@ public class StakeholderRestServiceTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-    public void testGetAllStakeholders_NExistingStakeholders_ReturnNStakeholders(int value) throws Exception {
+    public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders(int value) throws Exception {
         var stakeholderMapper = new StakeholderMapper();
         var allStakeholders = new ArrayList<Stakeholder>();
         for (int i = 0; i < value; i++) {
