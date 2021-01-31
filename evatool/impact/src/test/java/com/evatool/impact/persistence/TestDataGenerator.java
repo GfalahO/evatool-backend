@@ -55,4 +55,15 @@ public class TestDataGenerator {
         return impactDto;
     }
 
+    public static DimensionDto getEmptyDimensionDto() {
+        return new DimensionDto();
+    }
+
+    public static StakeholderDto getEmptyStakeholderDto() {
+        return new StakeholderDto();
+    }
+
+    public static ImpactDto getEmptyImpactDto() {
+        return new ImpactDto();
+    }
 }
