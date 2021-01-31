@@ -17,7 +17,9 @@ public class DimensionMapperTest {
         var dimensionDto = dimensionMapper.toDto(dimension);
 
         // then
-        assertThat(new ReflectionEquals(dimension).matches(dimensionDto));
+        assertThat(dimension.getId()).isEqualTo(dimensionDto.getId());
+        assertThat(dimension.getName()).isEqualTo(dimensionDto.getName());
+        assertThat(dimension.getDescription()).isEqualTo(dimension.getDescription());
     }
 
     @Test
@@ -30,6 +32,8 @@ public class DimensionMapperTest {
         var dimension = dimensionMapper.fromDto(dimensionDto);
 
         // then
-        assertThat(new ReflectionEquals(dimensionDto).matches(dimension));
+        assertThat(dimensionDto.getId()).isEqualTo(dimension.getId());
+        assertThat(dimensionDto.getName()).isEqualTo(dimension.getName());
+        assertThat(dimensionDto.getDescription()).isEqualTo(dimension.getDescription());
     }
 }

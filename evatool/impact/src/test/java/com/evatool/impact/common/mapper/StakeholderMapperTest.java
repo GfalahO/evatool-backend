@@ -18,7 +18,8 @@ public class StakeholderMapperTest {
         var stakeholderDto = stakeholderMapper.toDto(stakeholder);
 
         // then
-        assertThat(new ReflectionEquals(stakeholder).matches(stakeholderDto));
+        assertThat(stakeholder.getId()).isEqualTo(stakeholderDto.getId());
+        assertThat(stakeholder.getName()).isEqualTo(stakeholderDto.getName());
     }
 
     @Test
@@ -31,6 +32,7 @@ public class StakeholderMapperTest {
         var stakeholder = stakeholderMapper.fromDto(stakeholderDto);
 
         // then
-        assertThat(new ReflectionEquals(stakeholderDto).matches(stakeholder));
+        assertThat(stakeholderDto.getId()).isEqualTo(stakeholder.getId());
+        assertThat(stakeholderDto.getName()).isEqualTo(stakeholder.getName());
     }
 }
