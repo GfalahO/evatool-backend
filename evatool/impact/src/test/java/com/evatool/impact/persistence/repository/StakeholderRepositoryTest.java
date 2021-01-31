@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getDimension;
 import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.*;
 
@@ -64,6 +65,18 @@ public class StakeholderRepositoryTest {
 
         // then
         UUID.fromString(stakeholder.getId());
+    }
+
+    @Test
+    public void testSave_PresetId_Allow(){
+        // given
+        var stakeholder = getStakeholder();
+        stakeholder.setId(UUID.randomUUID().toString());
+
+        // when
+
+        // then
+        stakeholderRepository.save(stakeholder);
     }
 
     @Test

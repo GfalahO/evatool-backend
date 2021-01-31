@@ -53,7 +53,6 @@ public class DimensionRepositoryTest {
         assertThat(dimension.getId()).isNotNull();
     }
 
-
     @Test
     public void testSave_InsertedDimension_IdIsUuid() {
         // given
@@ -66,6 +65,17 @@ public class DimensionRepositoryTest {
         UUID.fromString(dimension.getId());
     }
 
+    @Test
+    public void testSave_PresetId_Allow(){
+        // given
+        var dimension = getDimension();
+        dimension.setId(UUID.randomUUID().toString());
+
+        // when
+
+        // then
+        dimensionRepository.save(dimension);
+    }
 
     @Test
     public void testSave_UpdatedDimension_ReturnUpdatedDimension() {

@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
+import static com.evatool.impact.persistence.TestDataGenerator.getDimension;
 import static com.evatool.impact.persistence.TestDataGenerator.getImpact;
 import static org.assertj.core.api.Assertions.*;
 
@@ -51,6 +52,18 @@ public class ImpactRepositoryTest {
 
         // then
         UUID.fromString(impact.getId());
+    }
+
+    @Test
+    public void testSave_PresetId_Allow() {
+        // given
+        var impact = getImpact();
+        impact.setId(UUID.randomUUID().toString());
+
+        // when
+
+        // then
+        impactRepository.save(impact);
     }
 
     @Test
