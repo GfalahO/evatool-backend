@@ -7,9 +7,11 @@ import com.evatool.impact.service.EntityNotFoundException;
 import com.evatool.impact.service.api.rest.DimensionRestService;
 import com.evatool.impact.util.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DimensionRestServiceImpl implements DimensionRestService {
     @Autowired
     private DimensionRepository dimensionRepository;
