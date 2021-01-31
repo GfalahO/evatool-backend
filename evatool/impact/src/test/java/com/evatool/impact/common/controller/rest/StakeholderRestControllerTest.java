@@ -66,6 +66,7 @@ public class StakeholderRestControllerTest {
 
     // TODO: Test normal cases like in ServiceTest
 
+    // TODO: Test insert, then read.
     // TODO: Test when inserting null. Not possible? (with deliberately malignant Dto?)
     // TODO: Test when updating null
     // TODO: Test delete when id does not exist

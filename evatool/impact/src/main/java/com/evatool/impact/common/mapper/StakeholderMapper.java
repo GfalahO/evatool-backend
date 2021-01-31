@@ -3,7 +3,10 @@ package com.evatool.impact.common.mapper;
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.persistence.entity.Stakeholder;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+// TODO: Belongs to logic layer?
 public class StakeholderMapper {
     private ModelMapper modelMapper = new ModelMapper();
 
