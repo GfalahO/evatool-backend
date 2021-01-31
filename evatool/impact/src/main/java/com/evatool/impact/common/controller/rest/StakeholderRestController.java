@@ -20,6 +20,7 @@ public class StakeholderRestController {
     @Autowired
     private StakeholderRestService stakeholderRestService;
 
+    // TODO: How to get this Autowired?
     private StakeholderMapper stakeholderMapper = new StakeholderMapper();
 
     @GetMapping("/stakeholder/{id}")
