@@ -31,8 +31,8 @@ public class ImpactDto {
                 "id='" + id + '\'' +
                 ", value=" + value +
                 ", description='" + description + '\'' +
-                ", stakeholderId='" + stakeholderId + '\'' +
                 ", dimensionId='" + dimensionId + '\'' +
+                ", stakeholderId='" + stakeholderId + '\'' +
                 '}';
     }
 }
