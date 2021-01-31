@@ -1,10 +1,11 @@
 package com.evatool.impact.service.impl.rest;
 
-import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.common.mapper.StakeholderMapper;
+import com.evatool.impact.persistence.entity.Stakeholder;
 import com.evatool.impact.persistence.repository.StakeholderRepository;
 import com.evatool.impact.service.api.rest.StakeholderRestService;
 import com.evatool.impact.service.impl.EntityNotFoundException;
+import com.evatool.impact.util.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,40 +18,31 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
     private StakeholderRepository stakeholderRepository;
 
     @Override
-    public StakeholderDto getStakeholderById(String id) throws EntityNotFoundException {
-        var stakeholderMapper = new StakeholderMapper();
+    public Stakeholder getStakeholderById(String id) throws EntityNotFoundException {
         var stakeholder = stakeholderRepository.findById(id).orElse(null);
         if (stakeholder == null) {
             throw new EntityNotFoundException(String.format("Stakeholder with id '%s' not found.", id));
         }
-        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
-        return stakeholderDto;
+        return stakeholder;
     }
 
     @Override
-    public List<StakeholderDto> getAllStakeholders() {
-        var stakeholderMapper = new StakeholderMapper();
+    public List<Stakeholder> getAllStakeholders() {
         var stakeholders = stakeholderRepository.findAll();
-        var stakeholderDtos = new ArrayList<StakeholderDto>();
-        stakeholders.forEach(s -> stakeholderDtos.add(stakeholderMapper.toDto(s)));
-        return stakeholderDtos;
+        return Convert.iterableToList(stakeholders);
     }
 
     @Override
-    public StakeholderDto insertStakeholder(StakeholderDto stakeholderDto) {
-        var stakeholderMapper = new StakeholderMapper();
-        var stakeholder = stakeholderMapper.fromDto(stakeholderDto);
-        return stakeholderMapper.toDto(stakeholderRepository.save(stakeholder));
+    public Stakeholder insertStakeholder(Stakeholder stakeholder) {
+        return stakeholderRepository.save(stakeholder);
     }
 
     @Override
-    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto) throws EntityNotFoundException {
-        var stakeholderMapper = new StakeholderMapper();
-        var stakeholder = stakeholderMapper.fromDto(stakeholderDto);
+    public Stakeholder updateStakeholder(Stakeholder stakeholder) throws EntityNotFoundException {
         if (stakeholder.getId() == null) {
             throw new EntityNotFoundException(String.format("Stakeholder with id '%s' not found.", stakeholder.getId()));
         }
-        return stakeholderMapper.toDto(stakeholderRepository.save(stakeholder));
+        return stakeholderRepository.save(stakeholder);
     }
 
     @Override
