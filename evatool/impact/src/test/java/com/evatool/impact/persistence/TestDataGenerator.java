@@ -1,6 +1,8 @@
 package com.evatool.impact.persistence;
 
+import com.evatool.impact.common.dto.DimensionDto;
 import com.evatool.impact.common.dto.ImpactDto;
+import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.persistence.entity.*;
 
 import java.util.UUID;
@@ -25,6 +27,32 @@ public class TestDataGenerator {
 
     public static Analysis getAnalysis() {
         return new Analysis();
+    }
+
+    public static DimensionDto getDimensionDto() {
+        var dimensionDto = new DimensionDto();
+
+        dimensionDto.setName("name");
+        dimensionDto.setDescription("description");
+
+        return dimensionDto;
+    }
+
+    public static StakeholderDto getStakeholderDto() {
+        var stakeholderDto = new StakeholderDto();
+
+        stakeholderDto.setName("name");
+
+        return stakeholderDto;
+    }
+
+    public static ImpactDto getImpactDto() {
+        var impactDto = new ImpactDto();
+
+        impactDto.setValue(0.0);
+        impactDto.setDescription("description");
+
+        return impactDto;
     }
 
 }

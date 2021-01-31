@@ -1,13 +1,15 @@
 package com.evatool.impact.common.mapper;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.persistence.TestDataGenerator.getStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StakeholderMapperTest {
     @Test
-    public void testStakeholderDto_NewStakeholderDto_EqualsStakeholder() {
+    public void testToDot_NewStakeholder_EqualsStakeholderDto() {
         // given
         var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
@@ -16,22 +18,19 @@ public class StakeholderMapperTest {
         var stakeholderDto = stakeholderMapper.toDto(stakeholder);
 
         // then
-        assertThat(stakeholderDto.getId()).isEqualTo(stakeholder.getId());
-        assertThat(stakeholderDto.getName()).isEqualTo(stakeholder.getName());
+        assertThat(new ReflectionEquals(stakeholder).matches(stakeholderDto));
     }
 
     @Test
-    public void testStakeholderDto_NewStakeholder_EqualsStakeholderDto() {
+    public void testFromDto_NewStakeholderDto_EqualsStakeholder() {
         // given
         var stakeholderMapper = new StakeholderMapper();
-        var stakeholder = getStakeholder();
+        var stakeholderDto = getStakeholderDto();
 
         // when
-        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
-        stakeholder = stakeholderMapper.fromDto(stakeholderDto);
+        var stakeholder = stakeholderMapper.fromDto(stakeholderDto);
 
         // then
-        assertThat(stakeholder.getId()).isEqualTo(stakeholderDto.getId());
-        assertThat(stakeholder.getName()).isEqualTo(stakeholderDto.getName());
+        assertThat(new ReflectionEquals(stakeholderDto).matches(stakeholder));
     }
 }
