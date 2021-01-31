@@ -38,18 +38,13 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
 
     @Override
     public Stakeholder updateStakeholder(Stakeholder stakeholder) throws EntityNotFoundException {
-        if (stakeholder.getId() == null) {
-            throw new EntityNotFoundException(String.format("Stakeholder with id '%s' not found.", stakeholder.getId()));
-        }
+        getStakeholderById(stakeholder.getId());
         return stakeholderRepository.save(stakeholder);
     }
 
     @Override
     public void deleteStakeholderById(String id) throws EntityNotFoundException {
-        var stakeholder = stakeholderRepository.findById(id).orElse(null);
-        if (stakeholder == null) {
-            throw new EntityNotFoundException(String.format("Stakeholder with id '%s' not found.", stakeholder.getId()));
-        }
+        var stakeholder = this.getStakeholderById(id);
         stakeholderRepository.delete(stakeholder);
     }
 }
