@@ -1,5 +1,6 @@
 package com.evatool.impact.common.controller.rest;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.common.mapper.StakeholderMapper;
 import org.junit.jupiter.api.Test;
@@ -8,17 +9,18 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.UUID;
 
-import static com.evatool.impact.persistence.TestDataGenerator.getEmptyStakeholderDto;
-import static com.evatool.impact.persistence.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.persistence.TestDataGenerator.*;
+import static com.evatool.impact.persistence.TestDataGenerator.getStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -135,6 +137,7 @@ public class StakeholderRestControllerTest {
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void testInsertStakeholder_InsertDuplicateStakeholder_AllowDuplicateInsert() {
         // given
         var stakeholder = getStakeholder();
@@ -152,8 +155,13 @@ public class StakeholderRestControllerTest {
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getBody().getId()).isEqualTo(responseEntityDuplicate.getBody().getId());
+
+        var getResponse = testRestTemplate.getForEntity("/api/stakeholders", StakeholderDto[].class);
+        var stakeholders = getResponse.getBody();
+        assertThat(stakeholders.length).isEqualTo(1);
     }
 
+    // TODO: Change code in rest controller to return bad request?
     @Test
     public void testInsertStakeholder_InsertNull_ReturnHttpStatusUnsupportedMediaType() {
         // given
@@ -167,8 +175,6 @@ public class StakeholderRestControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
 
-    // TODO: Ask if this kind of error handling is too overkill? Just make everything nullable? Introduce EntityPropertyViolationException? (InternalServerError should not be raised...)
-    // Internal server error due to not null check in Stakeholder.setName method.
     @Test
     public void testInsertStakeholder_InsertStakeholderWithNullName_ReturnHttpStatusInternalServerError() {
         // given
@@ -179,7 +185,7 @@ public class StakeholderRestControllerTest {
         var responseEntity = testRestTemplate.postForEntity("/api/stakeholder", httpEntity, StakeholderDto.class);
 
         // then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
@@ -210,39 +216,112 @@ public class StakeholderRestControllerTest {
         assertThat(getResponse.getBody().getName()).isEqualTo(updatedStakeholder.getName());
     }
 
-    // TODO: Update non existing id.
     @Test
-    public void testUpdateStakeholder_UpdateNonExistingId_A() {
+    public void testUpdateStakeholder_UpdateNonExistingId_ReturnHttpStatusNotFound() {
+        // given
+        var stakeholder = getStakeholder();
+        stakeholder.setId(UUID.randomUUID().toString());
+        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
+        var httpEntity = new HttpEntity<>(stakeholderDto);
 
+        // when
+        var putResponse = testRestTemplate.exchange(
+                "/api/stakeholder/" + stakeholder.getId(), HttpMethod.PUT, httpEntity, StakeholderDto.class);
+
+        // then
+        assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
-    // TODO: Test when updating id null
     @Test
-    public void testUpdateStakeholder_UpdateNullId_A() {
+    public void testUpdateStakeholder_UpdateNullId_ReturnHttpStatusBadRequest() {
+        // given
+        var stakeholder = getStakeholder();
+        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
+        var httpEntity = new HttpEntity<>(stakeholderDto);
 
+        // when
+        var putResponse = testRestTemplate.exchange(
+                "/api/stakeholder/" + stakeholder.getId(), HttpMethod.PUT, httpEntity, StakeholderDto.class);
+
+        // then
+        assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
-    // TODO: Test when updating name null
     @Test
-    public void testUpdateStakeholder_UpdateNullName_A() {
+    public void testUpdateStakeholder_UpdateNullName_ReturnHttpStatusBadRequest() {
+        // given
+        var stakeholder = getStakeholder();
+        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
+        var httpEntity = new HttpEntity<>(stakeholderDto);
+        var postResponse = testRestTemplate.postForEntity("/api/stakeholder", httpEntity, StakeholderDto.class);
 
+        // when
+        var updatedStakeholder = stakeholderMapper.fromDto(postResponse.getBody());
+        var updatedStakeholderDto = stakeholderMapper.toDto(updatedStakeholder);
+        updatedStakeholderDto.setName(null);
+        var putEntity = new HttpEntity<>(updatedStakeholderDto);
+        var putResponse = testRestTemplate.exchange(
+                "/api/stakeholder/" + postResponse.getBody().getId(), HttpMethod.PUT, putEntity, StakeholderDto.class);
+        var getResponse = testRestTemplate.getForEntity(
+                "/api/stakeholder/" + postResponse.getBody().getId(), StakeholderDto.class);
+
+        // then
+        assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
-    // TODO: Test delete
     @Test
-    public void testDeleteStakeholder_ExistingStakeholder_DeleteStakeholder() {
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    public void testDeleteStakeholder_ExistingStakeholder_DeleteStakeholderAndReturnHttpStatusOK() {
+        // given
+        var stakeholder = getStakeholder();
+        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
+        var insertEntity = new HttpEntity<>(stakeholderDto);
+        var insertEntityResponse = testRestTemplate.postForEntity("/api/stakeholder", insertEntity, StakeholderDto.class);
 
+        // when
+        var insertedStakeholderDto = insertEntityResponse.getBody();
+        var deleteEntity = new HttpEntity<>(insertedStakeholderDto);
+        var deleteEntityResponse = testRestTemplate.exchange(
+                "/api/stakeholder/" + insertedStakeholderDto.getId(), HttpMethod.DELETE, deleteEntity, Void.class);
+
+        // then
+        assertThat(deleteEntityResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        var getResponse = testRestTemplate.getForEntity("/api/stakeholders", StakeholderDto[].class);
+        var stakeholders = getResponse.getBody();
+        assertThat(stakeholders.length).isEqualTo(0);
     }
 
-    // TODO: Test delete when id does not exist
     @Test
-    public void testDeleteStakeholder_DeleteNonExistingId_A() {
+    public void testDeleteStakeholder_DeleteNonExistingId_ReturnHttpStatusNotFound() {
+        // given
+        var stakeholderDto = getStakeholderDto();
+        stakeholderDto.setId(UUID.randomUUID().toString());
 
+        // when
+        var httpEntity = new HttpEntity<>(stakeholderDto);
+        var responseEntity = testRestTemplate.exchange(
+                "/api/stakeholder/" + stakeholderDto.getId(), HttpMethod.DELETE, httpEntity, Void.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
-    // TODO: Test delete null id
     @Test
-    public void testDeleteStakeholder_DeleteNullId_A() {
+    public void testDeleteStakeholder_DeleteNullId_ReturnHttpStatusBadRequest() {
+        // given
+        var stakeholder = getStakeholder();
+        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
+        var httpEntity = new HttpEntity<>(stakeholderDto);
 
+        // when
+        var responseEntity = testRestTemplate.exchange(
+                "/api/stakeholder/" + stakeholder.getId(), HttpMethod.DELETE, httpEntity, Void.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
+
+    // TODO: Try to CRUD (all 4 operations) with a wrong Dto, e.g. DimensionDto.
+
 }

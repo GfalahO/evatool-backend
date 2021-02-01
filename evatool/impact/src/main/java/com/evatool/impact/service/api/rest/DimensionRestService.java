@@ -1,8 +1,7 @@
 package com.evatool.impact.service.api.rest;
 
 import com.evatool.impact.persistence.entity.Dimension;
-import com.evatool.impact.persistence.entity.Stakeholder;
-import com.evatool.impact.service.EntityNotFoundException;
+import com.evatool.impact.exception.EntityNotFoundException;
 
 import java.util.List;
 

@@ -2,8 +2,9 @@ package com.evatool.impact.common.controller.rest;
 
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.common.mapper.StakeholderMapper;
+import com.evatool.impact.exception.IdNullException;
 import com.evatool.impact.service.api.rest.StakeholderRestService;
-import com.evatool.impact.service.EntityNotFoundException;
+import com.evatool.impact.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class StakeholderRestController {
     private StakeholderMapper stakeholderMapper = new StakeholderMapper();
 
     @GetMapping("/stakeholder/{id}")
-    public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
         var stakeholder = stakeholderRestService.getStakeholderById(id);
         var stakeholderDto = stakeholderMapper.toDto(stakeholder);
         var responseEntity = new ResponseEntity<>(stakeholderDto, HttpStatus.OK);
@@ -47,7 +48,7 @@ public class StakeholderRestController {
     }
 
     @PutMapping("/stakeholder/{id}")
-    public ResponseEntity<StakeholderDto> updateStakeholder(@RequestBody StakeholderDto stakeholderDto) throws EntityNotFoundException {
+    public ResponseEntity<StakeholderDto> updateStakeholder(@RequestBody StakeholderDto stakeholderDto) throws EntityNotFoundException, IdNullException {
         var stakeholder = stakeholderMapper.fromDto(stakeholderDto);
         var updateStakeholder = stakeholderRestService.updateStakeholder(stakeholder);
         var updateStakeholderDto = stakeholderMapper.toDto(updateStakeholder);
@@ -56,7 +57,7 @@ public class StakeholderRestController {
     }
 
     @DeleteMapping("/stakeholder/{id}")
-    public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
         stakeholderRestService.deleteStakeholderById(id);
         return ResponseEntity.ok().build();
     }

@@ -2,8 +2,7 @@ package com.evatool.impact.service.impl.rest;
 
 import com.evatool.impact.persistence.entity.Dimension;
 import com.evatool.impact.persistence.repository.DimensionRepository;
-import com.evatool.impact.persistence.repository.StakeholderRepository;
-import com.evatool.impact.service.EntityNotFoundException;
+import com.evatool.impact.exception.EntityNotFoundException;
 import com.evatool.impact.service.api.rest.DimensionRestService;
 import com.evatool.impact.util.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
