@@ -1,5 +1,6 @@
 package com.evatool.impact.persistence.entity;
 
+import com.evatool.impact.exception.PropertyViolationException;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,9 +19,9 @@ public class SuperEntity {
     // Allowed transitions: null -> null and null -> valid.
     public void setId(String id) throws IllegalArgumentException {
         if (idExists()) {
-            throw new IllegalArgumentException("Existing id cannot be set.");
+            throw new PropertyViolationException("Existing id cannot be set.");
         } else if (id != null && !idIsValid(id)) {
-            throw new IllegalArgumentException("Id must be a valid UUID.");
+            throw new PropertyViolationException("Id must be a valid UUID.");
         }
         this.id = id;
     }

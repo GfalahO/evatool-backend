@@ -1,5 +1,6 @@
 package com.evatool.impact.persistence.entity;
 
+import com.evatool.impact.exception.PropertyViolationException;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -35,14 +36,14 @@ public class Dimension extends SuperEntity {
 
     public void setName(String name) throws IllegalArgumentException {
         if (name == null) {
-            throw new IllegalArgumentException("Name cannot be null.");
+            throw new PropertyViolationException("Name cannot be null.");
         }
         this.name = name;
     }
 
     public void setDescription(String description) throws IllegalArgumentException {
         if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null.");
+            throw new PropertyViolationException("Description cannot be null.");
         }
         this.description = description;
     }

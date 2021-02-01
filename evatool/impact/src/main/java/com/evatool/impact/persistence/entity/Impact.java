@@ -1,5 +1,6 @@
 package com.evatool.impact.persistence.entity;
 
+import com.evatool.impact.exception.PropertyViolationException;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -48,31 +49,30 @@ public class Impact extends SuperEntity {
                 this.id, this.value, this.description, this.dimension, this.stakeholder, requirements.size());
     }
 
-
     public void setValue(double value) {
         if (value < -1.0 || value > 1.0) {
-            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+            throw new PropertyViolationException("Value must be in range [-1, 1]");
         }
         this.value = value;
     }
 
     public void setDescription(String description) {
         if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null.");
+            throw new PropertyViolationException("Description cannot be null.");
         }
         this.description = description;
     }
 
     public void setDimension(Dimension dimension) {
         if (dimension == null) {
-            throw new IllegalArgumentException("Dimension cannot be null.");
+            throw new PropertyViolationException("Dimension cannot be null.");
         }
         this.dimension = dimension;
     }
 
     public void setStakeholder(Stakeholder stakeholder) {
         if (stakeholder == null) {
-            throw new IllegalArgumentException("Stakeholder cannot be null.");
+            throw new PropertyViolationException("Stakeholder cannot be null.");
         }
         this.stakeholder = stakeholder;
     }

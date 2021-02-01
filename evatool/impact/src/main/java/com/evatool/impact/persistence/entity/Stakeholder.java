@@ -1,5 +1,6 @@
 package com.evatool.impact.persistence.entity;
 
+import com.evatool.impact.exception.PropertyViolationException;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -36,7 +37,7 @@ public class Stakeholder extends SuperEntity {
 
     public void setName(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Name cannot be null.");
+            throw new PropertyViolationException("Name cannot be null.");
         }
         this.name = name;
     }
