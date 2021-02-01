@@ -1,5 +1,6 @@
 package com.evatool.impact.persistence.entity;
 
+import com.evatool.impact.exception.PropertyViolationException;
 import com.evatool.impact.persistence.TestDataGenerator;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +30,7 @@ public class SuperEntityTest {
         superEntity.setId(UUID.randomUUID().toString());
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> superEntity.setId(null));
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(null));
     }
 
     @Test
@@ -40,7 +41,7 @@ public class SuperEntityTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> superEntity.setId("not uuid"));
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId("not uuid"));
     }
 
     @Test
@@ -52,7 +53,7 @@ public class SuperEntityTest {
         superEntity.setId(UUID.randomUUID().toString());
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> superEntity.setId(UUID.randomUUID().toString()));
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(UUID.randomUUID().toString()));
     }
 
     @Test
