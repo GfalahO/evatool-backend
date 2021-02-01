@@ -1,4 +1,4 @@
 package com.evatool.impact.service.api.rest;
 
-public class DimensionRestServiceMockTest {
+public class ImpactRestServiceTest {
 }
