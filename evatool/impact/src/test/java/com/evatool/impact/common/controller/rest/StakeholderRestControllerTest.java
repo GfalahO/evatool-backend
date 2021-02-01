@@ -30,6 +30,8 @@ public class StakeholderRestControllerTest {
 
     private StakeholderMapper stakeholderMapper = new StakeholderMapper();
 
+    //region getStakeholderById
+
     // TODO: Are these kind of tests using an .sql file too tedious?
     @Test
     @Sql("/StakeholderRestControllerTest/Insert.sql")
@@ -76,6 +78,10 @@ public class StakeholderRestControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
+    //endregion
+
+    //region getStakeholders
+
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void testGetStakeholders_ExistingStakeholder_ReturnStakeholder() {
@@ -119,6 +125,10 @@ public class StakeholderRestControllerTest {
         assertThat(stakeholderDtos.length).isEqualTo(postResponseList.size());
     }
 
+    //endregion
+
+    //region insertStakeholder
+
     @Test
     public void testInsertStakeholder_InsertStakeholder_ReturnInsertedStakeholder() {
         // given
@@ -148,20 +158,21 @@ public class StakeholderRestControllerTest {
         var responseEntity = testRestTemplate.postForEntity("/api/stakeholder", httpEntity, StakeholderDto.class);
 
         var stakeholderDtoDuplicate = responseEntity.getBody();
-        var httpEntityDuplicate = new HttpEntity<>(stakeholderDto);
+        var httpEntityDuplicate = new HttpEntity<>(stakeholderDtoDuplicate);
         var responseEntityDuplicate = testRestTemplate.postForEntity(
-                "/api/stakeholder", stakeholderDtoDuplicate, StakeholderDto.class);
+                "/api/stakeholder", httpEntityDuplicate, StakeholderDto.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getBody().getId()).isEqualTo(responseEntityDuplicate.getBody().getId());
+        assertThat(responseEntity.getBody().getName()).isEqualTo(responseEntityDuplicate.getBody().getName());
 
         var getResponse = testRestTemplate.getForEntity("/api/stakeholders", StakeholderDto[].class);
         var stakeholders = getResponse.getBody();
         assertThat(stakeholders.length).isEqualTo(1);
     }
 
-    // TODO: Change code in rest controller to return bad request?
+    // TODO: Change code base to return bad request?
     @Test
     public void testInsertStakeholder_InsertNull_ReturnHttpStatusUnsupportedMediaType() {
         // given
@@ -187,6 +198,10 @@ public class StakeholderRestControllerTest {
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
+
+    //endregion
+
+    //region updateStakeholder
 
     @Test
     public void testUpdateStakeholder_InsertedStakeholder_ReturnUpdatedStakeholder() {
@@ -262,8 +277,6 @@ public class StakeholderRestControllerTest {
         var putEntity = new HttpEntity<>(updatedStakeholderDto);
         var putResponse = testRestTemplate.exchange(
                 "/api/stakeholder/" + postResponse.getBody().getId(), HttpMethod.PUT, putEntity, StakeholderDto.class);
-        var getResponse = testRestTemplate.getForEntity(
-                "/api/stakeholder/" + postResponse.getBody().getId(), StakeholderDto.class);
 
         // then
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -271,6 +284,10 @@ public class StakeholderRestControllerTest {
 
     // TODO: Update null dto with non-existing id
     // TODO: Update null dto with existing id
+
+    //endregion
+
+    //region deleteStakeholder
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
@@ -325,7 +342,10 @@ public class StakeholderRestControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
+    //endregion
+
     // TODO: Try to CRUD (all 4 operations) with a wrong Dto, e.g. DimensionDto. What happens? Insert with Dto copy class with one field missing.
+    // TODO: Send invalid/malignant requests and see what happens -> then make code resistant and write tests.
 
     // TODO: Create static error message provider and check errorMessage responses in tests.
     @Test
