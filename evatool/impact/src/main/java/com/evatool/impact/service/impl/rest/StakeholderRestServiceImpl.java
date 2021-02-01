@@ -1,5 +1,6 @@
 package com.evatool.impact.service.impl.rest;
 
+import com.evatool.impact.exception.EntityNullException;
 import com.evatool.impact.persistence.entity.Stakeholder;
 import com.evatool.impact.persistence.repository.StakeholderRepository;
 import com.evatool.impact.exception.IdNullException;
@@ -16,7 +17,6 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
     @Autowired
     private StakeholderRepository stakeholderRepository;
 
-    // TODO: Move error handling one layer down to repository?
     @Override
     public Stakeholder getStakeholderById(String id) throws EntityNotFoundException, IdNullException {
         if (id == null || id.equals("null")) { // DELETE Rest call requires id.equals.
@@ -38,11 +38,17 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
 
     @Override
     public Stakeholder insertStakeholder(Stakeholder stakeholder) {
+        if (stakeholder == null) {
+            throw new EntityNullException(Stakeholder.class);
+        }
         return stakeholderRepository.save(stakeholder);
     }
 
     @Override
     public Stakeholder updateStakeholder(Stakeholder stakeholder) throws EntityNotFoundException, IdNullException {
+        if (stakeholder == null) {
+            throw new EntityNullException(Stakeholder.class);
+        }
         getStakeholderById(stakeholder.getId());
         return stakeholderRepository.save(stakeholder);
     }
