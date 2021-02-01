@@ -1,8 +1,8 @@
 package com.evatool.impact.common.controller.rest;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.common.mapper.StakeholderMapper;
+import com.evatool.impact.exception.handle.ErrorMessage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -176,7 +176,7 @@ public class StakeholderRestControllerTest {
     }
 
     @Test
-    public void testInsertStakeholder_InsertStakeholderWithNullName_ReturnHttpStatusInternalServerError() {
+    public void testInsertStakeholder_InsertStakeholderWithNullName_ReturnHttpStatusBadRequest() {
         // given
         StakeholderDto stakeholderDto = getEmptyStakeholderDto();
 
@@ -269,6 +269,9 @@ public class StakeholderRestControllerTest {
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
+    // TODO: Update null dto with non-existing id
+    // TODO: Update null dto with existing id
+
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void testDeleteStakeholder_ExistingStakeholder_DeleteStakeholderAndReturnHttpStatusOK() {
@@ -322,6 +325,24 @@ public class StakeholderRestControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
-    // TODO: Try to CRUD (all 4 operations) with a wrong Dto, e.g. DimensionDto.
+    // TODO: Try to CRUD (all 4 operations) with a wrong Dto, e.g. DimensionDto. What happens? Insert with Dto copy class with one field missing.
 
+    // TODO: Create static error message provider and check errorMessage responses in tests.
+    @Test
+    public void testInspect() {
+        // given
+        var responseEntity = testRestTemplate.getForEntity("/api/stakeholder/wrong_id", ErrorMessage.class);
+
+        // when
+        var ex = responseEntity.getBody();
+        System.out.println(ex.getTimestamp());
+        System.out.println(ex.getMessage());
+        System.out.println(ex.getDetails());
+        System.out.println(ex.getPath());
+
+        System.out.println(ex.getClass().getSimpleName());
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
 }

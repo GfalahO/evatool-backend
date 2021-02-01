@@ -19,7 +19,7 @@ public class DimensionRestServiceImpl implements DimensionRestService {
     public Dimension getDimensionById(String id) throws EntityNotFoundException {
         var dimension = dimensionRepository.findById(id).orElse(null);
         if (dimension == null) {
-            throw new EntityNotFoundException(String.format("Dimension with id '%s' not found.", id));
+            throw new EntityNotFoundException(Dimension.class, id);
         }
         return dimension;
     }
@@ -38,7 +38,7 @@ public class DimensionRestServiceImpl implements DimensionRestService {
     @Override
     public Dimension updateDimension(Dimension dimension) throws EntityNotFoundException {
         if (dimension.getId() == null) {
-            throw new EntityNotFoundException(String.format("Dimension with id '%s' not found.", dimension.getId()));
+            throw new EntityNotFoundException(Dimension.class, dimension.getId());
         }
         return dimensionRepository.save(dimension);
     }
@@ -47,7 +47,7 @@ public class DimensionRestServiceImpl implements DimensionRestService {
     public void deleteDimensionById(String id) throws EntityNotFoundException {
         var dimension = dimensionRepository.findById(id).orElse(null);
         if (dimension == null) {
-            throw new EntityNotFoundException(String.format("Dimension with id '%s' not found.", dimension.getId()));
+            throw new EntityNotFoundException(Dimension.class, id);
         }
         dimensionRepository.delete(dimension);
     }

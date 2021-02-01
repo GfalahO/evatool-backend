@@ -16,15 +16,16 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
     @Autowired
     private StakeholderRepository stakeholderRepository;
 
+    // TODO: Move error handling one layer down to repository?
     @Override
     public Stakeholder getStakeholderById(String id) throws EntityNotFoundException, IdNullException {
         if (id == null || id.equals("null")) { // DELETE Rest call requires id.equals.
-            throw new IdNullException("Stakeholder with null id cannot exist.");
+            throw new IdNullException(Stakeholder.class);
         }
-        // TODO: Throw new exception: IdNotValidUUIDException?
+        // TODO: Throw new exception: IdInvalidException?
         var stakeholder = stakeholderRepository.findById(id).orElse(null);
         if (stakeholder == null) {
-            throw new EntityNotFoundException(String.format("Stakeholder with id '%s' not found.", id));
+            throw new EntityNotFoundException(Stakeholder.class, id);
         }
         return stakeholder;
     }
