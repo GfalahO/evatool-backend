@@ -30,7 +30,7 @@ public class StakeholderRestControllerTest {
 
     private StakeholderMapper stakeholderMapper = new StakeholderMapper();
 
-    //region getStakeholderById
+    //region getById
 
     // TODO: Are these kind of tests using an .sql file too tedious?
     @Test
@@ -80,7 +80,7 @@ public class StakeholderRestControllerTest {
 
     //endregion
 
-    //region getStakeholders
+    //region getAll
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
@@ -127,7 +127,7 @@ public class StakeholderRestControllerTest {
 
     //endregion
 
-    //region insertStakeholder
+    //region insert
 
     @Test
     public void testInsertStakeholder_InsertStakeholder_ReturnInsertedStakeholder() {
@@ -201,7 +201,7 @@ public class StakeholderRestControllerTest {
 
     //endregion
 
-    //region updateStakeholder
+    //region update
 
     @Test
     public void testUpdateStakeholder_InsertedStakeholder_ReturnUpdatedStakeholder() {
@@ -287,7 +287,7 @@ public class StakeholderRestControllerTest {
 
     //endregion
 
-    //region deleteStakeholder
+    //region delete
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)

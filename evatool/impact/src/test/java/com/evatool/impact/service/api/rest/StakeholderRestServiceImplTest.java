@@ -33,7 +33,7 @@ public class StakeholderRestServiceImplTest {
     @Autowired
     private StakeholderRestService stakeholderRestService;
 
-    //region getStakeholderById
+    //region getById
 
     @Test
     public void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
@@ -60,7 +60,7 @@ public class StakeholderRestServiceImplTest {
 
     //endregion
 
-    //region getAllStakeholders
+    //region getAll
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
@@ -95,7 +95,7 @@ public class StakeholderRestServiceImplTest {
 
     //endregion
 
-    //region insertStakeholder
+    //region insert
 
     @Test
     public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws IdNullException, EntityNotFoundException {
@@ -144,7 +144,7 @@ public class StakeholderRestServiceImplTest {
 
     //endregion
 
-    //region updateStakeholder
+    //region update
 
     @Test
     public void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws IdNullException, EntityNotFoundException {
@@ -188,7 +188,7 @@ public class StakeholderRestServiceImplTest {
 
     //endregion
 
-    //region deleteStakeholderById
+    //region delete
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
