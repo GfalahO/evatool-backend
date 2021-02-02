@@ -70,12 +70,15 @@ public class StakeholderRestControllerTest {
     @Test
     public void testGetStakeholderById_NoExistingStakeholder_ReturnHttpStatusNotFound() {
         // given
-        var responseEntity = testRestTemplate.getForEntity("/api/stakeholder/wrong_id", StakeholderDto.class);
+        //var responseEntity = testRestTemplate.getForEntity("/api/stakeholder/wrong_id", StakeholderDto.class);
+        var responseEntity = testRestTemplate.getForEntity("/api/stakeholder/wrong_id", ErrorMessage.class);
 
         // when
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(responseEntity.getBody().getMessage()).isNotNull();
+        // TODO: Check ErrorMessage validity (for all non-successful http status tests)
     }
 
     //endregion
@@ -379,6 +382,7 @@ public class StakeholderRestControllerTest {
     //endregion
 
     // TODO: Try to CRUD (all 4 operations) with a wrong Dto, e.g. DimensionDto. What happens? Insert with Dto copy class with one field missing.
+
     // TODO: Send invalid/malignant requests and see what happens -> then make code resistant and write tests.
 
     // TODO: Create static error message provider and check errorMessage responses in tests.
