@@ -41,4 +41,14 @@ public class ErrorMessage {
         this(message, details);
         this.path = path;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s[timestamp=%s, message=%s, details=%s, path=%s]",
+                this.getClass().getSimpleName(),
+                this.getTimestamp().toString(),
+                this.message,
+                this.details,
+                this.path);
+    }
 }
