@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class DimensionDto {
-
     @Getter
     @Setter
     private String id;

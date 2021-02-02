@@ -38,9 +38,6 @@ public class StakeholderRestServiceTest {
     @MockBean
     private StakeholderRestService stakeholderRestService;
 
-    @Autowired
-    private StakeholderRestController stakeholderRestController;
-
     @Test
     public void testGetStakeholderById_ExistingStakeholder_ReturnStakeholder() throws Exception {
         // given
