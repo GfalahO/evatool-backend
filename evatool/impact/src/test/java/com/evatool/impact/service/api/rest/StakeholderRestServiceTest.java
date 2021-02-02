@@ -38,10 +38,11 @@ public class StakeholderRestServiceTest {
     @MockBean
     private StakeholderRestService stakeholderRestService;
 
+    private StakeholderMapper stakeholderMapper = new StakeholderMapper();
+
     @Test
     public void testGetStakeholderById_ExistingStakeholder_ReturnStakeholder() throws Exception {
         // given
-        var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
 
         // when
@@ -58,7 +59,6 @@ public class StakeholderRestServiceTest {
     @Test
     public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders() throws Exception {
         // given
-        var stakeholderMapper = new StakeholderMapper();
         var stakeholder1 = getStakeholder();
         var stakeholder2 = getStakeholder();
 
@@ -79,7 +79,6 @@ public class StakeholderRestServiceTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders(int value) throws Exception {
-        var stakeholderMapper = new StakeholderMapper();
         var allStakeholders = new ArrayList<Stakeholder>();
         for (int i = 0; i < value; i++) {
             // given
@@ -100,7 +99,6 @@ public class StakeholderRestServiceTest {
     @Test
     public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws Exception {
         // given
-        var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
         stakeholder.setId(UUID.randomUUID().toString());
 
@@ -120,7 +118,6 @@ public class StakeholderRestServiceTest {
     @Test
     public void testUpdateStakeholder() throws Exception {
         // given
-        var stakeholderMapper = new StakeholderMapper();
         var stakeholder = getStakeholder();
         stakeholder.setId(UUID.randomUUID().toString());
 
