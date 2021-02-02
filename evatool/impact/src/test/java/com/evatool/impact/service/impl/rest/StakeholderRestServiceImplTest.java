@@ -1,9 +1,10 @@
-package com.evatool.impact.service.api.rest;
+package com.evatool.impact.service.impl.rest;
 
 import com.evatool.impact.exception.EntityNotFoundException;
 import com.evatool.impact.exception.EntityNullException;
 import com.evatool.impact.exception.IdNullException;
 import com.evatool.impact.persistence.entity.Stakeholder;
+import com.evatool.impact.service.api.rest.StakeholderRestService;
 import com.evatool.impact.service.impl.rest.StakeholderRestServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
