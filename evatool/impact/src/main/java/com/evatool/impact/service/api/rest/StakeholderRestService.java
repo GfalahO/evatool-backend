@@ -11,7 +11,7 @@ public interface StakeholderRestService {
 
     public List<Stakeholder> getAllStakeholders();
 
-    public Stakeholder insertStakeholder(Stakeholder stakeholderDto); // TODO: Throw entity already exists exception?
+    public Stakeholder insertStakeholder(Stakeholder stakeholderDto);
 
     public Stakeholder updateStakeholder(Stakeholder stakeholderDto) throws EntityNotFoundException, IdNullException;
 

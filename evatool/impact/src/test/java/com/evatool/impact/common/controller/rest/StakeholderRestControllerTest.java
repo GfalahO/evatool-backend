@@ -145,7 +145,6 @@ public class StakeholderRestControllerTest {
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getBody().getId()).isNotNull();
-        UUID.fromString(responseEntity.getBody().getId());
         assertThat(responseEntity.getBody().getName()).isEqualTo(stakeholder.getName());
     }
 
