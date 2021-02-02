@@ -173,8 +173,9 @@ public class StakeholderRestControllerTest {
     }
 
     // TODO: Change code base to return bad request?
+    // Note: RestController code is not being executed. The error is automatically thrown.
     @Test
-    public void testInsertStakeholder_InsertNull_ReturnHttpStatusUnsupportedMediaType() {
+    public void testInsertStakeholder_InsertNullDto_ReturnHttpStatusUnsupportedMediaType() {
         // given
         StakeholderDto stakeholderDto = null;
 
@@ -282,8 +283,41 @@ public class StakeholderRestControllerTest {
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
-    // TODO: Update null dto with non-existing id
-    // TODO: Update null dto with existing id
+    // TODO: Use custom NullDtoException? (for the next two tests)
+    // Note: sending a null DTO will automatically result in a bad request. This error is thrown before the controller code executes.
+    @Test
+    public void testUpdateStakeholder_UpdateNullDtoIntoExistingId_ReturnHttpStatusBadRequest() {
+        // given
+        var stakeholder = getStakeholder();
+        var stakeholderDto = stakeholderMapper.toDto(stakeholder);
+        var httpEntity = new HttpEntity<>(stakeholderDto);
+        var postResponse = testRestTemplate.postForEntity("/api/stakeholder", httpEntity, StakeholderDto.class);
+
+        // when
+        var updatedStakeholder = stakeholderMapper.fromDto(postResponse.getBody());
+        var updatedStakeholderDto = stakeholderMapper.toDto(updatedStakeholder);
+        updatedStakeholderDto = null;
+        var putEntity = new HttpEntity<>(updatedStakeholderDto);
+        var putResponse = testRestTemplate.exchange(
+                "/api/stakeholder/" + postResponse.getBody().getId(), HttpMethod.PUT, putEntity, ErrorMessage.class);
+
+        // then
+        assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void testUpdateStakeholder_UpdateNullDtoIntoNonExistingId_ReturnHttpStatusBadRequest() {
+        // given
+        StakeholderDto stakeholderDto = null;
+
+        // when
+        var putEntity = new HttpEntity<>(stakeholderDto);
+        var putResponse = testRestTemplate.exchange(
+                "/api/stakeholder/" + UUID.randomUUID().toString(), HttpMethod.PUT, putEntity, StakeholderDto.class);
+
+        // then
+        assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
 
     //endregion
 
