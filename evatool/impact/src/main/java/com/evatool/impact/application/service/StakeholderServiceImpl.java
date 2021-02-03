@@ -20,7 +20,6 @@ public class StakeholderServiceImpl implements StakeholderService {
 
     @Override
     public Stakeholder findStakeholderById(String id) throws EntityNotFoundException, IdNullException {
-        // TODO [hbuhl] id.equals("null"): id is not really null in this case
         if (id == null || id.equals("null")) { // DELETE Rest call requires id.equals.
             throw new IdNullException(Stakeholder.class);
         }
