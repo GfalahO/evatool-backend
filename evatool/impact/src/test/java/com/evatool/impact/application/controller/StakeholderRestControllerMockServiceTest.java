@@ -1,6 +1,7 @@
-package com.evatool.impact.application.service;
+package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.controller.StakeholderRestController;
+import com.evatool.impact.application.service.StakeholderService;
 import com.evatool.impact.domain.entity.Stakeholder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(StakeholderRestController.class)
-public class StakeholderServiceTest {
+public class StakeholderRestControllerMockServiceTest {
     @Autowired
     private MockMvc mvc;
 

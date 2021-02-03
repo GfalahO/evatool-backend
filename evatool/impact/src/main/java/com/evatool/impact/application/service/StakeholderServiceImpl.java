@@ -4,6 +4,7 @@ import com.evatool.impact.common.Convert;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityNullException;
 import com.evatool.impact.common.exception.IdNullException;
+import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Stakeholder;
 import com.evatool.impact.domain.repository.StakeholderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,12 @@ public class StakeholderServiceImpl implements StakeholderService {
         if (id == null || id.equals("null")) { // DELETE Rest call requires id.equals.
             throw new IdNullException(Stakeholder.class);
         }
-        // TODO [hbuhl] use Optional in right way (see Example: DimensionServiceImpl.getDimensionById(...))
-        var stakeholder = stakeholderRepository.findById(id).orElse(null);
-        if (stakeholder == null) {
+
+        var stakeholder = stakeholderRepository.findById(id);
+        if (stakeholder.isEmpty()) {
             throw new EntityNotFoundException(Stakeholder.class, id);
         }
-        return stakeholder;
+        return stakeholder.get();
     }
 
     @Override

@@ -16,12 +16,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class StakeholderDeletedEventMockTest {
+public class StakeholderUpdatedEventMockListenerTest {
     @Autowired
-    private StakeholderDeletedEventPublisher stakeholderDeletedEventPublisher;
+    private StakeholderUpdatedEventPublisher stakeholderUpdatedEventPublisher;
 
     @MockBean
-    private StakeholderDeletedEventListener stakeholderDeletedEventListener;
+    private StakeholderUpdatedEventListener stakeholderUpdatedEventListener;
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
@@ -32,11 +32,11 @@ public class StakeholderDeletedEventMockTest {
         var stakeholder = getStakeholder();
 
         // when
-        stakeholderDeletedEventPublisher.onStakeholderDeleted(stakeholder);
+        stakeholderUpdatedEventPublisher.onStakeholderUpdated(stakeholder);
         Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
 
         // then
-        verify(stakeholderDeletedEventListener, times(1)).onApplicationEvent(any(StakeholderDeletedEvent.class));
+        verify(stakeholderUpdatedEventListener, times(1)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
     }
 
     @ParameterizedTest
@@ -47,12 +47,12 @@ public class StakeholderDeletedEventMockTest {
             var stakeholder = getStakeholder();
 
             // when
-            stakeholderDeletedEventPublisher.onStakeholderDeleted(stakeholder);
+            stakeholderUpdatedEventPublisher.onStakeholderUpdated(stakeholder);
         }
         Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
 
         // then
-        verify(stakeholderDeletedEventListener, times(value)).onApplicationEvent(any(StakeholderDeletedEvent.class));
+        verify(stakeholderUpdatedEventListener, times(value)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
     }
 
     @Test
@@ -65,6 +65,6 @@ public class StakeholderDeletedEventMockTest {
         Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
 
         // then
-        verify(stakeholderDeletedEventListener, times(0)).onApplicationEvent(any(StakeholderDeletedEvent.class));
+        verify(stakeholderUpdatedEventListener, times(0)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
     }
 }

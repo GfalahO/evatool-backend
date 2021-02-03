@@ -16,12 +16,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-public class StakeholderUpdatedEventMockTest {
+public class StakeholderInsertedEventMockListenerTest {
     @Autowired
-    private StakeholderUpdatedEventPublisher stakeholderUpdatedEventPublisher;
+    private StakeholderInsertedEventPublisher stakeholderInsertedEventPublisher;
 
     @MockBean
-    private StakeholderUpdatedEventListener stakeholderUpdatedEventListener;
+    private StakeholderInsertedEventListener stakeholderInsertedEventListener;
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
@@ -32,11 +32,11 @@ public class StakeholderUpdatedEventMockTest {
         var stakeholder = getStakeholder();
 
         // when
-        stakeholderUpdatedEventPublisher.onStakeholderUpdated(stakeholder);
+        stakeholderInsertedEventPublisher.onStakeholderInserted(stakeholder);
         Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
 
         // then
-        verify(stakeholderUpdatedEventListener, times(1)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
+        verify(stakeholderInsertedEventListener, times(1)).onApplicationEvent(any(StakeholderInsertedEvent.class));
     }
 
     @ParameterizedTest
@@ -47,12 +47,12 @@ public class StakeholderUpdatedEventMockTest {
             var stakeholder = getStakeholder();
 
             // when
-            stakeholderUpdatedEventPublisher.onStakeholderUpdated(stakeholder);
+            stakeholderInsertedEventPublisher.onStakeholderInserted(stakeholder);
         }
         Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
 
         // then
-        verify(stakeholderUpdatedEventListener, times(value)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
+        verify(stakeholderInsertedEventListener, times(value)).onApplicationEvent(any(StakeholderInsertedEvent.class));
     }
 
     @Test
@@ -65,6 +65,6 @@ public class StakeholderUpdatedEventMockTest {
         Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
 
         // then
-        verify(stakeholderUpdatedEventListener, times(0)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
+        verify(stakeholderInsertedEventListener, times(0)).onApplicationEvent(any(StakeholderInsertedEvent.class));
     }
 }
