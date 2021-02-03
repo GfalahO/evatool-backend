@@ -44,11 +44,11 @@ public class ErrorMessage {
 
     @Override
     public String toString() {
-        return String.format("%s[timestamp=%s, message=%s, details=%s, path=%s]",
-                this.getClass().getSimpleName(),
-                this.getTimestamp().toString(),
-                this.message,
-                this.details,
-                this.path);
+        return "ErrorMessage{" +
+                "timestamp=" + timestamp +
+                ", message='" + message + '\'' +
+                ", details='" + details + '\'' +
+                ", path='" + path + '\'' +
+                '}';
     }
 }

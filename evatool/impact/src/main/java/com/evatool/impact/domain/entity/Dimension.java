@@ -29,9 +29,11 @@ public class Dimension extends SuperEntity {
 
     @Override
     public String toString() {
-        return String.format(
-                "Dimension[id=%s, name=%s, description=%s]",
-                this.id, this.name, this.description);
+        return "Dimension{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", id='" + id + '\'' +
+                '}';
     }
 
     public void setName(String name) throws IllegalArgumentException {

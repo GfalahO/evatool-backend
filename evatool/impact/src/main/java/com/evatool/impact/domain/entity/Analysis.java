@@ -9,14 +9,7 @@ import java.util.List;
 
 @Entity(name = "ANALYSIS")
 @Table(name = "ANALYSIS")
-public class Analysis {
-    @Getter
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "ID")
-    private String id;
-
+public class Analysis extends SuperEntity {
     @Getter
     @OneToMany
     private List<Impact> impacts = new ArrayList<>();
@@ -27,8 +20,9 @@ public class Analysis {
 
     @Override
     public String toString() {
-        return String.format(
-                "Project[id=%s, #impacts=%d]",
-                this.id, this.impacts.size());
+        return "Analysis{" +
+                "impacts=" + impacts +
+                ", id='" + id + '\'' +
+                '}';
     }
 }

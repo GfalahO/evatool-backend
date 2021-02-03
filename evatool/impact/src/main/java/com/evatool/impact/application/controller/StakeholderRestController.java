@@ -15,6 +15,7 @@ import java.util.List;
 import static com.evatool.impact.application.dto.mapper.StakeholderMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.StakeholderMapper.toDto;
 
+// TODO [hbuhl] API path conventions + path building (e.g. String in static class?) best practices
 @RestController
 @RequestMapping("/api")
 public class StakeholderRestController {

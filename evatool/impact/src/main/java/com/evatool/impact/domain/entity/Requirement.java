@@ -1,6 +1,7 @@
 package com.evatool.impact.domain.entity;
 
 import lombok.Getter;
+import net.bytebuddy.implementation.bind.annotation.Super;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,14 +10,7 @@ import java.util.List;
 
 @Entity(name = "REQUIREMENT")
 @Table(name = "REQUIREMENT")
-public class Requirement {
-    @Getter
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "ID")
-    private String id;
-
+public class Requirement extends SuperEntity {
     @Getter
     @ManyToMany
     private List<Impact> impacts = new ArrayList<>();
@@ -27,8 +21,9 @@ public class Requirement {
 
     @Override
     public String toString() {
-        return String.format(
-                "Requirement[id=%s, #impacts=%d]",
-                this.id, this.impacts.size());
+        return "Requirement{" +
+                "impacts=" + impacts +
+                ", id='" + id + '\'' +
+                '}';
     }
 }

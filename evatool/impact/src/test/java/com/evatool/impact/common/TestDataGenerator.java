@@ -5,6 +5,7 @@ import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.domain.entity.*;
 
+// TODO [hbuhl] Better testing data setup.
 public class TestDataGenerator {
     public static Dimension getDimension() {
         return new Dimension("dimension", "dimension");
