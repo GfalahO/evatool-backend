@@ -1,6 +1,5 @@
 package com.evatool.impact.common.controller.rest;
 
-import com.evatool.impact.common.dto.DimensionDto;
 import com.evatool.impact.common.dto.ImpactDto;
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.common.mapper.StakeholderMapper;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -24,11 +22,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.persistence.TestDataGenerator.*;
-import static com.evatool.impact.persistence.TestDataGenerator.getStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -97,8 +93,7 @@ public class StakeholderRestControllerTest {
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(responseEntity.getBody().getMessage()).isNotNull();
-        assertThat(responseEntity.getBody().getMessage()).isEqualTo("'Stakeholder' with id 'wrong_id' not found.");
+        assertThat(responseEntity.getBody().getMessage()).isEqualTo("'Stakeholder' with id 'wrong_id' was not found.");
         //responseEntity.getBody().getMessage()  // <-- "Entity of type %s not found"
         // TODO [hbuhl] Check ErrorMessage validity (for all non-successful http status tests)
     }
