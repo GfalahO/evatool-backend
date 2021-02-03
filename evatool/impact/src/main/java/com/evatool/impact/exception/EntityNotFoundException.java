@@ -1,7 +1,9 @@
 package com.evatool.impact.exception;
 
 public class EntityNotFoundException extends Exception {
+    public static final String format = "'%s' with id '%s' was not found.";
+
     public EntityNotFoundException(Class c, String id) {
-        super(String.format("'%s' with id '%s' not found.", c.getSimpleName(), id));
+        super(String.format(format, c.getSimpleName(), id));
     }
 }

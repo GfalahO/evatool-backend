@@ -1,5 +1,7 @@
 package com.evatool.impact.common.controller.rest;
 
+import com.evatool.impact.common.dto.DimensionDto;
+import com.evatool.impact.common.dto.ImpactDto;
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.common.mapper.StakeholderMapper;
 import com.evatool.impact.exception.EntityNotFoundException;
@@ -22,6 +24,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.persistence.TestDataGenerator.*;
@@ -49,7 +52,7 @@ public class StakeholderRestControllerTest {
 
     //region getById
 
-    // TODO: Are these kind of tests using an .sql file too tedious?
+    // TODO [hbuhl] Are these kind of tests using an .sql file too tedious?
     @Test
     @Sql("/StakeholderRestControllerTest/Insert.sql")
     public void testGetStakeholderById_ExistingStakeholder_ReturnStakeholder() {
@@ -95,7 +98,9 @@ public class StakeholderRestControllerTest {
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(responseEntity.getBody().getMessage()).isNotNull();
-        // TODO: Check ErrorMessage validity (for all non-successful http status tests)
+        assertThat(responseEntity.getBody().getMessage()).isEqualTo("'Stakeholder' with id 'wrong_id' not found.");
+        //responseEntity.getBody().getMessage()  // <-- "Entity of type %s not found"
+        // TODO [hbuhl] Check ErrorMessage validity (for all non-successful http status tests)
     }
 
     //endregion
@@ -191,7 +196,6 @@ public class StakeholderRestControllerTest {
         assertThat(stakeholders.length).isEqualTo(1);
     }
 
-    // TODO: Change code base to return bad request?
     // Note: RestController code is not being executed. The error is automatically thrown.
     @Test
     public void testInsertStakeholder_InsertNullDto_ReturnHttpStatusUnsupportedMediaType() {
@@ -204,6 +208,32 @@ public class StakeholderRestControllerTest {
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    }
+
+    @Test
+    public void testInsertStakeholder_InsertEmptyImpactDto_ReturnHttpStatusBadRequest() {
+        // given
+        ImpactDto stakeholderDto = getEmptyImpactDto();
+
+        // when
+        var httpEntity = new HttpEntity<>(stakeholderDto);
+        var responseEntity = testRestTemplate.postForEntity("/api/stakeholder", httpEntity, ErrorMessage.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void testInsertStakeholder_InsertImpactDto_ReturnHttpStatusBadRequest() {
+        // given
+        ImpactDto stakeholderDto = getImpactDto();
+
+        // when
+        var httpEntity = new HttpEntity<>(stakeholderDto);
+        var responseEntity = testRestTemplate.postForEntity("/api/stakeholder", httpEntity, ErrorMessage.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
@@ -302,8 +332,7 @@ public class StakeholderRestControllerTest {
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
-    // TODO: Use custom NullDtoException? (for the next two tests)
-    // Note: sending a null DTO will automatically result in a bad request. This error is thrown before the controller code executes.
+    // Note: RestController code is not being executed. The error is automatically thrown.
     @Test
     public void testUpdateStakeholder_UpdateNullDtoIntoExistingId_ReturnHttpStatusBadRequest() {
         // given
@@ -324,6 +353,7 @@ public class StakeholderRestControllerTest {
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
+    // Note: RestController code is not being executed. The error is automatically thrown.
     @Test
     public void testUpdateStakeholder_UpdateNullDtoIntoNonExistingId_ReturnHttpStatusBadRequest() {
         // given
@@ -397,11 +427,7 @@ public class StakeholderRestControllerTest {
 
     //endregion
 
-    // TODO: Try to CRUD (all 4 operations) with a wrong Dto, e.g. DimensionDto. What happens? Insert with Dto copy class with one field missing.
-
-    // TODO: Send invalid/malignant requests and see what happens -> then make code resistant and write tests.
-
-    // TODO: Create static error message provider and check errorMessage responses in tests.
+    // TODO [hbuhl] Create static error message provider and check errorMessage responses in tests.
     @Test
     public void testInspect() {
         // given

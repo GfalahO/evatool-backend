@@ -22,7 +22,6 @@ public class StakeholderRestServiceImpl implements StakeholderRestService {
         if (id == null || id.equals("null")) { // DELETE Rest call requires id.equals.
             throw new IdNullException(Stakeholder.class);
         }
-        // TODO: Throw new exception: IdInvalidException?
         var stakeholder = stakeholderRepository.findById(id).orElse(null);
         if (stakeholder == null) {
             throw new EntityNotFoundException(Stakeholder.class, id);

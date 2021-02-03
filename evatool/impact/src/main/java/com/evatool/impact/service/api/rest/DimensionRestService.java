@@ -10,7 +10,7 @@ public interface DimensionRestService {
 
     public List<Dimension> getAllDimensions();
 
-    public Dimension insertDimension(Dimension dimension); // TODO: Throw entity already exists exception?
+    public Dimension insertDimension(Dimension dimension);
 
     public Dimension updateDimension(Dimension dimension) throws EntityNotFoundException;
 

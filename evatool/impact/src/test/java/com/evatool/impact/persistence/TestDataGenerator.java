@@ -8,7 +8,6 @@ import com.evatool.impact.persistence.entity.*;
 import java.util.UUID;
 
 public class TestDataGenerator {
-
     public static Dimension getDimension() {
         return new Dimension("dimension", "dimension");
     }

@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-// TODO: Belongs to logic layer?
+// TODO [tzaika] make to static (for all mappers).
 public class StakeholderMapper {
     private ModelMapper modelMapper = new ModelMapper();
 

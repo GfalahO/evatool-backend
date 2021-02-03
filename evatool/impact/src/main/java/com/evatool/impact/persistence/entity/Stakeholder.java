@@ -30,9 +30,10 @@ public class Stakeholder extends SuperEntity {
 
     @Override
     public String toString() {
-        return String.format(
-                "Stakeholder[id=%s, name=%s]",
-                this.id, this.name);
+        return "Stakeholder{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                '}';
     }
 
     public void setName(String name) {

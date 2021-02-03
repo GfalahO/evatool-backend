@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
         return responseEntity;
     }
 
-    // TODO: This causes some tests to fail. Fix or omit completely?
+    // TODO [tzaika] This causes some tests to fail. Fix or omit completely?
     //@ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> handleException(Exception exception, WebRequest webRequest) {
         var errorMessage = new ErrorMessage(exception.getMessage());
