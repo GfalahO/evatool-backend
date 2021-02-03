@@ -39,7 +39,6 @@ public class StakeholderServiceImpl implements StakeholderService {
 
     @Override
     public Stakeholder createStakeholder(Stakeholder stakeholder) {
-        // TODO [hbuhl] repo.save throws IllegalArgumentException by null;
         if (stakeholder == null) {
             throw new EntityNullException(Stakeholder.class);
         }
