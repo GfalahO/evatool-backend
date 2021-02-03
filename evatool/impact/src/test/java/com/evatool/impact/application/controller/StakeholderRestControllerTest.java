@@ -27,7 +27,7 @@ import static com.evatool.impact.application.dto.mapper.StakeholderMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class StakeholderRestControllerTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
