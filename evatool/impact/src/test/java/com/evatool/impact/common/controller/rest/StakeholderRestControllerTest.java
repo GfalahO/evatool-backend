@@ -3,6 +3,7 @@ package com.evatool.impact.common.controller.rest;
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.common.mapper.StakeholderMapper;
 import com.evatool.impact.exception.handle.ErrorMessage;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -24,12 +25,17 @@ import static com.evatool.impact.persistence.TestDataGenerator.getStakeholderDto
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
 public class StakeholderRestControllerTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
     private StakeholderMapper stakeholderMapper = new StakeholderMapper();
+
+    @Before
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    public void clearDatabase() {
+
+    }
 
     //region getById
 
