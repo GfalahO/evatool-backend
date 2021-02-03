@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>impact</module>
+        <module>variants</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
