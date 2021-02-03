@@ -3,7 +3,10 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.StakeholderService;
+import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.IdNullException;
 import com.evatool.impact.common.exception.handle.ErrorMessage;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,7 +18,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -35,20 +37,12 @@ public class StakeholderRestControllerTest {
 
     //region getById
 
-    // TODO [hbuhl] Are these kind of tests using an .sql file too tedious?
-    @Test
-    @Sql("/StakeholderRestControllerTest/Insert.sql")
-    public void testGetStakeholderById_ExistingStakeholder_ReturnStakeholder() {
-        // given
-        var responseEntity = testRestTemplate.getForEntity("/api/stakeholder/id_1", StakeholderDto.class);
-
-        // when
-
-        // then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().getId()).isNotNull();
-        assertThat(responseEntity.getBody().getId()).isEqualTo("id_1");
-        assertThat(responseEntity.getBody().getName()).isEqualTo("stakeholder_1");
+    @BeforeEach
+    public void clearDatabase() throws IdNullException, EntityNotFoundException {
+        var stakeholders = stakeholderService.getAllStakeholders();
+        for (var s : stakeholders) {
+            stakeholderService.deleteStakeholderById(s.getId());
+        }
     }
 
     @Test
