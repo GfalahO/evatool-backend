@@ -2,12 +2,16 @@ package com.evatool.impact.common.controller.rest;
 
 import com.evatool.impact.common.dto.StakeholderDto;
 import com.evatool.impact.common.mapper.StakeholderMapper;
+import com.evatool.impact.exception.EntityNotFoundException;
+import com.evatool.impact.exception.IdNullException;
 import com.evatool.impact.exception.handle.ErrorMessage;
+import com.evatool.impact.service.api.rest.StakeholderRestService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -29,12 +33,18 @@ public class StakeholderRestControllerTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
+    @Autowired
+    private StakeholderRestService stakeholderRestService;
+
     private StakeholderMapper stakeholderMapper = new StakeholderMapper();
 
+    //@DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Before
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-    public void clearDatabase() {
-
+    public void clearDatabase() throws IdNullException, EntityNotFoundException {
+        var stakeholders = stakeholderRestService.getAllStakeholders();
+        for (var s : stakeholders) {
+            stakeholderRestService.deleteStakeholderById(s.getId());
+        }
     }
 
     //region getById
