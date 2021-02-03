@@ -23,8 +23,8 @@ import static com.evatool.impact.persistence.TestDataGenerator.*;
 import static com.evatool.impact.persistence.TestDataGenerator.getStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
 public class StakeholderRestControllerTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
