@@ -8,17 +8,6 @@ import static com.evatool.impact.common.TestDataGenerator.getImpact;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ImpactTest {
-    @Test // TODO [tzaika] delete this; not useful
-    public void testToString_DefaultObject_DoNotThrowException() {
-        // given
-        var impact = getImpact();
-
-        // when
-
-        // then
-        impact.toString();
-    }
-
     @ParameterizedTest
     @ValueSource(doubles = {-1.0, -0.5, 0.0, 0.5, 1.0})
     public void testSetValue_LegalValue_DoNotThrowException(double value) {

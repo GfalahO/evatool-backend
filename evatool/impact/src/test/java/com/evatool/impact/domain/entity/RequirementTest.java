@@ -6,19 +6,7 @@ import static com.evatool.impact.common.TestDataGenerator.getImpact;
 import static com.evatool.impact.common.TestDataGenerator.getRequirement;
 import static org.assertj.core.api.Assertions.assertThat;
 
-// TODO [tzaika] delete this; not useful
 public class RequirementTest {
-    @Test
-    public void testToString_DefaultObject_DoNotThrowException() {
-        // given
-        var impact = getImpact();
-
-        // when
-
-        // then
-        impact.toString();
-    }
-
     @Test
     public void testAddImpacts_RelationshipInserted_ReturnRequirements() {
         // given
