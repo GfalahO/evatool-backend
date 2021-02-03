@@ -1,5 +1,7 @@
 package com.evatool.impact.application.controller;
 
+import com.evatool.impact.ModuleSettings;
+import com.evatool.impact.application.controller.uri.StakeholderRestUri;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.StakeholderService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -15,21 +17,18 @@ import java.util.List;
 import static com.evatool.impact.application.dto.mapper.StakeholderMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.StakeholderMapper.toDto;
 
-// TODO [hbuhl] API path conventions + path building (e.g. String in static class?) best practices
 @RestController
-@RequestMapping("/api")
 public class StakeholderRestController {
-
     @Autowired
     private StakeholderService stakeholderService;
 
-    @GetMapping("/stakeholder/{id}")
+    @GetMapping(StakeholderRestUri.GET_STAKEHOLDER_URI)
     public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
         var stakeholder = stakeholderService.findStakeholderById(id);
         return new ResponseEntity<>(toDto(stakeholder), HttpStatus.OK);
     }
 
-    @GetMapping("/stakeholders")
+    @GetMapping(StakeholderRestUri.GET_ALL_STAKEHOLDERS_URI)
     public List<StakeholderDto> getAllStakeholders() {
         var stakeholders = stakeholderService.getAllStakeholders();
         var stakeholderDtoList = new ArrayList<StakeholderDto>();
@@ -37,19 +36,19 @@ public class StakeholderRestController {
         return stakeholderDtoList;
     }
 
-    @PostMapping("/stakeholder")
+    @PostMapping(StakeholderRestUri.CREATE_STAKEHOLDER_URI)
     public ResponseEntity<StakeholderDto> createStakeholder(@RequestBody StakeholderDto stakeholderDto) {
         var stakeholder = stakeholderService.createStakeholder(fromDto(stakeholderDto));
         return new ResponseEntity<>(toDto(stakeholder), HttpStatus.CREATED);
     }
 
-    @PutMapping("/stakeholder/{id}")
+    @PutMapping(StakeholderRestUri.UPDATE_STAKEHOLDER_URI)
     public ResponseEntity<StakeholderDto> updateStakeholder(@RequestBody StakeholderDto stakeholderDto) throws EntityNotFoundException, IdNullException {
         var stakeholder = stakeholderService.updateStakeholder(fromDto(stakeholderDto));
         return new ResponseEntity<>(toDto(stakeholder), HttpStatus.OK);
     }
 
-    @DeleteMapping("/stakeholder/{id}")
+    @DeleteMapping(StakeholderRestUri.DELETE_STAKEHOLDER_URI)
     public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
         stakeholderService.deleteStakeholderById(id);
         return ResponseEntity.ok().build();
