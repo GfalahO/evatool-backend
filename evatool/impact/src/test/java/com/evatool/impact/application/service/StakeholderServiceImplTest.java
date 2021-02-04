@@ -69,7 +69,7 @@ public class StakeholderServiceImplTest {
         var stakeholder1 = getStakeholder();
 
         // when
-        var insertedStakeholder1 = stakeholderService.createStakeholder(stakeholder1);
+        var insertedStakeholder = stakeholderService.createStakeholder(stakeholder1);
         var stakeholders = stakeholderService.getAllStakeholders();
 
         // then

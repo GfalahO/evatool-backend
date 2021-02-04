@@ -112,7 +112,7 @@ public class StakeholderRestControllerMockServiceTest {
     }
 
     @Test
-    public void testUpdateStakeholder() throws Exception {
+    public void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws Exception {
         // given
         var stakeholder = getStakeholder();
         stakeholder.setId(UUID.randomUUID().toString());
