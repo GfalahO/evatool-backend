@@ -1,7 +1,7 @@
 package com.evatool.impact.application.dto.mapper;
 
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 

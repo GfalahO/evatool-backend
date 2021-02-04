@@ -1,6 +1,6 @@
 package com.evatool.impact.application.dto.mapper;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static com.evatool.impact.application.dto.mapper.DimensionMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.DimensionMapper.toDto;
