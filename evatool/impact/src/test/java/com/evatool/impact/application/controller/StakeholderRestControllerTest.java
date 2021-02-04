@@ -7,6 +7,7 @@ import com.evatool.impact.application.service.StakeholderService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.IdNullException;
 import com.evatool.impact.common.exception.handle.ErrorMessage;
+import com.evatool.impact.domain.entity.Stakeholder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -76,9 +77,10 @@ public class StakeholderRestControllerTest {
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(responseEntity.getBody().getMessage()).isEqualTo("'Stakeholder' with id 'wrong_id' was not found.");
-        //responseEntity.getBody().getMessage()  // <-- "Entity of type %s not found"
-        // TODO [hbuhl] Check ErrorMessage validity (for all non-successful http status tests)
+        var errorMessage = EntityNotFoundException.MESSAGE_FORMAT
+                .replaceFirst("%s", Stakeholder.class.getSimpleName())
+                .replaceFirst("%s", "wrong_id");
+        assertThat(responseEntity.getBody().getMessage()).isEqualTo(errorMessage);
     }
 
     //endregion
@@ -421,23 +423,8 @@ public class StakeholderRestControllerTest {
 
     //endregion
 
+    // TODO [hbuhl] Check ErrorMessage validity (for all non-successful http status tests)
+
     // TODO [hbuhl] Create static error message provider and check errorMessage responses in tests.
-    @Test
-    public void testInspect() {
-        // given
-        var responseEntity = testRestTemplate.getForEntity(
-                StakeholderRestUri.getGetStakeholderUri("wrong_id"), ErrorMessage.class);
 
-        // when
-        var ex = responseEntity.getBody();
-        System.out.println(ex.getTimestamp());
-        System.out.println(ex.getMessage());
-        System.out.println(ex.getDetails());
-        System.out.println(ex.getPath());
-
-        System.out.println(ex.getClass().getSimpleName());
-
-        // then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
 }
