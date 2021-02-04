@@ -2,6 +2,7 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.controller.uri.StakeholderRestUri;
 import com.evatool.impact.application.service.StakeholderService;
+import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.Stakeholder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -50,6 +51,25 @@ public class StakeholderRestControllerMockServiceTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(stakeholder.getName()));
+    }
+
+    // TODO: [hbuhl] determine what needs to be tested where.
+    @Test
+    public void testGetStakeholderById_NonExistingStakeholder_ReturnHttpStatusNotFound() throws Exception {
+        // given
+        var nonExistingId = "wrong_id";
+
+        // when
+        when(stakeholderService.findStakeholderById(anyString())).thenThrow(new EntityNotFoundException(Stakeholder.class, nonExistingId));
+
+        // then
+        mvc.perform(get(StakeholderRestUri.buildGetStakeholderUri(nonExistingId))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(EntityNotFoundException.MESSAGE_FORMAT
+                        .replaceFirst("%s", Stakeholder.class.getSimpleName())
+                        .replaceFirst("%s", nonExistingId)));
     }
 
     @Test
