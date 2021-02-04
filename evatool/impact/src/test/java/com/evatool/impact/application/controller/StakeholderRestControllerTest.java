@@ -54,11 +54,11 @@ public class StakeholderRestControllerTest {
         var stakeholderDto = toDto(stakeholder);
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var postResponse = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
 
         // when
         var getResponse = testRestTemplate.getForEntity(
-                StakeholderRestUri.getGetStakeholderUri(postResponse.getBody().getId()), StakeholderDto.class);
+                StakeholderRestUri.buildGetStakeholderUri(postResponse.getBody().getId()), StakeholderDto.class);
 
         // then
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -71,7 +71,7 @@ public class StakeholderRestControllerTest {
     public void testGetStakeholderById_NoExistingStakeholder_ReturnHttpStatusNotFound() {
         // given
         var responseEntity = testRestTemplate.getForEntity(
-                StakeholderRestUri.getGetStakeholderUri("wrong_id"), ErrorMessage.class);
+                StakeholderRestUri.buildGetStakeholderUri("wrong_id"), ErrorMessage.class);
 
         // when
 
@@ -95,11 +95,11 @@ public class StakeholderRestControllerTest {
         var stakeholderDto = toDto(stakeholder);
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var postResponse = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
 
         // when
         var getResponse = testRestTemplate.getForEntity(
-                StakeholderRestUri.getGetStakeholdersUri(), StakeholderDto[].class);
+                StakeholderRestUri.buildGetStakeholdersUri(), StakeholderDto[].class);
         var stakeholders = getResponse.getBody();
 
         // then
@@ -120,13 +120,13 @@ public class StakeholderRestControllerTest {
             var stakeholderDto = toDto(stakeholder);
             var httpEntity = new HttpEntity<>(stakeholderDto);
             var postResponse = testRestTemplate.postForEntity(
-                    StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                    StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
             postResponseList.add(postResponse);
         }
 
         // when
         var getResponse = testRestTemplate.getForEntity(
-                StakeholderRestUri.getGetStakeholdersUri(), StakeholderDto[].class);
+                StakeholderRestUri.buildGetStakeholdersUri(), StakeholderDto[].class);
         var stakeholderDtos = getResponse.getBody();
 
         // then
@@ -147,7 +147,7 @@ public class StakeholderRestControllerTest {
         // when
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var responseEntity = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -165,12 +165,12 @@ public class StakeholderRestControllerTest {
         // when
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var responseEntity = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
 
         var stakeholderDtoDuplicate = responseEntity.getBody();
         var httpEntityDuplicate = new HttpEntity<>(stakeholderDtoDuplicate);
         var responseEntityDuplicate = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntityDuplicate, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntityDuplicate, StakeholderDto.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -178,7 +178,7 @@ public class StakeholderRestControllerTest {
         assertThat(responseEntity.getBody().getName()).isEqualTo(responseEntityDuplicate.getBody().getName());
 
         var getResponse = testRestTemplate.getForEntity(
-                StakeholderRestUri.getGetStakeholdersUri(), StakeholderDto[].class);
+                StakeholderRestUri.buildGetStakeholdersUri(), StakeholderDto[].class);
         var stakeholders = getResponse.getBody();
         assertThat(stakeholders.length).isEqualTo(1);
     }
@@ -192,7 +192,7 @@ public class StakeholderRestControllerTest {
         // when
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var responseEntity = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
@@ -206,7 +206,7 @@ public class StakeholderRestControllerTest {
         // when
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var responseEntity = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, ErrorMessage.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, ErrorMessage.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -220,7 +220,7 @@ public class StakeholderRestControllerTest {
         // when
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var responseEntity = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, ErrorMessage.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, ErrorMessage.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -234,7 +234,7 @@ public class StakeholderRestControllerTest {
         // when
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var responseEntity = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
 
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -251,16 +251,16 @@ public class StakeholderRestControllerTest {
         var stakeholderDto = toDto(stakeholder);
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var postResponse = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
 
         // when
         var updatedStakeholder = fromDto(postResponse.getBody());
         updatedStakeholder.setName("new_name");
         var putEntity = new HttpEntity<>(toDto(updatedStakeholder));
         var putResponse = testRestTemplate.exchange(
-                StakeholderRestUri.getUpdateStakeholderUri(postResponse.getBody().getId()), HttpMethod.PUT, putEntity, StakeholderDto.class);
+                StakeholderRestUri.buildUpdateStakeholderUri(postResponse.getBody().getId()), HttpMethod.PUT, putEntity, StakeholderDto.class);
         var getResponse = testRestTemplate.getForEntity(
-                StakeholderRestUri.getGetStakeholderUri(postResponse.getBody().getId()), StakeholderDto.class);
+                StakeholderRestUri.buildGetStakeholderUri(postResponse.getBody().getId()), StakeholderDto.class);
 
         // then
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -283,7 +283,7 @@ public class StakeholderRestControllerTest {
 
         // when
         var putResponse = testRestTemplate.exchange(
-                StakeholderRestUri.getUpdateStakeholderUri(stakeholder.getId()), HttpMethod.PUT, httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildUpdateStakeholderUri(stakeholder.getId()), HttpMethod.PUT, httpEntity, StakeholderDto.class);
 
         // then
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -298,7 +298,7 @@ public class StakeholderRestControllerTest {
 
         // when
         var putResponse = testRestTemplate.exchange(
-                StakeholderRestUri.getUpdateStakeholderUri("null"), HttpMethod.PUT, httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildUpdateStakeholderUri("null"), HttpMethod.PUT, httpEntity, StakeholderDto.class);
 
         // then
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST); // Not NOT_FOUND: non UUID id throws exception in SuperEntity.
@@ -311,7 +311,7 @@ public class StakeholderRestControllerTest {
         var stakeholderDto = toDto(stakeholder);
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var postResponse = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
 
         // when
         var updatedStakeholder = fromDto(postResponse.getBody());
@@ -319,7 +319,7 @@ public class StakeholderRestControllerTest {
         updatedStakeholderDto.setName(null);
         var putEntity = new HttpEntity<>(updatedStakeholderDto);
         var putResponse = testRestTemplate.exchange(
-                StakeholderRestUri.getUpdateStakeholderUri(postResponse.getBody().getId()), HttpMethod.PUT, putEntity, StakeholderDto.class);
+                StakeholderRestUri.buildUpdateStakeholderUri(postResponse.getBody().getId()), HttpMethod.PUT, putEntity, StakeholderDto.class);
 
         // then
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -333,7 +333,7 @@ public class StakeholderRestControllerTest {
         var stakeholderDto = toDto(stakeholder);
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var postResponse = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), httpEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), httpEntity, StakeholderDto.class);
 
         // when
         var updatedStakeholder = fromDto(postResponse.getBody());
@@ -341,7 +341,7 @@ public class StakeholderRestControllerTest {
         updatedStakeholderDto = null;
         var putEntity = new HttpEntity<>(updatedStakeholderDto);
         var putResponse = testRestTemplate.exchange(
-                StakeholderRestUri.getUpdateStakeholderUri(postResponse.getBody().getId()), HttpMethod.PUT, putEntity, ErrorMessage.class);
+                StakeholderRestUri.buildUpdateStakeholderUri(postResponse.getBody().getId()), HttpMethod.PUT, putEntity, ErrorMessage.class);
 
         // then
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -356,7 +356,7 @@ public class StakeholderRestControllerTest {
         // when
         var putEntity = new HttpEntity<>(stakeholderDto);
         var putResponse = testRestTemplate.exchange(
-                StakeholderRestUri.getUpdateStakeholderUri(UUID.randomUUID().toString()), HttpMethod.PUT, putEntity, StakeholderDto.class);
+                StakeholderRestUri.buildUpdateStakeholderUri(UUID.randomUUID().toString()), HttpMethod.PUT, putEntity, StakeholderDto.class);
 
         // then
         assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -374,19 +374,19 @@ public class StakeholderRestControllerTest {
         var stakeholderDto = toDto(stakeholder);
         var insertEntity = new HttpEntity<>(stakeholderDto);
         var insertEntityResponse = testRestTemplate.postForEntity(
-                StakeholderRestUri.getCreateStakeholderUri(), insertEntity, StakeholderDto.class);
+                StakeholderRestUri.buildCreateStakeholderUri(), insertEntity, StakeholderDto.class);
 
         // when
         var insertedStakeholderDto = insertEntityResponse.getBody();
         var deleteEntity = new HttpEntity<>(insertedStakeholderDto);
         var deleteEntityResponse = testRestTemplate.exchange(
-                StakeholderRestUri.getDeleteStakeholderUri(insertedStakeholderDto.getId()), HttpMethod.DELETE, deleteEntity, Void.class);
+                StakeholderRestUri.buildDeleteStakeholderUri(insertedStakeholderDto.getId()), HttpMethod.DELETE, deleteEntity, Void.class);
 
         // then
         assertThat(deleteEntityResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         var getResponse = testRestTemplate.getForEntity(
-                StakeholderRestUri.getGetStakeholdersUri(), StakeholderDto[].class);
+                StakeholderRestUri.buildGetStakeholdersUri(), StakeholderDto[].class);
         var stakeholders = getResponse.getBody();
         assertThat(stakeholders.length).isEqualTo(0);
     }
@@ -400,7 +400,7 @@ public class StakeholderRestControllerTest {
         // when
         var httpEntity = new HttpEntity<>(stakeholderDto);
         var responseEntity = testRestTemplate.exchange(
-                StakeholderRestUri.getDeleteStakeholderUri(stakeholderDto.getId()), HttpMethod.DELETE, httpEntity, Void.class);
+                StakeholderRestUri.buildDeleteStakeholderUri(stakeholderDto.getId()), HttpMethod.DELETE, httpEntity, Void.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -415,7 +415,7 @@ public class StakeholderRestControllerTest {
 
         // when
         var responseEntity = testRestTemplate.exchange(
-                StakeholderRestUri.getDeleteStakeholderUri("null"), HttpMethod.DELETE, httpEntity, Void.class);
+                StakeholderRestUri.buildDeleteStakeholderUri("null"), HttpMethod.DELETE, httpEntity, Void.class);
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
