@@ -423,8 +423,6 @@ public class StakeholderRestControllerTest {
 
     //endregion
 
-    // TODO [hbuhl] Check ErrorMessage validity (for all non-successful http status tests)
-
-    // TODO [hbuhl] Create static error message provider and check errorMessage responses in tests.
+    // TODO [hbuhl] Check ErrorMessage validity (for all non-successful http status tests) + in service + exception
 
 }
