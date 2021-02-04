@@ -21,17 +21,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 public class StakeholderServiceImplTest {
-    @TestConfiguration
-    private static class StakeholderRestServiceImplTestContextConfiguration {
-        @Bean
-        public StakeholderService stakeholderRestService() {
-            return new StakeholderServiceImpl();
-        }
-    }
-
     @Autowired
     private StakeholderService stakeholderService;
-    // TODO [hbuhl] Could not autowire. There is more than one bean of 'StakeholderService' type; add qualifier
 
     //region getById
 
