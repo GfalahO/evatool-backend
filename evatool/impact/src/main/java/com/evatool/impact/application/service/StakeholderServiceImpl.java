@@ -23,7 +23,6 @@ public class StakeholderServiceImpl implements StakeholderService {
         if (id == null) {
             throw new IdNullException(Stakeholder.class);
         }
-
         var stakeholder = stakeholderRepository.findById(id);
         if (stakeholder.isEmpty()) {
             throw new EntityNotFoundException(Stakeholder.class, id);
@@ -47,7 +46,6 @@ public class StakeholderServiceImpl implements StakeholderService {
 
     @Override
     public Stakeholder updateStakeholder(Stakeholder stakeholder) throws EntityNotFoundException, IdNullException {
-        // TODO [hbuhl] not really
         if (stakeholder == null) {
             throw new EntityNullException(Stakeholder.class);
         }
