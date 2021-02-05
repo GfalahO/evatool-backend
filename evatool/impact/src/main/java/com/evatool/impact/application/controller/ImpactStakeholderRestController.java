@@ -10,10 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import java.util.List;
+import java.util.UUID;
 
 @RestController
+@RequestMapping(StakeholderRestUri.IMPACT_STAKEHOLDER_REST_CONTROLLER_URI)
 public class ImpactStakeholderRestController {
     @Autowired
     private ImpactStakeholderService stakeholderService;
@@ -21,7 +24,23 @@ public class ImpactStakeholderRestController {
     @GetMapping(StakeholderRestUri.GET_STAKEHOLDER_URI)
     public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
         var stakeholderDto = stakeholderService.findStakeholderById(id);
+        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(stakeholderDto.getId()).withSelfRel());
         return new ResponseEntity<>(stakeholderDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/test/{id}")
+    public ResponseEntity<StakeholderDto> getStakeholder_RestLevel3(@PathVariable String id) {
+        var stakeholderDto = new StakeholderDto();
+        stakeholderDto.setId(UUID.randomUUID().toString());
+        stakeholderDto.setName("name");
+
+        var selfLink = linkTo(ImpactStakeholderRestController.class).slash(stakeholderDto.getId()).withSelfRel();
+
+        System.out.println(selfLink);
+        stakeholderDto.add(selfLink);
+        var responseEntity = new ResponseEntity(stakeholderDto, HttpStatus.OK);
+        System.out.println(responseEntity);
+        return responseEntity;
     }
 
     @GetMapping(StakeholderRestUri.GET_ALL_STAKEHOLDERS_URI)

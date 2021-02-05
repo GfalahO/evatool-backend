@@ -377,7 +377,16 @@ public class ImpactStakeholderRestControllerTest {
 
             //then
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-            // assert error message
         }
+    }
+
+    @Test
+    public void t() {
+        var stakeholderDto = getStakeholderDto();
+        var insertEntityResponse = testRestTemplate.postForEntity(
+                StakeholderRestUri.buildCreateStakeholderUri(), stakeholderDto, StakeholderDto.class);
+
+        var getResponse = testRestTemplate.getForEntity(
+                 insertEntityResponse.getBody().getId(), StakeholderDto.class);
     }
 }
