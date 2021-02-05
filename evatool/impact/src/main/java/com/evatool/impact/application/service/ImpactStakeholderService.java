@@ -1,5 +1,6 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.IdNullException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
@@ -7,13 +8,13 @@ import com.evatool.impact.domain.entity.ImpactStakeholder;
 import java.util.List;
 
 public interface ImpactStakeholderService {
-    ImpactStakeholder findStakeholderById(String id) throws EntityNotFoundException, IdNullException;
+    StakeholderDto findStakeholderById(String id) throws EntityNotFoundException, IdNullException;
 
-    List<ImpactStakeholder> getAllStakeholders();
+    List<StakeholderDto> getAllStakeholders();
 
-    ImpactStakeholder createStakeholder(ImpactStakeholder stakeholder);
+    StakeholderDto createStakeholder(StakeholderDto stakeholderDto);
 
-    ImpactStakeholder updateStakeholder(ImpactStakeholder stakeholder) throws EntityNotFoundException, IdNullException;
+    StakeholderDto updateStakeholder(StakeholderDto stakeholderDto) throws EntityNotFoundException, IdNullException;
 
     void deleteStakeholderById(String id) throws EntityNotFoundException, IdNullException;
 

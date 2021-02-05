@@ -14,6 +14,10 @@ public class DimensionDto {
 
     @Getter
     @Setter
+    private String type;
+
+    @Getter
+    @Setter
     private String description;
 
     @Override
@@ -21,6 +25,7 @@ public class DimensionDto {
         return "DimensionDto{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

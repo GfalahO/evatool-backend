@@ -1,5 +1,7 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.StakeholderDto;
+import com.evatool.impact.application.dto.mapper.StakeholderMapper;
 import com.evatool.impact.common.Convert;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityNullException;
@@ -9,6 +11,7 @@ import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,7 +21,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     private ImpactStakeholderRepository stakeholderRepository;
 
     @Override
-    public ImpactStakeholder findStakeholderById(String id) throws EntityNotFoundException, IdNullException {
+    public StakeholderDto findStakeholderById(String id) throws EntityNotFoundException, IdNullException {
         if (id == null) {
             throw new IdNullException(ImpactStakeholder.class);
         }
@@ -26,39 +29,44 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         if (stakeholder.isEmpty()) {
             throw new EntityNotFoundException(ImpactStakeholder.class, id);
         }
-        return stakeholder.get();
+        var stakeholderDto = StakeholderMapper.toDto(stakeholder.get());
+        return stakeholderDto;
     }
 
     @Override
-    public List<ImpactStakeholder> getAllStakeholders() {
+    public List<StakeholderDto> getAllStakeholders() {
         var stakeholders = stakeholderRepository.findAll();
-        return Convert.iterableToList(stakeholders);
+        var stakeholderDtoList = new ArrayList<StakeholderDto>();
+        stakeholders.forEach(s -> stakeholderDtoList.add(StakeholderMapper.toDto(s)));
+        return stakeholderDtoList;
     }
 
     @Override
-    public ImpactStakeholder createStakeholder(ImpactStakeholder stakeholder) {
-        if (stakeholder == null) {
+    public StakeholderDto createStakeholder(StakeholderDto stakeholderDto) {
+        if (stakeholderDto == null) {
             throw new EntityNullException(ImpactStakeholder.class);
         }
-        return stakeholderRepository.save(stakeholder);
+        var stakeholder = stakeholderRepository.save(StakeholderMapper.fromDto(stakeholderDto));
+        return StakeholderMapper.toDto(stakeholder);
     }
 
     @Override
-    public ImpactStakeholder updateStakeholder(ImpactStakeholder stakeholder) throws EntityNotFoundException, IdNullException {
-        if (stakeholder == null) {
+    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto) throws EntityNotFoundException, IdNullException {
+        if (stakeholderDto == null) {
             throw new EntityNullException(ImpactStakeholder.class);
         }
-        findStakeholderById(stakeholder.getId());
-        return stakeholderRepository.save(stakeholder);
+        this.findStakeholderById(stakeholderDto.getId());
+        var stakeholder = StakeholderMapper.fromDto(stakeholderDto);
+        return StakeholderMapper.toDto(stakeholderRepository.save(stakeholder));
     }
 
     @Override
     public void deleteStakeholderById(String id) throws EntityNotFoundException, IdNullException {
-        var stakeholder = this.findStakeholderById(id);
+        var stakeholderDto = this.findStakeholderById(id);
+        var stakeholder = StakeholderMapper.fromDto(stakeholderDto);
         stakeholderRepository.delete(stakeholder);
     }
 
-    // TODO: [hbuhl] Write tests?
     @Override
     public void deleteStakeholders() {
         stakeholderRepository.deleteAll();

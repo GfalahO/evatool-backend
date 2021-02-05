@@ -1,9 +1,9 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityNullException;
 import com.evatool.impact.common.exception.IdNullException;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,24 +14,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
-import static com.evatool.impact.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-// TODO: [hbuhl] Use real database for tests (toggle between in-memory and real db)
-// TODO: [hbuhl] Complete more elaborate testing setup in this class and copy it to other classes + test all cases!
 @SpringBootTest
 public class ImpactStakeholderServiceImplTest {
     @Autowired
     ImpactStakeholderService stakeholderService;
 
     @BeforeEach
-    void clearData() {
+    void clearDatabase() {
         stakeholderService.deleteStakeholders();
     }
 
     void insertStakeholder() {
-        var stakeholder = getStakeholder();
+        var stakeholder = getStakeholderDto();
         stakeholderService.createStakeholder(stakeholder).getId();
     }
 
@@ -96,7 +94,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws IdNullException, EntityNotFoundException {
             // given
-            var stakeholder = getStakeholder();
+            var stakeholder = getStakeholderDto();
 
             // when
             var insertedStakeholder = stakeholderService.createStakeholder(stakeholder);
@@ -109,27 +107,9 @@ public class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        public void testInsertStakeholder_DuplicateInsert_AllowDuplicateInsert() {
-            // given
-            var stakeholder = getStakeholder();
-
-            // when
-            var insertedStakeholder1 = stakeholderService.createStakeholder(stakeholder);
-            var insertedStakeholder2 = stakeholderService.createStakeholder(stakeholder);
-            var stakeholders = stakeholderService.getAllStakeholders();
-
-            // then
-            assertThat(stakeholders.size()).isEqualTo(1);
-            assertThat(stakeholder.getId()).isEqualTo(insertedStakeholder1.getId());
-            assertThat(stakeholder.getId()).isEqualTo(insertedStakeholder2.getId());
-            assertThat(stakeholder.getName()).isEqualTo(insertedStakeholder1.getName());
-            assertThat(stakeholder.getName()).isEqualTo(insertedStakeholder2.getName());
-        }
-
-        @Test
         public void testInsertStakeholder_NullStakeholder_ThrowEntityNullException() {
             // given
-            ImpactStakeholder stakeholder = null;
+            StakeholderDto stakeholder = null;
 
             // when
 
@@ -143,7 +123,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws IdNullException, EntityNotFoundException {
             // given
-            var stakeholder = getStakeholder();
+            var stakeholder = getStakeholderDto();
             var insertedStakeholder = stakeholderService.createStakeholder(stakeholder);
 
             // when
@@ -158,9 +138,9 @@ public class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        public void testUpdateStakeholder_UpdatedNonExistingId_ThrowEntityNotFoundException() throws IdNullException, EntityNotFoundException {
+        public void testUpdateStakeholder_UpdatedNonExistingId_ThrowEntityNotFoundException() {
             // given
-            var stakeholder = getStakeholder();
+            var stakeholder = getStakeholderDto();
             stakeholder.setId(UUID.randomUUID().toString());
 
             // when
@@ -172,7 +152,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testUpdateStakeholder_UpdatedNullId_ThrowEntityIdNullException() {
             // given
-            var stakeholder = getStakeholder();
+            var stakeholder = getStakeholderDto();
 
             // when
 
@@ -186,7 +166,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() throws IdNullException, EntityNotFoundException {
             // given
-            var stakeholder = getStakeholder();
+            var stakeholder = getStakeholderDto();
 
             // when
             var insertedStakeholder = stakeholderService.createStakeholder(stakeholder);
@@ -198,7 +178,7 @@ public class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        public void testDeleteStakeholderById_DeleteNonExistingId_ReturnHttpStatusNotFound() throws IdNullException, EntityNotFoundException {
+        public void testDeleteStakeholderById_DeleteNonExistingId_ReturnHttpStatusNotFound() {
             // given
             var stakeholder = getStakeholder();
             stakeholder.setId(UUID.randomUUID().toString());
