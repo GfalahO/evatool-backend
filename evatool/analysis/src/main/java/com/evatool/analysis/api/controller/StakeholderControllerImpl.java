@@ -28,12 +28,14 @@ public class StakeholderControllerImpl implements StakeholderController {
     @GetMapping("/stakeholder/{id}")
     public Stakeholder getStakeholderById(@PathVariable String id) {
         Optional<Stakeholder> stakeholder = stakeholderRepository.findById(id);
-        // stakeholder.get() // for tests
+        // return stakeholder.get() // real code
+        // FOR TESTS; can be deleted
         var dummy = new Stakeholder();
         dummy.setStakeholderName("Dummy");
         dummy.setPriority(1);
         dummy.setStakeholderRule(StakeholderRules.naturalPerson);
         return dummy;
+        //
     }
 
 }
