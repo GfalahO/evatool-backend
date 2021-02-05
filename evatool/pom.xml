@@ -7,6 +7,7 @@
         <module>impact</module>
         <module>variants</module>
         <module>springapplication</module>
+        <module>analysis</module>
         <module>requirements</module>
     </modules>
     <parent>
@@ -80,6 +81,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>com.evatool.EvaToolApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
