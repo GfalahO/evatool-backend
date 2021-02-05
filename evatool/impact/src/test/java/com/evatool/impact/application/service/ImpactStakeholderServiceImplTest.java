@@ -139,7 +139,7 @@ public class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        public void testUpdateStakeholder_UpdatedNonExistingId_ThrowEntityNotFoundException() throws IdNullException, EntityNotFoundException {
+        public void testUpdateStakeholder_UpdatedNonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholder = getStakeholderDto();
             stakeholder.setId(UUID.randomUUID().toString());
@@ -179,7 +179,7 @@ public class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        public void testDeleteStakeholderById_DeleteNonExistingId_ReturnHttpStatusNotFound() throws IdNullException, EntityNotFoundException {
+        public void testDeleteStakeholderById_DeleteNonExistingId_ReturnHttpStatusNotFound() {
             // given
             var stakeholder = getStakeholder();
             stakeholder.setId(UUID.randomUUID().toString());
