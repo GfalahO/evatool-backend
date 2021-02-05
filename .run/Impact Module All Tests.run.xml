@@ -3,7 +3,7 @@
         <module name="impact"/>
         <extension name="coverage">
             <pattern>
-                <option name="PATTERN" value="com.evatool.impact.persistence.entity.*"/>
+                <option name="PATTERN" value="com.evatool.impact.domain.entity.*"/>
                 <option name="ENABLED" value="true"/>
             </pattern>
         </extension>
