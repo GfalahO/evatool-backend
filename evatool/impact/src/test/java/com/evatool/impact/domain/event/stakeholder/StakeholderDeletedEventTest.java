@@ -1,7 +1,7 @@
 package com.evatool.impact.domain.event.stakeholder;
 
 import com.evatool.impact.common.TestSettings;
-import com.evatool.impact.domain.repository.StakeholderRepository;
+import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class StakeholderDeletedEventTest {
     @Autowired
-    private StakeholderRepository stakeholderRepository;
+    private ImpactStakeholderRepository stakeholderRepository;
 
     @Autowired
     private StakeholderDeletedEventPublisher stakeholderDeletedEventPublisher;

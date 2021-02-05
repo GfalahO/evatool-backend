@@ -10,9 +10,9 @@ import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class StakeholderRepositoryTest {
+public class ImpactStakeholderRepositoryTest {
     @Autowired
-    private StakeholderRepository stakeholderRepository;
+    private ImpactStakeholderRepository stakeholderRepository;
 
     @Test
     public void testFindById_InsertedStakeholder_ReturnStakeholder() {
