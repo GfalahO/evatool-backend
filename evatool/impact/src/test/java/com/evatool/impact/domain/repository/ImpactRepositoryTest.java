@@ -6,7 +6,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getImpact;
+import static com.evatool.impact.TestDataGenerator.getImpact;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest

@@ -4,11 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static com.evatool.impact.application.dto.mapper.DimensionMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.DimensionMapper.toDto;
-import static com.evatool.impact.common.TestDataGenerator.getDimension;
-import static com.evatool.impact.common.TestDataGenerator.getDimensionDto;
+import static com.evatool.impact.TestDataGenerator.getDimension;
+import static com.evatool.impact.TestDataGenerator.getDimensionDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
-// TODO [hbuhl] why .jupiter.api.Test?
 public class DimensionMapperTest {
     @Test
     public void testToDot_NewDimension_EqualsDimensionDto() {

@@ -1,13 +1,13 @@
 package com.evatool.impact.application.dto.mapper;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.ImpactMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.ImpactMapper.toDto;
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ImpactMapperTest {
@@ -30,7 +30,7 @@ public class ImpactMapperTest {
         assertThat(impact.getStakeholder().getId()).isEqualTo(impactDto.getStakeholderId());
     }
 
-    @Ignore // TODO [tzaika] actually an integration test
+    @Disabled // TODO [tzaika] actually an integration test
     @Test
     public void testFromDto_NewImpactDto_EqualsImpact() {
         // given
