@@ -1,4 +1,4 @@
-package com.evatool.impact;
+package com.evatool.impact.common;
 
 import org.awaitility.core.ConditionFactory;
 
