@@ -28,11 +28,11 @@ public class Variant {
     private boolean st_flags_real;
 
     @OneToOne
-    private Stakeholder stakeholder;
+    private VariantsStakeholder variantsStakeholder;
 
     @OneToMany
     private List<Analysis> analysis;
 
     @OneToMany
-    private List<Requirement> requirements;
+    private List<VariantsRequirement> variantsRequirements;
 }

@@ -7,9 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name = "REQUIREMENT")
+// renamed entity because analysis is owner of the entity and they had already used up the name 'Stakeholder'
+@Entity(name = "VARIANTS_STAKEHOLDER")
 @Getter
-public class Requirement {
+public class VariantsStakeholder {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")

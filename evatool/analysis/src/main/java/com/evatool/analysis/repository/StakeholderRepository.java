@@ -1,6 +1,6 @@
-package com.evatool.variants.repositories;
+package com.evatool.analysis.repository;
 
-import com.evatool.variants.entities.Stakeholder;
+import com.evatool.analysis.model.Stakeholder;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

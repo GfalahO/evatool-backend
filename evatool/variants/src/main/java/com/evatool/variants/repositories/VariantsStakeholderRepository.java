@@ -1,10 +1,10 @@
 package com.evatool.variants.repositories;
 
-import com.evatool.variants.entities.Requirement;
+import com.evatool.variants.entities.VariantsStakeholder;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RequirementRepository extends CrudRepository<Requirement, String> {
+public interface VariantsStakeholderRepository extends CrudRepository<VariantsStakeholder, String> {
 
 }

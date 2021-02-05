@@ -3,11 +3,14 @@ package com.evatool.variants.entities;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@Entity(name = "STAKEHOLDER")
+// renamed because the entity is owned by another module and they have already used up the name 'Requirement'
+@Entity(name = "VARIANTS_REQUIREMENT")
 @Getter
-public class Stakeholder {
+public class VariantsRequirement {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
