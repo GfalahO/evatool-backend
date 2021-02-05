@@ -1,7 +1,6 @@
 package com.evatool.impact.application.dto.mapper;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
@@ -30,6 +29,8 @@ public class ImpactMapperTest {
         assertThat(impact.getStakeholder().getId()).isEqualTo(impactDto.getStakeholderId());
     }
 
+    // TODO WRONG JUNIT VERSION!!!!
+    /*
     @Ignore // TODO [tzaika] actually an integration test
     @Test
     public void testFromDto_NewImpactDto_EqualsImpact() {
@@ -55,4 +56,5 @@ public class ImpactMapperTest {
         assertThat(impact.getStakeholder().getId()).isEqualTo(impactDto.getStakeholderId());
         assertThat(impact.getStakeholder().getName()).isEqualTo(stakeholder.getName());
     }
+    */
 }
