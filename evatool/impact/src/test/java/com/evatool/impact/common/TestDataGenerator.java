@@ -15,16 +15,8 @@ public class TestDataGenerator {
         return new Stakeholder("person");
     }
 
-    public static Requirement getRequirement() {
-        return new Requirement();
-    }
-
     public static Impact getImpact() {
         return new Impact(0.0, "impact", getDimension(), getStakeholder());
-    }
-
-    public static Analysis getAnalysis() {
-        return new Analysis();
     }
 
     public static DimensionDto getDimensionDto() {

@@ -27,10 +27,6 @@ public class Impact extends SuperEntity {
     @ManyToOne
     private Stakeholder stakeholder;
 
-    @Getter
-    @ManyToMany
-    private List<Requirement> requirements = new ArrayList<>();
-
     public Impact() {
 
     }
@@ -49,7 +45,6 @@ public class Impact extends SuperEntity {
                 ", description='" + description + '\'' +
                 ", dimension=" + dimension +
                 ", stakeholder=" + stakeholder +
-                ", requirements=" + requirements +
                 ", id='" + id + '\'' +
                 '}';
     }
