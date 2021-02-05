@@ -3,15 +3,17 @@ package com.evatool.impact;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.StakeholderDto;
-import com.evatool.impact.domain.entity.*;
+import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.domain.entity.Impact;
+import com.evatool.impact.domain.entity.ImpactStakeholder;
 
 public class TestDataGenerator {
     public static Dimension getDimension() {
         return new Dimension("dimension", "dimension");
     }
 
-    public static Stakeholder getStakeholder() {
-        return new Stakeholder("person");
+    public static ImpactStakeholder getStakeholder() {
+        return new ImpactStakeholder("person");
     }
 
     public static Impact getImpact() {

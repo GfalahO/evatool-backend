@@ -3,9 +3,10 @@ package com.evatool.impact.domain.entity;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity(name = "IMPACT")
 @Table(name = "IMPACT")
@@ -25,13 +26,13 @@ public class Impact extends SuperEntity {
     @Getter
     //@ManyToOne(optional = false, fetch = FetchType.EAGER) // Do this? Change tests if yes...
     @ManyToOne
-    private Stakeholder stakeholder;
+    private ImpactStakeholder stakeholder;
 
     public Impact() {
 
     }
 
-    public Impact(double value, String description, Dimension dimension, Stakeholder stakeholder) {
+    public Impact(double value, String description, Dimension dimension, ImpactStakeholder stakeholder) {
         this.setValue(value);
         this.setDescription(description);
         this.setDimension(dimension);
@@ -70,7 +71,7 @@ public class Impact extends SuperEntity {
         this.dimension = dimension;
     }
 
-    public void setStakeholder(Stakeholder stakeholder) {
+    public void setStakeholder(ImpactStakeholder stakeholder) {
         if (stakeholder == null) {
             throw new PropertyViolationException("Stakeholder cannot be null.");
         }
