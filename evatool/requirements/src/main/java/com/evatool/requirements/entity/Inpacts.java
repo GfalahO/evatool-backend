@@ -1,9 +1,8 @@
-
 package com.evatool.requirements.entity;
 
-
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.UUID;
 
 @Entity
@@ -18,23 +17,23 @@ public class Inpacts {
     /*@OneToOne
     private Requirement_GR requirement_gr;*/
     @ManyToOne
-    private Stakeholder stakeholder;
+    private RequirementsStakeholder requirementsStakeholder;
 
     private Dimension dimension;
 
     public Inpacts() {
     }
 
-    public Inpacts(String titel, String description, int value, Dimension dimension, Stakeholder stakeholder) {
+    public Inpacts(String titel, String description, int value, Dimension dimension, RequirementsStakeholder requirementsStakeholder) {
         this.titel = titel;
         this.description = description;
         this.value = value;
-        this.dimension=dimension;
-        this.stakeholder=stakeholder;
+        this.dimension = dimension;
+        this.requirementsStakeholder = requirementsStakeholder;
     }
 
-    public enum Dimension{
-        SAFETY,PRIVAT
+    public enum Dimension {
+        SAFETY, PRIVAT
     }
 
     public String getTitel() {
@@ -78,12 +77,12 @@ public class Inpacts {
         this.requirement_gr = requirement_gr;
     }*/
 
-    public Stakeholder getStakeholder() {
-        return stakeholder;
+    public RequirementsStakeholder getStakeholder() {
+        return requirementsStakeholder;
     }
 
-    public void setStakeholder(Stakeholder stakeholder) {
-        this.stakeholder = stakeholder;
+    public void setStakeholder(RequirementsStakeholder requirementsStakeholder) {
+        this.requirementsStakeholder = requirementsStakeholder;
     }
 
     public UUID getId() {
