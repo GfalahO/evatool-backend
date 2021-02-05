@@ -22,6 +22,7 @@ import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+// TODO: Complete more elaborate testing setup in this class and copy it to other classes + test all cases!
 @SpringBootTest
 public class StakeholderServiceImplTest {
     @Autowired
@@ -34,13 +35,11 @@ public class StakeholderServiceImplTest {
 
     void insertStakeholder() {
         var stakeholder = getStakeholder();
-        var insertedStakeholder = stakeholderService.createStakeholder(stakeholder);
+        stakeholderService.createStakeholder(stakeholder).getId();
     }
 
     @Nested
     public class GetById {
-        // TODO: [hbuhl] Normal case test
-
         @Test
         public void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
             // given
@@ -202,7 +201,7 @@ public class StakeholderServiceImplTest {
         }
 
         @Test
-        public void testDeleteStakeholder_DeleteNonExistingId_ReturnHttpStatusNotFound() throws IdNullException, EntityNotFoundException {
+        public void testDeleteStakeholderById_DeleteNonExistingId_ReturnHttpStatusNotFound() throws IdNullException, EntityNotFoundException {
             // given
             var stakeholder = getStakeholder();
             stakeholder.setId(UUID.randomUUID().toString());
