@@ -2,7 +2,7 @@ package com.evatool.impact.domain.entity;
 
 import org.junit.jupiter.api.Test;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class StakeholderTest {

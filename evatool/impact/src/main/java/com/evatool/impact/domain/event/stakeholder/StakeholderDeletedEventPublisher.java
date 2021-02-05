@@ -10,7 +10,7 @@ public class StakeholderDeletedEventPublisher {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
-    public void onStakeholderDeleted(final Stakeholder stakeholder) {
+    public void onStakeholderDeleted(final Stakeholder stakeholder) throws InterruptedException {
         var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, stakeholder);
         applicationEventPublisher.publishEvent(stakeholderDeletedEvent);
     }

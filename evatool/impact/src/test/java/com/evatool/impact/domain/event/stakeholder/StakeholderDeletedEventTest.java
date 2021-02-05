@@ -1,16 +1,27 @@
 package com.evatool.impact.domain.event.stakeholder;
 
-import com.evatool.impact.common.TestSettings;
+import com.evatool.impact.TestSettings;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import org.awaitility.core.ConditionFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
+import java.time.Duration;
+
+import static com.evatool.impact.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 public class StakeholderDeletedEventTest {
+    public static final ConditionFactory WAIT = await()
+            .atMost(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT))
+            .pollInterval(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT_POLL));
+
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
 
@@ -28,10 +39,10 @@ public class StakeholderDeletedEventTest {
 
         // when
         stakeholderDeletedEventPublisher.onStakeholderDeleted(stakeholder);
-        Thread.sleep(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT);
-        var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
         // then
-        assertThat(found).isNull();
+        WAIT.untilAsserted(() -> {
+            assertThat(stakeholderRepository.findById(stakeholder.getId()).isEmpty());
+        });
     }
 }

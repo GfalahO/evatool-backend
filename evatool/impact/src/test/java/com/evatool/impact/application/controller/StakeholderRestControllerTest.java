@@ -26,7 +26,7 @@ import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.StakeholderMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.StakeholderMapper.toDto;
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)

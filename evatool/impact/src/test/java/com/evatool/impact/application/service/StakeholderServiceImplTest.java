@@ -5,20 +5,16 @@ import com.evatool.impact.common.exception.EntityNullException;
 import com.evatool.impact.common.exception.IdNullException;
 import com.evatool.impact.domain.entity.Stakeholder;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 

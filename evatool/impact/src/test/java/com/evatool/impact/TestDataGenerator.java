@@ -1,4 +1,4 @@
-package com.evatool.impact.common;
+package com.evatool.impact;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactDto;
