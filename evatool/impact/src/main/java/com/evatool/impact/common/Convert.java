@@ -14,14 +14,4 @@ public class Convert {
 
         return list;
     }
-
-    public static <T> List<T> allElements(List<T> list, Function<T, T> func) {
-        var newList = new ArrayList<T>();
-
-        for (var listItem : list) {
-            newList.add(func.apply(listItem));
-        }
-
-        return newList;
-    }
 }

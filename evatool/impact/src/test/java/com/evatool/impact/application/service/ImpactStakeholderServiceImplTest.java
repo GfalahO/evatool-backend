@@ -1,6 +1,7 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.StakeholderDto;
+import com.evatool.impact.application.dto.mapper.DimensionMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityNullException;
 import com.evatool.impact.common.exception.IdNullException;
@@ -14,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
-import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
+import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -189,5 +189,15 @@ public class ImpactStakeholderServiceImplTest {
             // then
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.deleteStakeholderById(stakeholder.getId()));
         }
+    }
+
+    @Test
+    public void t(){
+        var d = getDimension();
+        var dto = DimensionMapper.toDto(d);
+        System.out.println(d);
+        System.out.println(dto);
+        dto.setType("e");
+        System.out.println(DimensionMapper.fromDto(dto));
     }
 }

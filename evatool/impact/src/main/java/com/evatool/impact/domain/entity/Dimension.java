@@ -2,10 +2,9 @@ package com.evatool.impact.domain.entity;
 
 import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name = "DIMENSION")
 @Table(name = "DIMENSION")
@@ -15,6 +14,12 @@ public class Dimension extends SuperEntity {
     private String name;
 
     @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE", nullable = false)
+    private DimensionType type;
+
+    @Getter
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
@@ -22,8 +27,9 @@ public class Dimension extends SuperEntity {
 
     }
 
-    public Dimension(String name, String description) {
+    public Dimension(String name, DimensionType type, String description) {
         this.setName(name);
+        this.setType(type);
         this.setDescription(description);
     }
 
@@ -31,6 +37,7 @@ public class Dimension extends SuperEntity {
     public String toString() {
         return "Dimension{" +
                 "name='" + name + '\'' +
+                ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 ", id='" + id + '\'' +
                 '}';
@@ -48,5 +55,14 @@ public class Dimension extends SuperEntity {
             throw new PropertyViolationException("Description cannot be null.");
         }
         this.description = description;
+    }
+
+    public static boolean isDimensionType(String value) {
+        for (var e : DimensionType.values()) {
+            if (value.equalsIgnoreCase(e.toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
