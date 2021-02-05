@@ -22,7 +22,8 @@ import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-// TODO: Complete more elaborate testing setup in this class and copy it to other classes + test all cases!
+// TODO: [hbuhl] Use real database for tests (toggle between in-memory and real db)
+// TODO: [hbuhl] Complete more elaborate testing setup in this class and copy it to other classes + test all cases!
 @SpringBootTest
 public class StakeholderServiceImplTest {
     @Autowired
