@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // TODO [hbuhl] make all tests more entity agnostic (variable names)
 // TODO [hbuhl] Better testing data setup.
+// TODO [hbuhl] determine what needs to be tested where.
+// TODO [hbuhl] Use real database for tests (toggle between in-memory and real db)
+// TODO [hbuhl] Complete more elaborate testing setup in this class and copy it to other classes + test all cases!
 
 // TODO Swagger doc
 // TODO What about other documentation?

@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.evatool.impact.application.dto.mapper.StakeholderMapper.fromDto;
-import static com.evatool.impact.application.dto.mapper.StakeholderMapper.toDto;
-
 @RestController
 public class ImpactStakeholderRestController {
     @Autowired
@@ -23,28 +20,24 @@ public class ImpactStakeholderRestController {
 
     @GetMapping(StakeholderRestUri.GET_STAKEHOLDER_URI)
     public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
-        var stakeholder = stakeholderService.findStakeholderById(id);
-        return new ResponseEntity<>(toDto(stakeholder), HttpStatus.OK);
+        var stakeholderDto = stakeholderService.findStakeholderById(id);
+        return new ResponseEntity<>(stakeholderDto, HttpStatus.OK);
     }
 
     @GetMapping(StakeholderRestUri.GET_ALL_STAKEHOLDERS_URI)
     public List<StakeholderDto> getAllStakeholders() {
-        var stakeholders = stakeholderService.getAllStakeholders();
-        var stakeholderDtoList = new ArrayList<StakeholderDto>();
-        stakeholders.forEach(s -> stakeholderDtoList.add(toDto(s)));
+        var stakeholderDtoList = stakeholderService.getAllStakeholders();
         return stakeholderDtoList;
     }
 
     @PostMapping(StakeholderRestUri.CREATE_STAKEHOLDER_URI)
     public ResponseEntity<StakeholderDto> createStakeholder(@RequestBody StakeholderDto stakeholderDto) {
-        var stakeholder = stakeholderService.createStakeholder(fromDto(stakeholderDto));
-        return new ResponseEntity<>(toDto(stakeholder), HttpStatus.CREATED);
+        return new ResponseEntity<>(stakeholderService.createStakeholder(stakeholderDto), HttpStatus.CREATED);
     }
 
     @PutMapping(StakeholderRestUri.UPDATE_STAKEHOLDER_URI)
     public ResponseEntity<StakeholderDto> updateStakeholder(@RequestBody StakeholderDto stakeholderDto) throws EntityNotFoundException, IdNullException {
-        var stakeholder = stakeholderService.updateStakeholder(fromDto(stakeholderDto));
-        return new ResponseEntity<>(toDto(stakeholder), HttpStatus.OK);
+        return new ResponseEntity<>(stakeholderService.updateStakeholder(stakeholderDto), HttpStatus.OK);
     }
 
     @DeleteMapping(StakeholderRestUri.DELETE_STAKEHOLDER_URI)

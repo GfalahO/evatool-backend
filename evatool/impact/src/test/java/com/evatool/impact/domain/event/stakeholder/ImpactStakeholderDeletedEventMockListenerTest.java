@@ -1,6 +1,6 @@
 package com.evatool.impact.domain.event.stakeholder;
 
-import com.evatool.impact.TestSettings;
+import com.evatool.impact.common.TestSettings;
 import com.evatool.impact.domain.event.TestEvent;
 import org.awaitility.core.ConditionFactory;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.Duration;
 
-import static com.evatool.impact.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
