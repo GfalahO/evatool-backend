@@ -58,6 +58,11 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>2.4.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.evatool</groupId>
+            <artifactId>variants</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
