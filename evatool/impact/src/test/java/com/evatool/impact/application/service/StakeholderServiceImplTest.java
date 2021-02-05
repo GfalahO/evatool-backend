@@ -5,6 +5,7 @@ import com.evatool.impact.common.exception.EntityNullException;
 import com.evatool.impact.common.exception.IdNullException;
 import com.evatool.impact.domain.entity.Stakeholder;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,15 +28,19 @@ public class StakeholderServiceImplTest {
     StakeholderService stakeholderService;
 
     @BeforeEach
-    void clear() throws IdNullException, EntityNotFoundException {
-        var entities = stakeholderService.getAllStakeholders();
-        for (var entity : entities) {
-            stakeholderService.deleteStakeholderById(entity.getId());
-        }
+    void clearData() {
+        stakeholderService.deleteStakeholders();
+    }
+
+    void insertStakeholder() {
+        var stakeholder = getStakeholder();
+        var insertedStakeholder = stakeholderService.createStakeholder(stakeholder);
     }
 
     @Nested
     public class GetById {
+        // TODO: [hbuhl] Normal case test
+
         @Test
         public void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
             // given
@@ -65,10 +70,9 @@ public class StakeholderServiceImplTest {
         @Test
         public void testGetAllStakeholders_InsertedStakeholder_ReturnStakeholder() {
             // given
-            var stakeholder1 = getStakeholder();
+            insertStakeholder();
 
             // when
-            var insertedStakeholder = stakeholderService.createStakeholder(stakeholder1);
             var stakeholders = stakeholderService.getAllStakeholders();
 
             // then
@@ -78,13 +82,12 @@ public class StakeholderServiceImplTest {
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
+            // given
             for (int i = 0; i < value; i++) {
-                // given
-                var stakeholder = getStakeholder();
-
-                // when
-                var insertedStakeholder = stakeholderService.createStakeholder(stakeholder);
+                insertStakeholder();
             }
+
+            // when
             var stakeholders = stakeholderService.getAllStakeholders();
 
             // then

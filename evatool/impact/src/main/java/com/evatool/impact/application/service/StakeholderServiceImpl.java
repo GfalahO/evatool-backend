@@ -58,4 +58,10 @@ public class StakeholderServiceImpl implements StakeholderService {
         var stakeholder = this.findStakeholderById(id);
         stakeholderRepository.delete(stakeholder);
     }
+
+    // TODO: [hbuhl] Write tests?
+    @Override
+    public void deleteStakeholders() {
+        stakeholderRepository.deleteAll();
+    }
 }

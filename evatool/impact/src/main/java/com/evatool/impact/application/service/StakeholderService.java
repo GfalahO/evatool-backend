@@ -11,9 +11,11 @@ public interface StakeholderService {
 
     List<Stakeholder> getAllStakeholders();
 
-    Stakeholder createStakeholder(Stakeholder stakeholderDto);
+    Stakeholder createStakeholder(Stakeholder stakeholder);
 
-    Stakeholder updateStakeholder(Stakeholder stakeholderDto) throws EntityNotFoundException, IdNullException;
+    Stakeholder updateStakeholder(Stakeholder stakeholder) throws EntityNotFoundException, IdNullException;
 
     void deleteStakeholderById(String id) throws EntityNotFoundException, IdNullException;
+
+    void deleteStakeholders();
 }
