@@ -7,9 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name = "REQUIREMENT")
+// renamed because the entity is owned by another module and they have already used up the name 'Requirement'
+@Entity(name = "VARIANTS_REQUIREMENT")
 @Getter
-public class Requirement {
+public class VariantsRequirement {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
