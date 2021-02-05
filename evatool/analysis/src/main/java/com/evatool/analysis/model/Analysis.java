@@ -1,9 +1,8 @@
-package com.FAE.EVATool.Analysis.Model;
+package com.evatool.analysis.model;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.context.annotation.Bean;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -16,8 +15,9 @@ import java.util.Set;
 @Table(name = "project_analysis")
 public class Analysis {
 
-    @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid",
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid",
             strategy = "uuid")
     @Getter
     private String analysisId;
@@ -37,7 +37,7 @@ public class Analysis {
     private String description;
 
     /**
-     * The User of the Analysis {@link List<User>}
+     * The User of the Analysis {@link java.util.List<User>}
      * Referenz zum User
      */
     @Getter
@@ -46,7 +46,7 @@ public class Analysis {
     private Set<User> analysisUserId;
 
     /**
-     * The Stakeholder of the Analysis {@link List<Stakeholder>}
+     * The Stakeholder of the Analysis {@link java.util.List<Stakeholder>}
      * Referenz zum Stakholder
      */
     @Getter
@@ -54,5 +54,6 @@ public class Analysis {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Stakeholder> analysisStakeholderId;
 
-    public Analysis() {}
+    public Analysis() {
+    }
 }

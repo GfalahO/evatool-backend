@@ -1,22 +1,24 @@
-package com.FAE.EVATool.Analysis.Model;
+package com.evatool.analysis.model;
 
-import com.FAE.EVATool.Analysis.Enum.StakeholderRules;
-import com.sun.istack.NotNull;
+import com.evatool.analysis.enums.StakeholderRules;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * @author fobaidi
  * @author MHallweg
  */
 @Entity
-public class Stakeholder{
+public class Stakeholder {
 
-    @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid",
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid",
             strategy = "uuid")
     @Getter
     private String stakeholderId;
@@ -41,6 +43,5 @@ public class Stakeholder{
     @Getter
     @Setter
     private StakeholderRules stakeholderRule;
-
 
 }

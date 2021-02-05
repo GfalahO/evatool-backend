@@ -1,20 +1,20 @@
-package com.FAE.EVATool.Analysis.Enum;
+package com.evatool.analysis.enums;
 
 import com.sun.istack.NotNull;
 
 /**
  * This Enum represents the Stakeholder Rules
+ *
  * @author fobaidi
  * @author MHallweg
  */
 public enum StakeholderRules {
 
+    naturalPerson("natural person"),
+    organization("organization"),
+    society("society");
 
-     naturalPerson("natural person"),
-     organization ("organization"),
-     society ("society");
-
-     private String stakeholderrule;
+    private String stakeholderrule;
 
     StakeholderRules(String stakeholderrule) {
         this.stakeholderrule = stakeholderrule;

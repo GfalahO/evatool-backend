@@ -1,11 +1,10 @@
-package com.FAE.EVATool.Analysis.Repository;
+package com.evatool.analysis.repository;
 
-import com.FAE.EVATool.Analysis.Model.User;
+import com.evatool.analysis.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
-
 
 }

@@ -1,9 +1,9 @@
-package com.FAE.EVATool.Analysis.Model;
+package com.evatool.analysis.model;
 
-import com.FAE.EVATool.Analysis.Enum.StakeholderRules;
-import com.FAE.EVATool.Analysis.Repository.AnalysisRepository;
-import com.FAE.EVATool.Analysis.Repository.StakeholderRepository;
-import com.FAE.EVATool.Analysis.Repository.UserRepository;
+import com.evatool.analysis.enums.StakeholderRules;
+import com.evatool.analysis.repository.AnalysisRepository;
+import com.evatool.analysis.repository.StakeholderRepository;
+import com.evatool.analysis.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +20,7 @@ public class Sampledata {
     private AnalysisRepository analysisRepository;
 
     User user = new User();
+
     public void creatUser() {
 
         user.setUserName("Falah Obaidi");
@@ -28,6 +29,7 @@ public class Sampledata {
 
         userRepository.save(user);
     }
+
     public void creatStakeholder() {
         Stakeholder stakeholder = new Stakeholder();
         stakeholder.setStakeholderName("Falah Obaid");
@@ -48,8 +50,8 @@ public class Sampledata {
     }
 
     public void loadUser() {
-       Optional<User> falah = userRepository.findById(user.getUserId());
-       System.out.println(falah.get().getUserName());
+        Optional<User> falah = userRepository.findById(user.getUserId());
+        System.out.println(falah.get().getUserName());
 
     }
 

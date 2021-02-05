@@ -1,4 +1,4 @@
-package com.FAE.EVATool.Analysis.Model;
+package com.evatool.analysis.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RunampledataCreation implements ApplicationListener<ContextRefreshedEvent> {
-
 
     @Autowired
     private Sampledata userSampledata;

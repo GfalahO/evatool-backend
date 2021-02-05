@@ -1,6 +1,6 @@
-package com.FAE.EVATool.Analysis.API.Controller;
+package com.evatool.analysis.api.controller;
 
-import com.FAE.EVATool.Analysis.API.Interfaces.UserController;
+import com.evatool.analysis.api.interfaces.UserController;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

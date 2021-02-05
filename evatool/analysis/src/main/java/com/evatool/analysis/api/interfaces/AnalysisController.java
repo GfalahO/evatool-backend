@@ -1,7 +1,6 @@
-package com.FAE.EVATool.Analysis.API.Interfaces;
+package com.evatool.analysis.api.interfaces;
 
-import com.FAE.EVATool.Analysis.Model.Analysis;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.evatool.analysis.model.Analysis;
 
 public interface AnalysisController {
 
