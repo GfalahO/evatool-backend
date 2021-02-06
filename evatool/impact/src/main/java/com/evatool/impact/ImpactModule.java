@@ -3,7 +3,6 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO [hbuhl] dto dimension type test
 // TODO [hbuhl] Use Rest level 3 in all Stakeholder Rest APIs (what links are necessary?)
 
 // TODO [hbuhl] Better testing data setup.
