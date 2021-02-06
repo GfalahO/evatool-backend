@@ -1,57 +1,60 @@
 package com.evatool.requirements.controller;
 
+import com.evatool.requirements.entity.RequirementsImpacts;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementGR;
-import com.evatool.requirements.entity.RequirementsImpact;
-import com.evatool.requirements.repository.RequirementGRRepository;
+import com.evatool.requirements.repository.InpactsRepository;
 import com.evatool.requirements.repository.RequirementRepository;
-import com.evatool.requirements.repository.RequirementsImpactRepository;
+import com.evatool.requirements.repository.RequirementGRRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-@RequestMapping("requirements")
 public class RequirementGRController {
 
-    @Autowired
-    private RequirementGRRepository requirementGRRepository;
+	@Autowired
+	private RequirementGRRepository requirement_grRepository;
 
-    @Autowired
-    private RequirementRepository requirementRepository;
+	@Autowired
+	private RequirementRepository requirementRepository;
 
-    @Autowired
-    private RequirementsImpactRepository requirementsImpactRepository;
+	@Autowired
+	private InpactsRepository inpactsRepository;
 
-    @GetMapping("/requirement_gr")
-    public List<RequirementGR> getRequirementGrList() {
-        return requirementGRRepository.findAll();
-    }
+	@GetMapping("/requirement_gr")
+	public List<RequirementGR> getRequirement_grList() {
+		return requirement_grRepository.findAll();
+	}
 
-    @GetMapping("/requirement_gr/{id}")
-    public Optional<RequirementGR> getRequirementGrById(@PathVariable UUID id) {
-        return requirementGRRepository.findById(id);
-    }
 
-    @GetMapping("/requirement_gr/{id}/impact/requirement")
-    public Collection<Requirement> getRequirementGrByImpact(@PathVariable UUID id) {
-        Optional<RequirementsImpact> impact = requirementsImpactRepository.findById(id);
-        if (impact.get() == null) return null;
-        List<Requirement> requirementList = new ArrayList<>();
-        requirementGRRepository.findByRequirementsImpact(impact.get()).forEach(e -> requirementList.add(e.getRequirement()));
-        return requirementList;
-    }
 
-    @GetMapping("/requirement_gr/{id}/requirement/impacts")
-    public Collection<RequirementsImpact> getRequirementGRByRequirement(@PathVariable UUID id) {
-        Optional<Requirement> requirement = requirementRepository.findById(id);
-        if (requirement.get() == null) return null;
-        List<RequirementsImpact> requirementsImpactList = new ArrayList<>();
-        requirementGRRepository.findByRequirement(requirement.get()).forEach(e -> requirementsImpactList.add(e.getRequirementsImpact()));
-        return requirementsImpactList;
-    }
+	@GetMapping("/requirement_gr/{id}")
+	public Optional<RequirementGR> getRequirement_grById(@PathVariable UUID id) {
+		return requirement_grRepository.findById(id);
+	}
+
+	@GetMapping("/requirement_gr/{id}/inpacts/requirement")
+	public Collection<Requirement> getRequirement_grByInpact(@PathVariable UUID id) {
+		Optional<RequirementsImpacts> inpacts = inpactsRepository.findById(id);
+		if(inpacts.get()==null) return null;
+		List<Requirement> requirementList = new ArrayList<>();
+		requirement_grRepository.findByRequirementsImpacts(inpacts.get()).forEach(e->requirementList.add(e.getRequirement()));
+		return requirementList;
+	}
+
+	@GetMapping("/requirement_gr/{id}/requirement/inpacts")
+	public Collection<RequirementsImpacts> getRequirement_grByRequirement(@PathVariable UUID id) {
+		Optional<Requirement> requirement = requirementRepository.findById(id);
+		if(requirement.get()==null) return null;
+		List<RequirementsImpacts> requirementsImpactsList = new ArrayList<>();
+		requirement_grRepository.findByRequirement(requirement.get()).forEach(e-> requirementsImpactsList.add(e.getRequirementsImpacts()));
+		return requirementsImpactsList;
+	}
+
+	public Collection<RequirementGR> getRequirement_grByRequirementList(Requirement requirement, RequirementsImpacts requirementsImpacts)
+	{
+		return requirement_grRepository.findByRequirementAndRequirementsImpacts(requirement, requirementsImpacts);
+	}
 }

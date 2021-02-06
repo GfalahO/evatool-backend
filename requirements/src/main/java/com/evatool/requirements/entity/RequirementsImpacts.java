@@ -1,24 +1,34 @@
+
 package com.evatool.requirements.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class ScenarioVariants {
+public class RequirementsImpacts {
 
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private UUID id = UUID.randomUUID();
     private String titel;
     private String description;
+    private int value;
 
-    public ScenarioVariants() {
+    private Dimension dimension;
+
+    public RequirementsImpacts() {
     }
 
-    public ScenarioVariants(String titel, String description) {
+    public RequirementsImpacts(String titel, String description, int value, Dimension dimension) {
         this.titel = titel;
         this.description = description;
+        this.value = value;
+        this.dimension=dimension;
+    }
+
+    public enum Dimension{
+        SAFETY,PRIVAT
     }
 
     public String getTitel() {
@@ -35,6 +45,22 @@ public class ScenarioVariants {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public Dimension getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(Dimension dimension) {
+        this.dimension = dimension;
     }
 
     public UUID getId() {

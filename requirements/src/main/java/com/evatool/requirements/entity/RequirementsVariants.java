@@ -4,24 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.UUID;
 
-// renamed because the entity is owned by another module and they have already used up the name 'Stakeholder'
 @Entity
-public class RequirementsStakeholder {
+public class RequirementsVariants {
 
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private UUID id = UUID.randomUUID();
     private String titel;
+    private String description;
 
-    public RequirementsStakeholder() {
+
+    public RequirementsVariants() {
     }
 
-    public RequirementsStakeholder(String titel) {
+    public RequirementsVariants(String titel, String description) {
         this.titel = titel;
-    }
-
-    public enum Dimension {
-        SAFETY, PRIVAT
+        this.description = description;
     }
 
     public String getTitel() {
@@ -30,6 +27,14 @@ public class RequirementsStakeholder {
 
     public void setTitel(String titel) {
         this.titel = titel;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public UUID getId() {
