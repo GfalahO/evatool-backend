@@ -5,11 +5,11 @@ import com.evatool.impact.ModuleSettings;
 public class ImpactRestUri {
     public static final String IMPACT_REST_CONTROLLER_MAPPING = ModuleSettings.BASE_URI;
 
-    public static final String GET_IMPACT = "dimension";
-    public static final String GET_IMPACTS = "dimensions";
-    public static final String POST_IMPACT = "dimension";
-    public static final String PUT_IMPACT = "dimension";
-    public static final String DELETE_IMPACT = "dimension";
+    public static final String GET_IMPACT = "impact";
+    public static final String GET_IMPACTS = "impacts";
+    public static final String POST_IMPACT = "impact";
+    public static final String PUT_IMPACT = "impact";
+    public static final String DELETE_IMPACT = "impact";
 
     public static final String GET_IMPACT_MAPPING = "/" + GET_IMPACT + "/{id}";
     public static final String GET_IMPACTS_MAPPING = "/" + GET_IMPACTS;

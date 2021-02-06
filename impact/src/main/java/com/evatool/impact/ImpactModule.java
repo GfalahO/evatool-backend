@@ -3,10 +3,10 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO [hbuhl] Implemenet Dimension + Tests
+// TODO run all modules tests
 
-// TODO [tzaika] Implement Impact + Tests
-
+// TODO [tzaika] Implemenet Dimension Tests
+// TODO [tzaika] Implement Impact Tests
 // TODO [tzaika] Test if real events are asynchronous
 
 // TODO [tzaika & hbuhl] Swagger doc

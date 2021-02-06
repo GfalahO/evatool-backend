@@ -78,8 +78,6 @@ public class ImpactServiceImpl implements ImpactService {
             var dimension = dimensionRepository.findById(impactDto.getDimensionId());
             if (!dimension.isEmpty()) {
                 impact.setDimension(dimension.get());
-            } else {
-                // TODO [tzaika] Throw exception or reset relation?
             }
         }
         if (impactDto.getStakeholderId() != null) {
