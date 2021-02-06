@@ -1,8 +1,6 @@
 package com.evatool.impact.domain.event.stakeholder;
 
-import com.evatool.impact.common.TestSettings;
 import com.evatool.impact.domain.event.TestEvent;
-import org.awaitility.core.ConditionFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,10 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Duration;
 
 import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
 import static org.awaitility.Awaitility.await;

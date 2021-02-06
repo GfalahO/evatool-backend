@@ -3,8 +3,6 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO [hbuhl] Use real database for tests (toggle between in-memory and real db). Overkill? Not necessary?
-
 // TODO [hbuhl] Implemenet Dimension + Tests
 
 // TODO [tzaika] Implement Impact + Tests

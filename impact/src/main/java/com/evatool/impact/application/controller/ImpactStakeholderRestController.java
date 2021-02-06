@@ -62,8 +62,8 @@ public class ImpactStakeholderRestController {
     @DeleteMapping(DELETE_STAKEHOLDER_MAPPING)
     public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws EntityNotFoundException {
         stakeholderService.deleteStakeholderById(id);
-        // TODO: Return links?
-        // TODO: Return noContent?
+        // TODO [hbuhl] Return links?
+        // TODO [hbuhl] Return noContent?
         return ResponseEntity.ok().build();
     }
 
