@@ -3,17 +3,24 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO [hbuhl] determine what needs to be tested where.
-// TODO [hbuhl] make all tests more entity agnostic (variable names)
-// TODO [hbuhl] Better testing data setup.
-// TODO [hbuhl] Use real database for tests (toggle between in-memory and real db)
-// TODO [hbuhl] Complete more elaborate testing setup in this class and copy it to other classes + test all cases!
+// TODO [hbuhl] Mock away async behaviour in event tests
+// TODO [hbuhl] dto dimension type test
 // TODO [hbuhl] Use Rest level 3 in all Stakeholder Rest APIs (what links are necessary?)
 
-// TODO Swagger doc
-// TODO What about other documentation?
-// TODO API Specification
-// TODO Eventing Specification
+// TODO [hbuhl] Better testing data setup.
+// TODO [hbuhl] make all tests more entity agnostic (variable names)
+
+// TODO [hbuhl] determine what needs to be tested where.
+// TODO [hbuhl] Complete more elaborate testing setup in this class and copy it to other classes + test all cases!
+
+// TODO [hbuhl] Use real database for tests (toggle between in-memory and real db). Overkill? Not necessary?
+
+
+
+// TODO [tzaika & hbuhl] Swagger doc
+// TODO [tzaika & hbuhl] What about other documentation?
+// TODO [tzaika & hbuhl] API Specification
+// TODO [tzaika & hbuhl] Eventing Specification
 
 @SpringBootApplication
 public class ImpactModule {
