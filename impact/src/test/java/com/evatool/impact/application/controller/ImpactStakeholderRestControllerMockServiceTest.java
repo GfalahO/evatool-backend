@@ -4,6 +4,7 @@ import com.evatool.impact.application.controller.uri.StakeholderRestUri;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.ImpactStakeholderService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.handle.ErrorMessage;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
