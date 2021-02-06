@@ -21,15 +21,15 @@ public class SuperEntity {
 
     // Allowed transitions: null -> null and null -> valid.
     public void setId(String id) throws IllegalArgumentException {
-        if (idExists()) {
+        if (this.idAlreadySet()) {
             throw new PropertyViolationException("Existing id cannot be set.");
-        } else if (id != null && !idIsValid(id)) {
+        } else if (id != null && !this.idIsValid(id)) {
             throw new PropertyViolationException("Id must be a valid UUID.");
         }
         this.id = id;
     }
 
-    private boolean idExists() {
+    private boolean idAlreadySet() {
         return this.id != null;
     }
 
