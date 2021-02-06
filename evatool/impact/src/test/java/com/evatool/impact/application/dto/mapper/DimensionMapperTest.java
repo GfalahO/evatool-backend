@@ -42,7 +42,7 @@ public class DimensionMapperTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"ECONOMICd", "SOsCIAL", "economiac", "soscial", "Sodcial", "Econdomic"})
+    @ValueSource(strings = {"", "null", "ECONOMICd", "SOsCIAL", "economiac", "soscial", "Sodcial", "Econdomic"})
     public void testFromDto_IllegalTypeValues_DoThrowException(String value) {
         // given
         var dto = getDimensionDto();
