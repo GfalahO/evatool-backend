@@ -25,6 +25,7 @@ public class GlobalExceptionHandler {
     }
 
     // TODO [tzaika] This causes some tests to fail. Fix or omit completely?
+    // This happens by default so its kinda useless.
     //@ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> handleException(Exception exception, WebRequest webRequest) {
         var errorMessage = new ErrorMessage(exception.getMessage());
