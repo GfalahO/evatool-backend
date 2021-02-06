@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Impact Module All Tests" type="JUnit" factoryName="JUnit">
+  <configuration default="false" name="Impact Module Tests" type="JUnit" factoryName="JUnit">
     <module name="impact" />
     <option name="PACKAGE_NAME" value="com.evatool.impact" />
     <option name="MAIN_CLASS_NAME" value="" />
