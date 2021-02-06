@@ -23,10 +23,6 @@ import static org.mockito.Mockito.verify;
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
 public class ImpactStakeholderUpdatedEventMockListenerTest {
-    public static final ConditionFactory WAIT = await()
-            .atMost(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT))
-            .pollInterval(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT_POLL));
-
     @Autowired
     private StakeholderUpdatedEventPublisher stakeholderUpdatedEventPublisher;
 

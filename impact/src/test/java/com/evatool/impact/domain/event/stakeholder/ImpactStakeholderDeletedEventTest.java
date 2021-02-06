@@ -17,10 +17,6 @@ import static org.awaitility.Awaitility.await;
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
 public class ImpactStakeholderDeletedEventTest {
-    public static final ConditionFactory WAIT = await()
-            .atMost(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT))
-            .pollInterval(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT_POLL));
-
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
 

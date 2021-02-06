@@ -6,6 +6,7 @@ import java.time.Duration;
 
 import static org.awaitility.Awaitility.await;
 
+// TODO: Remove
 public class TestSettings {
     public static final int WAIT_MILLIS_FOR_ASYNC_EVENT = 100;
     public static final int WAIT_MILLIS_FOR_ASYNC_EVENT_POLL = 10;
