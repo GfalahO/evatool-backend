@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [tzaika] Implement Impact Tests
 // TODO [tzaika] Test if real events are asynchronous
 
-// TODO [tzaika & hbuhl] Swagger doc
-// TODO [tzaika & hbuhl] What about other documentation?
 // TODO [tzaika & hbuhl] API Specification
 // TODO [tzaika & hbuhl] Eventing Specification
 
