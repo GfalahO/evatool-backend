@@ -24,7 +24,7 @@ public class DimensionMapperTest {
         // then
         assertThat(dimension.getId()).isEqualTo(dimensionDto.getId());
         assertThat(dimension.getName()).isEqualTo(dimensionDto.getName());
-        assertThat(dimension.getType()).isEqualTo(dimensionDto.getType());
+        assertThat(dimension.getType().toString()).isEqualTo(dimensionDto.getType());
         assertThat(dimension.getDescription()).isEqualTo(dimension.getDescription());
     }
 
