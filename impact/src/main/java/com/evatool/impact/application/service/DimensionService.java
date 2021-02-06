@@ -1,19 +1,20 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.domain.entity.Dimension;
 
 import java.util.List;
 
 public interface DimensionService {
+    DimensionDto findDimensionById(String id) throws EntityNotFoundException;
 
-    Dimension findDimensionById(String id) throws EntityNotFoundException;
+    List<DimensionDto> getAllDimensions();
 
-    List<Dimension> getAllDimensions();
+    DimensionDto createDimension(DimensionDto dimensionDto);
 
-    Dimension createDimension(Dimension dimension);
-
-    Dimension updateDimension(Dimension dimension) throws EntityNotFoundException;
+    DimensionDto updateDimension(DimensionDto dimensionDto) throws EntityNotFoundException;
 
     void deleteDimensionById(String id) throws EntityNotFoundException;
+
+    void deleteDimensions();
 }

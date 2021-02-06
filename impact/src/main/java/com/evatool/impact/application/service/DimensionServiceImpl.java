@@ -1,46 +1,53 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.impact.common.Convert;
+import com.evatool.impact.application.dto.DimensionDto;
+import com.evatool.impact.application.dto.mapper.DimensionMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DimensionServiceImpl implements DimensionService {
-
     @Autowired
     private DimensionRepository dimensionRepository;
 
     @Override
-    public Dimension findDimensionById(String id) throws EntityNotFoundException {
+    public DimensionDto findDimensionById(String id) throws EntityNotFoundException {
+        if (id == null) {
+            throw new EntityNotFoundException(Dimension.class, "null");
+        }
         var dimension = dimensionRepository.findById(id);
         if (dimension.isEmpty()) {
             throw new EntityNotFoundException(Dimension.class, id);
         }
-        return dimension.get();
+        var dimensionDto = DimensionMapper.toDto(dimension.get());
+        return dimensionDto;
     }
 
     @Override
-    public List<Dimension> getAllDimensions() {
+    public List<DimensionDto> getAllDimensions() {
         var dimensions = dimensionRepository.findAll();
-        return Convert.iterableToList(dimensions);
+        var dimensionDtoList = new ArrayList<DimensionDto>();
+        dimensions.forEach(s -> dimensionDtoList.add(DimensionMapper.toDto(s)));
+        return dimensionDtoList;
     }
 
     @Override
-    public Dimension createDimension(Dimension dimension) {
-        return dimensionRepository.save(dimension);
+    public DimensionDto createDimension(DimensionDto dimensionDto) {
+        var dimension = dimensionRepository.save(DimensionMapper.fromDto(dimensionDto));
+        return DimensionMapper.toDto(dimension);
     }
 
     @Override
-    public Dimension updateDimension(Dimension dimension) throws EntityNotFoundException {
-        if (dimensionRepository.findById(dimension.getId()).isEmpty()) {
-            throw new EntityNotFoundException(Dimension.class, dimension.getId());
-        }
-        return dimensionRepository.save(dimension);
+    public DimensionDto updateDimension(DimensionDto dimensionDto) throws EntityNotFoundException {
+        this.findDimensionById(dimensionDto.getId());
+        var dimension = DimensionMapper.fromDto(dimensionDto);
+        return DimensionMapper.toDto(dimensionRepository.save(dimension));
     }
 
     @Override
@@ -50,5 +57,10 @@ public class DimensionServiceImpl implements DimensionService {
             throw new EntityNotFoundException(Dimension.class, id);
         }
         dimensionRepository.delete(dimension.get());
+    }
+
+    @Override
+    public void deleteDimensions() {
+        dimensionRepository.deleteAll();
     }
 }
