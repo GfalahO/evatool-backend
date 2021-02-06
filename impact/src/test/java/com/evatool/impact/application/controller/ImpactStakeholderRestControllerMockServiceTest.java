@@ -131,7 +131,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             when(stakeholderService.createStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
 
             // then
-            mvc.perform(post(StakeholderRestUri.buildCreateStakeholderUri()).content(new ObjectMapper().writeValueAsString(stakeholder))
+            mvc.perform(post(StakeholderRestUri.buildPostStakeholderUri()).content(new ObjectMapper().writeValueAsString(stakeholder))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isCreated())
@@ -155,7 +155,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             when(stakeholderService.updateStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
 
             // then
-            mvc.perform(put(StakeholderRestUri.buildUpdateStakeholderUri("dummy_id")).content(new ObjectMapper().writeValueAsString(stakeholder))
+            mvc.perform(put(StakeholderRestUri.buildPutStakeholderUri("dummy_id")).content(new ObjectMapper().writeValueAsString(stakeholder))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
