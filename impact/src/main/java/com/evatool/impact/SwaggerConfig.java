@@ -1,5 +1,6 @@
 package com.evatool.impact;
 
+import com.evatool.impact.common.ModuleSettings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,7 +33,8 @@ public class SwaggerConfig {
     }
 
     private Predicate<String> postPaths() {
-        return or(regex("/api/posts.*"), regex("/api/javainuse.*"));
+        return or(regex(ModuleSettings.BASE_URI + "/posts.*"), regex(ModuleSettings.BASE_URI + "/javainuse.*"));
+        //return or(regex("/api/posts.*"), regex("/api/javainuse.*"));
     }
 
     private ApiInfo apiInfo() {
