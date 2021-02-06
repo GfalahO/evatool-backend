@@ -1,6 +1,6 @@
 package com.evatool.impact.application.controller.uri;
 
-import com.evatool.impact.ModuleSettings;
+import com.evatool.impact.common.ModuleSettings;
 
 public class DimensionRestUri {
     public static final String DIMENSION_REST_CONTROLLER_MAPPING = ModuleSettings.BASE_URI;

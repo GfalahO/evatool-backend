@@ -1,6 +1,6 @@
 package com.evatool.impact.application.controller.uri;
 
-import com.evatool.impact.ModuleSettings;
+import com.evatool.impact.common.ModuleSettings;
 
 public class ImpactRestUri {
     public static final String IMPACT_REST_CONTROLLER_MAPPING = ModuleSettings.BASE_URI;
