@@ -1,8 +1,6 @@
 package com.evatool.impact.common.exception.handle;
 
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.EntityNullException;
-import com.evatool.impact.common.exception.IdNullException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,20 +14,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest webRequest) {
         var errorMessage = new ErrorMessage(exception.getMessage());
         var responseEntity = new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-        return responseEntity;
-    }
-
-    @ExceptionHandler(IdNullException.class)
-    public ResponseEntity<ErrorMessage> handleIdNullException(IdNullException exception, WebRequest webRequest) {
-        var errorMessage = new ErrorMessage(exception.getMessage());
-        var responseEntity = new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-        return responseEntity;
-    }
-
-    @ExceptionHandler(EntityNullException.class)
-    public ResponseEntity<ErrorMessage> handleEntityNullException(EntityNullException exception, WebRequest webRequest) {
-        var errorMessage = new ErrorMessage(exception.getMessage());
-        var responseEntity = new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
         return responseEntity;
     }
 

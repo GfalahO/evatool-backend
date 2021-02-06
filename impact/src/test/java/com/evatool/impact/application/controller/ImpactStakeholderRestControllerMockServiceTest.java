@@ -69,10 +69,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             mvc.perform(get(StakeholderRestUri.buildGetStakeholderUri(nonExistingId))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.message").value(EntityNotFoundException.MESSAGE_FORMAT
-                            .replaceFirst("%s", ImpactStakeholder.class.getSimpleName())
-                            .replaceFirst("%s", nonExistingId)));
+                    .andExpect(status().isNotFound());
         }
     }
 

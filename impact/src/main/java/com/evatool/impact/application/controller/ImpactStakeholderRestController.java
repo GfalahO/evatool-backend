@@ -1,12 +1,8 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.impact.application.controller.uri.RestSettings;
-import com.evatool.impact.application.controller.uri.StakeholderRestUri;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.ImpactStakeholderService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.IdNullException;
-import org.hibernate.loader.entity.plan.PaddedBatchingEntityLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +32,7 @@ public class ImpactStakeholderRestController {
     }
 
     @GetMapping(GET_STAKEHOLDER_MAPPING)
-    public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
+    public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException {
         var stakeholderDto = stakeholderService.findStakeholderById(id);
         addLinks(stakeholderDto);
         return new ResponseEntity(stakeholderDto, HttpStatus.OK);
@@ -57,14 +53,14 @@ public class ImpactStakeholderRestController {
     }
 
     @PutMapping(PUT_STAKEHOLDER_MAPPING)
-    public ResponseEntity<StakeholderDto> updateStakeholder(@RequestBody StakeholderDto stakeholderDto) throws EntityNotFoundException, IdNullException {
+    public ResponseEntity<StakeholderDto> updateStakeholder(@RequestBody StakeholderDto stakeholderDto) throws EntityNotFoundException {
         var updatedStakeholderDto = stakeholderService.updateStakeholder(stakeholderDto);
         addLinks(updatedStakeholderDto);
         return new ResponseEntity(updatedStakeholderDto, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE_STAKEHOLDER_MAPPING)
-    public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
+    public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws EntityNotFoundException {
         stakeholderService.deleteStakeholderById(id);
         // TODO: Return links?
         // TODO: Return noContent?

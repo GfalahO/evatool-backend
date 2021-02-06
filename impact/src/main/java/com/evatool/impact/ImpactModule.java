@@ -3,10 +3,6 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO [hbuhl] make code (business + tests) more entity agnostic (variable names)
-// TODO [hbuhl] determine what needs to be tested where.
-// TODO [hbuhl] Complete more elaborate testing setup.
-
 // TODO [hbuhl] Use real database for tests (toggle between in-memory and real db). Overkill? Not necessary?
 
 // TODO [hbuhl] Implemenet Dimension + Tests
