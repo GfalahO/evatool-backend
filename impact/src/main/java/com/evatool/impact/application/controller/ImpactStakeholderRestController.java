@@ -6,6 +6,7 @@ import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.ImpactStakeholderService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.IdNullException;
+import org.hibernate.loader.entity.plan.PaddedBatchingEntityLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,61 +15,69 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import static com.evatool.impact.application.controller.uri.RestSettings.*;
+import static com.evatool.impact.application.controller.uri.StakeholderRestUri.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping(StakeholderRestUri.IMPACT_STAKEHOLDER_REST_CONTROLLER_MAPPING)
+@RequestMapping(IMPACT_STAKEHOLDER_REST_CONTROLLER_MAPPING)
 public class ImpactStakeholderRestController {
     @Autowired
     private ImpactStakeholderService stakeholderService;
-
-    @GetMapping(StakeholderRestUri.GET_STAKEHOLDER_MAPPING)
-    public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
-        var stakeholderDto = stakeholderService.findStakeholderById(id);
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.GET_STAKEHOLDER).slash(id).withSelfRel());
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.GET_STAKEHOLDERS).withRel(RestSettings.GET_ALL_LINK));
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.POST_STAKEHOLDER).withRel(RestSettings.POST_LINK));
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.PUT_STAKEHOLDER).slash(id).withRel(RestSettings.PUT_LINK));
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.DELETE_STAKEHOLDER).slash(id).withRel(RestSettings.DELETE_LINK));
-        return new ResponseEntity<>(stakeholderDto, HttpStatus.OK);
-    }
 
     @GetMapping("/test/{id}")
     public ResponseEntity<StakeholderDto> getStakeholder_RestLevel3(@PathVariable String id) {
         var stakeholderDto = new StakeholderDto();
         stakeholderDto.setId(UUID.randomUUID().toString());
         stakeholderDto.setName("name");
-
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.GET_STAKEHOLDER).slash(id).withSelfRel());
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.GET_STAKEHOLDERS).withRel(RestSettings.GET_ALL_LINK));
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.POST_STAKEHOLDER).withRel(RestSettings.POST_LINK));
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.PUT_STAKEHOLDER).slash(id).withRel(RestSettings.PUT_LINK));
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(StakeholderRestUri.DELETE_STAKEHOLDER).slash(id).withRel(RestSettings.DELETE_LINK));
-
+        addLinks(stakeholderDto);
         var responseEntity = new ResponseEntity(stakeholderDto, HttpStatus.OK);
-        System.out.println(responseEntity);
         return responseEntity;
     }
 
-    @GetMapping(StakeholderRestUri.GET_STAKEHOLDERS_MAPPING)
+    @GetMapping(GET_STAKEHOLDER_MAPPING)
+    public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
+        var stakeholderDto = stakeholderService.findStakeholderById(id);
+        addLinks(stakeholderDto);
+        return new ResponseEntity(stakeholderDto, HttpStatus.OK);
+    }
+
+    @GetMapping(GET_STAKEHOLDERS_MAPPING)
     public List<StakeholderDto> getAllStakeholders() {
         var stakeholderDtoList = stakeholderService.getAllStakeholders();
+        stakeholderDtoList.forEach(s -> addLinks(s));
         return stakeholderDtoList;
     }
 
-    @PostMapping(StakeholderRestUri.POST_STAKEHOLDER_MAPPING)
+    @PostMapping(POST_STAKEHOLDER_MAPPING)
     public ResponseEntity<StakeholderDto> createStakeholder(@RequestBody StakeholderDto stakeholderDto) {
-        return new ResponseEntity<>(stakeholderService.createStakeholder(stakeholderDto), HttpStatus.CREATED);
+        var insertedStakeholderDto = stakeholderService.createStakeholder(stakeholderDto);
+        addLinks(insertedStakeholderDto);
+        return new ResponseEntity(insertedStakeholderDto, HttpStatus.CREATED);
     }
 
-    @PutMapping(StakeholderRestUri.PUT_STAKEHOLDER_MAPPING)
+    @PutMapping(PUT_STAKEHOLDER_MAPPING)
     public ResponseEntity<StakeholderDto> updateStakeholder(@RequestBody StakeholderDto stakeholderDto) throws EntityNotFoundException, IdNullException {
-        return new ResponseEntity<>(stakeholderService.updateStakeholder(stakeholderDto), HttpStatus.OK);
+        var updatedStakeholderDto = stakeholderService.updateStakeholder(stakeholderDto);
+        addLinks(updatedStakeholderDto);
+        return new ResponseEntity(updatedStakeholderDto, HttpStatus.OK);
     }
 
-    @DeleteMapping(StakeholderRestUri.DELETE_STAKEHOLDER_MAPPING)
+    @DeleteMapping(DELETE_STAKEHOLDER_MAPPING)
     public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws EntityNotFoundException, IdNullException {
         stakeholderService.deleteStakeholderById(id);
+        // TODO: Return links?
+        // TODO: Return noContent?
         return ResponseEntity.ok().build();
+    }
+
+    private void addLinks(StakeholderDto stakeholderDto) {
+        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(GET_STAKEHOLDERS).withRel(GET_ALL_LINK));
+        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(POST_STAKEHOLDER).withRel(POST_LINK));
+        if (stakeholderDto.getId() != null) {
+            stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(GET_STAKEHOLDER).slash(stakeholderDto.getId()).withSelfRel());
+            stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(PUT_STAKEHOLDER).slash(stakeholderDto.getId()).withRel(PUT_LINK));
+            stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(DELETE_STAKEHOLDER).slash(stakeholderDto.getId()).withRel(DELETE_LINK));
+        }
     }
 }

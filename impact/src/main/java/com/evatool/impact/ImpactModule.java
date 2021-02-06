@@ -3,11 +3,9 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO [hbuhl] Use Rest level 3 in all Stakeholder Rest APIs (what links are necessary?)
-
 // TODO [hbuhl] Better testing data setup.
 
-// TODO [hbuhl] make all tests more entity agnostic (variable names)
+// TODO [hbuhl] make code (business + tests) more entity agnostic (variable names)
 // TODO [hbuhl] determine what needs to be tested where.
 // TODO [hbuhl] Complete more elaborate testing setup in this class and copy it to other classes + test all cases!
 
