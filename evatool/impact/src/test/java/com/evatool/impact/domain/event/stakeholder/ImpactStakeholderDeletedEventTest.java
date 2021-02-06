@@ -6,6 +6,7 @@ import org.awaitility.core.ConditionFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
 
@@ -14,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 @SpringBootTest
+@ActiveProfiles(profiles = "non-async")
 public class ImpactStakeholderDeletedEventTest {
     public static final ConditionFactory WAIT = await()
             .atMost(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT))
@@ -38,8 +40,6 @@ public class ImpactStakeholderDeletedEventTest {
         stakeholderDeletedEventPublisher.onStakeholderDeleted(stakeholder);
 
         // then
-        WAIT.untilAsserted(() -> {
-            assertThat(stakeholderRepository.findById(stakeholder.getId()).isEmpty());
-        });
+        assertThat(stakeholderRepository.findById(stakeholder.getId()).isEmpty());
     }
 }

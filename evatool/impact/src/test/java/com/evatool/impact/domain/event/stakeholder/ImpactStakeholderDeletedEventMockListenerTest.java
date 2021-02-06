@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 
@@ -20,11 +23,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
+@ActiveProfiles(profiles = "non-async")
 public class ImpactStakeholderDeletedEventMockListenerTest {
-    public static final ConditionFactory WAIT = await()
-            .atMost(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT))
-            .pollInterval(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT_POLL));
-
     @Autowired
     private StakeholderDeletedEventPublisher stakeholderDeletedEventPublisher;
 
@@ -43,9 +43,7 @@ public class ImpactStakeholderDeletedEventMockListenerTest {
         stakeholderDeletedEventPublisher.onStakeholderDeleted(stakeholder);
 
         // then
-        WAIT.untilAsserted(() -> {
-            verify(stakeholderDeletedEventListener, times(1)).onApplicationEvent(any(StakeholderDeletedEvent.class));
-        });
+        verify(stakeholderDeletedEventListener, times(1)).onApplicationEvent(any(StakeholderDeletedEvent.class));
     }
 
     @ParameterizedTest
@@ -60,9 +58,7 @@ public class ImpactStakeholderDeletedEventMockListenerTest {
         }
 
         // then
-        WAIT.untilAsserted(() -> {
-            verify(stakeholderDeletedEventListener, times(value)).onApplicationEvent(any(StakeholderDeletedEvent.class));
-        });
+        verify(stakeholderDeletedEventListener, times(value)).onApplicationEvent(any(StakeholderDeletedEvent.class));
     }
 
     @Test
@@ -74,8 +70,6 @@ public class ImpactStakeholderDeletedEventMockListenerTest {
         applicationEventPublisher.publishEvent(new TestEvent(this));
 
         // then
-        WAIT.untilAsserted(() -> {
-            verify(stakeholderDeletedEventListener, times(0)).onApplicationEvent(any(StakeholderDeletedEvent.class));
-        });
+        verify(stakeholderDeletedEventListener, times(0)).onApplicationEvent(any(StakeholderDeletedEvent.class));
     }
 }

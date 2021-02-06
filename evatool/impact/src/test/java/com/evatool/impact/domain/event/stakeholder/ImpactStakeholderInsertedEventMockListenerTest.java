@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
 
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
+@ActiveProfiles(profiles = "non-async")
 public class ImpactStakeholderInsertedEventMockListenerTest {
     public static final ConditionFactory WAIT = await()
             .atMost(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT))
@@ -43,9 +45,7 @@ public class ImpactStakeholderInsertedEventMockListenerTest {
         stakeholderInsertedEventPublisher.onStakeholderInserted(stakeholder);
 
         // then
-        WAIT.untilAsserted(() -> {
-            verify(stakeholderInsertedEventListener, times(1)).onApplicationEvent(any(StakeholderInsertedEvent.class));
-        });
+        verify(stakeholderInsertedEventListener, times(1)).onApplicationEvent(any(StakeholderInsertedEvent.class));
     }
 
     @ParameterizedTest
@@ -60,9 +60,7 @@ public class ImpactStakeholderInsertedEventMockListenerTest {
         }
 
         // then
-        WAIT.untilAsserted(() -> {
-            verify(stakeholderInsertedEventListener, times(value)).onApplicationEvent(any(StakeholderInsertedEvent.class));
-        });
+        verify(stakeholderInsertedEventListener, times(value)).onApplicationEvent(any(StakeholderInsertedEvent.class));
     }
 
     @Test
@@ -74,8 +72,6 @@ public class ImpactStakeholderInsertedEventMockListenerTest {
         applicationEventPublisher.publishEvent(new TestEvent(this));
 
         // then
-        WAIT.untilAsserted(() -> {
-            verify(stakeholderInsertedEventListener, times(0)).onApplicationEvent(any(StakeholderInsertedEvent.class));
-        });
+        verify(stakeholderInsertedEventListener, times(0)).onApplicationEvent(any(StakeholderInsertedEvent.class));
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
 
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
+@ActiveProfiles(profiles = "non-async")
 public class ImpactStakeholderUpdatedEventMockListenerTest {
     public static final ConditionFactory WAIT = await()
             .atMost(Duration.ofMillis(TestSettings.WAIT_MILLIS_FOR_ASYNC_EVENT))
@@ -43,9 +45,7 @@ public class ImpactStakeholderUpdatedEventMockListenerTest {
         stakeholderUpdatedEventPublisher.onStakeholderUpdated(stakeholder);
 
         // then
-        WAIT.untilAsserted(() -> {
-            verify(stakeholderUpdatedEventListener, times(1)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
-        });
+        verify(stakeholderUpdatedEventListener, times(1)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
     }
 
     @ParameterizedTest
@@ -60,9 +60,7 @@ public class ImpactStakeholderUpdatedEventMockListenerTest {
         }
 
         // then
-        WAIT.untilAsserted(() -> {
-            verify(stakeholderUpdatedEventListener, times(value)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
-        });
+        verify(stakeholderUpdatedEventListener, times(value)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
     }
 
     @Test
@@ -74,8 +72,6 @@ public class ImpactStakeholderUpdatedEventMockListenerTest {
         applicationEventPublisher.publishEvent(new TestEvent(this));
 
         // then
-        WAIT.untilAsserted(() -> {
-            verify(stakeholderUpdatedEventListener, times(0)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
-        });
+        verify(stakeholderUpdatedEventListener, times(0)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
     }
 }

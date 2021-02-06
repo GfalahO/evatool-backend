@@ -3,7 +3,6 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO [hbuhl] Mock away async behaviour in event tests
 // TODO [hbuhl] dto dimension type test
 // TODO [hbuhl] Use Rest level 3 in all Stakeholder Rest APIs (what links are necessary?)
 
@@ -15,6 +14,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // TODO [hbuhl] Use real database for tests (toggle between in-memory and real db). Overkill? Not necessary?
 
+
+// TODO [tzaika] Test if real events are asynchronous
 
 
 // TODO [tzaika & hbuhl] Swagger doc
