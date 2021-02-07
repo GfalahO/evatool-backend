@@ -3,6 +3,8 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// TODO Tests for Rest level 3 links
+
 // TODO [tzaika] Implemenet Dimension Tests
 // TODO [tzaika] Implement Impact Tests
 // TODO [tzaika] Test if real events are asynchronous
