@@ -53,7 +53,7 @@ public class ImpactRestController {
         return ResponseEntity.ok().build();
     }
 
-    public static void addLinks(ImpactDto impactDto) {
+    private void addLinks(ImpactDto impactDto) {
         impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACTS).withRel(buildGetAllImpactsRel()));
         impactDto.add(linkTo(DimensionRestController.class).slash(POST_IMPACT).withRel(buildPostImpactRel()));
         if (impactDto.getId() != null) {

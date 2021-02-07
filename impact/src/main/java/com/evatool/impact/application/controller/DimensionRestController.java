@@ -53,7 +53,7 @@ public class DimensionRestController {
         return ResponseEntity.ok().build();
     }
 
-    public static void addLinks(DimensionDto dimensionDto) {
+    private void addLinks(DimensionDto dimensionDto) {
         dimensionDto.add(linkTo(DimensionRestController.class).slash(GET_DIMENSIONS).withRel(buildGetDimensionsRel()));
         dimensionDto.add(linkTo(DimensionRestController.class).slash(POST_DIMENSION).withRel(buildPostDimensionRel()));
         if (dimensionDto.getId() != null) {

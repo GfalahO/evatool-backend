@@ -64,7 +64,7 @@ public class ImpactStakeholderRestController {
         return ResponseEntity.ok().build();
     }
 
-    public static void addLinks(StakeholderDto stakeholderDto) {
+    private void addLinks(StakeholderDto stakeholderDto) {
         stakeholderDto.add(linkTo(DimensionRestController.class).slash(GET_STAKEHOLDERS).withRel(buildGetAllStakeholdersRel()));
         stakeholderDto.add(linkTo(DimensionRestController.class).slash(POST_STAKEHOLDER).withRel(buildPostStakeholderRel()));
         if (stakeholderDto.getId() != null) {
