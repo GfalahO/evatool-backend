@@ -3,14 +3,22 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// TODO [tzaika] Implement Dimension Tests
-// TODO [tzaika] Implement Impact Tests
+// Implement:
+    // TODO Better error handling for possible rest calls
+    // TODO Events
+
+// Tests:
+    // TODO [tzaika] Implement Dimension Tests
+    // TODO [tzaika] Implement Impact Tests
+    // TODO Controller util classes
+    // TODO Correct ErrorMessage return in RestController (Mock and integration test)
+    // TODO Correct Json of Rest Controller [Rest Level 3] (Mock tests only)
+    // TODO Event Tests
+
 // TODO [tzaika] Test if real events are asynchronous
 
 // TODO [tzaika & hbuhl] API Specification
 // TODO [tzaika & hbuhl] Eventing Specification
-
-// TODO Implement events and tests
 
 @SpringBootApplication
 public class ImpactModule {
