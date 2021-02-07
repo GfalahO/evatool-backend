@@ -23,13 +23,4 @@ public class GlobalExceptionHandler {
         var responseEntity = new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
         return responseEntity;
     }
-
-    // TODO [tzaika] This causes some tests to fail. Fix or omit completely?
-    // This happens by default so its kinda useless.
-    //@ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorMessage> handleException(Exception exception, WebRequest webRequest) {
-        var errorMessage = new ErrorMessage(exception.getMessage());
-        var responseEntity = new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
-        return responseEntity;
-    }
 }
