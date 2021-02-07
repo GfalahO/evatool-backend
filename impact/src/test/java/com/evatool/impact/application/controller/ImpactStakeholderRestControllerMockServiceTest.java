@@ -1,8 +1,8 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.impact.ImpactModule;
-import com.evatool.impact.SwaggerConfig;
-import com.evatool.impact.application.controller.uri.StakeholderUriSetting;
+import com.evatool.impact.common.config.SwaggerConfig;
+import com.evatool.impact.application.controller.util.StakeholderRest;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.ImpactStakeholderService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -54,7 +54,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             when(stakeholderService.findStakeholderById(anyString())).thenReturn(stakeholder);
 
             // then
-            mvc.perform(get(StakeholderUriSetting.buildGetStakeholderUri("dummy_id"))
+            mvc.perform(get(StakeholderRest.buildGetStakeholderUri("dummy_id"))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -70,7 +70,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             when(stakeholderService.findStakeholderById(anyString())).thenThrow(new EntityNotFoundException(ImpactStakeholder.class, nonExistingId));
 
             // then
-            mvc.perform(get(StakeholderUriSetting.buildGetStakeholderUri(nonExistingId))
+            mvc.perform(get(StakeholderRest.buildGetStakeholderUri(nonExistingId))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isNotFound());
@@ -90,7 +90,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             given(stakeholderService.getAllStakeholders()).willReturn(allStakeholders);
 
             // then
-            mvc.perform(get(StakeholderUriSetting.buildGetStakeholdersUri())
+            mvc.perform(get(StakeholderRest.buildGetStakeholdersUri())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -112,7 +112,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             given(stakeholderService.getAllStakeholders()).willReturn(allStakeholders);
 
             // then
-            mvc.perform(get(StakeholderUriSetting.buildGetStakeholdersUri())
+            mvc.perform(get(StakeholderRest.buildGetStakeholdersUri())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -132,7 +132,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             when(stakeholderService.createStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
 
             // then
-            mvc.perform(post(StakeholderUriSetting.buildPostStakeholderUri()).content(new ObjectMapper().writeValueAsString(stakeholder))
+            mvc.perform(post(StakeholderRest.buildPostStakeholderUri()).content(new ObjectMapper().writeValueAsString(stakeholder))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isCreated())
@@ -156,7 +156,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             when(stakeholderService.updateStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
 
             // then
-            mvc.perform(put(StakeholderUriSetting.buildPutStakeholderUri("dummy_id")).content(new ObjectMapper().writeValueAsString(stakeholder))
+            mvc.perform(put(StakeholderRest.buildPutStakeholderUri("dummy_id")).content(new ObjectMapper().writeValueAsString(stakeholder))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -174,7 +174,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             // when
 
             // then
-            mvc.perform(delete(StakeholderUriSetting.buildDeleteStakeholderUri("dummy_id"))
+            mvc.perform(delete(StakeholderRest.buildDeleteStakeholderUri("dummy_id"))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk());

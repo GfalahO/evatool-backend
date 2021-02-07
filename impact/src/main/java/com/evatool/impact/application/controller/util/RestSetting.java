@@ -1,6 +1,6 @@
-package com.evatool.impact.application.controller.uri;
+package com.evatool.impact.application.controller.util;
 
-public class RestUriSetting {
+public class RestSetting {
     public static final String BASE_URI = "/api/impact/";
 
     public static final String GET_REL_PREFIX = "get";

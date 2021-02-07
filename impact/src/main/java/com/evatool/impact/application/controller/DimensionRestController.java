@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.evatool.impact.application.controller.uri.DimensionUriSetting.*;
+import static com.evatool.impact.application.controller.util.DimensionRest.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
@@ -54,12 +54,12 @@ public class DimensionRestController {
     }
 
     public static void addLinks(DimensionDto dimensionDto) {
-        dimensionDto.add(linkTo(DimensionRestController.class).slash(GET_DIMENSIONS).withRel(buildGetAllRel()));
-        dimensionDto.add(linkTo(DimensionRestController.class).slash(POST_DIMENSION).withRel(buildPostRel()));
+        dimensionDto.add(linkTo(DimensionRestController.class).slash(GET_DIMENSIONS).withRel(buildGetDimensionsRel()));
+        dimensionDto.add(linkTo(DimensionRestController.class).slash(POST_DIMENSION).withRel(buildPostDimensionRel()));
         if (dimensionDto.getId() != null) {
             dimensionDto.add(linkTo(DimensionRestController.class).slash(GET_DIMENSION).slash(dimensionDto.getId()).withSelfRel());
-            dimensionDto.add(linkTo(DimensionRestController.class).slash(PUT_DIMENSION).slash(dimensionDto.getId()).withRel(buildPutRel()));
-            dimensionDto.add(linkTo(DimensionRestController.class).slash(DELETE_DIMENSION).slash(dimensionDto.getId()).withRel(buildDeleteRel()));
+            dimensionDto.add(linkTo(DimensionRestController.class).slash(PUT_DIMENSION).slash(dimensionDto.getId()).withRel(buildPutDimensionRel()));
+            dimensionDto.add(linkTo(DimensionRestController.class).slash(DELETE_DIMENSION).slash(dimensionDto.getId()).withRel(buildDeleteDimensionRel()));
         }
     }
 }

@@ -1,8 +1,8 @@
-package com.evatool.impact.application.controller.uri;
+package com.evatool.impact.application.controller.util;
 
-import static com.evatool.impact.application.controller.uri.RestUriSetting.*;
+import static com.evatool.impact.application.controller.util.RestSetting.*;
 
-public class StakeholderUriSetting {
+public class StakeholderRest {
     public static final String IMPACT_STAKEHOLDER_REST_CONTROLLER_MAPPING = BASE_URI;
 
     public static final String SINGULAR = "stakeholder";
@@ -40,23 +40,23 @@ public class StakeholderUriSetting {
         return IMPACT_STAKEHOLDER_REST_CONTROLLER_MAPPING + DELETE_STAKEHOLDER_MAPPING.replace("{id}", id);
     }
 
-    public static String buildGetRel() {
+    public static String buildGetStakeholderRel() {
         return GET_REL_PREFIX + " " + SINGULAR;
     }
 
-    public static String buildGetAllRel() {
+    public static String buildGetAllStakeholdersRel() {
         return GET_ALL_REL_PREFIX + " " + PLURAL;
     }
 
-    public static String buildPostRel() {
+    public static String buildPostStakeholderRel() {
         return POST_REL_PREFIX + " " + SINGULAR;
     }
 
-    public static String buildPutRel() {
+    public static String buildPutStakeholderRel() {
         return PUT_REL_PREFIX + " " + SINGULAR;
     }
 
-    public static String buildDeleteRel() {
+    public static String buildDeleteStakeholderRel() {
         return DELETE_REL_PREFIX + " " + SINGULAR;
     }
 }

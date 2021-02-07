@@ -1,4 +1,4 @@
-package com.evatool.impact;
+package com.evatool.impact.common.config;
 
 import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.evatool.impact.application.controller.uri.RestUriSetting.BASE_URI;
+import static com.evatool.impact.application.controller.util.RestSetting.BASE_URI;
 import static com.google.common.base.Predicates.or;
 import static springfox.documentation.builders.PathSelectors.regex;
 

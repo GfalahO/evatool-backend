@@ -1,8 +1,8 @@
-package com.evatool.impact.application.controller.uri;
+package com.evatool.impact.application.controller.util;
 
-import static com.evatool.impact.application.controller.uri.RestUriSetting.*;
+import static com.evatool.impact.application.controller.util.RestSetting.*;
 
-public class DimensionUriSetting {
+public class DimensionRest {
     public static final String DIMENSION_REST_CONTROLLER_MAPPING = BASE_URI;
 
     public static final String SINGULAR = "dimension";
@@ -40,23 +40,23 @@ public class DimensionUriSetting {
         return DIMENSION_REST_CONTROLLER_MAPPING + DELETE_DIMENSION_MAPPING.replace("{id}", id);
     }
 
-    public static String buildGetRel() {
+    public static String buildGetDimensionRel() {
         return GET_REL_PREFIX + " " + SINGULAR;
     }
 
-    public static String buildGetAllRel() {
+    public static String buildGetDimensionsRel() {
         return GET_ALL_REL_PREFIX + " " + PLURAL;
     }
 
-    public static String buildPostRel() {
+    public static String buildPostDimensionRel() {
         return POST_REL_PREFIX + " " + SINGULAR;
     }
 
-    public static String buildPutRel() {
+    public static String buildPutDimensionRel() {
         return PUT_REL_PREFIX + " " + SINGULAR;
     }
 
-    public static String buildDeleteRel() {
+    public static String buildDeleteDimensionRel() {
         return DELETE_REL_PREFIX + " " + SINGULAR;
     }
 }

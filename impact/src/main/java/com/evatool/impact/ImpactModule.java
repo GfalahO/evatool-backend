@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO Move addLinks to static class (for better separation and tests)
 
 // TODO Implement error handling for most cases (return helpful errors and links to help the frontend developers)
-// TODO Tests for Rest level 3 links (Uri classes and RestUriSetting)
+// TODO Tests for Rest level 3 links (Uri classes and RestSetting)
 // TODO More tests for Rest Controller - both ServiceMock and Integration test (validate error message, Json and Rest Level 3 Links)
 
 // TODO [tzaika] Implement Dimension Tests

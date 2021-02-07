@@ -1,4 +1,4 @@
-package com.evatool.impact.domain.event;
+package com.evatool.impact.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
