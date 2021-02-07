@@ -22,6 +22,7 @@ import java.util.List;
 import static springfox.documentation.builders.PathSelectors.regex;
 import static com.google.common.base.Predicates.or;
 
+// http://localhost:8080/swagger-ui.html#/
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
