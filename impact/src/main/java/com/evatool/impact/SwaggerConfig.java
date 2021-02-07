@@ -1,26 +1,22 @@
 package com.evatool.impact;
 
-import com.evatool.impact.common.ModuleSettings;
+import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.google.common.base.Predicate;
-
 import org.springframework.hateoas.client.LinkDiscoverer;
 import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.plugin.core.SimplePluginRegistry;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static springfox.documentation.builders.PathSelectors.regex;
+import static com.evatool.impact.application.controller.uri.RestUriSetting.BASE_URI;
 import static com.google.common.base.Predicates.or;
+import static springfox.documentation.builders.PathSelectors.regex;
 
 // http://localhost:8080/swagger-ui.html#/
 @Configuration
@@ -34,7 +30,7 @@ public class SwaggerConfig {
     }
 
     private Predicate<String> postPaths() {
-        return or(regex(ModuleSettings.BASE_URI + "/posts.*"), regex(ModuleSettings.BASE_URI + "/javainuse.*"));
+        return or(regex(BASE_URI + "/posts.*"), regex(BASE_URI + "/javainuse.*"));
         //return or(regex("/api/posts.*"), regex("/api/javainuse.*"));
     }
 

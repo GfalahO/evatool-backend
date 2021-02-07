@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.evatool.impact.application.controller.uri.ImpactRestUri.*;
-import static com.evatool.impact.application.controller.uri.ImpactRestUri.PLURAL;
-import static com.evatool.impact.application.controller.uri.ImpactRestUri.SINGULAR;
-import static com.evatool.impact.application.controller.uri.RestLevel3LinkRel.*;
+import static com.evatool.impact.application.controller.uri.ImpactUriSetting.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
@@ -56,13 +53,13 @@ public class ImpactRestController {
         return ResponseEntity.ok().build();
     }
 
-    private void addLinks(ImpactDto impactDto) {
-        impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACTS).withRel(buildGetAllRel(PLURAL)));
-        impactDto.add(linkTo(DimensionRestController.class).slash(POST_IMPACT).withRel(buildPostRel(SINGULAR)));
+    public static void addLinks(ImpactDto impactDto) {
+        impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACTS).withRel(buildGetAllRel()));
+        impactDto.add(linkTo(DimensionRestController.class).slash(POST_IMPACT).withRel(buildPostRel()));
         if (impactDto.getId() != null) {
             impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACT).slash(impactDto.getId()).withSelfRel());
-            impactDto.add(linkTo(DimensionRestController.class).slash(PUT_IMPACT).slash(impactDto.getId()).withRel(buildPutRel(SINGULAR)));
-            impactDto.add(linkTo(DimensionRestController.class).slash(DELETE_IMPACT).slash(impactDto.getId()).withRel(buildDeleteRel(SINGULAR)));
+            impactDto.add(linkTo(DimensionRestController.class).slash(PUT_IMPACT).slash(impactDto.getId()).withRel(buildPutRel()));
+            impactDto.add(linkTo(DimensionRestController.class).slash(DELETE_IMPACT).slash(impactDto.getId()).withRel(buildDeleteRel()));
         }
     }
 }

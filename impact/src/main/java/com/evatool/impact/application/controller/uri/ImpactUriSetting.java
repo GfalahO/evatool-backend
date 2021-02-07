@@ -1,9 +1,9 @@
 package com.evatool.impact.application.controller.uri;
 
-import com.evatool.impact.common.ModuleSettings;
+import static com.evatool.impact.application.controller.uri.RestUriSetting.*;
 
-public class ImpactRestUri {
-    public static final String IMPACT_REST_CONTROLLER_MAPPING = ModuleSettings.BASE_URI;
+public class ImpactUriSetting {
+    public static final String IMPACT_REST_CONTROLLER_MAPPING = BASE_URI;
 
     public static final String SINGULAR = "impact";
     public static final String PLURAL = "impacts";
@@ -38,5 +38,25 @@ public class ImpactRestUri {
 
     public static String buildDeleteImpactUri(String id) {
         return IMPACT_REST_CONTROLLER_MAPPING + DELETE_IMPACT_MAPPING.replace("{id}", id);
+    }
+
+    public static String buildGetRel() {
+        return GET_REL_PREFIX + " " + SINGULAR;
+    }
+
+    public static String buildGetAllRel() {
+        return GET_ALL_REL_PREFIX + " " + PLURAL;
+    }
+
+    public static String buildPostRel() {
+        return POST_REL_PREFIX + " " + SINGULAR;
+    }
+
+    public static String buildPutRel() {
+        return PUT_REL_PREFIX + " " + SINGULAR;
+    }
+
+    public static String buildDeleteRel() {
+        return DELETE_REL_PREFIX + " " + SINGULAR;
     }
 }
