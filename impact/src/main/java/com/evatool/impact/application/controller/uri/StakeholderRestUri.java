@@ -5,11 +5,14 @@ import com.evatool.impact.common.ModuleSettings;
 public class StakeholderRestUri {
     public static final String IMPACT_STAKEHOLDER_REST_CONTROLLER_MAPPING = ModuleSettings.BASE_URI;
 
-    public static final String GET_STAKEHOLDER = "stakeholder";
-    public static final String GET_STAKEHOLDERS = "stakeholders";
-    public static final String POST_STAKEHOLDER = "stakeholder";
-    public static final String PUT_STAKEHOLDER = "stakeholder";
-    public static final String DELETE_STAKEHOLDER = "stakeholder";
+    public static final String SINGULAR = "stakeholder";
+    public static final String PLURAL = "stakeholders";
+
+    public static final String GET_STAKEHOLDER = SINGULAR;
+    public static final String GET_STAKEHOLDERS = PLURAL;
+    public static final String POST_STAKEHOLDER = SINGULAR;
+    public static final String PUT_STAKEHOLDER = SINGULAR;
+    public static final String DELETE_STAKEHOLDER = SINGULAR;
 
     public static final String GET_STAKEHOLDER_MAPPING = "/" + GET_STAKEHOLDER + "/{id}";
     public static final String GET_STAKEHOLDERS_MAPPING = "/" + GET_STAKEHOLDERS;

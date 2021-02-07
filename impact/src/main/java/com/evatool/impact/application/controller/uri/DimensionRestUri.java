@@ -5,11 +5,14 @@ import com.evatool.impact.common.ModuleSettings;
 public class DimensionRestUri {
     public static final String DIMENSION_REST_CONTROLLER_MAPPING = ModuleSettings.BASE_URI;
 
-    public static final String GET_DIMENSION = "dimension";
-    public static final String GET_DIMENSIONS = "dimensions";
-    public static final String POST_DIMENSION = "dimension";
-    public static final String PUT_DIMENSION = "dimension";
-    public static final String DELETE_DIMENSION = "dimension";
+    public static final String SINGULAR = "dimension";
+    public static final String PLURAL = "dimensions";
+
+    public static final String GET_DIMENSION = SINGULAR;
+    public static final String GET_DIMENSIONS = PLURAL;
+    public static final String POST_DIMENSION = SINGULAR;
+    public static final String PUT_DIMENSION = SINGULAR;
+    public static final String DELETE_DIMENSION = SINGULAR;
 
     public static final String GET_DIMENSION_MAPPING = "/" + GET_DIMENSION + "/{id}";
     public static final String GET_DIMENSIONS_MAPPING = "/" + GET_DIMENSIONS;
