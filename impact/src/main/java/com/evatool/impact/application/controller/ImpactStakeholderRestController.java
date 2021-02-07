@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.uri.StakeholderRestUri.*;
-import static com.evatool.impact.application.controller.uri.RestSettings.*;
+import static com.evatool.impact.application.controller.uri.RestLevel3LinkRel.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
@@ -66,12 +66,12 @@ public class ImpactStakeholderRestController {
     }
 
     private void addLinks(StakeholderDto stakeholderDto) {
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(GET_STAKEHOLDERS).withRel(GET_ALL_LINK));
-        stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(POST_STAKEHOLDER).withRel(POST_LINK));
+        stakeholderDto.add(linkTo(DimensionRestController.class).slash(GET_STAKEHOLDERS).withRel(buildGetAllRel(PLURAL)));
+        stakeholderDto.add(linkTo(DimensionRestController.class).slash(POST_STAKEHOLDER).withRel(buildPostRel(SINGULAR)));
         if (stakeholderDto.getId() != null) {
-            stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(GET_STAKEHOLDER).slash(stakeholderDto.getId()).withSelfRel());
-            stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(PUT_STAKEHOLDER).slash(stakeholderDto.getId()).withRel(PUT_LINK));
-            stakeholderDto.add(linkTo(ImpactStakeholderRestController.class).slash(DELETE_STAKEHOLDER).slash(stakeholderDto.getId()).withRel(DELETE_LINK));
+            stakeholderDto.add(linkTo(DimensionRestController.class).slash(GET_STAKEHOLDER).slash(stakeholderDto.getId()).withSelfRel());
+            stakeholderDto.add(linkTo(DimensionRestController.class).slash(PUT_STAKEHOLDER).slash(stakeholderDto.getId()).withRel(buildPutRel(SINGULAR)));
+            stakeholderDto.add(linkTo(DimensionRestController.class).slash(DELETE_STAKEHOLDER).slash(stakeholderDto.getId()).withRel(buildDeleteRel(SINGULAR)));
         }
     }
 }
