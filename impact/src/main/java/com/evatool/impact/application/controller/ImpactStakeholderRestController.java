@@ -65,7 +65,7 @@ public class ImpactStakeholderRestController {
     }
 
     private void addLinks(StakeholderDto stakeholderDto) {
-        stakeholderDto.add(linkTo(DimensionRestController.class).slash(GET_STAKEHOLDERS).withRel(buildGetAllStakeholdersRel()));
+        stakeholderDto.add(linkTo(DimensionRestController.class).slash(GET_STAKEHOLDERS).withRel(buildGetStakeholdersRel()));
         stakeholderDto.add(linkTo(DimensionRestController.class).slash(POST_STAKEHOLDER).withRel(buildPostStakeholderRel()));
         if (stakeholderDto.getId() != null) {
             stakeholderDto.add(linkTo(DimensionRestController.class).slash(GET_STAKEHOLDER).slash(stakeholderDto.getId()).withSelfRel());

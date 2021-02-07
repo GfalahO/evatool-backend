@@ -44,7 +44,7 @@ public class ImpactRest {
         return GET_REL_PREFIX + " " + SINGULAR;
     }
 
-    public static String buildGetAllImpactsRel() {
+    public static String buildGetImpactsRel() {
         return GET_ALL_REL_PREFIX + " " + PLURAL;
     }
 

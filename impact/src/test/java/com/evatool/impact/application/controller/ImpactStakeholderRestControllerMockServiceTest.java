@@ -7,6 +7,7 @@ import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.ImpactStakeholderService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -67,7 +68,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             var nonExistingId = "wrong_id";
 
             // when
-            when(stakeholderService.findStakeholderById(anyString())).thenThrow(new EntityNotFoundException(ImpactStakeholder.class, nonExistingId));
+            when(stakeholderService.findStakeholderById(anyString())).thenThrow(EntityNotFoundException.class);
 
             // then
             mvc.perform(get(StakeholderRest.buildGetStakeholderUri(nonExistingId))
@@ -123,7 +124,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
     @Nested
     public class Insert {
         @Test
-        public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws Exception {
+        public void testInsertStakeholder_InsertedStakeholderWithExistingId_ReturnInsertedStakeholder() throws Exception {
             // given
             var stakeholder = getStakeholderDto();
             stakeholder.setId(UUID.randomUUID().toString());
@@ -138,7 +139,8 @@ public class ImpactStakeholderRestControllerMockServiceTest {
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id").exists())
                     .andExpect(jsonPath("$.id").value(stakeholder.getId()))
-                    .andExpect(jsonPath("$.name").value(stakeholder.getName()));
+                    .andExpect(jsonPath("$.name").value(stakeholder.getName()))
+                    .andExpect(jsonPath("$..links[0].href").value("http://localhost" + StakeholderRest.buildGetStakeholdersUri()));
         }
     }
 

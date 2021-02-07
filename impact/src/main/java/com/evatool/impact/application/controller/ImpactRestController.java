@@ -54,7 +54,7 @@ public class ImpactRestController {
     }
 
     private void addLinks(ImpactDto impactDto) {
-        impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACTS).withRel(buildGetAllImpactsRel()));
+        impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACTS).withRel(buildGetImpactsRel()));
         impactDto.add(linkTo(DimensionRestController.class).slash(POST_IMPACT).withRel(buildPostImpactRel()));
         if (impactDto.getId() != null) {
             impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACT).slash(impactDto.getId()).withSelfRel());

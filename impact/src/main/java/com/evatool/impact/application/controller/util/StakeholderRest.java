@@ -44,7 +44,7 @@ public class StakeholderRest {
         return GET_REL_PREFIX + " " + SINGULAR;
     }
 
-    public static String buildGetAllStakeholdersRel() {
+    public static String buildGetStakeholdersRel() {
         return GET_ALL_REL_PREFIX + " " + PLURAL;
     }
 
