@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Implement:
     // TODO Better error handling for possible rest calls
     // TODO Events
+    // TODO More Impact URIs
 
 // Tests:
     // TODO [tzaika] Implement Dimension Tests

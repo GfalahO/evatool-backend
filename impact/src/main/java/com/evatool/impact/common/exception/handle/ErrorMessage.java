@@ -15,31 +15,9 @@ public class ErrorMessage {
     @Setter
     private String message;
 
-    @Getter
-    @Setter
-    private String details;
-
-    @Getter
-    @Setter
-    private String path;
-
-    public ErrorMessage() {
-        this.timestamp = new Timestamp(System.currentTimeMillis());
-    }
-
     public ErrorMessage(String message) {
-        this();
+        this.timestamp = new Timestamp(System.currentTimeMillis());
         this.message = message;
-    }
-
-    public ErrorMessage(String message, String details) {
-        this(message);
-        this.details = details;
-    }
-
-    public ErrorMessage(String message, String details, String path) {
-        this(message, details);
-        this.path = path;
     }
 
     @Override
@@ -47,8 +25,6 @@ public class ErrorMessage {
         return "ErrorMessage{" +
                 "timestamp=" + timestamp +
                 ", message='" + message + '\'' +
-                ", details='" + details + '\'' +
-                ", path='" + path + '\'' +
                 '}';
     }
 }
