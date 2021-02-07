@@ -3,6 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.dto.mapper.StakeholderMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
 
     @Override
     public StakeholderDto findStakeholderById(String id) throws EntityNotFoundException {
-        if(id == null){
+        if (id == null) {
             throw new EntityNotFoundException(ImpactStakeholder.class, "null");
         }
         var stakeholder = stakeholderRepository.findById(id);
@@ -39,6 +40,9 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
 
     @Override
     public StakeholderDto createStakeholder(StakeholderDto stakeholderDto) {
+        if (stakeholderDto.getId() != null) {
+            throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", ImpactStakeholder.class.getSimpleName()));
+        }
         var stakeholder = stakeholderRepository.save(StakeholderMapper.fromDto(stakeholderDto));
         return StakeholderMapper.toDto(stakeholder);
     }

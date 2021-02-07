@@ -183,9 +183,10 @@ public class ImpactStakeholderRestControllerTest {
         }
 
         @Test
-        public void testInsertStakeholder_InsertWithNotNullId_Allow() {
+        public void testInsertStakeholder_InsertWithNotNullId_ReturnHttpStatusBadRequest() {
             // given
             var stakeholderDto = getStakeholderDto();
+            stakeholderDto.setId(UUID.randomUUID().toString());
 
             // when
             var httpEntity = new HttpEntity(stakeholderDto);
@@ -197,7 +198,26 @@ public class ImpactStakeholderRestControllerTest {
                     StakeholderRest.buildPostStakeholderUri(), httpEntity, StakeholderDto.class);
 
             // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        public void testInsertStakeholder_InsertOnExistingId_ReturnHttpStatusBadRequest() {
+            // given
+            var stakeholderDto = getStakeholderDto();
+            stakeholderDto.setId(UUID.randomUUID().toString());
+
+            // when
+            var httpEntity = new HttpEntity(stakeholderDto);
+            var responseEntity = testRestTemplate.postForEntity(
+                    StakeholderRest.buildPostStakeholderUri(), httpEntity, StakeholderDto.class);
+
+            httpEntity = new HttpEntity(responseEntity.getBody());
+            responseEntity = testRestTemplate.postForEntity(
+                    StakeholderRest.buildPostStakeholderUri(), httpEntity, StakeholderDto.class);
+
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 

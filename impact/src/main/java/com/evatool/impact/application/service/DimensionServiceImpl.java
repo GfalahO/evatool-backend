@@ -3,7 +3,9 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.mapper.DimensionMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,9 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public DimensionDto createDimension(DimensionDto dimensionDto) {
+        if (dimensionDto.getId() != null) {
+            throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Dimension.class.getSimpleName()));
+        }
         var dimension = dimensionRepository.save(DimensionMapper.fromDto(dimensionDto));
         return DimensionMapper.toDto(dimension);
     }

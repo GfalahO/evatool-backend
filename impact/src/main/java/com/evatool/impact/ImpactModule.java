@@ -11,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Tests:
     // TODO [tzaika] Implement Dimension Tests
     // TODO [tzaika] Implement Impact Tests
+    // TODO Cover all scenarios with Tests
+    // TODO use @BeforeEach and other best practice things in Tests
     // TODO Controller util classes
     // TODO Correct ErrorMessage return in RestController (Mock and integration test)
     // TODO Correct Json of Rest Controller [Rest Level 3] (Mock tests only)

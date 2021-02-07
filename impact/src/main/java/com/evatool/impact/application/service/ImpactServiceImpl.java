@@ -3,6 +3,8 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
@@ -47,6 +49,9 @@ public class ImpactServiceImpl implements ImpactService {
 
     @Override
     public ImpactDto createImpact(ImpactDto impactDto) {
+        if (impactDto.getId() != null) {
+            throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Impact.class.getSimpleName()));
+        }
         var impact = impactRepository.save(ImpactMapper.fromDto(impactDto));
         this.retrieveImpactRelations(impactDto, impact);
         return ImpactMapper.toDto(impact);
