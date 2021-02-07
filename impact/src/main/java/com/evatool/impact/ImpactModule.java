@@ -3,7 +3,7 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// Implement:
+// Features:
     // TODO Better error handling for possible rest calls
     // TODO Events
     // TODO More Impact URIs
