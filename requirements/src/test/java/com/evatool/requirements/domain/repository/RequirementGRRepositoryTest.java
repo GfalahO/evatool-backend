@@ -1,6 +1,11 @@
 package com.evatool.requirements.domain.repository;
 
+import com.evatool.requirements.entity.Requirement;
+import com.evatool.requirements.entity.RequirementGR;
+import com.evatool.requirements.entity.RequirementsImpacts;
+import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementGRRepository;
+import com.evatool.requirements.repository.RequirementRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -8,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.UUID;
 
 import static com.evatool.requirements.common.TestDataGenerator.getRequirementGR;
+import static com.evatool.requirements.common.TestDataGenerator.getRequirementsImpacts;
+import static com.evatool.requirements.common.TestDataGenerator.getRequirement;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -16,26 +23,38 @@ public class RequirementGRRepositoryTest {
     @Autowired
     private RequirementGRRepository requirementGRRepository;
 
+    @Autowired
+    private RequirementRepository requirementRepository;
 
-
+    @Autowired
+    private RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Test
     public void testFindById_ExistingRequirementGR_ReturnRequirement() {
         // given
-        var requirementGR = getRequirementGR();
+        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        Requirement requirement = getRequirement();
+        requirementRepository.save(requirement);
+        requirementsImpactsRepository.save(requirementsImpacts);
+
+        RequirementGR requirementGR = getRequirementGR(requirement,requirementsImpacts);
         requirementGRRepository.save(requirementGR);
 
         // when
-        var found = requirementGRRepository.findById(requirementGR.getId()).orElse(null);
+        RequirementGR requirementGRFound = requirementGRRepository.findById(requirementGR.getId()).orElse(null);
 
         // then
-        assertThat(found.getId()).isEqualTo(requirementGR.getId());
+        assertThat(requirementGRFound.getId()).isEqualTo(requirementGR.getId());
     }
 
     @Test
     public void testSave_InsertedRequirementGR_IdIsNotNull() {
+        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        Requirement requirement = getRequirement();
+        requirementRepository.save(requirement);
+        requirementsImpactsRepository.save(requirementsImpacts);
         // given
-        var requirementGR = getRequirementGR();
+        RequirementGR requirementGR = getRequirementGR(requirement, requirementsImpacts);
 
         // when
         requirementGRRepository.save(requirementGR);
@@ -46,8 +65,12 @@ public class RequirementGRRepositoryTest {
 
     @Test
     public void testSave_InsertedRequirementGR_IdIsUuid() {
+        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        Requirement requirement = getRequirement();
+        requirementRepository.save(requirement);
+        requirementsImpactsRepository.save(requirementsImpacts);
         // given
-        var requirementGR = getRequirementGR();
+        RequirementGR requirementGR = getRequirementGR(requirement, requirementsImpacts);
 
         // when
         requirementGRRepository.save(requirementGR);
@@ -57,28 +80,20 @@ public class RequirementGRRepositoryTest {
     }
 
     @Test
-    public void testSave_PresetId_Allow() {
-        // given
-        var requirementGR = getRequirementGR();
-        requirementGR.setId(UUID.randomUUID());
-
-        // when
-
-        // then
-        requirementGRRepository.save(requirementGR);
-    }
-
-    @Test
     public void testDelete_DeletedRequirementGR_ReturnNull() {
+        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        Requirement requirement = getRequirement();
+        requirementRepository.save(requirement);
+        requirementsImpactsRepository.save(requirementsImpacts);
         // given
-        var requirementGR = getRequirementGR();
+        RequirementGR requirementGR = getRequirementGR(requirement, requirementsImpacts);
         requirementGRRepository.save(requirementGR);
 
         // when
         requirementGRRepository.delete(requirementGR);
-        var found = requirementGRRepository.findById(requirementGR.getId()).orElse(null);
+        RequirementGR requirementGRFound = requirementGRRepository.findById(requirementGR.getId()).orElse(null);
 
         // then
-        assertThat(found).isNull();
+        assertThat(requirementGRFound).isNull();
     }
 }

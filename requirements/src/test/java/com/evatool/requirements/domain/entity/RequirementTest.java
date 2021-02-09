@@ -1,5 +1,6 @@
 package com.evatool.requirements.domain.entity;
 
+import com.evatool.requirements.entity.Requirement;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,7 +12,7 @@ public class RequirementTest {
     @Test
     public void testSetDescription_NullValue_ThrowException() {
         // given
-        var requirement = getRequirement();
+        Requirement requirement = getRequirement();
 
         // when
 
@@ -22,7 +23,7 @@ public class RequirementTest {
     @Test
     public void testSetTitle_NullValue_ThrowException() {
         // given
-        var requirement = getRequirement();
+        Requirement requirement = getRequirement();
 
         // when
 

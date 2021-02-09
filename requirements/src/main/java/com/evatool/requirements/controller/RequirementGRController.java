@@ -3,7 +3,7 @@ package com.evatool.requirements.controller;
 import com.evatool.requirements.entity.RequirementsImpacts;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementGR;
-import com.evatool.requirements.repository.InpactsRepository;
+import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.repository.RequirementGRRepository;
 import org.slf4j.Logger;
@@ -25,15 +25,13 @@ public class RequirementGRController {
 	private RequirementRepository requirementRepository;
 
 	@Autowired
-	private InpactsRepository inpactsRepository;
+	private RequirementsImpactsRepository requirementsImpactsRepository;
 
 	@GetMapping("/requirement_gr")
 	public List<RequirementGR> getRequirement_grList() {
 		logger.info("/requirement_gr");
 		return requirement_grRepository.findAll();
 	}
-
-
 
 	@GetMapping("/requirement_gr/{id}")
 	public Optional<RequirementGR> getRequirement_grById(@PathVariable UUID id) {
@@ -44,7 +42,7 @@ public class RequirementGRController {
 	@GetMapping("/requirement_gr/{id}/inpacts/requirement")
 	public Collection<Requirement> getRequirement_grByInpact(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]/inpacts/requirement",id);
-		Optional<RequirementsImpacts> inpacts = inpactsRepository.findById(id);
+		Optional<RequirementsImpacts> inpacts = requirementsImpactsRepository.findById(id);
 		if(inpacts.get()==null) return null;
 		List<Requirement> requirementList = new ArrayList<>();
 		requirement_grRepository.findByRequirementsImpacts(inpacts.get()).forEach(e->requirementList.add(e.getRequirement()));

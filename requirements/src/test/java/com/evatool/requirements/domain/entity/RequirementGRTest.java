@@ -1,5 +1,6 @@
 package com.evatool.requirements.domain.entity;
 
+import com.evatool.requirements.entity.RequirementGR;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,7 +12,7 @@ public class RequirementGRTest {
     @Test
     public void testSetRequirement_NullValue_ThrowException() {
         // given
-        var requirementGR = getRequirementGR();
+        RequirementGR requirementGR = getRequirementGR();
 
         // when
 
@@ -22,7 +23,7 @@ public class RequirementGRTest {
     @Test
     public void testSetRequirementsImpacts_NullValue_ThrowException() {
         // given
-        var requirementGR = getRequirementGR();
+        RequirementGR requirementGR = getRequirementGR();
 
         // when
 
@@ -31,10 +32,10 @@ public class RequirementGRTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1, 0, 1})
-    public void testSetVariants_NullValue_ThrowException(int value) {
+    @ValueSource(ints = {2})
+    public void testSetValue_NullValue_ThrowException(int value) {
         // given
-        var requirementGR = getRequirementGR();
+        RequirementGR requirementGR = getRequirementGR();
 
         // when
 

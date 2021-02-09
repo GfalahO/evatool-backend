@@ -4,7 +4,7 @@ import com.evatool.requirements.entity.RequirementsImpacts;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementGR;
 import com.evatool.requirements.entity.RequirementsVariants;
-import com.evatool.requirements.repository.InpactsRepository;
+import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.repository.RequirementGRRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
@@ -27,7 +27,7 @@ public class RequirementsApplication {
    @Bean
     public CommandLineRunner initData(RequirementsVariantsRepository requirementsVariantsRepository,
                                       RequirementRepository requirementRepository,
-                                      InpactsRepository inpactsRepository,
+                                      RequirementsImpactsRepository requirementsImpactsRepository,
                                       RequirementGRRepository requirement_grRepository) {
         return (args) -> {
             logger.info("Begin start Requirement Service");
@@ -48,7 +48,7 @@ public class RequirementsApplication {
             requirementRepository.save(requirement2);
 
             RequirementsImpacts requirementsImpacts1 = new RequirementsImpacts("Inpact titel", "Inpact description",-1, RequirementsImpacts.Dimension.PRIVAT);
-            inpactsRepository.save(requirementsImpacts1);
+            requirementsImpactsRepository.save(requirementsImpacts1);
 
             RequirementGR requirement_gr1 = new RequirementGR(requirementsImpacts1,requirement1,1);
             RequirementGR requirement_gr2 = new RequirementGR(requirementsImpacts1,requirement2,1);

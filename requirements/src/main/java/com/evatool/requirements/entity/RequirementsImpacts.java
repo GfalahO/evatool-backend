@@ -36,8 +36,8 @@ public class RequirementsImpacts {
     }
 
     public void setTitel(String titel) {
-        if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null.");
+        if (titel == null) {
+            throw new IllegalArgumentException("Title cannot be null.");
         }
         this.titel = titel;
     }
@@ -58,6 +58,9 @@ public class RequirementsImpacts {
     }
 
     public void setValue(int value) {
+        if (value < -1 || value > 1) {
+            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+        }
         this.value = value;
     }
 

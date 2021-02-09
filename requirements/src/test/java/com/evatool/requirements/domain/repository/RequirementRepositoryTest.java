@@ -1,6 +1,7 @@
 package com.evatool.requirements.domain.repository;
 
 import com.evatool.requirements.common.TestDataGenerator;
+import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.repository.RequirementRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +21,20 @@ public class RequirementRepositoryTest {
     @Test
     public void testFindById_ExistingRequirement_ReturnRequirement() {
         // given
-        var requirement = TestDataGenerator.getRequirement();
+        Requirement requirement = TestDataGenerator.getRequirement();
         requirementRepository.save(requirement);
 
         // when
-        var found = requirementRepository.findById(requirement.getId()).orElse(null);
+        Requirement requirementFound = requirementRepository.findById(requirement.getId()).orElse(null);
 
         // then
-        assertThat(found.getId()).isEqualTo(requirement.getId());
+        assertThat(requirementFound.getId()).isEqualTo(requirement.getId());
     }
 
     @Test
     public void testSave_InsertedRequirement_IdIsNotNull() {
         // given
-        var requirement = getRequirement();
+        Requirement requirement = getRequirement();
 
         // when
         requirementRepository.save(requirement);
@@ -45,7 +46,7 @@ public class RequirementRepositoryTest {
     @Test
     public void testSave_InsertedRequirement_IdIsUuid() {
         // given
-        var requirement = getRequirement();
+        Requirement requirement = getRequirement();
 
         // when
         requirementRepository.save(requirement);
@@ -55,28 +56,16 @@ public class RequirementRepositoryTest {
     }
 
     @Test
-    public void testSave_PresetId_Allow() {
-        // given
-        var requirement = getRequirement();
-        requirement.setId(UUID.randomUUID());
-
-        // when
-
-        // then
-        requirementRepository.save(requirement);
-    }
-
-    @Test
     public void testDelete_DeletedRequirement_ReturnNull() {
         // given
-        var requirement = getRequirement();
+        Requirement requirement = getRequirement();
         requirementRepository.save(requirement);
 
         // when
         requirementRepository.delete(requirement);
-        var found = requirementRepository.findById(requirement.getId()).orElse(null);
+        Requirement requirementFound = requirementRepository.findById(requirement.getId()).orElse(null);
 
         // then
-        assertThat(found).isNull();
+        assertThat(requirementFound).isNull();
     }
 }

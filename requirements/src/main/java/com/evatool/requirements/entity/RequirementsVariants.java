@@ -26,8 +26,8 @@ public class RequirementsVariants {
     }
 
     public void setTitel(String titel) {
-        if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null.");
+        if (titel == null) {
+            throw new IllegalArgumentException("Title cannot be null.");
         }
         this.titel = titel;
     }

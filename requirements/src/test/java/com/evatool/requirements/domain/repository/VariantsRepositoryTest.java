@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
-import static com.evatool.requirements.common.TestDataGenerator.getVariant;
+import static com.evatool.requirements.common.TestDataGenerator.getRequirementsVariants;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -21,63 +21,51 @@ public class VariantsRepositoryTest {
     @Test
     public void testFindById_InsertedVariants_ReturnImpact() {
         // given
-        var variant = getVariant();
-        requirementsVariantsRepository.save(variant);
+        RequirementsVariants requirementsVariants = getRequirementsVariants();
+        requirementsVariantsRepository.save(requirementsVariants);
 
         // when
-        var found = requirementsVariantsRepository.findById(variant.getId()).orElse(null);
+        RequirementsVariants requirementsVariantsFound = requirementsVariantsRepository.findById(requirementsVariants.getId()).orElse(null);
 
         // then
-        assertThat(found.getId()).isEqualTo(variant.getId());
+        assertThat(requirementsVariantsFound.getId()).isEqualTo(requirementsVariants.getId());
     }
 
     @Test
     public void testSave_InsertedVariants_IdIsNotNull() {
         // given
-        var variant = getVariant();
+        RequirementsVariants requirementsVariants = getRequirementsVariants();
 
         // when
-        requirementsVariantsRepository.save(variant);
+        requirementsVariantsRepository.save(requirementsVariants);
 
         // then
-        assertThat(variant.getId()).isNotNull();
+        assertThat(requirementsVariants.getId()).isNotNull();
     }
 
     @Test
     public void testSave_InsertedVariants_IdIsUuid() {
         // given
-        var variant = getVariant();
+        RequirementsVariants requirementsVariants = getRequirementsVariants();
 
         // when
-        requirementsVariantsRepository.save(variant);
+        requirementsVariantsRepository.save(requirementsVariants);
 
         // then
-        UUID.fromString(variant.getId().toString());
-    }
-
-    @Test
-    public void testSave_PresetId_Allow() {
-        // given
-        var variant = getVariant();
-        variant.setId(UUID.randomUUID());
-
-        // when
-
-        // then
-        requirementsVariantsRepository.save(variant);
+        UUID.fromString(requirementsVariants.getId().toString());
     }
 
     @Test
     public void testDelete_DeletedVariants_ReturnNull() {
         // given
-        var variant = getVariant();
-        requirementsVariantsRepository.save(variant);
+        RequirementsVariants requirementsVariants = getRequirementsVariants();
+        requirementsVariantsRepository.save(requirementsVariants);
 
         // when
-        requirementsVariantsRepository.delete(variant);
-        var found = requirementsVariantsRepository.findById(variant.getId()).orElse(null);
+        requirementsVariantsRepository.delete(requirementsVariants);
+        RequirementsVariants requirementsVariantsFound = requirementsVariantsRepository.findById(requirementsVariants.getId()).orElse(null);
 
         // then
-        assertThat(found).isNull();
+        assertThat(requirementsVariantsFound).isNull();
     }
 }

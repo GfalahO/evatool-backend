@@ -23,7 +23,7 @@ public class RequirementsController {
 	private RequirementGRController requirement_grController;
 
 	@Autowired
-	RequirementDTOService dtoService;
+	private RequirementDTOService dtoService;
 
 	@GetMapping("/requirements")
 	public List<RequirementDTO> getRequirementList() {
@@ -40,19 +40,19 @@ public class RequirementsController {
 	}
 
 	@PostMapping("/requirements")
-	Requirement newRequirement(@RequestBody Requirement requirement) {
+	public Requirement newRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
 		return requirementRepository.save(requirement);
 	}
 
 	@PutMapping("/requirements/{id}")
-	Requirement updateRequirement(@RequestBody Requirement requirement) {
+	public Requirement updateRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
 		return requirementRepository.save(requirement);
 	}
 
 	@DeleteMapping("/requirements/{id}")
-	void deleteRequirement(@RequestBody Requirement requirement) {
+	public void deleteRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
 		requirementRepository.delete(requirement);
 	}

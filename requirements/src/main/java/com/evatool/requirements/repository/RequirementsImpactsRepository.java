@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface InpactsRepository extends JpaRepository<RequirementsImpacts, UUID> {
+public interface RequirementsImpactsRepository extends JpaRepository<RequirementsImpacts, UUID> {
 }

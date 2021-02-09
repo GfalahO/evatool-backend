@@ -30,7 +30,7 @@ public class Requirement {
     }
 
     public void setTitel(String titel) {
-        if (description == null) {
+        if (titel == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
         this.titel = titel;
@@ -53,7 +53,7 @@ public class Requirement {
     }
 
     public void setVariants(Collection<RequirementsVariants> variants) {
-        if (description == null) {
+        if (variants == null) {
             throw new IllegalArgumentException("Variants cannot be null.");
         }
         this.variants = variants;
