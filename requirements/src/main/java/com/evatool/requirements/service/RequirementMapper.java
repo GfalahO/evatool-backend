@@ -28,17 +28,17 @@ public class RequirementMapper {
 
     private RequirementDTO map(Requirement requirement) {
         RequirementDTO requirementDTO = new RequirementDTO();
-        requirementDTO.setRequirementTitle(requirement.getTitel());
+        requirementDTO.setRequirementTitle(requirement.getTitle());
         requirementDTO.setRootEntityId(requirement.getId());
         requirementDTO.setRequirementDescription(requirement.getDescription());
         requirement.getVariants().forEach(variants->{
-            requirementDTO.setVariantsTitle(variants.getTitel());
+            requirementDTO.setVariantsTitle(variants.getTitle());
             requirementDTO.setVariantsUUID(variants.getId());
 
         });
         Collection<RequirementsImpacts> requirementsImpactsList = requirement_grController.getRequirement_grByRequirement(requirement.getId());
         requirementsImpactsList.forEach(inpacts -> {
-            requirementDTO.getImpactTitles().put(inpacts.getId(),inpacts.getTitel());
+            requirementDTO.getImpactTitles().put(inpacts.getId(),inpacts.getTitle());
 
 
             requirementDTO.getDimensions().add(inpacts.getDimension());

@@ -26,6 +26,6 @@ public class RequirementsVariantsTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementsVariants.setTitel(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementsVariants.setTitle(null));
     }
 }

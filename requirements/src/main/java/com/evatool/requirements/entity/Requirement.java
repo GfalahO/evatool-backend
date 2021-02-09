@@ -12,7 +12,7 @@ public class Requirement {
     //TODO Proejktid hinterlegen
     @Id
     private UUID id = UUID.randomUUID();
-    private String titel;
+    private String title;
     private String description;
     @ManyToMany
     private Collection<RequirementsVariants> variants = new ArrayList<>();
@@ -20,20 +20,20 @@ public class Requirement {
     public Requirement() {
     }
 
-    public Requirement(String titel, String description) {
-        this.titel = titel;
+    public Requirement(String title, String description) {
+        this.title = title;
         this.description = description;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        if (titel == null) {
+    public void setTitle(String title) {
+        if (title == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
-        this.titel = titel;
+        this.title = title;
     }
 
     public String getDescription() {

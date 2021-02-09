@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface RequirementGRRepository extends JpaRepository<RequirementGR, UUID> {
 
-    public Collection<RequirementGR> findByRequirementsImpacts(RequirementsImpacts inpact);
+    public Collection<RequirementGR> findByRequirementsImpacts(RequirementsImpacts requirementsImpacts);
 
     public Collection<RequirementGR> findByRequirement(Requirement requirement);
     public Collection<RequirementGR> findByRequirementAndRequirementsImpacts(Requirement requirement, RequirementsImpacts requirementsImpacts);

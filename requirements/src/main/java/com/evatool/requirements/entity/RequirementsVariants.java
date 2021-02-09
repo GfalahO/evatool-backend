@@ -9,27 +9,27 @@ public class RequirementsVariants {
 
     @Id
     private UUID id = UUID.randomUUID();
-    private String titel;
+    private String title;
     private String description;
 
 
     public RequirementsVariants() {
     }
 
-    public RequirementsVariants(String titel, String description) {
-        this.titel = titel;
+    public RequirementsVariants(String title, String description) {
+        this.title = title;
         this.description = description;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitel(String titel) {
+    public void setTitle(String titel) {
         if (titel == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
-        this.titel = titel;
+        this.title = titel;
     }
 
     public String getDescription() {

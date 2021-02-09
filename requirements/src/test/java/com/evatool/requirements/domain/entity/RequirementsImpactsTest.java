@@ -29,7 +29,7 @@ public class RequirementsImpactsTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementsImpacts.setTitel(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementsImpacts.setTitle(null));
     }
 
     @ParameterizedTest

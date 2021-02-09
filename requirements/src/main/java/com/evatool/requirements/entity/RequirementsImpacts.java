@@ -20,8 +20,8 @@ public class RequirementsImpacts {
     public RequirementsImpacts() {
     }
 
-    public RequirementsImpacts(String titel, String description, int value, Dimension dimension) {
-        this.titel = titel;
+    public RequirementsImpacts(String title, String description, int value, Dimension dimension) {
+        this.titel = title;
         this.description = description;
         this.value = value;
         this.dimension=dimension;
@@ -31,15 +31,15 @@ public class RequirementsImpacts {
         SAFETY,PRIVAT
     }
 
-    public String getTitel() {
+    public String getTitle() {
         return titel;
     }
 
-    public void setTitel(String titel) {
-        if (titel == null) {
+    public void setTitle(String title) {
+        if (title == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
-        this.titel = titel;
+        this.titel = title;
     }
 
     public String getDescription() {
