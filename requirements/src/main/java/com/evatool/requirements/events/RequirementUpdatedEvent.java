@@ -1,4 +1,13 @@
 package com.evatool.requirements.events;
 
-public class RequirementUpdatedEvent {
+import com.evatool.requirements.dto.RequirementDTO;
+import org.springframework.context.ApplicationEvent;
+
+public class RequirementUpdatedEvent extends ApplicationEvent {
+    private RequirementDTO dto;
+
+    public RequirementUpdatedEvent(RequirementDTO dto) {
+        super(dto);
+        this.dto = dto;
+    }
 }
