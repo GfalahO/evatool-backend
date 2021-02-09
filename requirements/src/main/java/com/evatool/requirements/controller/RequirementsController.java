@@ -39,7 +39,6 @@ public class RequirementsController {
 		return requirementRepository.findById(id);
 	}
 
-
 	@PostMapping("/requirements")
 	Requirement newRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
@@ -52,7 +51,7 @@ public class RequirementsController {
 		return requirementRepository.save(requirement);
 	}
 
-	@DeleteMapping("/requirements")
+	@DeleteMapping("/requirements/{id}")
 	void deleteRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
 		requirementRepository.delete(requirement);
