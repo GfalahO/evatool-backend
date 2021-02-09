@@ -30,6 +30,10 @@ public class RequirementGR {
     }
 
     public void setRequirementsImpacts(RequirementsImpacts requirementsImpacts) {
+        if (requirementsImpacts == null) {
+            throw new IllegalArgumentException("RequirementsImpacts cannot be null.");
+        }
+
         this.requirementsImpacts = requirementsImpacts;
     }
 
@@ -38,6 +42,9 @@ public class RequirementGR {
     }
 
     public void setRequirement(Requirement requirement) {
+        if (requirement == null) {
+            throw new IllegalArgumentException("Requirement cannot be null.");
+        }
         this.requirement = requirement;
     }
 
@@ -46,6 +53,10 @@ public class RequirementGR {
     }
 
     public void setPoints(int points) {
+        if (points < -1 || points > 1) {
+            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+        }
+
         this.points = points;
     }
 

@@ -30,6 +30,9 @@ public class Requirement {
     }
 
     public void setTitel(String titel) {
+        if (description == null) {
+            throw new IllegalArgumentException("Title cannot be null.");
+        }
         this.titel = titel;
     }
 
@@ -37,7 +40,11 @@ public class Requirement {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description) throws IllegalArgumentException {
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null.");
+        }
+
         this.description = description;
     }
 
@@ -46,6 +53,9 @@ public class Requirement {
     }
 
     public void setVariants(Collection<RequirementsVariants> variants) {
+        if (description == null) {
+            throw new IllegalArgumentException("Variants cannot be null.");
+        }
         this.variants = variants;
     }
 
@@ -56,5 +66,6 @@ public class Requirement {
     public void setId(UUID id) {
         this.id = id;
     }
+
 }
 

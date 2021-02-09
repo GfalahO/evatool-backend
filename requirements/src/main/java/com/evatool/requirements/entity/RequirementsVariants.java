@@ -26,6 +26,9 @@ public class RequirementsVariants {
     }
 
     public void setTitel(String titel) {
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null.");
+        }
         this.titel = titel;
     }
 
@@ -34,6 +37,9 @@ public class RequirementsVariants {
     }
 
     public void setDescription(String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null.");
+        }
         this.description = description;
     }
 

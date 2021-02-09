@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ScenarioRepository extends JpaRepository<RequirementsVariants, UUID> {
+public interface RequirementsVariantsRepository extends JpaRepository<RequirementsVariants, UUID> {
 }
