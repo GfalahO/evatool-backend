@@ -29,6 +29,7 @@ public class RequirementMapper {
     private RequirementDTO map(Requirement requirement) {
         RequirementDTO requirementDTO = new RequirementDTO();
         requirementDTO.setRequirementTitle(requirement.getTitel());
+        requirementDTO.setRootEntityId(requirement.getId());
         requirementDTO.setRequirementDescription(requirement.getDescription());
         requirement.getVariants().forEach(variants->{
             requirementDTO.setVariantsTitle(variants.getTitel());
