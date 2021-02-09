@@ -31,15 +31,19 @@ public class RequirementMapper {
         requirementDTO.setRequirementTitle(requirement.getTitel());
         requirementDTO.setRequirementDescription(requirement.getDescription());
         requirement.getVariants().forEach(variants->{
-            requirementDTO.getVariantsTitle().put(variants.getTitel(),variants.getId());
+            requirementDTO.setVariantsTitle(variants.getTitel());
+            requirementDTO.setVariantsUUID(variants.getId());
+
         });
         Collection<RequirementsImpacts> requirementsImpactsList = requirement_grController.getRequirement_grByRequirement(requirement.getId());
         requirementsImpactsList.forEach(inpacts -> {
-            requirementDTO.getImpactTitles().put(inpacts.getTitel(),inpacts.getId());
+            requirementDTO.getImpactTitles().put(inpacts.getId(),inpacts.getTitel());
+
+
             requirementDTO.getDimensions().add(inpacts.getDimension());
             Collection<RequirementGR> requirement_grCollection = requirement_grController.getRequirement_grByRequirementList(requirement,inpacts);
             //TODO keine Berechnung sondern nur den Wert
-            requirementDTO.getRequirementImpactPoints().put(inpacts.getTitel(),calculatePoints(inpacts,requirement_grCollection));
+            requirementDTO.getRequirementImpactPoints().put(inpacts.getId(),calculatePoints(inpacts,requirement_grCollection));
         });
 
 

@@ -46,7 +46,7 @@ public class RequirementsController {
 		return requirementRepository.save(requirement);
 	}
 
-	@PutMapping("/requirements")
+	@PutMapping("/requirements/{id}")
 	Requirement updateRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
 		return requirementRepository.save(requirement);

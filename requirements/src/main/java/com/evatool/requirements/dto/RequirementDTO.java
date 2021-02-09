@@ -4,18 +4,33 @@ import java.util.*;
 
 public class RequirementDTO {
 
-    // TODO UUID nach vorne
-    // TODO UUID vom Requirement einfügen
-    // TODO Variante nur einzeln gesetzt mit UUID und Text
-    private Map<String,UUID> impactTitles = new HashMap<>();
+    private Map<UUID,String> impactTitles = new HashMap<>();
+    private UUID rootEntityId;
     private String requirementTitle;
     private String requirementDescription;
     private Set dimensions = new HashSet();
-    private Map<String,UUID> variantsTitle = new HashMap<>();
-    private Map<String,Integer> requirementImpactPoints = new HashMap<>();
+    private String variantsTitle;
+    private UUID variantsUUID;
+    private Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
 
     public RequirementDTO() {
 
+    }
+
+    public UUID getRootEntityId() {
+        return rootEntityId;
+    }
+
+    public void setRootEntityId(UUID rootEntityId) {
+        this.rootEntityId = rootEntityId;
+    }
+
+    public UUID getVariantsUUID() {
+        return variantsUUID;
+    }
+
+    public void setVariantsUUID(UUID variantsUUID) {
+        this.variantsUUID = variantsUUID;
     }
 
     public String getRequirementTitle() {
@@ -34,11 +49,11 @@ public class RequirementDTO {
         this.requirementDescription = requirementDescription;
     }
 
-    public Map<String, UUID> getImpactTitles() {
+    public Map<UUID,String> getImpactTitles() {
         return impactTitles;
     }
 
-    public void setImpactTitles(Map<String, UUID> impactTitles) {
+    public void setImpactTitles(Map<UUID,String> impactTitles) {
         this.impactTitles = impactTitles;
     }
 
@@ -50,19 +65,19 @@ public class RequirementDTO {
         this.dimensions = dimensions;
     }
 
-    public Map<String, UUID> getVariantsTitle() {
+    public String getVariantsTitle() {
         return variantsTitle;
     }
 
-    public void setVariantsTitle(Map<String, UUID> variantsTitle) {
+    public void setVariantsTitle(String variantsTitle) {
         this.variantsTitle = variantsTitle;
     }
 
-    public Map<String, Integer> getRequirementImpactPoints() {
+    public Map<UUID, Integer> getRequirementImpactPoints() {
         return requirementImpactPoints;
     }
 
-    public void setRequirementImpactPoints(Map<String, Integer> requirementImpactPoints) {
+    public void setRequirementImpactPoints(Map<UUID, Integer> requirementImpactPoints) {
         this.requirementImpactPoints = requirementImpactPoints;
     }
 }
