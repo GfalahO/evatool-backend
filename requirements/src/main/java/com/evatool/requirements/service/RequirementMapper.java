@@ -38,6 +38,7 @@ public class RequirementMapper {
             requirementDTO.getImpactTitles().put(inpacts.getTitel(),inpacts.getId());
             requirementDTO.getDimensions().add(inpacts.getDimension());
             Collection<RequirementGR> requirement_grCollection = requirement_grController.getRequirement_grByRequirementList(requirement,inpacts);
+            //TODO keine Berechnung sondern nur den Wert
             requirementDTO.getRequirementImpactPoints().put(inpacts.getTitel(),calculatePoints(inpacts,requirement_grCollection));
         });
 

@@ -9,6 +9,7 @@ import java.util.UUID;
 @Entity
 public class Requirement {
 
+    //TODO Proejktid hinterlegen
     @Id
     private UUID id = UUID.randomUUID();
     private String titel;

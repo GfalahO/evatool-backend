@@ -4,6 +4,9 @@ import java.util.*;
 
 public class RequirementDTO {
 
+    // TODO UUID nach vorne
+    // TODO UUID vom Requirement einfügen
+    // TODO Variante nur einzeln gesetzt mit UUID und Text
     private Map<String,UUID> impactTitles = new HashMap<>();
     private String requirementTitle;
     private String requirementDescription;
