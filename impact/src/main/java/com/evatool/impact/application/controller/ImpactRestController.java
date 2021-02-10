@@ -16,6 +16,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 @RequestMapping(IMPACT_REST_CONTROLLER_MAPPING)
 public class ImpactRestController {
+
     @Autowired
     private ImpactService impactService;
 
@@ -23,13 +24,13 @@ public class ImpactRestController {
     public ResponseEntity<ImpactDto> getImpact(@PathVariable String id) throws EntityNotFoundException {
         var impactDto = impactService.findImpactById(id);
         addLinks(impactDto);
-        return new ResponseEntity(impactDto, HttpStatus.OK);
+        return new ResponseEntity<>(impactDto, HttpStatus.OK);
     }
 
     @GetMapping(GET_IMPACTS_MAPPING)
     public List<ImpactDto> getAllImpacts() {
         var impactDtoList = impactService.getAllImpacts();
-        impactDtoList.forEach(s -> addLinks(s));
+        impactDtoList.forEach(this::addLinks);
         return impactDtoList;
     }
 
