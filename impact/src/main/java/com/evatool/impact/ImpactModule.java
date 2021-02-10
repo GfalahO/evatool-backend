@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl & tzaika] Event Tests
 
 // General:
-// TODO [tzaika] Test if real events are asynchronous
+// TODO [hbuhl & tzaika] Test if real events are asynchronous
 // TODO [tzaika] ImpactRest with Swagger
 
 @SpringBootApplication
