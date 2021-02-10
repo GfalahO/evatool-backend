@@ -21,7 +21,6 @@ import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@AutoConfigureTestDatabase
 public class ImpactStakeholderRestControllerTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -41,8 +40,8 @@ public class ImpactStakeholderRestControllerTest {
 
     @Nested
     public class GetAll {
-        @ParameterizedTest
         @Transactional
+        @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetStakeholders_ExistingStakeholders_ReturnStakeholders(int value) {
             var postResponseList = new ArrayList<ResponseEntity<StakeholderDto>>();

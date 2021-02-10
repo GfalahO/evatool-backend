@@ -16,6 +16,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -35,6 +36,11 @@ public class DimensionRestControllerTest {
     @BeforeEach
     public void clearDatabase() {
         dimensionService.deleteDimensions();
+    }
+
+    void insertDimension() {
+        var dimensionDto = getDimensionDto();
+        dimensionService.createDimension(dimensionDto);
     }
 
     @Nested
@@ -74,39 +80,14 @@ public class DimensionRestControllerTest {
 
     @Nested
     public class GetAll {
-        @Test
-        public void testGetDimensions_ExistingDimension_ReturnDimension() {
-            // given
-            var dimension = getDimension();
-            var dimensionDto = toDto(dimension);
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var postResponse = testRestTemplate.postForEntity(
-                    DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
-
-            // when
-            var getResponse = testRestTemplate.getForEntity(
-                    DimensionRest.buildGetDimensionsUri(), DimensionDto[].class);
-            var dimensions = getResponse.getBody();
-
-            // then
-            assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(dimensions[0].getId()).isNotNull();
-            assertThat(dimensions[0].getId()).isEqualTo(postResponse.getBody().getId());
-            assertThat(dimensions[0].getName()).isEqualTo(postResponse.getBody().getName());
-        }
-
+        @Transactional
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetDimensions_ExistingDimensions_ReturnDimensions(int value) {
             var postResponseList = new ArrayList<ResponseEntity<DimensionDto>>();
             for (int i = 0; i < value; i++) {
                 // given
-                var dimension = getDimension();
-                var dimensionDto = toDto(dimension);
-                var httpEntity = new HttpEntity<>(dimensionDto);
-                var postResponse = testRestTemplate.postForEntity(
-                        DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
-                postResponseList.add(postResponse);
+                insertDimension();
             }
 
             // when
