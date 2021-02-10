@@ -16,5 +16,6 @@ public interface ImpactService {
     ImpactDto updateImpact(ImpactDto impactDto) throws EntityNotFoundException;
 
     void deleteImpactById(String id) throws EntityNotFoundException;
-    
+
+    void deleteImpacts();
 }

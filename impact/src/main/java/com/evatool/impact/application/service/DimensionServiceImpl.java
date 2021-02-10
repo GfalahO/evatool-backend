@@ -14,8 +14,13 @@ import java.util.List;
 
 @Service
 public class DimensionServiceImpl implements DimensionService {
+
+    private final DimensionRepository dimensionRepository;
+
     @Autowired
-    private DimensionRepository dimensionRepository;
+    public DimensionServiceImpl(DimensionRepository dimensionRepository) {
+        this.dimensionRepository = dimensionRepository;
+    }
 
     @Override
     public DimensionDto findDimensionById(String id) throws EntityNotFoundException {

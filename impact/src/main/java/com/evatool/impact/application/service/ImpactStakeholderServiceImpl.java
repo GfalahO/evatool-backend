@@ -14,8 +14,13 @@ import java.util.List;
 
 @Service
 public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
+
+    private final ImpactStakeholderRepository stakeholderRepository;
+
     @Autowired
-    private ImpactStakeholderRepository stakeholderRepository;
+    public ImpactStakeholderServiceImpl(ImpactStakeholderRepository stakeholderRepository) {
+        this.stakeholderRepository = stakeholderRepository;
+    }
 
     @Override
     public StakeholderDto findStakeholderById(String id) throws EntityNotFoundException {

@@ -70,4 +70,9 @@ public class ImpactServiceImpl implements ImpactService {
     public void deleteImpactById(String id) {
         impactRepository.deleteById(id);
     }
+
+    @Override
+    public void deleteImpacts() {
+        impactRepository.deleteAll();
+    }
 }
