@@ -1,19 +1,16 @@
 package com.evatool.impact.common.exception.handle;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
 public class ErrorMessage {
     @Getter
-    @Setter
-    private Date timestamp;
+    private final Date timestamp;
 
     @Getter
-    @Setter
-    private String message;
+    private final String message;
 
     public ErrorMessage(String message) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
