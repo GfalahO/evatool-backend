@@ -11,11 +11,11 @@ public class ImpactDto extends RepresentationModel<ImpactDto> {
 
     @Getter
     @Setter
-    private String stakeholderId;
+    private StakeholderDto stakeholder;
 
     @Getter
     @Setter
-    private String dimensionId;
+    private DimensionDto dimension;
 
     @Getter
     @Setter
@@ -29,10 +29,10 @@ public class ImpactDto extends RepresentationModel<ImpactDto> {
     public String toString() {
         return "ImpactDto{" +
                 "id='" + id + '\'' +
+                ", stakeholder=" + stakeholder +
+                ", dimension=" + dimension +
                 ", value=" + value +
                 ", description='" + description + '\'' +
-                ", dimensionId='" + dimensionId + '\'' +
-                ", stakeholderId='" + stakeholderId + '\'' +
                 '}';
     }
 }
