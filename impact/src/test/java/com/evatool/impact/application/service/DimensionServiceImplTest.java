@@ -49,7 +49,7 @@ public class DimensionServiceImplTest {
             // given
             for (int i = 0; i < value; i++) {
                 var dimensionDto = createDummyDimensionDto();
-                dimensionService.createDimension(dimensionDto).getId();
+                dimensionService.createDimension(dimensionDto);
             }
 
             // when
@@ -147,7 +147,7 @@ public class DimensionServiceImplTest {
             // given
             for (int i = 0; i < value; i++) {
                 var dimensionDto = createDummyDimensionDto();
-                dimensionService.createDimension(dimensionDto).getId();
+                dimensionService.createDimension(dimensionDto);
             }
 
             // when

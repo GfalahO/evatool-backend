@@ -11,21 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class ImpactStakeholderRestControllerTest {
-    @Autowired
-    private TestRestTemplate testRestTemplate;
+
+    private final TestRestTemplate testRestTemplate;
+
+    private final ImpactStakeholderService stakeholderService;
 
     @Autowired
-    private ImpactStakeholderService stakeholderService;
+    public ImpactStakeholderRestControllerTest(TestRestTemplate testRestTemplate, ImpactStakeholderService stakeholderService) {
+        this.testRestTemplate = testRestTemplate;
+        this.stakeholderService = stakeholderService;
+    }
 
     @BeforeEach
     public void clearDatabase() {
@@ -34,11 +35,9 @@ public class ImpactStakeholderRestControllerTest {
 
     @Nested
     public class GetAll {
-        @Transactional
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetStakeholders_ExistingStakeholders_ReturnStakeholders(int value) {
-            var postResponseList = new ArrayList<ResponseEntity<StakeholderDto>>();
             for (int i = 0; i < value; i++) {
                 // given
                 var stakeholderDto = createDummyStakeholderDto();
@@ -52,7 +51,7 @@ public class ImpactStakeholderRestControllerTest {
 
             // then
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(stakeholderDtos.length).isEqualTo(postResponseList.size());
+            assertThat(stakeholderDtos.length).isEqualTo(value);
         }
     }
 }

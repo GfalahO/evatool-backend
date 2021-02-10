@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.util.StakeholderRest.buildGetStakeholdersRel;
@@ -48,7 +49,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             stakeholderDto.setId(id);
 
             // when
-            given(stakeholderService.getAllStakeholders()).willReturn(Arrays.asList(stakeholderDto));
+            given(stakeholderService.getAllStakeholders()).willReturn(Collections.singletonList(stakeholderDto));
 
             // then
             mvc.perform(get(buildGetStakeholdersUri())

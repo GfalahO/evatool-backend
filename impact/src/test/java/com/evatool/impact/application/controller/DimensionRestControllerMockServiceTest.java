@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.util.DimensionRest.*;
@@ -116,7 +117,7 @@ public class DimensionRestControllerMockServiceTest {
             dimensionDto.setId(id);
 
             // when
-            given(dimensionService.getAllDimensions()).willReturn(Arrays.asList(dimensionDto));
+            given(dimensionService.getAllDimensions()).willReturn(Collections.singletonList(dimensionDto));
 
             // then
             mvc.perform(get(buildGetDimensionsUri())

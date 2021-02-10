@@ -81,7 +81,7 @@ public class SuperEntityTest {
         return new SuperEntityImpl();
     }
 
-    private class SuperEntityImpl extends SuperEntity {
+    private static class SuperEntityImpl extends SuperEntity {
 
     }
 }

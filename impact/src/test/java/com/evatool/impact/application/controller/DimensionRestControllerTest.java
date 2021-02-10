@@ -14,10 +14,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
@@ -28,11 +25,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class DimensionRestControllerTest {
-    @Autowired
-    private TestRestTemplate testRestTemplate;
+
+    private final TestRestTemplate testRestTemplate;
+
+    private final DimensionService dimensionService;
 
     @Autowired
-    private DimensionService dimensionService;
+    public DimensionRestControllerTest(TestRestTemplate testRestTemplate, DimensionService dimensionService) {
+        this.testRestTemplate = testRestTemplate;
+        this.dimensionService = dimensionService;
+    }
 
     @BeforeEach
     public void clearDatabase() {
@@ -76,11 +78,9 @@ public class DimensionRestControllerTest {
 
     @Nested
     public class GetAll {
-        @Transactional
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetDimensions_ExistingDimensions_ReturnDimensions(int value) {
-            var postResponseList = new ArrayList<ResponseEntity<DimensionDto>>();
             for (int i = 0; i < value; i++) {
                 // given
                 var dimensionDto = createDummyDimensionDto();
@@ -94,7 +94,7 @@ public class DimensionRestControllerTest {
 
             // then
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(dimensionDtos.length).isEqualTo(postResponseList.size());
+            assertThat(dimensionDtos.length).isEqualTo(value);
         }
     }
 
@@ -167,7 +167,7 @@ public class DimensionRestControllerTest {
             dimensionDto.setDescription(null);
 
             // when
-            var httpEntity = new HttpEntity(dimensionDto);
+            var httpEntity = new HttpEntity<>(dimensionDto);
             var responseEntity = testRestTemplate.postForEntity(
                     DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
 
@@ -182,7 +182,7 @@ public class DimensionRestControllerTest {
             dimensionDto.setType(null);
 
             // when
-            var httpEntity = new HttpEntity(dimensionDto);
+            var httpEntity = new HttpEntity<>(dimensionDto);
             var responseEntity = testRestTemplate.postForEntity(
                     DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
 
@@ -198,7 +198,7 @@ public class DimensionRestControllerTest {
             dimensionDto.setType(value);
 
             // when
-            var httpEntity = new HttpEntity(dimensionDto);
+            var httpEntity = new HttpEntity<>(dimensionDto);
             var responseEntity = testRestTemplate.postForEntity(
                     DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
 
@@ -213,11 +213,11 @@ public class DimensionRestControllerTest {
             dimensionDto.setId(UUID.randomUUID().toString());
 
             // when
-            var httpEntity = new HttpEntity(dimensionDto);
+            var httpEntity = new HttpEntity<>(dimensionDto);
             var responseEntity = testRestTemplate.postForEntity(
                     DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
 
-            httpEntity = new HttpEntity(responseEntity.getBody());
+            httpEntity = new HttpEntity<>(responseEntity.getBody());
             responseEntity = testRestTemplate.postForEntity(
                     DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
 
