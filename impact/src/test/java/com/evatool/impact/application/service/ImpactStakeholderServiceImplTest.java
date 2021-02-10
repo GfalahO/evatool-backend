@@ -26,7 +26,7 @@ public class ImpactStakeholderServiceImplTest {
 
     void insertStakeholder() {
         var stakeholder = getStakeholderDto();
-        stakeholderService.createStakeholder(stakeholder).getId();
+        stakeholderService.createStakeholder(stakeholder);
     }
 
     @Nested

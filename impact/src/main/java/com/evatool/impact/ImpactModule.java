@@ -10,11 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Tests:
 // TODO [hbuhl] Copy Stakeholder Tests to Dimension Tests and remove unnecessary Stakeholder Tests (API spec)
 // TODO [tzaika] Implement Impact Tests
+
 // TODO Cover all scenarios with Tests
 // TODO use @BeforeEach and other best practice things in Tests
-// TODO Controller util classes
 // TODO Correct ErrorMessage return in RestController (Mock and integration test)
 // TODO Correct Json of Rest Controller [Rest Level 3] (Mock tests only)
+
+// TODO Controller util classes
 // TODO JsonMapper Tests
 // TODO Event Tests
 

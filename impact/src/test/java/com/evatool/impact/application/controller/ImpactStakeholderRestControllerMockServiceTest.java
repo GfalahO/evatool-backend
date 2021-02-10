@@ -45,61 +45,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
     private ImpactStakeholderService stakeholderService;
 
     @Nested
-    public class GetById {
-        @Test
-        public void testGetStakeholderById_ExistingStakeholder_ReturnStakeholder() throws Exception {
-            // given
-            var stakeholder = getStakeholderDto();
-
-            // when
-            when(stakeholderService.findStakeholderById(anyString())).thenReturn(stakeholder);
-
-            // then
-            mvc.perform(get(StakeholderRest.buildGetStakeholderUri("dummy_id"))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.name").value(stakeholder.getName()));
-        }
-
-        @Test
-        public void testGetStakeholderById_NonExistingStakeholder_ReturnHttpStatusNotFound() throws Exception {
-            // given
-            var nonExistingId = "wrong_id";
-
-            // when
-            when(stakeholderService.findStakeholderById(anyString())).thenThrow(EntityNotFoundException.class);
-
-            // then
-            mvc.perform(get(StakeholderRest.buildGetStakeholderUri(nonExistingId))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isNotFound());
-        }
-    }
-
-    @Nested
     public class GetAll {
-        @Test
-        public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders() throws Exception {
-            // given
-            var stakeholder1 = getStakeholderDto();
-            var stakeholder2 = getStakeholderDto();
-
-            // when
-            var allStakeholders = Arrays.asList(stakeholder1, stakeholder2);
-            given(stakeholderService.getAllStakeholders()).willReturn(allStakeholders);
-
-            // then
-            mvc.perform(get(StakeholderRest.buildGetStakeholdersUri())
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[0].name").value(stakeholder1.getName()))
-                    .andExpect(jsonPath("$[1].name").value(stakeholder2.getName()));
-        }
-
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders(int value) throws Exception {
@@ -118,68 +64,6 @@ public class ImpactStakeholderRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(value)));
-        }
-    }
-
-    @Nested
-    public class Insert {
-        @Test
-        public void testInsertStakeholder_InsertedStakeholderWithExistingId_ReturnInsertedStakeholder() throws Exception {
-            // given
-            var stakeholder = getStakeholderDto();
-            stakeholder.setId(UUID.randomUUID().toString());
-
-            // when
-            when(stakeholderService.createStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
-
-            // then
-            mvc.perform(post(StakeholderRest.buildPostStakeholderUri()).content(new ObjectMapper().writeValueAsString(stakeholder))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.id").exists())
-                    .andExpect(jsonPath("$.id").value(stakeholder.getId()))
-                    .andExpect(jsonPath("$.name").value(stakeholder.getName()))
-                    .andExpect(jsonPath("$..links[0].href").value("http://localhost" + StakeholderRest.buildGetStakeholdersUri()));
-        }
-    }
-
-    @Nested
-    public class Update {
-        @Test
-        public void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws Exception {
-            // given
-            var stakeholder = getStakeholderDto();
-            stakeholder.setId(UUID.randomUUID().toString());
-
-            // when
-            when(stakeholderService.createStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
-            stakeholder.setName("new_name");
-            when(stakeholderService.updateStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
-
-            // then
-            mvc.perform(put(StakeholderRest.buildPutStakeholderUri("dummy_id")).content(new ObjectMapper().writeValueAsString(stakeholder))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id").exists())
-                    .andExpect(jsonPath("$.name").value(stakeholder.getName()));
-        }
-    }
-
-    @Nested
-    public class Delete {
-        @Test
-        public void testDeleteStakeholder_DeletedStakeholder_ReturnNull() throws Exception {
-            // given
-
-            // when
-
-            // then
-            mvc.perform(delete(StakeholderRest.buildDeleteStakeholderUri("dummy_id"))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk());
         }
     }
 }

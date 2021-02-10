@@ -30,13 +30,6 @@ public class ImpactStakeholderRestController {
         return responseEntity;
     }
 
-    @GetMapping(GET_STAKEHOLDER_MAPPING)
-    public ResponseEntity<StakeholderDto> getStakeholder(@PathVariable String id) throws EntityNotFoundException {
-        var stakeholderDto = stakeholderService.findStakeholderById(id);
-        addLinks(stakeholderDto);
-        return new ResponseEntity(stakeholderDto, HttpStatus.OK);
-    }
-
     @GetMapping(GET_STAKEHOLDERS_MAPPING)
     public List<StakeholderDto> getAllStakeholders() {
         var stakeholderDtoList = stakeholderService.getAllStakeholders();
@@ -44,33 +37,7 @@ public class ImpactStakeholderRestController {
         return stakeholderDtoList;
     }
 
-    @PostMapping(POST_STAKEHOLDER_MAPPING)
-    public ResponseEntity<StakeholderDto> createStakeholder(@RequestBody StakeholderDto stakeholderDto) {
-        var insertedStakeholderDto = stakeholderService.createStakeholder(stakeholderDto);
-        addLinks(insertedStakeholderDto);
-        return new ResponseEntity(insertedStakeholderDto, HttpStatus.CREATED);
-    }
-
-    @PutMapping(PUT_STAKEHOLDER_MAPPING)
-    public ResponseEntity<StakeholderDto> updateStakeholder(@RequestBody StakeholderDto stakeholderDto) throws EntityNotFoundException {
-        var updatedStakeholderDto = stakeholderService.updateStakeholder(stakeholderDto);
-        addLinks(updatedStakeholderDto);
-        return new ResponseEntity(updatedStakeholderDto, HttpStatus.OK);
-    }
-
-    @DeleteMapping(DELETE_STAKEHOLDER_MAPPING)
-    public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws EntityNotFoundException {
-        stakeholderService.deleteStakeholderById(id);
-        return ResponseEntity.ok().build();
-    }
-
     private void addLinks(StakeholderDto stakeholderDto) {
         stakeholderDto.add(linkTo(DimensionRestController.class).slash(GET_STAKEHOLDERS).withRel(buildGetStakeholdersRel()));
-        stakeholderDto.add(linkTo(DimensionRestController.class).slash(POST_STAKEHOLDER).withRel(buildPostStakeholderRel()));
-        if (stakeholderDto.getId() != null) {
-            stakeholderDto.add(linkTo(DimensionRestController.class).slash(GET_STAKEHOLDER).slash(stakeholderDto.getId()).withSelfRel());
-            stakeholderDto.add(linkTo(DimensionRestController.class).slash(PUT_STAKEHOLDER).slash(stakeholderDto.getId()).withRel(buildPutStakeholderRel()));
-            stakeholderDto.add(linkTo(DimensionRestController.class).slash(DELETE_STAKEHOLDER).slash(stakeholderDto.getId()).withRel(buildDeleteStakeholderRel()));
-        }
     }
 }
