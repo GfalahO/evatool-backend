@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Tests:
 // TODO [tzaika] Implement Impact Tests
+// TODO ErrorMessage tests in RestController?
+// TODO ErrorMessage tests in RestController?
 // TODO Event Tests
 
 // General:

@@ -16,20 +16,25 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 @RequestMapping(DIMENSION_REST_CONTROLLER_MAPPING)
 public class DimensionRestController {
+
+    private final DimensionService dimensionService;
+
     @Autowired
-    private DimensionService dimensionService;
+    public DimensionRestController(DimensionService dimensionService) {
+        this.dimensionService = dimensionService;
+    }
 
     @GetMapping(GET_DIMENSION_MAPPING)
     public ResponseEntity<DimensionDto> getDimension(@PathVariable String id) throws EntityNotFoundException {
         var dimensionDto = dimensionService.findDimensionById(id);
         addLinks(dimensionDto);
-        return new ResponseEntity(dimensionDto, HttpStatus.OK);
+        return new ResponseEntity<>(dimensionDto, HttpStatus.OK);
     }
 
     @GetMapping(GET_DIMENSIONS_MAPPING)
     public List<DimensionDto> getAllDimensions() {
         var dimensionDtoList = dimensionService.getAllDimensions();
-        dimensionDtoList.forEach(s -> addLinks(s));
+        dimensionDtoList.forEach(this::addLinks);
         return dimensionDtoList;
     }
 
@@ -37,14 +42,14 @@ public class DimensionRestController {
     public ResponseEntity<DimensionDto> createDimension(@RequestBody DimensionDto dimensionDto) {
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
         addLinks(insertedDimensionDto);
-        return new ResponseEntity(insertedDimensionDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(insertedDimensionDto, HttpStatus.CREATED);
     }
 
     @PutMapping(PUT_DIMENSION_MAPPING)
     public ResponseEntity<DimensionDto> updateDimension(@RequestBody DimensionDto dimensionDto) throws EntityNotFoundException {
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
         addLinks(updatedDimensionDto);
-        return new ResponseEntity(updatedDimensionDto, HttpStatus.OK);
+        return new ResponseEntity<>(updatedDimensionDto, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE_DIMENSION_MAPPING)

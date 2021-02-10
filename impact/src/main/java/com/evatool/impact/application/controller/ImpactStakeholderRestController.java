@@ -2,7 +2,6 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.ImpactStakeholderService;
-import com.evatool.impact.common.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 @RequestMapping(IMPACT_STAKEHOLDER_REST_CONTROLLER_MAPPING)
 public class ImpactStakeholderRestController {
+
+    private final ImpactStakeholderService stakeholderService;
+
     @Autowired
-    private ImpactStakeholderService stakeholderService;
+    public ImpactStakeholderRestController(ImpactStakeholderService stakeholderService) {
+        this.stakeholderService = stakeholderService;
+    }
 
     @GetMapping("/test/{id}")
     public ResponseEntity<StakeholderDto> getStakeholder_RestLevel3(@PathVariable String id) {

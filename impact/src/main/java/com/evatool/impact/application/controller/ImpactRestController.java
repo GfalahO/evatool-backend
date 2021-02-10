@@ -18,9 +18,6 @@ public class ImpactRestController {
 
     private final ImpactService impactService;
 
-    // Constructor-based dependency injection
-    // https://blog.marcnuri.com/field-injection-is-not-recommended/
-    // TODO [hbuhl] read and remove comment
     @Autowired
     public ImpactRestController(ImpactService impactService) {
         this.impactService = impactService;
