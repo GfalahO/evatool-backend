@@ -11,7 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -22,11 +23,6 @@ public class ImpactStakeholderServiceImplTest {
     @BeforeEach
     void clearDatabase() {
         stakeholderService.deleteStakeholders();
-    }
-
-    void insertStakeholder() {
-        var stakeholderDto = getStakeholderDto();
-        stakeholderService.createStakeholder(stakeholderDto);
     }
 
     @Nested
@@ -49,7 +45,8 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testGetAllStakeholders_InsertedStakeholder_ReturnStakeholder() {
             // given
-            insertStakeholder();
+            var stakeholderDto = getStakeholderDto();
+            stakeholderService.createStakeholder(stakeholderDto);
 
             // when
             var stakeholders = stakeholderService.getAllStakeholders();
@@ -63,7 +60,8 @@ public class ImpactStakeholderServiceImplTest {
         public void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                insertStakeholder();
+                var stakeholderDto = getStakeholderDto();
+                stakeholderService.createStakeholder(stakeholderDto);
             }
 
             // when
@@ -160,7 +158,8 @@ public class ImpactStakeholderServiceImplTest {
         public void testDeleteAll_InsertStakeholders_ReturnNoStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                insertStakeholder();
+                var stakeholderDto = getStakeholderDto();
+                stakeholderService.createStakeholder(stakeholderDto);
             }
 
             // when

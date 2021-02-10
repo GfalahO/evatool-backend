@@ -34,11 +34,6 @@ public class ImpactStakeholderRestControllerTest {
         stakeholderService.deleteStakeholders();
     }
 
-    void insertStakeholder() {
-        var stakeholderDto = getStakeholderDto();
-        stakeholderService.createStakeholder(stakeholderDto);
-    }
-
     @Nested
     public class GetAll {
         @Transactional
@@ -48,7 +43,8 @@ public class ImpactStakeholderRestControllerTest {
             var postResponseList = new ArrayList<ResponseEntity<StakeholderDto>>();
             for (int i = 0; i < value; i++) {
                 // given
-                insertStakeholder();
+                var stakeholderDto = getStakeholderDto();
+                stakeholderService.createStakeholder(stakeholderDto);
             }
 
             // when

@@ -21,7 +21,7 @@ public class SuperEntityTest {
     }
 
     @Test
-    public void testSetId_ValidToNullValue_ThrowException() {
+    public void testSetId_ValidToNullValue_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 
@@ -33,7 +33,7 @@ public class SuperEntityTest {
     }
 
     @Test
-    public void testSetId_IllegalValue_ThrowException() {
+    public void testSetId_IllegalValue_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 
@@ -44,7 +44,7 @@ public class SuperEntityTest {
     }
 
     @Test
-    public void testSetId_IllegalValueSequence_ThrowException() {
+    public void testSetId_IllegalValueSequence_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 

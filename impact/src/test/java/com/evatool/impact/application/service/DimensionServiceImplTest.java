@@ -13,8 +13,7 @@ import java.util.UUID;
 
 import static com.evatool.impact.common.TestDataGenerator.getDimension;
 import static com.evatool.impact.common.TestDataGenerator.getDimensionDto;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 public class DimensionServiceImplTest {
@@ -131,7 +130,7 @@ public class DimensionServiceImplTest {
         }
 
         @Test
-        public void testDeleteDimensionById_DeleteNonExistingId_ReturnHttpStatusNotFound() {
+        public void testDeleteDimensionById_DeleteNonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimension = getDimension();
             dimension.setId(UUID.randomUUID().toString());
