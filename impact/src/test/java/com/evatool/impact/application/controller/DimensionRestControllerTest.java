@@ -3,6 +3,9 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.controller.util.DimensionRest;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
+import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.handle.ErrorMessage;
+import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.DimensionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -62,7 +65,7 @@ public class DimensionRestControllerTest {
         }
 
         @Test
-        public void testGetDimensionById_NoExistingDimension_ReturnHttpStatusNotFound() {
+        public void testGetDimensionById_NonExistingDimension_ReturnHttpStatusNotFound() {
             // given
             var responseEntity = testRestTemplate.getForEntity(
                     DimensionRest.buildGetDimensionUri("wrong_id"), DimensionDto.class);
@@ -71,6 +74,28 @@ public class DimensionRestControllerTest {
 
             // then
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
+
+        @Test
+        public void testGetDimensionById_NonExistingDimension_ReturnErrorMessage() {
+            // given
+            var id = "wrong_id";
+            var responseEntity = testRestTemplate.getForEntity(
+                    DimensionRest.buildGetDimensionUri(id), ErrorMessage.class);
+
+            // when
+
+            // then
+            var errorMessage = responseEntity.getBody();
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(errorMessage.getTimestamp()).isNotNull();
+            // Check range of timeStamp?
+            assertThat(errorMessage.getMessage()).isNotNull();
+            assertThat(errorMessage.getMessage()).isEqualTo(EntityNotFoundException.MESSAGE_FORMAT
+                    .replaceFirst("%s", Dimension.class.getSimpleName())
+                    .replaceFirst("%s", id));
+            assertThat(errorMessage.getUri()).isNotNull();
+            assertThat(errorMessage.getUri()).isEqualTo(DimensionRest.buildGetDimensionUri(id));
         }
     }
 
