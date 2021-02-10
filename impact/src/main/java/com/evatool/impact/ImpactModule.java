@@ -4,15 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Features:
-// TODO Events
+// TODO [hbuhl & tzaika] Events
 
 // Tests:
 // TODO [tzaika] Implement Impact Tests
-// TODO ErrorMessage tests in RestController?
-// TODO Event Tests
+// TODO [hbuhl] ErrorMessage tests in RestController?
+// TODO [hbuhl & tzaika] Event Tests
 
 // General:
-// TODO [hbuhl] use real database instead of in-memory?
 // TODO [tzaika] Test if real events are asynchronous
 // TODO [tzaika] ImpactRest with Swagger
 

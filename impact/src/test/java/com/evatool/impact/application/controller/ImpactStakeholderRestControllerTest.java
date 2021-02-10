@@ -47,6 +47,7 @@ public class ImpactStakeholderRestControllerTest {
 
             // then
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(stakeholderDtos).isNotNull();
             assertThat(stakeholderDtos.length).isEqualTo(value);
         }
     }
