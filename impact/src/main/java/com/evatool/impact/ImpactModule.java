@@ -6,10 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Features:
 // TODO Better error handling for possible rest calls
 // TODO Events
-// TODO More Impact URIs
 
 // Tests:
-// TODO [tzaika] Implement Dimension Tests
+// TODO [hbuhl] Copy Stakeholder Tests to Dimension Tests and remove unnecessary Stakeholder Tests (API spec)
 // TODO [tzaika] Implement Impact Tests
 // TODO Cover all scenarios with Tests
 // TODO use @BeforeEach and other best practice things in Tests
