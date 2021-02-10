@@ -2,9 +2,10 @@ package com.evatool.impact.application.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
 
-public class ImpactDto extends RepresentationModel<ImpactDto> {
+// TODO [future feature] using HATEOAS
+// extends RepresentationModel<ImpactDto>
+public class ImpactDto {
     @Getter
     @Setter
     private String id;

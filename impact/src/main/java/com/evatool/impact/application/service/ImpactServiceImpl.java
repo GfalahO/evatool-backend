@@ -17,14 +17,18 @@ import java.util.List;
 @Service
 public class ImpactServiceImpl implements ImpactService {
 
-    @Autowired
-    private ImpactRepository impactRepository;
+    private final ImpactRepository impactRepository;
+
+    private final ImpactStakeholderRepository impactStakeholderRepository;
+
+    private final DimensionRepository dimensionRepository;
 
     @Autowired
-    private ImpactStakeholderRepository impactStakeholderRepository;
-
-    @Autowired
-    private DimensionRepository dimensionRepository;
+    public ImpactServiceImpl(ImpactRepository impactRepository, ImpactStakeholderRepository impactStakeholderRepository, DimensionRepository dimensionRepository) {
+        this.impactRepository = impactRepository;
+        this.impactStakeholderRepository = impactStakeholderRepository;
+        this.dimensionRepository = dimensionRepository;
+    }
 
     @Override
     public ImpactDto findImpactById(String id) throws EntityNotFoundException {

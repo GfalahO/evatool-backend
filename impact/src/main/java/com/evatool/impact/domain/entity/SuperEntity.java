@@ -35,8 +35,8 @@ public class SuperEntity {
 
     private boolean idIsValid(String id) {
         try {
-            UUID.fromString(id);
-            return true;
+            var uuid = UUID.fromString(id);
+            return uuid.toString().equals(id);
         } catch (IllegalArgumentException ex) {
             return false;
         }

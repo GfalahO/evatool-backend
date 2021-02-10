@@ -9,6 +9,7 @@ import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 
 public class TestDataGenerator {
+    
     public static Dimension getDimension() {
         return new Dimension("dimension", DimensionType.ECONOMIC, "dimension");
     }

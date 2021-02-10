@@ -11,40 +11,42 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.evatool.impact.application.controller.util.ImpactRest.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping(IMPACT_REST_CONTROLLER_MAPPING)
 public class ImpactRestController {
+
+    private final ImpactService impactService;
+
+    // Constructor-based dependency injection
+    // https://blog.marcnuri.com/field-injection-is-not-recommended/
+    // TODO [hbuhl] read and remove comment
     @Autowired
-    private ImpactService impactService;
+    public ImpactRestController(ImpactService impactService) {
+        this.impactService = impactService;
+    }
 
     @GetMapping(GET_IMPACT_MAPPING)
     public ResponseEntity<ImpactDto> getImpact(@PathVariable String id) throws EntityNotFoundException {
         var impactDto = impactService.findImpactById(id);
-        addLinks(impactDto);
-        return new ResponseEntity(impactDto, HttpStatus.OK);
+        return new ResponseEntity<>(impactDto, HttpStatus.OK);
     }
 
     @GetMapping(GET_IMPACTS_MAPPING)
     public List<ImpactDto> getAllImpacts() {
-        var impactDtoList = impactService.getAllImpacts();
-        impactDtoList.forEach(s -> addLinks(s));
-        return impactDtoList;
+        return impactService.getAllImpacts();
     }
 
     @PostMapping(POST_IMPACT_MAPPING)
     public ResponseEntity<ImpactDto> createImpact(@RequestBody ImpactDto impactDto) {
         var insertedImpactDto = impactService.createImpact(impactDto);
-        addLinks(insertedImpactDto);
-        return new ResponseEntity(insertedImpactDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(insertedImpactDto, HttpStatus.CREATED);
     }
 
     @PutMapping(PUT_IMPACT_MAPPING)
     public ResponseEntity<ImpactDto> updateImpact(@RequestBody ImpactDto impactDto) throws EntityNotFoundException {
         var updatedImpactDto = impactService.updateImpact(impactDto);
-        addLinks(updatedImpactDto);
-        return new ResponseEntity(updatedImpactDto, HttpStatus.OK);
+        return new ResponseEntity<>(updatedImpactDto, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE_IMPACT_MAPPING)
@@ -53,7 +55,11 @@ public class ImpactRestController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * TODO [future feature] using HATEOAS
+     */
     private void addLinks(ImpactDto impactDto) {
+        /*
         impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACTS).withRel(buildGetImpactsRel()));
         impactDto.add(linkTo(DimensionRestController.class).slash(POST_IMPACT).withRel(buildPostImpactRel()));
         if (impactDto.getId() != null) {
@@ -61,5 +67,6 @@ public class ImpactRestController {
             impactDto.add(linkTo(DimensionRestController.class).slash(PUT_IMPACT).slash(impactDto.getId()).withRel(buildPutImpactRel()));
             impactDto.add(linkTo(DimensionRestController.class).slash(DELETE_IMPACT).slash(impactDto.getId()).withRel(buildDeleteImpactRel()));
         }
+        */
     }
 }
