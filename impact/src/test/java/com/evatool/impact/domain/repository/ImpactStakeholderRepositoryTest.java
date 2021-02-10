@@ -11,8 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 public class ImpactStakeholderRepositoryTest {
+
+    private final ImpactStakeholderRepository stakeholderRepository;
+
     @Autowired
-    private ImpactStakeholderRepository stakeholderRepository;
+    public ImpactStakeholderRepositoryTest(ImpactStakeholderRepository stakeholderRepository) {
+        this.stakeholderRepository = stakeholderRepository;
+    }
 
     @Test
     public void testFindById_InsertedStakeholder_ReturnStakeholder() {

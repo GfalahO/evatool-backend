@@ -12,8 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 public class ImpactRepositoryTest {
 
+    private final ImpactRepository impactRepository;
+
     @Autowired
-    private ImpactRepository impactRepository;
+    public ImpactRepositoryTest(ImpactRepository impactRepository) {
+        this.impactRepository = impactRepository;
+    }
 
     @Test
     public void testFindById_InsertedImpact_ReturnImpact() {

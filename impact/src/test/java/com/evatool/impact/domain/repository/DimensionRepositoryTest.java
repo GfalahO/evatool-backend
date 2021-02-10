@@ -11,8 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 public class DimensionRepositoryTest {
+
+    private final DimensionRepository dimensionRepository;
+
     @Autowired
-    private DimensionRepository dimensionRepository;
+    public DimensionRepositoryTest(DimensionRepository dimensionRepository) {
+        this.dimensionRepository = dimensionRepository;
+    }
 
     @Test
     public void testFindById_InsertedDimension_ReturnDimension() {
