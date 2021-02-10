@@ -7,7 +7,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -15,7 +16,7 @@ public class DimensionDtoMapperTest {
     @Test
     public void testToDot_NewDimension_EqualsDimensionDto() {
         // given
-        var dimension = getDimension();
+        var dimension = createDummyDimension();
 
         // when
         var dimensionDto = toDto(dimension);
@@ -31,7 +32,7 @@ public class DimensionDtoMapperTest {
     @ValueSource(strings = {"ECONOMIC", "SOCIAL", "economic", "social", "Social", "Economic"})
     public void testFromDto_LegalTypeValues_DoNotThrowException(String value) {
         // given
-        var dto = getDimensionDto();
+        var dto = createDummyDimensionDto();
 
         // when
         dto.setType(value);
@@ -44,7 +45,7 @@ public class DimensionDtoMapperTest {
     @ValueSource(strings = {"", "null", "ECONOMICd", "SOsCIAL", "economiac", "soscial", "Sodcial", "Econdomic"})
     public void testFromDto_IllegalTypeValues_ThrowPropertyViolationException(String value) {
         // given
-        var dto = getDimensionDto();
+        var dto = createDummyDimensionDto();
 
         // when
         dto.setType(value);
@@ -56,7 +57,7 @@ public class DimensionDtoMapperTest {
     @Test // TODO [tzaika] actually an integration test
     public void testFromDto_NewDimensionDto_EqualsDimension() {
         // given
-        var dimensionDto = getDimensionDto();
+        var dimensionDto = createDummyDimensionDto();
 
         // when
         var dimension = fromDto(dimensionDto);

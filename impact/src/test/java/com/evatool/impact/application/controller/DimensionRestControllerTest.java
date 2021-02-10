@@ -22,7 +22,8 @@ import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -43,7 +44,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testGetDimensionById_InsertedDimension_ReturnDimension() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
             var postResponse = testRestTemplate.postForEntity(
@@ -82,7 +83,7 @@ public class DimensionRestControllerTest {
             var postResponseList = new ArrayList<ResponseEntity<DimensionDto>>();
             for (int i = 0; i < value; i++) {
                 // given
-                var dimensionDto = getDimensionDto();
+                var dimensionDto = createDummyDimensionDto();
                 dimensionService.createDimension(dimensionDto);
             }
 
@@ -102,7 +103,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testInsertDimension_InsertDimension_ReturnInsertedDimension() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
 
             // when
@@ -134,7 +135,21 @@ public class DimensionRestControllerTest {
         @Test
         public void testInsertDimension_InsertEmptyDimensionDto_ReturnHttpStatusBadRequest() {
             // given
-            var dimensionDto = getEmptyDimensionDto();
+            var httpEntity = new HttpEntity<>(new DimensionDto());
+
+            // when
+            var responseEntity = testRestTemplate.postForEntity(
+                    DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
+
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        public void testInsertDimension_InsertDimensionWithNullName_ReturnHttpStatusBadRequest() {
+            // given
+            DimensionDto dimensionDto = createDummyDimensionDto();
+            dimensionDto.setName(null);
 
             // when
             var httpEntity = new HttpEntity<>(dimensionDto);
@@ -146,24 +161,9 @@ public class DimensionRestControllerTest {
         }
 
         @Test
-        public void testInsertDimension_InsertDimensionWithNullName_ReturnHttpStatusBadRequest() {
-            // given
-            DimensionDto dimensionDto = getDimensionDto();
-            dimensionDto.setName(null);
-
-            // when
-            var httpEntity = new HttpEntity(dimensionDto);
-            var responseEntity = testRestTemplate.postForEntity(
-                    DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
         public void testInsertDimension_InsertDimensionWithNullDescription_ReturnHttpStatusBadRequest() {
             // given
-            DimensionDto dimensionDto = getDimensionDto();
+            DimensionDto dimensionDto = createDummyDimensionDto();
             dimensionDto.setDescription(null);
 
             // when
@@ -178,7 +178,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testInsertDimension_InsertDimensionWithNullType_ReturnHttpStatusBadRequest() {
             // given
-            DimensionDto dimensionDto = getDimensionDto();
+            DimensionDto dimensionDto = createDummyDimensionDto();
             dimensionDto.setType(null);
 
             // when
@@ -194,7 +194,7 @@ public class DimensionRestControllerTest {
         @ValueSource(strings = {"", "typo"})
         public void testInsertDimension_InsertDimensionWithIllegalType_ReturnHttpStatusBadRequest(String value) {
             // given
-            DimensionDto dimensionDto = getDimensionDto();
+            DimensionDto dimensionDto = createDummyDimensionDto();
             dimensionDto.setType(value);
 
             // when
@@ -209,7 +209,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testInsertDimension_InsertWithNotNullId_ReturnHttpStatusBadRequest() {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
 
             // when
@@ -231,7 +231,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testUpdateDimension_InsertedDimension_ReturnUpdatedDimension() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
             var postResponse = testRestTemplate.postForEntity(
@@ -260,7 +260,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testUpdateDimension_UpdateNonExistingId_ReturnHttpStatusNotFound() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID().toString());
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
@@ -276,7 +276,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testUpdateDimension_UpdateNullId_ReturnHttpStatusNotFound() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
 
@@ -291,7 +291,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testUpdateDimension_UpdateNullName_ReturnHttpStatusBadRequest() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
             var postResponse = testRestTemplate.postForEntity(
@@ -312,7 +312,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testUpdateDimension_UpdateNullDescription_ReturnHttpStatusBadRequest() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
             var postResponse = testRestTemplate.postForEntity(
@@ -333,7 +333,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testUpdateDimension_UpdateNullType_ReturnHttpStatusBadRequest() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
             var postResponse = testRestTemplate.postForEntity(
@@ -355,7 +355,7 @@ public class DimensionRestControllerTest {
         @ValueSource(strings = {"", "typo"})
         public void testUpdateDimension_UpdateIllegalType_ReturnHttpStatusBadRequest(String value) {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
             var postResponse = testRestTemplate.postForEntity(
@@ -377,7 +377,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testUpdateDimension_UpdateNullDtoIntoExistingId_ReturnHttpStatusBadRequest() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
             var postResponse = testRestTemplate.postForEntity(
@@ -416,7 +416,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testDeleteDimension_ExistingDimension_DeleteDimensionAndReturnHttpStatusOK() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var insertEntity = new HttpEntity<>(dimensionDto);
             var insertEntityResponse = testRestTemplate.postForEntity(
@@ -440,7 +440,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testDeleteDimension_DeleteNonExistingId_ReturnHttpStatusNotFound() {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
 
             // when
@@ -455,7 +455,7 @@ public class DimensionRestControllerTest {
         @Test
         public void testDeleteDimension_DeleteNullId_ReturnHttpStatusBadRequest() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
 

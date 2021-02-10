@@ -15,7 +15,7 @@ public class ImpactDtoMapperTest {
     @Test
     public void testToDto_NewImpact_EqualsImpactDto() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
         impact.getDimension().setId(UUID.randomUUID().toString());
         impact.getStakeholder().setId(UUID.randomUUID().toString());
 
@@ -39,9 +39,9 @@ public class ImpactDtoMapperTest {
     @Test
     public void testFromDto_NewImpactDto_EqualsImpact() {
         // given
-        var impactDto = getImpactDto();
-        impactDto.setDimension(getDimensionDto());
-        impactDto.setStakeholder(getStakeholderDto());
+        var impactDto = createDummyImpactDto();
+        impactDto.setDimension(createDummyDimensionDto());
+        impactDto.setStakeholder(createDummyStakeholderDto());
 
         // when
         // TODO: [tzaika] add mock or real service

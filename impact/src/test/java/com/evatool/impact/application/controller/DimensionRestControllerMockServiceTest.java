@@ -3,7 +3,6 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.ImpactModule;
 import com.evatool.impact.application.controller.util.DimensionRest;
 import com.evatool.impact.application.dto.DimensionDto;
-import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.DimensionService;
 import com.evatool.impact.common.config.SwaggerConfig;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -24,8 +23,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.util.DimensionRest.*;
-import static com.evatool.impact.application.controller.util.DimensionRest.buildGetDimensionsRel;
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -50,7 +48,7 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testGetDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID().toString();
             dimensionDto.setId(id);
 
@@ -79,7 +77,7 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testGetDimensionById_ExistingDimension_ReturnDimension() throws Exception {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
 
             // when
             when(dimensionService.findDimensionById(anyString())).thenReturn(dimensionDto);
@@ -113,7 +111,7 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testGetAllDimensions_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID().toString();
             dimensionDto.setId(id);
 
@@ -143,8 +141,8 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testGetAllDimensions_ExistingDimensions_ReturnDimensions() throws Exception {
             // given
-            var dimension1 = getDimensionDto();
-            var dimension2 = getDimensionDto();
+            var dimension1 = createDummyDimensionDto();
+            var dimension2 = createDummyDimensionDto();
 
             // when
             var allDimensionDtos = Arrays.asList(dimension1, dimension2);
@@ -166,7 +164,7 @@ public class DimensionRestControllerMockServiceTest {
             var allDimensionDtos = new ArrayList<DimensionDto>();
             for (int i = 0; i < value; i++) {
                 // given
-                var dimensionDto = getDimensionDto();
+                var dimensionDto = createDummyDimensionDto();
                 allDimensionDtos.add(dimensionDto);
             }
             // when
@@ -186,7 +184,7 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testInsertDimension_InsertedDimension_CorrectRestLevel3() throws Exception {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
 
             // when
@@ -206,7 +204,7 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws Exception {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID().toString();
             dimensionDto.setId(id);
 
@@ -238,7 +236,7 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testUpdateDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID().toString();
             dimensionDto.setId(id);
 
@@ -269,7 +267,7 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
 
             // when

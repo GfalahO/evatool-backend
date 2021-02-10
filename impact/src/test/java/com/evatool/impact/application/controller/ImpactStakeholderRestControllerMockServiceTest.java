@@ -19,8 +19,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static com.evatool.impact.application.controller.util.StakeholderRest.*;
-import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
+import static com.evatool.impact.application.controller.util.StakeholderRest.buildGetStakeholdersRel;
+import static com.evatool.impact.application.controller.util.StakeholderRest.buildGetStakeholdersUri;
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholderDto;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,7 +43,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
         @Test
         public void testGetAllStakeholders_ExistingStakeholder_CorrectRestLevel3() throws Exception {
             // given
-            var stakeholderDto = getStakeholderDto();
+            var stakeholderDto = createDummyStakeholderDto();
             var id = UUID.randomUUID().toString();
             stakeholderDto.setId(id);
 
@@ -64,8 +65,8 @@ public class ImpactStakeholderRestControllerMockServiceTest {
         @Test
         public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders() throws Exception {
             // given
-            var stakeholder1 = getStakeholderDto();
-            var stakeholder2 = getStakeholderDto();
+            var stakeholder1 = createDummyStakeholderDto();
+            var stakeholder2 = createDummyStakeholderDto();
 
             // when
             var allStakeholderDtos = Arrays.asList(stakeholder1, stakeholder2);
@@ -87,7 +88,7 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             var allStakeholderDtos = new ArrayList<StakeholderDto>();
             for (int i = 0; i < value; i++) {
                 // given
-                var stakeholderDto = getStakeholderDto();
+                var stakeholderDto = createDummyStakeholderDto();
                 allStakeholderDtos.add(stakeholderDto);
             }
             // when

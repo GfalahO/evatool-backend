@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -30,7 +30,7 @@ public class ImpactStakeholderDeletedEventMockListenerTest {
     @Test
     public void testOnApplicationEvent_PublishEvent_ReceivePublishedEvent() throws InterruptedException {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
 
         // when
         stakeholderDeletedEventPublisher.onStakeholderDeleted(stakeholder);
@@ -44,7 +44,7 @@ public class ImpactStakeholderDeletedEventMockListenerTest {
     public void testOnApplicationEvent_PublishEvents_ReceivePublishedEvents(int value) throws InterruptedException {
         for (int i = 0; i < value; i++) {
             // given
-            var stakeholder = getStakeholder();
+            var stakeholder = createDummyStakeholder();
 
             // when
             stakeholderDeletedEventPublisher.onStakeholderDeleted(stakeholder);
@@ -57,7 +57,7 @@ public class ImpactStakeholderDeletedEventMockListenerTest {
     @Test
     public void testOnApplicationEvent_PublishWrongEvent_DoNotReceivePublishedEvent() throws InterruptedException {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
 
         // when
         applicationEventPublisher.publishEvent(new TestEvent(this));

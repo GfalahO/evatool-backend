@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -24,7 +24,7 @@ public class ImpactStakeholderInsertedEventTest {
     @Test
     public void testOnApplicationEvent_PublishEvent_StakeholderIdIsNotNull() throws InterruptedException {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
 
         // when
         stakeholderInsertedEventPublisher.onStakeholderInserted(stakeholder);
@@ -36,7 +36,7 @@ public class ImpactStakeholderInsertedEventTest {
     @Test
     public void testOnApplicationEvent_PublishEvent_ReturnInsertedStakeholder() throws InterruptedException {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
 
         // when
         stakeholderInsertedEventPublisher.onStakeholderInserted(stakeholder);
