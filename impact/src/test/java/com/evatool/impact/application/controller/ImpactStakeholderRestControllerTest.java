@@ -1,11 +1,8 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.impact.ImpactModule;
 import com.evatool.impact.application.controller.util.StakeholderRest;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.ImpactStakeholderService;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
 import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -58,6 +58,9 @@ public class Dimension extends SuperEntity {
     }
 
     public static boolean isDimensionType(String value) {
+        if (value == null) {
+            return false;
+        }
         for (var e : DimensionType.values()) {
             if (value.equalsIgnoreCase(e.toString())) {
                 return true;
