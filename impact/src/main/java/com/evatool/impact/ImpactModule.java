@@ -21,12 +21,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // TODO [tzaika] Test if real events are asynchronous
 
-// TODO [tzaika] ImpactDTO in wiki
+// TODO [tzaika & hbuhl] API Specification
+// TODO [tzaika] ImpactRest with Swagger
 // TODO [tzaika] Rename *Mapper to *DtoMapper
 
 @SpringBootApplication
 public class ImpactModule {
-    public static void main(String[] args) {
-        SpringApplication.run(ImpactModule.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(ImpactModule.class, args);
+	}
 }
