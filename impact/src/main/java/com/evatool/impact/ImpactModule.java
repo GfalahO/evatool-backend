@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO Controller util classes
 // TODO Correct ErrorMessage return in RestController (Mock and integration test)
 // TODO Correct Json of Rest Controller [Rest Level 3] (Mock tests only)
-// TODO DtoMapper Tests
+// TODO JsonMapper Tests
 // TODO Event Tests
 
 // TODO [tzaika] Test if real events are asynchronous
