@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO Event Tests
 
 // General:
+// TODO Warnings
 // TODO [hbuhl] Split GitHub Action into unit and integration tests?
 // TODO [hbuhl] use real database instead of in-memory?
 // TODO [tzaika] Test if real events are asynchronous
