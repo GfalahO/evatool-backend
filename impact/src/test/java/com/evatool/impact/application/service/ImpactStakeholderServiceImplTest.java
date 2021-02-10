@@ -11,9 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
-import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
-import static org.assertj.core.api.Assertions.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholderDto;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 public class ImpactStakeholderServiceImplTest {
@@ -30,7 +31,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
             // given
-            var stakeholder = getStakeholder();
+            var stakeholder = createDummyStakeholder();
             stakeholder.setId(UUID.randomUUID().toString());
 
             // when
@@ -47,7 +48,7 @@ public class ImpactStakeholderServiceImplTest {
         public void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                var stakeholderDto = getStakeholderDto();
+                var stakeholderDto = createDummyStakeholderDto();
                 stakeholderService.createStakeholder(stakeholderDto);
             }
 
@@ -64,7 +65,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws EntityNotFoundException {
             // given
-            var stakeholderDto = getStakeholderDto();
+            var stakeholderDto = createDummyStakeholderDto();
 
             // when
             var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
@@ -82,7 +83,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws EntityNotFoundException {
             // given
-            var stakeholderDto = getStakeholderDto();
+            var stakeholderDto = createDummyStakeholderDto();
             var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
 
             // when
@@ -99,7 +100,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testUpdateStakeholder_UpdatedNonExistingId_ThrowEntityNotFoundException() {
             // given
-            var stakeholderDto = getStakeholderDto();
+            var stakeholderDto = createDummyStakeholderDto();
             stakeholderDto.setId(UUID.randomUUID().toString());
 
             // when
@@ -114,7 +115,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() throws EntityNotFoundException {
             // given
-            var stakeholderDto = getStakeholderDto();
+            var stakeholderDto = createDummyStakeholderDto();
 
             // when
             var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
@@ -128,7 +129,7 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testDeleteStakeholderById_DeleteNonExistingId_ReturnHttpStatusNotFound() {
             // given
-            var stakeholder = getStakeholder();
+            var stakeholder = createDummyStakeholder();
             stakeholder.setId(UUID.randomUUID().toString());
 
             // when
@@ -145,7 +146,7 @@ public class ImpactStakeholderServiceImplTest {
         public void testDeleteAll_InsertStakeholders_ReturnNoStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                var stakeholderDto = getStakeholderDto();
+                var stakeholderDto = createDummyStakeholderDto();
                 stakeholderService.createStakeholder(stakeholderDto);
             }
 

@@ -11,9 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getDimension;
-import static com.evatool.impact.common.TestDataGenerator.getDimensionDto;
-import static org.assertj.core.api.Assertions.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 public class DimensionServiceImplTest {
@@ -30,7 +31,7 @@ public class DimensionServiceImplTest {
         @Test
         public void testGetDimensionById_NonExistingId_ThrowEntityNotFoundException() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID().toString());
 
             // when
@@ -47,7 +48,7 @@ public class DimensionServiceImplTest {
         public void testGetAllDimensions_InsertedDimensions_ReturnDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                var dimensionDto = getDimensionDto();
+                var dimensionDto = createDummyDimensionDto();
                 dimensionService.createDimension(dimensionDto).getId();
             }
 
@@ -64,7 +65,7 @@ public class DimensionServiceImplTest {
         @Test
         public void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws EntityNotFoundException {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
 
             // when
             var insertedDimension = dimensionService.createDimension(dimensionDto);
@@ -82,7 +83,7 @@ public class DimensionServiceImplTest {
         @Test
         public void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws EntityNotFoundException {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             var insertedDimension = dimensionService.createDimension(dimensionDto);
 
             // when
@@ -99,7 +100,7 @@ public class DimensionServiceImplTest {
         @Test
         public void testUpdateDimension_UpdatedNonExistingId_ThrowEntityNotFoundException() {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
 
             // when
@@ -114,7 +115,7 @@ public class DimensionServiceImplTest {
         @Test
         public void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions() throws EntityNotFoundException {
             // given
-            var dimensionDto = getDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
 
             // when
             var insertedDimension = dimensionService.createDimension(dimensionDto);
@@ -128,7 +129,7 @@ public class DimensionServiceImplTest {
         @Test
         public void testDeleteDimensionById_DeleteNonExistingId_ThrowEntityNotFoundException() {
             // given
-            var dimension = getDimension();
+            var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID().toString());
 
             // when
@@ -145,7 +146,7 @@ public class DimensionServiceImplTest {
         public void testDeleteAll_InsertDimensions_ReturnNoDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                var dimensionDto = getDimensionDto();
+                var dimensionDto = createDummyDimensionDto();
                 dimensionService.createDimension(dimensionDto).getId();
             }
 

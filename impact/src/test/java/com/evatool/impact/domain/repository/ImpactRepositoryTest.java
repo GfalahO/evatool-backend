@@ -6,7 +6,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getImpact;
+import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -18,7 +18,7 @@ public class ImpactRepositoryTest {
     @Test
     public void testFindById_InsertedImpact_ReturnImpact() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
         impactRepository.save(impact);
 
         // when
@@ -31,7 +31,7 @@ public class ImpactRepositoryTest {
     @Test
     public void testSave_InsertedImpact_IdIsNotNull() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
 
         // when
         impactRepository.save(impact);
@@ -43,7 +43,7 @@ public class ImpactRepositoryTest {
     @Test
     public void testSave_InsertedImpact_IdIsUuid() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
 
         // when
         impactRepository.save(impact);
@@ -56,7 +56,7 @@ public class ImpactRepositoryTest {
     @Test
     public void testSave_PresetId_Allow() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
         impact.setId(UUID.randomUUID().toString());
 
         // when
@@ -68,7 +68,7 @@ public class ImpactRepositoryTest {
     @Test
     public void testSave_UpdatedImpact_ReturnUpdatedDimension() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
         impactRepository.save(impact);
         var newValue = 0.125;
 
@@ -85,7 +85,7 @@ public class ImpactRepositoryTest {
     @Test
     public void testDelete_DeletedImpact_ReturnNull() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
         impactRepository.save(impact);
 
         // when
