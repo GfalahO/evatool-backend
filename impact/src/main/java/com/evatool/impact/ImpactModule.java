@@ -10,8 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Tests:
 // TODO [tzaika] Implement Impact Tests
 
-// TODO Correct ErrorMessage return in DimensionRestController (Integration)
-
 // TODO ErrorMessage Tests
 // TODO Controller util classes
 // TODO JsonMapper Tests
