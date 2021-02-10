@@ -26,33 +26,36 @@ public class ImpactMapperTest {
         assertThat(impact.getId()).isEqualTo(impactDto.getId());
         assertThat(impact.getValue()).isEqualTo(impactDto.getValue());
         assertThat(impact.getDescription()).isEqualTo(impactDto.getDescription());
-        assertThat(impact.getDimension().getId()).isEqualTo(impactDto.getDimensionId());
-        assertThat(impact.getStakeholder().getId()).isEqualTo(impactDto.getStakeholderId());
+        assertThat(impact.getDimension().getId()).isEqualTo(impactDto.getDimension().getId());
+        // TODO [tzaika] check
+        assertThat(impact.getDimension().getType().toString()).isEqualTo(impactDto.getDimension().getType());
+        assertThat(impact.getDimension().getName()).isEqualTo(impactDto.getDimension().getName());
+        assertThat(impact.getDimension().getDescription()).isEqualTo(impactDto.getDimension().getDescription());
+        assertThat(impact.getStakeholder().getId()).isEqualTo(impactDto.getStakeholder().getId());
+        assertThat(impact.getStakeholder().getName()).isEqualTo(impactDto.getStakeholder().getName());
     }
 
     @Disabled // TODO [tzaika] actually an integration test
     @Test
     public void testFromDto_NewImpactDto_EqualsImpact() {
         // given
-        var dimension = getDimension();
-        dimension.setId(UUID.randomUUID().toString());
-        var stakeholder = getStakeholder();
-        stakeholder.setId(UUID.randomUUID().toString());
         var impactDto = getImpactDto();
-        impactDto.setDimensionId(dimension.getId());
-        impactDto.setStakeholderId(stakeholder.getId());
+        impactDto.setDimension(getDimensionDto());
+        impactDto.setStakeholder(getStakeholderDto());
 
         // when
-        var impact = fromDto(impactDto);
+        // TODO: [tzaika] add mock or real service
+        var impact = fromDto(impactDto, null, null);
 
         // then
         assertThat(impact.getId()).isEqualTo(impactDto.getId());
         assertThat(impact.getValue()).isEqualTo(impactDto.getValue());
         assertThat(impact.getDescription()).isEqualTo(impactDto.getDescription());
-        assertThat(impact.getDimension().getId()).isEqualTo(impactDto.getDimensionId());
-        assertThat(impact.getDimension().getName()).isEqualTo(dimension.getName());
-        assertThat(impact.getDimension().getDescription()).isEqualTo(dimension.getDescription());
-        assertThat(impact.getStakeholder().getId()).isEqualTo(impactDto.getStakeholderId());
-        assertThat(impact.getStakeholder().getName()).isEqualTo(stakeholder.getName());
+        assertThat(impact.getDimension().getId()).isEqualTo(impactDto.getDimension().getId());
+        assertThat(impact.getDimension().getType().toString()).isEqualTo(impactDto.getDimension().getType());
+        assertThat(impact.getDimension().getName()).isEqualTo(impactDto.getDimension().getName());
+        assertThat(impact.getDimension().getDescription()).isEqualTo(impactDto.getDimension().getDescription());
+        assertThat(impact.getStakeholder().getId()).isEqualTo(impactDto.getStakeholder().getId());
+        assertThat(impact.getStakeholder().getName()).isEqualTo(impactDto.getStakeholder().getName());
     }
 }
