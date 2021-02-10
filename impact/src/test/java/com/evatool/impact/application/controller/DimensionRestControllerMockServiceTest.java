@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getDimensionDto;
+import static com.evatool.impact.application.controller.util.DimensionRest.buildGetDimensionsUri;
+import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -79,6 +80,23 @@ public class DimensionRestControllerMockServiceTest {
     @Nested
     public class GetAll {
         @Test
+        public void testGetAllDimensions_ExistingDimension_CorrectRestLevel3() throws Exception {
+            // given
+            var dimension = getDimensionDto();
+
+            // when
+            given(dimensionService.getAllDimensions()).willReturn(Arrays.asList(dimension));
+
+            // then
+            mvc.perform(get(buildGetDimensionsUri())
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(1)))
+                    .andExpect(jsonPath("$..links[0].href").value("http://localhost" + buildGetDimensionsUri()));
+        }
+
+        @Test
         public void testGetAllDimensions_ExistingDimensions_ReturnDimensions() throws Exception {
             // given
             var dimension1 = getDimensionDto();
@@ -89,7 +107,7 @@ public class DimensionRestControllerMockServiceTest {
             given(dimensionService.getAllDimensions()).willReturn(allDimensions);
 
             // then
-            mvc.perform(get(DimensionRest.buildGetDimensionsUri())
+            mvc.perform(get(buildGetDimensionsUri())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -111,7 +129,7 @@ public class DimensionRestControllerMockServiceTest {
             given(dimensionService.getAllDimensions()).willReturn(allDimensions);
 
             // then
-            mvc.perform(get(DimensionRest.buildGetDimensionsUri())
+            mvc.perform(get(buildGetDimensionsUri())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -138,7 +156,7 @@ public class DimensionRestControllerMockServiceTest {
                     .andExpect(jsonPath("$.id").exists())
                     .andExpect(jsonPath("$.id").value(dimension.getId()))
                     .andExpect(jsonPath("$.name").value(dimension.getName()))
-                    .andExpect(jsonPath("$..links[0].href").value("http://localhost" + DimensionRest.buildGetDimensionsUri()));
+                    .andExpect(jsonPath("$..links[0].href").value("http://localhost" + buildGetDimensionsUri()));
         }
     }
 
