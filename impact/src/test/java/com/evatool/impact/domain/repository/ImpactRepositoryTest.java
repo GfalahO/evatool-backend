@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 public class ImpactRepositoryTest {
+
     @Autowired
     private ImpactRepository impactRepository;
 
@@ -21,10 +22,10 @@ public class ImpactRepositoryTest {
         impactRepository.save(impact);
 
         // when
-        var found = impactRepository.findById(impact.getId()).orElse(null);
+        var found = impactRepository.findById(impact.getId());
 
         // then
-        assertThat(found.getId()).isEqualTo(impact.getId());
+        assertThat(found.isPresent()).isTrue();
     }
 
     @Test
@@ -48,7 +49,8 @@ public class ImpactRepositoryTest {
         impactRepository.save(impact);
 
         // then
-        UUID.fromString(impact.getId());
+        var uuid = UUID.fromString(impact.getId());
+        assertThat(uuid.toString()).isEqualTo(impact.getId());
     }
 
     @Test
@@ -73,10 +75,11 @@ public class ImpactRepositoryTest {
         // when
         impact.setValue(newValue);
         impactRepository.save(impact);
-        var changedDimension = impactRepository.findById(impact.getId()).orElse(null);
+        var impactOptional = impactRepository.findById(impact.getId());
 
         // then
-        assertThat(changedDimension.getValue()).isEqualTo(newValue);
+        assertThat(impactOptional.isPresent()).isTrue();
+        assertThat(impactOptional.get().getValue()).isEqualTo(newValue);
     }
 
     @Test
@@ -87,9 +90,9 @@ public class ImpactRepositoryTest {
 
         // when
         impactRepository.delete(impact);
-        var found = impactRepository.findById(impact.getId()).orElse(null);
+        var found = impactRepository.findById(impact.getId());
 
         // then
-        assertThat(found).isNull();
+        assertThat(found.isPresent()).isFalse();
     }
 }
