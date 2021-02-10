@@ -3,28 +3,28 @@ package com.evatool.impact.domain.entity;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
+// TODO [future feature] assign data sources; use real DB
+// @Table(name = "IMPACT")
 @Entity(name = "IMPACT")
-@Table(name = "IMPACT")
 public class Impact extends SuperEntity {
+
+    // @Column(name = "VALUE", nullable = false)
     @Getter
-    @Column(name = "VALUE", nullable = false)
     private double value;
 
+    // @Column(name = "DESCRIPTION", nullable = false)
     @Getter
-    @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
     @Getter
     @ManyToOne
     private Dimension dimension;
 
+    // @ManyToOne(optional = false, fetch = FetchType.EAGER) // Do this? Change tests if yes...
     @Getter
-    //@ManyToOne(optional = false, fetch = FetchType.EAGER) // Do this? Change tests if yes...
     @ManyToOne
     private ImpactStakeholder stakeholder;
 
