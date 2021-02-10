@@ -153,9 +153,8 @@ public class DimensionRestControllerTest {
         @Test
         public void testInsertDimension_InsertDimensionWithNullName_ReturnHttpStatusBadRequest() {
             // given
-            DimensionDto dimensionDto = getEmptyDimensionDto();
-            dimensionDto.setDescription("");
-            dimensionDto.setType(DimensionType.ECONOMIC.toString());
+            DimensionDto dimensionDto = getDimensionDto();
+            dimensionDto.setName(null);
 
             // when
             var httpEntity = new HttpEntity(dimensionDto);
@@ -169,9 +168,8 @@ public class DimensionRestControllerTest {
         @Test
         public void testInsertDimension_InsertDimensionWithNullDescription_ReturnHttpStatusBadRequest() {
             // given
-            DimensionDto dimensionDto = getEmptyDimensionDto();
-            dimensionDto.setName("");
-            dimensionDto.setType(DimensionType.ECONOMIC.toString());
+            DimensionDto dimensionDto = getDimensionDto();
+            dimensionDto.setDescription(null);
 
             // when
             var httpEntity = new HttpEntity(dimensionDto);
@@ -185,9 +183,8 @@ public class DimensionRestControllerTest {
         @Test
         public void testInsertDimension_InsertDimensionWithNullType_ReturnHttpStatusBadRequest() {
             // given
-            DimensionDto dimensionDto = getEmptyDimensionDto();
-            dimensionDto.setName("");
-            dimensionDto.setDescription("");
+            DimensionDto dimensionDto = getDimensionDto();
+            dimensionDto.setType(null);
 
             // when
             var httpEntity = new HttpEntity(dimensionDto);
@@ -202,9 +199,7 @@ public class DimensionRestControllerTest {
         @ValueSource(strings = {"", "typo"})
         public void testInsertDimension_InsertDimensionWithIllegalType_ReturnHttpStatusBadRequest(String value) {
             // given
-            DimensionDto dimensionDto = getEmptyDimensionDto();
-            dimensionDto.setName("");
-            dimensionDto.setDescription("");
+            DimensionDto dimensionDto = getDimensionDto();
             dimensionDto.setType(value);
 
             // when
