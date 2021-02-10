@@ -56,6 +56,17 @@ public class SuperEntityTest {
     }
 
     @Test
+    public void testSetId_NullValue_DoNotThrowException() {
+        // given
+        var superEntity = getSuperEntity();
+
+        // when
+        superEntity.setId(null);
+
+        // then
+    }
+
+    @Test
     public void testSetId_LegalValue_DoNotThrowException() {
         // given
         var superEntity = getSuperEntity();
