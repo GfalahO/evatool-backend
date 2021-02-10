@@ -12,8 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [tzaika] Implement Impact Tests
 
 // TODO DimensionMockTests: Correct Rest Level 3 for CRUD operations (once each)
-// TODO DimensionMockTests: use @BeforeEach in nested classes to save lines
-// TODO Correct ErrorMessage return in RestController (Mock and integration test)
+// TODO DimensionRestControllerTests: use @BeforeEach in nested classes to save lines
+// TODO Correct ErrorMessage and Rest Level 3 return in RestController (Mock and integration test)
 
 // TODO Controller util classes
 // TODO JsonMapper Tests

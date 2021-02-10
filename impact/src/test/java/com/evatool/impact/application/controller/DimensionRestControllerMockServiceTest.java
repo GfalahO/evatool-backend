@@ -104,8 +104,8 @@ public class DimensionRestControllerMockServiceTest {
             var dimension2 = getDimensionDto();
 
             // when
-            var allDimensions = Arrays.asList(dimension1, dimension2);
-            given(dimensionService.getAllDimensions()).willReturn(allDimensions);
+            var allDimensionDtos = Arrays.asList(dimension1, dimension2);
+            given(dimensionService.getAllDimensions()).willReturn(allDimensionDtos);
 
             // then
             mvc.perform(get(buildGetDimensionsUri())
@@ -120,14 +120,14 @@ public class DimensionRestControllerMockServiceTest {
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetAllDimensions_ExistingDimensions_ReturnDimensions(int value) throws Exception {
-            var allDimensions = new ArrayList<DimensionDto>();
+            var allDimensionDtos = new ArrayList<DimensionDto>();
             for (int i = 0; i < value; i++) {
                 // given
                 var dimensionDto = getDimensionDto();
-                allDimensions.add(dimensionDto);
+                allDimensionDtos.add(dimensionDto);
             }
             // when
-            given(dimensionService.getAllDimensions()).willReturn(allDimensions);
+            given(dimensionService.getAllDimensions()).willReturn(allDimensionDtos);
 
             // then
             mvc.perform(get(buildGetDimensionsUri())

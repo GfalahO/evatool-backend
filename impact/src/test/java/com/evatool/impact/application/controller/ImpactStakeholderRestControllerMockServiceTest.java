@@ -63,8 +63,8 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             var stakeholder2 = getStakeholderDto();
 
             // when
-            var allStakeholders = Arrays.asList(stakeholder1, stakeholder2);
-            given(stakeholderService.getAllStakeholders()).willReturn(allStakeholders);
+            var allStakeholderDtos = Arrays.asList(stakeholder1, stakeholder2);
+            given(stakeholderService.getAllStakeholders()).willReturn(allStakeholderDtos);
 
             // then
             mvc.perform(get(buildGetStakeholdersUri())
@@ -79,14 +79,14 @@ public class ImpactStakeholderRestControllerMockServiceTest {
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders(int value) throws Exception {
-            var allStakeholders = new ArrayList<StakeholderDto>();
+            var allStakeholderDtos = new ArrayList<StakeholderDto>();
             for (int i = 0; i < value; i++) {
                 // given
                 var stakeholderDto = getStakeholderDto();
-                allStakeholders.add(stakeholderDto);
+                allStakeholderDtos.add(stakeholderDto);
             }
             // when
-            given(stakeholderService.getAllStakeholders()).willReturn(allStakeholders);
+            given(stakeholderService.getAllStakeholders()).willReturn(allStakeholderDtos);
 
             // then
             mvc.perform(get(buildGetStakeholdersUri())
