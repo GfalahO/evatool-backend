@@ -39,11 +39,6 @@ public class DimensionRestControllerTest {
         dimensionService.deleteDimensions();
     }
 
-    void insertDimension() {
-        var dimensionDto = getDimensionDto();
-        dimensionService.createDimension(dimensionDto);
-    }
-
     @Nested
     public class GetById {
         @Test
@@ -88,7 +83,8 @@ public class DimensionRestControllerTest {
             var postResponseList = new ArrayList<ResponseEntity<DimensionDto>>();
             for (int i = 0; i < value; i++) {
                 // given
-                insertDimension();
+                var dimensionDto = getDimensionDto();
+                dimensionService.createDimension(dimensionDto);
             }
 
             // when

@@ -8,10 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO Events
 
 // Tests:
-// TODO [hbuhl] Copy Stakeholder Tests to Dimension Tests and remove unnecessary Stakeholder Tests (API spec)
 // TODO [tzaika] Implement Impact Tests
 
-// TODO DimensionRestControllerTests: use @BeforeEach in nested classes to save lines
 // TODO Correct ErrorMessage return in DimensionRestController (Mock and integration test)
 
 // TODO Controller util classes

@@ -25,11 +25,6 @@ public class DimensionServiceImplTest {
         dimensionService.deleteDimensions();
     }
 
-    void insertDimension() {
-        var dimensionDto = getDimensionDto();
-        dimensionService.createDimension(dimensionDto).getId();
-    }
-
     @Nested
     public class GetById {
         @Test
@@ -52,7 +47,8 @@ public class DimensionServiceImplTest {
         public void testGetAllDimensions_InsertedDimensions_ReturnDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                insertDimension();
+                var dimensionDto = getDimensionDto();
+                dimensionService.createDimension(dimensionDto).getId();
             }
 
             // when
@@ -149,7 +145,8 @@ public class DimensionServiceImplTest {
         public void testDeleteAll_InsertDimensions_ReturnNoDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                insertDimension();
+                var dimensionDto = getDimensionDto();
+                dimensionService.createDimension(dimensionDto).getId();
             }
 
             // when
