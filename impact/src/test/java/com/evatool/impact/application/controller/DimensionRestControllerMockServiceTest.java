@@ -3,6 +3,7 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.ImpactModule;
 import com.evatool.impact.application.controller.util.DimensionRest;
 import com.evatool.impact.application.dto.DimensionDto;
+import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.DimensionService;
 import com.evatool.impact.common.config.SwaggerConfig;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -22,7 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static com.evatool.impact.application.controller.util.DimensionRest.buildGetDimensionsUri;
+import static com.evatool.impact.application.controller.util.DimensionRest.*;
+import static com.evatool.impact.application.controller.util.DimensionRest.buildGetDimensionsRel;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,6 +48,35 @@ public class DimensionRestControllerMockServiceTest {
     @Nested
     public class GetById {
         @Test
+        public void testGetDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
+            // given
+            var dimensionDto = getDimensionDto();
+            var id = UUID.randomUUID().toString();
+            dimensionDto.setId(id);
+
+            // when
+            given(dimensionService.findDimensionById(any(String.class))).willReturn(dimensionDto);
+
+            // then
+            mvc.perform(get(buildGetDimensionUri("dummy_id"))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.links").isNotEmpty())
+                    .andExpect(jsonPath("$.links", hasSize(5)))
+                    .andExpect(jsonPath("$.links[0].rel").value(buildGetDimensionsRel()))
+                    .andExpect(jsonPath("$.links[0].href").value("http://localhost" + buildGetDimensionsUri()))
+                    .andExpect(jsonPath("$.links[1].rel").value(buildPostDimensionRel()))
+                    .andExpect(jsonPath("$.links[1].href").value("http://localhost" + buildPostDimensionUri()))
+                    .andExpect(jsonPath("$.links[2].rel").value("self"))
+                    .andExpect(jsonPath("$.links[2].href").value("http://localhost" + buildGetDimensionUri(id)))
+                    .andExpect(jsonPath("$.links[3].rel").value(buildPutDimensionRel()))
+                    .andExpect(jsonPath("$.links[3].href").value("http://localhost" + buildPutDimensionUri(id)))
+                    .andExpect(jsonPath("$.links[4].rel").value(buildDeleteDimensionRel()))
+                    .andExpect(jsonPath("$.links[4].href").value("http://localhost" + buildDeleteDimensionUri(id)));
+        }
+
+        @Test
         public void testGetDimensionById_ExistingDimension_ReturnDimension() throws Exception {
             // given
             var dimensionDto = getDimensionDto();
@@ -54,7 +85,7 @@ public class DimensionRestControllerMockServiceTest {
             when(dimensionService.findDimensionById(anyString())).thenReturn(dimensionDto);
 
             // then
-            mvc.perform(get(DimensionRest.buildGetDimensionUri("dummy_id"))
+            mvc.perform(get(buildGetDimensionUri("dummy_id"))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -70,7 +101,7 @@ public class DimensionRestControllerMockServiceTest {
             when(dimensionService.findDimensionById(anyString())).thenThrow(EntityNotFoundException.class);
 
             // then
-            mvc.perform(get(DimensionRest.buildGetDimensionUri(nonExistingId))
+            mvc.perform(get(buildGetDimensionUri(nonExistingId))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isNotFound());
@@ -83,6 +114,8 @@ public class DimensionRestControllerMockServiceTest {
         public void testGetAllDimensions_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = getDimensionDto();
+            var id = UUID.randomUUID().toString();
+            dimensionDto.setId(id);
 
             // when
             given(dimensionService.getAllDimensions()).willReturn(Arrays.asList(dimensionDto));
@@ -93,8 +126,18 @@ public class DimensionRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(1)))
-                    .andExpect(jsonPath("$..links[0]").isNotEmpty())
-                    .andExpect(jsonPath("$..links[0].href").value("http://localhost" + buildGetDimensionsUri()));
+                    .andExpect(jsonPath("$[0]..links").isNotEmpty())
+                    .andExpect(jsonPath("$[0]..links", hasSize(1)))
+                    .andExpect(jsonPath("$[0]..links[0].rel").value(buildGetDimensionsRel()))
+                    .andExpect(jsonPath("$[0]..links[0].href").value("http://localhost" + buildGetDimensionsUri()))
+                    .andExpect(jsonPath("$[0]..links[1].rel").value(buildPostDimensionRel()))
+                    .andExpect(jsonPath("$[0]..links[1].href").value("http://localhost" + buildPostDimensionUri()))
+                    .andExpect(jsonPath("$[0]..links[2].rel").value("self"))
+                    .andExpect(jsonPath("$[0]..links[2].href").value("http://localhost" + buildGetDimensionUri(id)))
+                    .andExpect(jsonPath("$[0]..links[3].rel").value(buildPutDimensionRel()))
+                    .andExpect(jsonPath("$[0]..links[3].href").value("http://localhost" + buildPutDimensionUri(id)))
+                    .andExpect(jsonPath("$[0]..links[4].rel").value(buildDeleteDimensionRel()))
+                    .andExpect(jsonPath("$[0]..links[4].href").value("http://localhost" + buildDeleteDimensionUri(id)));
         }
 
         @Test
@@ -141,7 +184,7 @@ public class DimensionRestControllerMockServiceTest {
     @Nested
     public class Insert {
         @Test
-        public void testInsertDimension_InsertedDimensionWithExistingId_ReturnInsertedDimension() throws Exception {
+        public void testInsertDimension_InsertedDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = getDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
@@ -156,13 +199,73 @@ public class DimensionRestControllerMockServiceTest {
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id").exists())
                     .andExpect(jsonPath("$.id").value(dimensionDto.getId()))
-                    .andExpect(jsonPath("$.name").value(dimensionDto.getName()))
-                    .andExpect(jsonPath("$..links[0].href").value("http://localhost" + buildGetDimensionsUri()));
+                    .andExpect(jsonPath("$.name").value(dimensionDto.getName()));
+
+        }
+
+        @Test
+        public void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws Exception {
+            // given
+            var dimensionDto = getDimensionDto();
+            var id = UUID.randomUUID().toString();
+            dimensionDto.setId(id);
+
+            // when
+            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+
+            // then
+            mvc.perform(post(DimensionRest.buildPostDimensionUri()).content(new ObjectMapper().writeValueAsString(dimensionDto))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isCreated())
+                    .andExpect(jsonPath("$.links").isNotEmpty())
+                    .andExpect(jsonPath("$.links", hasSize(5)))
+                    .andExpect(jsonPath("$.links[0].rel").value(buildGetDimensionsRel()))
+                    .andExpect(jsonPath("$.links[0].href").value("http://localhost" + buildGetDimensionsUri()))
+                    .andExpect(jsonPath("$.links[1].rel").value(buildPostDimensionRel()))
+                    .andExpect(jsonPath("$.links[1].href").value("http://localhost" + buildPostDimensionUri()))
+                    .andExpect(jsonPath("$.links[2].rel").value("self"))
+                    .andExpect(jsonPath("$.links[2].href").value("http://localhost" + buildGetDimensionUri(id)))
+                    .andExpect(jsonPath("$.links[3].rel").value(buildPutDimensionRel()))
+                    .andExpect(jsonPath("$.links[3].href").value("http://localhost" + buildPutDimensionUri(id)))
+                    .andExpect(jsonPath("$.links[4].rel").value(buildDeleteDimensionRel()))
+                    .andExpect(jsonPath("$.links[4].href").value("http://localhost" + buildDeleteDimensionUri(id)));
         }
     }
 
     @Nested
     public class Update {
+        @Test
+        public void testUpdateDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
+            // given
+            var dimensionDto = getDimensionDto();
+            var id = UUID.randomUUID().toString();
+            dimensionDto.setId(id);
+
+            // when
+            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+            dimensionDto.setName("new_name");
+            when(dimensionService.updateDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+
+            // then
+            mvc.perform(put(DimensionRest.buildPutDimensionUri("dummy_id")).content(new ObjectMapper().writeValueAsString(dimensionDto))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.links").isNotEmpty())
+                    .andExpect(jsonPath("$.links", hasSize(5)))
+                    .andExpect(jsonPath("$.links[0].rel").value(buildGetDimensionsRel()))
+                    .andExpect(jsonPath("$.links[0].href").value("http://localhost" + buildGetDimensionsUri()))
+                    .andExpect(jsonPath("$.links[1].rel").value(buildPostDimensionRel()))
+                    .andExpect(jsonPath("$.links[1].href").value("http://localhost" + buildPostDimensionUri()))
+                    .andExpect(jsonPath("$.links[2].rel").value("self"))
+                    .andExpect(jsonPath("$.links[2].href").value("http://localhost" + buildGetDimensionUri(id)))
+                    .andExpect(jsonPath("$.links[3].rel").value(buildPutDimensionRel()))
+                    .andExpect(jsonPath("$.links[3].href").value("http://localhost" + buildPutDimensionUri(id)))
+                    .andExpect(jsonPath("$.links[4].rel").value(buildDeleteDimensionRel()))
+                    .andExpect(jsonPath("$.links[4].href").value("http://localhost" + buildDeleteDimensionUri(id)));
+        }
+
         @Test
         public void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
             // given

@@ -11,9 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl] Copy Stakeholder Tests to Dimension Tests and remove unnecessary Stakeholder Tests (API spec)
 // TODO [tzaika] Implement Impact Tests
 
-// TODO DimensionMockTests: Correct Rest Level 3 for CRUD operations (once each)
 // TODO DimensionRestControllerTests: use @BeforeEach in nested classes to save lines
-// TODO Correct ErrorMessage and Rest Level 3 return in RestController (Mock and integration test)
+// TODO Correct Rest Level 3 return in RestController (integration test)
+// TODO Correct ErrorMessage return in RestController (Mock and integration test)
 
 // TODO Controller util classes
 // TODO JsonMapper Tests

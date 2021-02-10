@@ -17,8 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
-import static com.evatool.impact.application.controller.util.StakeholderRest.buildGetStakeholdersUri;
+import static com.evatool.impact.application.controller.util.StakeholderRest.*;
 import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
@@ -42,6 +43,8 @@ public class ImpactStakeholderRestControllerMockServiceTest {
         public void testGetAllStakeholders_ExistingStakeholder_CorrectRestLevel3() throws Exception {
             // given
             var stakeholderDto = getStakeholderDto();
+            var id = UUID.randomUUID().toString();
+            stakeholderDto.setId(id);
 
             // when
             given(stakeholderService.getAllStakeholders()).willReturn(Arrays.asList(stakeholderDto));
@@ -52,8 +55,10 @@ public class ImpactStakeholderRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(1)))
-                    .andExpect(jsonPath("$..links[0]").isNotEmpty())
-                    .andExpect(jsonPath("$..links[0].href").value("http://localhost" + buildGetStakeholdersUri()));
+                    .andExpect(jsonPath("$[0]..links").isNotEmpty())
+                    .andExpect(jsonPath("$[0]..links", hasSize(1)))
+                    .andExpect(jsonPath("$[0]..links[0].rel").value(buildGetStakeholdersRel()))
+                    .andExpect(jsonPath("$[0]..links[0].href").value("http://localhost" + buildGetStakeholdersUri()));
         }
 
         @Test
