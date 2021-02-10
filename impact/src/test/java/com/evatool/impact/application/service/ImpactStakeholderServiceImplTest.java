@@ -42,19 +42,6 @@ public class ImpactStakeholderServiceImplTest {
 
     @Nested
     public class GetAll {
-        @Test
-        public void testGetAllStakeholders_InsertedStakeholder_ReturnStakeholder() {
-            // given
-            var stakeholderDto = getStakeholderDto();
-            stakeholderService.createStakeholder(stakeholderDto);
-
-            // when
-            var stakeholders = stakeholderService.getAllStakeholders();
-
-            // then
-            assertThat(stakeholders.size()).isEqualTo(1);
-        }
-
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
