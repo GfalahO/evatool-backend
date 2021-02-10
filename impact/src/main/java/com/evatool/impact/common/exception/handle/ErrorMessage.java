@@ -12,9 +12,13 @@ public class ErrorMessage {
     @Getter
     private final String message;
 
-    public ErrorMessage(String message) {
+    @Getter
+    private final String uri;
+
+    public ErrorMessage(String message, String uri) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
         this.message = message;
+        this.uri = uri;
     }
 
     @Override
@@ -22,6 +26,7 @@ public class ErrorMessage {
         return "ErrorMessage{" +
                 "timestamp=" + timestamp +
                 ", message='" + message + '\'' +
+                ", uri='" + uri + '\'' +
                 '}';
     }
 }
