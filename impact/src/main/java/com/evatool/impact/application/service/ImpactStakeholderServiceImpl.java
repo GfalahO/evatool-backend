@@ -31,8 +31,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         if (stakeholder.isEmpty()) {
             throw new EntityNotFoundException(ImpactStakeholder.class, id);
         }
-        var stakeholderDto = StakeholderDtoMapper.toDto(stakeholder.get());
-        return stakeholderDto;
+        return StakeholderDtoMapper.toDto(stakeholder.get());
     }
 
     @Override

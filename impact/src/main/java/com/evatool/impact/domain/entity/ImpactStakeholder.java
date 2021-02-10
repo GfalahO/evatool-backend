@@ -23,11 +23,6 @@ public class ImpactStakeholder extends SuperEntity {
         this.setName(name);
     }
 
-    private ImpactStakeholder(String id, String name) {
-        this(name);
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "Stakeholder{" +

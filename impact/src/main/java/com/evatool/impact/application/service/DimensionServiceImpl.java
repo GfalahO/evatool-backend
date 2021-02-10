@@ -31,8 +31,7 @@ public class DimensionServiceImpl implements DimensionService {
         if (dimension.isEmpty()) {
             throw new EntityNotFoundException(Dimension.class, id);
         }
-        var dimensionDto = DimensionDtoMapper.toDto(dimension.get());
-        return dimensionDto;
+        return DimensionDtoMapper.toDto(dimension.get());
     }
 
     @Override

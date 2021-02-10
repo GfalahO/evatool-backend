@@ -14,15 +14,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest webRequest) {
         var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-        var responseEntity = new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-        return responseEntity;
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(PropertyViolationException.class)
     public ResponseEntity<ErrorMessage> handlePropertyViolationException(PropertyViolationException exception, WebRequest webRequest) {
         var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-        var responseEntity = new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-        return responseEntity;
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     private String getUri(WebRequest webRequest) {
