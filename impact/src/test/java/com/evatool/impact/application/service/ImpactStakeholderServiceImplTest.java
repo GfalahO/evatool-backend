@@ -25,8 +25,8 @@ public class ImpactStakeholderServiceImplTest {
     }
 
     void insertStakeholder() {
-        var stakeholder = getStakeholderDto();
-        stakeholderService.createStakeholder(stakeholder);
+        var stakeholderDto = getStakeholderDto();
+        stakeholderService.createStakeholder(stakeholderDto);
     }
 
     @Nested
@@ -79,10 +79,10 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws EntityNotFoundException {
             // given
-            var stakeholder = getStakeholderDto();
+            var stakeholderDto = getStakeholderDto();
 
             // when
-            var insertedStakeholder = stakeholderService.createStakeholder(stakeholder);
+            var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
             var retrievedStakeholder = stakeholderService.findStakeholderById(insertedStakeholder.getId());
 
             // then
@@ -97,8 +97,8 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws EntityNotFoundException {
             // given
-            var stakeholder = getStakeholderDto();
-            var insertedStakeholder = stakeholderService.createStakeholder(stakeholder);
+            var stakeholderDto = getStakeholderDto();
+            var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
 
             // when
             var newName = "new_name";
@@ -114,13 +114,13 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testUpdateStakeholder_UpdatedNonExistingId_ThrowEntityNotFoundException() {
             // given
-            var stakeholder = getStakeholderDto();
-            stakeholder.setId(UUID.randomUUID().toString());
+            var stakeholderDto = getStakeholderDto();
+            stakeholderDto.setId(UUID.randomUUID().toString());
 
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.updateStakeholder(stakeholder));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.updateStakeholder(stakeholderDto));
         }
     }
 
@@ -129,10 +129,10 @@ public class ImpactStakeholderServiceImplTest {
         @Test
         public void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() throws EntityNotFoundException {
             // given
-            var stakeholder = getStakeholderDto();
+            var stakeholderDto = getStakeholderDto();
 
             // when
-            var insertedStakeholder = stakeholderService.createStakeholder(stakeholder);
+            var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
             stakeholderService.deleteStakeholderById(insertedStakeholder.getId());
 
             // then

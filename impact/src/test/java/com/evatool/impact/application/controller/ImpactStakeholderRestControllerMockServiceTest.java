@@ -41,10 +41,10 @@ public class ImpactStakeholderRestControllerMockServiceTest {
         @Test
         public void testGetAllStakeholders_ExistingStakeholder_CorrectRestLevel3() throws Exception {
             // given
-            var stakeholder = getStakeholderDto();
+            var stakeholderDto = getStakeholderDto();
 
             // when
-            given(stakeholderService.getAllStakeholders()).willReturn(Arrays.asList(stakeholder));
+            given(stakeholderService.getAllStakeholders()).willReturn(Arrays.asList(stakeholderDto));
 
             // then
             mvc.perform(get(buildGetStakeholdersUri())
@@ -82,8 +82,8 @@ public class ImpactStakeholderRestControllerMockServiceTest {
             var allStakeholders = new ArrayList<StakeholderDto>();
             for (int i = 0; i < value; i++) {
                 // given
-                var stakeholder = getStakeholderDto();
-                allStakeholders.add(stakeholder);
+                var stakeholderDto = getStakeholderDto();
+                allStakeholders.add(stakeholderDto);
             }
             // when
             given(stakeholderService.getAllStakeholders()).willReturn(allStakeholders);

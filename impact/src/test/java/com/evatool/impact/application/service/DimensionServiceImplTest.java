@@ -27,8 +27,8 @@ public class DimensionServiceImplTest {
     }
 
     void insertDimension() {
-        var dimension = getDimensionDto();
-        dimensionService.createDimension(dimension).getId();
+        var dimensionDto = getDimensionDto();
+        dimensionService.createDimension(dimensionDto).getId();
     }
 
     @Nested
@@ -69,10 +69,10 @@ public class DimensionServiceImplTest {
         @Test
         public void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws EntityNotFoundException {
             // given
-            var dimension = getDimensionDto();
+            var dimensionDto = getDimensionDto();
 
             // when
-            var insertedDimension = dimensionService.createDimension(dimension);
+            var insertedDimension = dimensionService.createDimension(dimensionDto);
             var retrievedDimension = dimensionService.findDimensionById(insertedDimension.getId());
 
             // then
@@ -87,8 +87,8 @@ public class DimensionServiceImplTest {
         @Test
         public void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws EntityNotFoundException {
             // given
-            var dimension = getDimensionDto();
-            var insertedDimension = dimensionService.createDimension(dimension);
+            var dimensionDto = getDimensionDto();
+            var insertedDimension = dimensionService.createDimension(dimensionDto);
 
             // when
             var newName = "new_name";
@@ -104,13 +104,13 @@ public class DimensionServiceImplTest {
         @Test
         public void testUpdateDimension_UpdatedNonExistingId_ThrowEntityNotFoundException() {
             // given
-            var dimension = getDimensionDto();
-            dimension.setId(UUID.randomUUID().toString());
+            var dimensionDto = getDimensionDto();
+            dimensionDto.setId(UUID.randomUUID().toString());
 
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.updateDimension(dimension));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.updateDimension(dimensionDto));
         }
     }
 
@@ -119,10 +119,10 @@ public class DimensionServiceImplTest {
         @Test
         public void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions() throws EntityNotFoundException {
             // given
-            var dimension = getDimensionDto();
+            var dimensionDto = getDimensionDto();
 
             // when
-            var insertedDimension = dimensionService.createDimension(dimension);
+            var insertedDimension = dimensionService.createDimension(dimensionDto);
             dimensionService.deleteDimensionById(insertedDimension.getId());
 
             // then

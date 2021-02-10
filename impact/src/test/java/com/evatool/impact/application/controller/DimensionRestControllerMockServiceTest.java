@@ -48,17 +48,17 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testGetDimensionById_ExistingDimension_ReturnDimension() throws Exception {
             // given
-            var dimension = getDimensionDto();
+            var dimensionDto = getDimensionDto();
 
             // when
-            when(dimensionService.findDimensionById(anyString())).thenReturn(dimension);
+            when(dimensionService.findDimensionById(anyString())).thenReturn(dimensionDto);
 
             // then
             mvc.perform(get(DimensionRest.buildGetDimensionUri("dummy_id"))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.name").value(dimension.getName()));
+                    .andExpect(jsonPath("$.name").value(dimensionDto.getName()));
         }
 
         @Test
@@ -82,10 +82,10 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testGetAllDimensions_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
-            var dimension = getDimensionDto();
+            var dimensionDto = getDimensionDto();
 
             // when
-            given(dimensionService.getAllDimensions()).willReturn(Arrays.asList(dimension));
+            given(dimensionService.getAllDimensions()).willReturn(Arrays.asList(dimensionDto));
 
             // then
             mvc.perform(get(buildGetDimensionsUri())
@@ -123,8 +123,8 @@ public class DimensionRestControllerMockServiceTest {
             var allDimensions = new ArrayList<DimensionDto>();
             for (int i = 0; i < value; i++) {
                 // given
-                var dimension = getDimensionDto();
-                allDimensions.add(dimension);
+                var dimensionDto = getDimensionDto();
+                allDimensions.add(dimensionDto);
             }
             // when
             given(dimensionService.getAllDimensions()).willReturn(allDimensions);
@@ -143,20 +143,20 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testInsertDimension_InsertedDimensionWithExistingId_ReturnInsertedDimension() throws Exception {
             // given
-            var dimension = getDimensionDto();
-            dimension.setId(UUID.randomUUID().toString());
+            var dimensionDto = getDimensionDto();
+            dimensionDto.setId(UUID.randomUUID().toString());
 
             // when
-            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimension);
+            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
 
             // then
-            mvc.perform(post(DimensionRest.buildPostDimensionUri()).content(new ObjectMapper().writeValueAsString(dimension))
+            mvc.perform(post(DimensionRest.buildPostDimensionUri()).content(new ObjectMapper().writeValueAsString(dimensionDto))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id").exists())
-                    .andExpect(jsonPath("$.id").value(dimension.getId()))
-                    .andExpect(jsonPath("$.name").value(dimension.getName()))
+                    .andExpect(jsonPath("$.id").value(dimensionDto.getId()))
+                    .andExpect(jsonPath("$.name").value(dimensionDto.getName()))
                     .andExpect(jsonPath("$..links[0].href").value("http://localhost" + buildGetDimensionsUri()));
         }
     }
@@ -166,21 +166,21 @@ public class DimensionRestControllerMockServiceTest {
         @Test
         public void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
             // given
-            var dimension = getDimensionDto();
-            dimension.setId(UUID.randomUUID().toString());
+            var dimensionDto = getDimensionDto();
+            dimensionDto.setId(UUID.randomUUID().toString());
 
             // when
-            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimension);
-            dimension.setName("new_name");
-            when(dimensionService.updateDimension(any(DimensionDto.class))).thenReturn(dimension);
+            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+            dimensionDto.setName("new_name");
+            when(dimensionService.updateDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
 
             // then
-            mvc.perform(put(DimensionRest.buildPutDimensionUri("dummy_id")).content(new ObjectMapper().writeValueAsString(dimension))
+            mvc.perform(put(DimensionRest.buildPutDimensionUri("dummy_id")).content(new ObjectMapper().writeValueAsString(dimensionDto))
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").exists())
-                    .andExpect(jsonPath("$.name").value(dimension.getName()));
+                    .andExpect(jsonPath("$.name").value(dimensionDto.getName()));
         }
     }
 
