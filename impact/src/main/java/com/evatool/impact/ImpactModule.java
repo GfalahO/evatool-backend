@@ -12,19 +12,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [tzaika] Implement Impact Tests
 
 // TODO DimensionRestControllerTests: use @BeforeEach in nested classes to save lines
-// TODO Correct Rest Level 3 return in RestController (integration test)
 // TODO Correct ErrorMessage return in RestController (Mock and integration test)
-
-// TODO [hbuhl] Split GitHub Action into unit and integration tests?
-// TODO [hbuhl] use real database instead of in-memory?
 
 // TODO Controller util classes
 // TODO JsonMapper Tests
 // TODO Event Tests
 
+// General:
+// TODO [hbuhl] Split GitHub Action into unit and integration tests?
+// TODO [hbuhl] use real database instead of in-memory?
+
 // TODO [tzaika] Test if real events are asynchronous
 
-// TODO [tzaika & hbuhl] API Specification
 // TODO [tzaika] ImpactDTO in wiki
 // TODO [tzaika] Rename *Mapper to *DtoMapper
 
