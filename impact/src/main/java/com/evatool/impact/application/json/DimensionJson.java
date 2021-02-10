@@ -24,7 +24,6 @@ public class DimensionJson {
     @Override
     public String toString() {
         Gson gson = new Gson();
-        var json = gson.toJson(this);
-        return json;
+        return gson.toJson(this);
     }
 }
