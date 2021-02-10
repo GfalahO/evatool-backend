@@ -93,6 +93,7 @@ public class DimensionRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(1)))
+                    .andExpect(jsonPath("$..links[0]").isNotEmpty())
                     .andExpect(jsonPath("$..links[0].href").value("http://localhost" + buildGetDimensionsUri()));
         }
 
