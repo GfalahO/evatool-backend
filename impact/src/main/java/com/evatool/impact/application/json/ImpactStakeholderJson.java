@@ -11,10 +11,4 @@ public class ImpactStakeholderJson {
     @Getter
     @Setter
     private String name;
-
-    public ImpactStakeholderJson(String json){
-        // TODO: Implement
-        // This code will be very sensitive to changes made by the other team.
-
-    }
 }
