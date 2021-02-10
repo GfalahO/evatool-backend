@@ -6,6 +6,7 @@ import com.evatool.impact.common.exception.EntityNotFoundException;
 import java.util.List;
 
 public interface ImpactService {
+
     ImpactDto findImpactById(String id) throws EntityNotFoundException;
 
     List<ImpactDto> getAllImpacts();
@@ -15,6 +16,5 @@ public interface ImpactService {
     ImpactDto updateImpact(ImpactDto impactDto) throws EntityNotFoundException;
 
     void deleteImpactById(String id) throws EntityNotFoundException;
-
-    void deleteImpacts();
+    
 }
