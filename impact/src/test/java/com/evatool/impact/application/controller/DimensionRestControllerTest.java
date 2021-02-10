@@ -3,10 +3,6 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.controller.util.DimensionRest;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
-import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.handle.ErrorMessage;
-import com.evatool.impact.domain.entity.Dimension;
-import com.evatool.impact.domain.entity.DimensionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,8 +20,8 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import static com.evatool.impact.application.dto.mapper.DimensionMapper.fromDto;
-import static com.evatool.impact.application.dto.mapper.DimensionMapper.toDto;
+import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
+import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

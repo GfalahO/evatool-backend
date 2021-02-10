@@ -1,7 +1,7 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.mapper.ImpactMapper;
+import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Impact;
@@ -35,14 +35,14 @@ public class ImpactServiceImpl implements ImpactService {
         if (impact.isEmpty()) {
             throw new EntityNotFoundException(Impact.class, id);
         }
-        return ImpactMapper.toDto(impact.get());
+        return ImpactDtoMapper.toDto(impact.get());
     }
 
     @Override
     public List<ImpactDto> getAllImpacts() {
         var impacts = impactRepository.findAll();
         var impactDtoList = new ArrayList<ImpactDto>();
-        impacts.forEach(impact -> impactDtoList.add(ImpactMapper.toDto(impact)));
+        impacts.forEach(impact -> impactDtoList.add(ImpactDtoMapper.toDto(impact)));
         return impactDtoList;
     }
 
@@ -51,15 +51,15 @@ public class ImpactServiceImpl implements ImpactService {
         if (impactDto.getId() != null) {
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Impact.class.getSimpleName()));
         }
-        var impact = ImpactMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
-        return ImpactMapper.toDto(impactRepository.save(impact));
+        var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
+        return ImpactDtoMapper.toDto(impactRepository.save(impact));
     }
 
     @Override
     public ImpactDto updateImpact(ImpactDto impactDto) throws EntityNotFoundException {
         this.findImpactById(impactDto.getId());
-        var impact = ImpactMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
-        return ImpactMapper.toDto(impactRepository.save(impact));
+        var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
+        return ImpactDtoMapper.toDto(impactRepository.save(impact));
     }
 
     @Override

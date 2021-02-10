@@ -1,18 +1,17 @@
 package com.evatool.impact.application.dto.mapper;
 
 import com.evatool.impact.common.exception.PropertyViolationException;
-import com.evatool.impact.domain.entity.Dimension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static com.evatool.impact.application.dto.mapper.DimensionMapper.fromDto;
-import static com.evatool.impact.application.dto.mapper.DimensionMapper.toDto;
+import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
+import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class DimensionMapperTest {
+public class DimensionDtoMapperTest {
     @Test
     public void testToDot_NewDimension_EqualsDimensionDto() {
         // given
@@ -38,7 +37,7 @@ public class DimensionMapperTest {
         dto.setType(value);
 
         // then
-        DimensionMapper.fromDto(dto);
+        DimensionDtoMapper.fromDto(dto);
     }
 
     @ParameterizedTest
@@ -51,7 +50,7 @@ public class DimensionMapperTest {
         dto.setType(value);
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> DimensionMapper.fromDto(dto));
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> DimensionDtoMapper.fromDto(dto));
     }
 
     @Test // TODO [tzaika] actually an integration test

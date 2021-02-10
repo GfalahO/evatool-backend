@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static com.evatool.impact.application.dto.mapper.ImpactMapper.fromDto;
-import static com.evatool.impact.application.dto.mapper.ImpactMapper.toDto;
+import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.fromDto;
+import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ImpactMapperTest {
+public class ImpactDtoMapperTest {
 
     @Test
     public void testToDto_NewImpact_EqualsImpactDto() {

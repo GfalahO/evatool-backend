@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 
 import java.util.Arrays;
 
-public class DimensionMapper {
+public class DimensionDtoMapper {
     private static final ModelMapper modelMapper = new ModelMapper();
 
     public static Dimension fromDto(DimensionDto dimensionDto) {

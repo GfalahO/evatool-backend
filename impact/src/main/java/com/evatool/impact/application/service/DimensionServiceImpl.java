@@ -1,11 +1,10 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.DimensionDto;
-import com.evatool.impact.application.dto.mapper.DimensionMapper;
+import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class DimensionServiceImpl implements DimensionService {
         if (dimension.isEmpty()) {
             throw new EntityNotFoundException(Dimension.class, id);
         }
-        var dimensionDto = DimensionMapper.toDto(dimension.get());
+        var dimensionDto = DimensionDtoMapper.toDto(dimension.get());
         return dimensionDto;
     }
 
@@ -35,7 +34,7 @@ public class DimensionServiceImpl implements DimensionService {
     public List<DimensionDto> getAllDimensions() {
         var dimensions = dimensionRepository.findAll();
         var dimensionDtoList = new ArrayList<DimensionDto>();
-        dimensions.forEach(s -> dimensionDtoList.add(DimensionMapper.toDto(s)));
+        dimensions.forEach(s -> dimensionDtoList.add(DimensionDtoMapper.toDto(s)));
         return dimensionDtoList;
     }
 
@@ -44,15 +43,15 @@ public class DimensionServiceImpl implements DimensionService {
         if (dimensionDto.getId() != null) {
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Dimension.class.getSimpleName()));
         }
-        var dimension = dimensionRepository.save(DimensionMapper.fromDto(dimensionDto));
-        return DimensionMapper.toDto(dimension);
+        var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
+        return DimensionDtoMapper.toDto(dimension);
     }
 
     @Override
     public DimensionDto updateDimension(DimensionDto dimensionDto) throws EntityNotFoundException {
         this.findDimensionById(dimensionDto.getId());
-        var dimension = DimensionMapper.fromDto(dimensionDto);
-        return DimensionMapper.toDto(dimensionRepository.save(dimension));
+        var dimension = DimensionDtoMapper.fromDto(dimensionDto);
+        return DimensionDtoMapper.toDto(dimensionRepository.save(dimension));
     }
 
     @Override

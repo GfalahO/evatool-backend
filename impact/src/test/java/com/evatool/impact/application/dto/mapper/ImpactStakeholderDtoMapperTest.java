@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
 import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
-import static com.evatool.impact.application.dto.mapper.StakeholderMapper.fromDto;
-import static com.evatool.impact.application.dto.mapper.StakeholderMapper.toDto;
+import static com.evatool.impact.application.dto.mapper.StakeholderDtoMapper.fromDto;
+import static com.evatool.impact.application.dto.mapper.StakeholderDtoMapper.toDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ImpactStakeholderMapperTest {
+public class ImpactStakeholderDtoMapperTest {
     @Test
     public void testToDot_NewStakeholder_EqualsStakeholderDto() {
         // given

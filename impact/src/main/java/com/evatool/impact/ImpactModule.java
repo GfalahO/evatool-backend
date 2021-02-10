@@ -20,10 +20,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl] use real database instead of in-memory?
 
 // TODO [tzaika] Test if real events are asynchronous
-
-// TODO [tzaika & hbuhl] API Specification
 // TODO [tzaika] ImpactRest with Swagger
-// TODO [tzaika] Rename *Mapper to *DtoMapper
 
 @SpringBootApplication
 public class ImpactModule {
