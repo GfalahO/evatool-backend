@@ -75,28 +75,6 @@ public class DimensionRestControllerTest {
             // then
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
-
-        @Test
-        public void testGetDimensionById_NonExistingDimension_ReturnErrorMessage() {
-            // given
-            var id = "wrong_id";
-            var responseEntity = testRestTemplate.getForEntity(
-                    DimensionRest.buildGetDimensionUri(id), ErrorMessage.class);
-
-            // when
-
-            // then
-            var errorMessage = responseEntity.getBody();
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-            assertThat(errorMessage.getTimestamp()).isNotNull();
-            // Check range of timeStamp?
-            assertThat(errorMessage.getMessage()).isNotNull();
-            assertThat(errorMessage.getMessage()).isEqualTo(EntityNotFoundException.MESSAGE_FORMAT
-                    .replaceFirst("%s", Dimension.class.getSimpleName())
-                    .replaceFirst("%s", id));
-            assertThat(errorMessage.getUri()).isNotNull();
-            assertThat(errorMessage.getUri()).isEqualTo(DimensionRest.buildGetDimensionUri(id));
-        }
     }
 
     @Nested
