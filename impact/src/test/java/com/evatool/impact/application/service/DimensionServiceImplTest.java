@@ -48,18 +48,6 @@ public class DimensionServiceImplTest {
 
     @Nested
     public class GetAll {
-        @Test
-        public void testGetAllDimensions_InsertedDimension_ReturnDimension() {
-            // given
-            insertDimension();
-
-            // when
-            var dimensions = dimensionService.getAllDimensions();
-
-            // then
-            assertThat(dimensions.size()).isEqualTo(1);
-        }
-
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetAllDimensions_InsertedDimensions_ReturnDimensions(int value) {
