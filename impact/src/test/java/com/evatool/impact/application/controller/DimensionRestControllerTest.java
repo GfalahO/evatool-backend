@@ -26,15 +26,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class DimensionRestControllerTest {
 
-    private final TestRestTemplate testRestTemplate;
-
-    private final DimensionService dimensionService;
+    @Autowired
+    private TestRestTemplate testRestTemplate;
 
     @Autowired
-    public DimensionRestControllerTest(TestRestTemplate testRestTemplate, DimensionService dimensionService) {
-        this.testRestTemplate = testRestTemplate;
-        this.dimensionService = dimensionService;
-    }
+    private DimensionService dimensionService;
 
     @BeforeEach
     public void clearDatabase() {

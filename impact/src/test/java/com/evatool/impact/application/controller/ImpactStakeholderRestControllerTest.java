@@ -18,15 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class ImpactStakeholderRestControllerTest {
 
-    private final TestRestTemplate testRestTemplate;
-
-    private final ImpactStakeholderService stakeholderService;
+    @Autowired
+    private TestRestTemplate testRestTemplate;
 
     @Autowired
-    public ImpactStakeholderRestControllerTest(TestRestTemplate testRestTemplate, ImpactStakeholderService stakeholderService) {
-        this.testRestTemplate = testRestTemplate;
-        this.stakeholderService = stakeholderService;
-    }
+    private ImpactStakeholderService stakeholderService;
 
     @BeforeEach
     public void clearDatabase() {

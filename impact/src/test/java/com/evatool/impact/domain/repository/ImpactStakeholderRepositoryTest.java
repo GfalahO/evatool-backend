@@ -2,6 +2,8 @@ package com.evatool.impact.domain.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
@@ -12,12 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 public class ImpactStakeholderRepositoryTest {
 
-    private final ImpactStakeholderRepository stakeholderRepository;
-
     @Autowired
-    public ImpactStakeholderRepositoryTest(ImpactStakeholderRepository stakeholderRepository) {
-        this.stakeholderRepository = stakeholderRepository;
-    }
+    private ImpactStakeholderRepository stakeholderRepository;
 
     @Test
     public void testFindById_InsertedStakeholder_ReturnStakeholder() {
