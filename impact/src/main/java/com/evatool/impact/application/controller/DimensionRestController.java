@@ -24,7 +24,6 @@ public class DimensionRestController {
 
     private final DimensionService dimensionService;
 
-    @Autowired
     public DimensionRestController(DimensionService dimensionService) {
         this.dimensionService = dimensionService;
     }

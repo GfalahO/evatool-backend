@@ -23,7 +23,6 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final DimensionRepository dimensionRepository;
 
-    @Autowired
     public ImpactServiceImpl(ImpactRepository impactRepository, ImpactStakeholderRepository impactStakeholderRepository, DimensionRepository dimensionRepository) {
         this.impactRepository = impactRepository;
         this.impactStakeholderRepository = impactStakeholderRepository;

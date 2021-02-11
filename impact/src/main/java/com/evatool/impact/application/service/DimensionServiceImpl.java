@@ -17,7 +17,6 @@ public class DimensionServiceImpl implements DimensionService {
 
     private final DimensionRepository dimensionRepository;
 
-    @Autowired
     public DimensionServiceImpl(DimensionRepository dimensionRepository) {
         this.dimensionRepository = dimensionRepository;
     }

@@ -17,7 +17,6 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
 
     private final ImpactStakeholderRepository stakeholderRepository;
 
-    @Autowired
     public ImpactStakeholderServiceImpl(ImpactStakeholderRepository stakeholderRepository) {
         this.stakeholderRepository = stakeholderRepository;
     }

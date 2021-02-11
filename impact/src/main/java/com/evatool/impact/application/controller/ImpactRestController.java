@@ -18,7 +18,6 @@ public class ImpactRestController {
 
     private final ImpactService impactService;
 
-    @Autowired
     public ImpactRestController(ImpactService impactService) {
         this.impactService = impactService;
     }

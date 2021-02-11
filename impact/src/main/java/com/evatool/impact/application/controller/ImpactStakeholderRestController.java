@@ -19,7 +19,6 @@ public class ImpactStakeholderRestController {
 
     private final ImpactStakeholderService stakeholderService;
 
-    @Autowired
     public ImpactStakeholderRestController(ImpactStakeholderService stakeholderService) {
         this.stakeholderService = stakeholderService;
     }
