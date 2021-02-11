@@ -9,6 +9,12 @@ import javax.persistence.*;
 @Entity(name = "DIMENSION")
 @Table(name = "DIMENSION")
 public class Dimension extends SuperEntity {
+
+    public enum Type {
+        SOCIAL,
+        ECONOMIC
+    }
+
     @Getter
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -17,7 +23,7 @@ public class Dimension extends SuperEntity {
     @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = false)
-    private DimensionType type;
+    private Type type;
 
     @Getter
     @Column(name = "DESCRIPTION", nullable = false)
@@ -27,7 +33,7 @@ public class Dimension extends SuperEntity {
 
     }
 
-    public Dimension(String name, DimensionType type, String description) {
+    public Dimension(String name, Type type, String description) {
         this.setName(name);
         this.setType(type);
         this.setDescription(description);
@@ -57,11 +63,11 @@ public class Dimension extends SuperEntity {
         this.description = description;
     }
 
-    public static boolean isDimensionType(String value) {
+    public static boolean isValidType(String value) {
         if (value == null) {
             return false;
         }
-        for (var e : DimensionType.values()) {
+        for (var e : Type.values()) {
             if (value.equalsIgnoreCase(e.toString())) {
                 return true;
             }
