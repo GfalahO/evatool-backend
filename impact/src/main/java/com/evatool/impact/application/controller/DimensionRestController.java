@@ -65,12 +65,12 @@ public class DimensionRestController {
     }
 
     private void addLinks(DimensionDto dimensionDto) {
-        dimensionDto.add(linkTo(DimensionRestController.class).slash(GET_DIMENSIONS).withRel(buildGetDimensionsRel()));
-        dimensionDto.add(linkTo(DimensionRestController.class).slash(POST_DIMENSION).withRel(buildPostDimensionRel()));
+        dimensionDto.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(buildGetDimensionsRel()));
+        dimensionDto.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(buildPostDimensionRel()));
         if (dimensionDto.getId() != null) {
-            dimensionDto.add(linkTo(DimensionRestController.class).slash(GET_DIMENSION).slash(dimensionDto.getId()).withSelfRel());
-            dimensionDto.add(linkTo(DimensionRestController.class).slash(PUT_DIMENSION).slash(dimensionDto.getId()).withRel(buildPutDimensionRel()));
-            dimensionDto.add(linkTo(DimensionRestController.class).slash(DELETE_DIMENSION).slash(dimensionDto.getId()).withRel(buildDeleteDimensionRel()));
+            dimensionDto.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(dimensionDto.getId()).withSelfRel());
+            dimensionDto.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(dimensionDto.getId()).withRel(buildPutDimensionRel()));
+            dimensionDto.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(dimensionDto.getId()).withRel(buildDeleteDimensionRel()));
         }
     }
 }

@@ -57,12 +57,12 @@ public class ImpactRestController {
      */
     private void addLinks(ImpactDto impactDto) {
         /*
-        impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACTS).withRel(buildGetImpactsRel()));
-        impactDto.add(linkTo(DimensionRestController.class).slash(POST_IMPACT).withRel(buildPostImpactRel()));
+        impactDto.add(linkTo(DimensionRestController.class).slash(IMPACTS).withRel(buildGetImpactsRel()));
+        impactDto.add(linkTo(DimensionRestController.class).slash(IMPACTS).withRel(buildPostImpactRel()));
         if (impactDto.getId() != null) {
-            impactDto.add(linkTo(DimensionRestController.class).slash(GET_IMPACT).slash(impactDto.getId()).withSelfRel());
-            impactDto.add(linkTo(DimensionRestController.class).slash(PUT_IMPACT).slash(impactDto.getId()).withRel(buildPutImpactRel()));
-            impactDto.add(linkTo(DimensionRestController.class).slash(DELETE_IMPACT).slash(impactDto.getId()).withRel(buildDeleteImpactRel()));
+            impactDto.add(linkTo(DimensionRestController.class).slash(IMPACTS).slash(impactDto.getId()).withSelfRel());
+            impactDto.add(linkTo(DimensionRestController.class).slash(IMPACTS).slash(impactDto.getId()).withRel(buildPutImpactRel()));
+            impactDto.add(linkTo(DimensionRestController.class).slash(IMPACTS).slash(impactDto.getId()).withRel(buildDeleteImpactRel()));
         }
         */
     }

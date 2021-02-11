@@ -5,20 +5,13 @@ import static com.evatool.impact.application.controller.util.RestSetting.*;
 public class DimensionRest {
     public static final String DIMENSION_REST_CONTROLLER_MAPPING = BASE_URI;
 
-    public static final String SINGULAR = "dimension";
-    public static final String PLURAL = "dimensions";
+    public static final String DIMENSIONS = "dimensions";
 
-    public static final String GET_DIMENSION = SINGULAR;
-    public static final String GET_DIMENSIONS = PLURAL;
-    public static final String POST_DIMENSION = SINGULAR;
-    public static final String PUT_DIMENSION = SINGULAR;
-    public static final String DELETE_DIMENSION = SINGULAR;
-
-    public static final String GET_DIMENSION_MAPPING = "/" + GET_DIMENSION + "/{id}";
-    public static final String GET_DIMENSIONS_MAPPING = "/" + GET_DIMENSIONS;
-    public static final String POST_DIMENSION_MAPPING = "/" + POST_DIMENSION;
-    public static final String PUT_DIMENSION_MAPPING = "/" + PUT_DIMENSION + "/{id}";
-    public static final String DELETE_DIMENSION_MAPPING = "/" + DELETE_DIMENSION + "/{id}";
+    public static final String GET_DIMENSION_MAPPING = "/dimensions/{id}";
+    public static final String GET_DIMENSIONS_MAPPING = "/dimensions";
+    public static final String POST_DIMENSION_MAPPING = "/dimensions";
+    public static final String PUT_DIMENSION_MAPPING = "/dimensions/{id}";
+    public static final String DELETE_DIMENSION_MAPPING = "/dimensions/{id}";
 
     public static String buildGetDimensionUri(String id) {
         return DIMENSION_REST_CONTROLLER_MAPPING + GET_DIMENSION_MAPPING.replace("{id}", id);
@@ -41,22 +34,22 @@ public class DimensionRest {
     }
 
     public static String buildGetDimensionRel() {
-        return GET_REL_PREFIX + " " + SINGULAR;
+        return GET_REL_PREFIX + " " + DIMENSIONS;
     }
 
     public static String buildGetDimensionsRel() {
-        return GET_ALL_REL_PREFIX + " " + PLURAL;
+        return GET_ALL_REL_PREFIX + " " + DIMENSIONS;
     }
 
     public static String buildPostDimensionRel() {
-        return POST_REL_PREFIX + " " + SINGULAR;
+        return POST_REL_PREFIX + " " + DIMENSIONS;
     }
 
     public static String buildPutDimensionRel() {
-        return PUT_REL_PREFIX + " " + SINGULAR;
+        return PUT_REL_PREFIX + " " + DIMENSIONS;
     }
 
     public static String buildDeleteDimensionRel() {
-        return DELETE_REL_PREFIX + " " + SINGULAR;
+        return DELETE_REL_PREFIX + " " + DIMENSIONS;
     }
 }
