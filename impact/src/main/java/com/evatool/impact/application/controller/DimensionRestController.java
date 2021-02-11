@@ -3,6 +3,8 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RequestMapping(DIMENSION_REST_CONTROLLER_MAPPING)
 public class DimensionRestController {
 
+    // TODO [tzaika] should we use logging?
+    private static Logger logger = LoggerFactory.getLogger(DimensionRestController.class);
+
     private final DimensionService dimensionService;
 
     @Autowired
@@ -28,6 +33,7 @@ public class DimensionRestController {
     public ResponseEntity<DimensionDto> getDimension(@PathVariable String id) throws EntityNotFoundException {
         var dimensionDto = dimensionService.findDimensionById(id);
         addLinks(dimensionDto);
+        logger.info("Dimension with id {} retrieved.", id);
         return new ResponseEntity<>(dimensionDto, HttpStatus.OK);
     }
 
