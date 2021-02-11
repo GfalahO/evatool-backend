@@ -7,12 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl & tzaika] Events
 
 // Tests:
-// TODO [tzaika] Implement Impact Tests
+// TODO [tzaika] Implement Impact API Tests
 // TODO [hbuhl] ErrorMessage tests in RestController?
 // TODO [hbuhl & tzaika] Event Tests
 
 // General:
-// TODO Autowired on constructor injection optional?
 // TODO use logger: Logger logger = LoggerFactory.getLogger(MyClass.class);
 // TODO [hbuhl & tzaika] Test if real events are asynchronous
 // TODO [tzaika] ImpactRest with Swagger
