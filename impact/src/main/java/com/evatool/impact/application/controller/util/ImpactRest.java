@@ -2,12 +2,20 @@ package com.evatool.impact.application.controller.util;
 
 import static com.evatool.impact.application.controller.util.RestSetting.*;
 
+// TODO [tzaika or hbuhl] unnecessarily complicated
+// One simple class with constant strings is completely sufficient
+// At that stage our URI's are actually very simple
+// This complicated string build logic makes it very difficult to read and understand what the URI actually looks like
+// For Example:
+// public static final String IMPACTS = "/impacts"
+// public static final String IMPACTS_ID = "/impacts/{id}"
 public class ImpactRest {
     public static final String IMPACT_REST_CONTROLLER_MAPPING = BASE_URI;
 
     public static final String SINGULAR = "impact";
     public static final String PLURAL = "impacts";
 
+    // TODO [tzaika or hbuhl] use only plural in uri
     public static final String GET_IMPACT = SINGULAR;
     public static final String GET_IMPACTS = PLURAL;
     public static final String POST_IMPACT = SINGULAR;
