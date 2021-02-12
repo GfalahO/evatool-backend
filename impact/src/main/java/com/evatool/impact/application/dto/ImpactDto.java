@@ -12,7 +12,7 @@ public class ImpactDto {
 
     @Getter
     @Setter
-    private StakeholderDto stakeholder; // Is using nested Dtos ok? Why not use stakeholderId and stakeholderName?
+    private StakeholderDto stakeholder;
 
     @Getter
     @Setter

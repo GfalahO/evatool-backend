@@ -5,7 +5,6 @@ import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
-import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.DimensionRepository;
@@ -22,7 +21,7 @@ import java.util.UUID;
 @Service
 public class ImpactServiceImpl implements ImpactService {
 
-    private static final Logger logger =  LoggerFactory.getLogger(ImpactServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImpactServiceImpl.class);
 
     private final ImpactRepository impactRepository;
 

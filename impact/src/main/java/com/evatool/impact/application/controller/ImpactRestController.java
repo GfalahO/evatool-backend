@@ -2,9 +2,6 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.service.ImpactService;
-import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.InvalidUuidException;
-import com.evatool.impact.common.exception.PropertyViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,7 +16,7 @@ import static com.evatool.impact.application.controller.util.ImpactRest.*;
 @RequestMapping(IMPACT_REST_CONTROLLER_MAPPING)
 public class ImpactRestController {
 
-    private static final Logger logger =  LoggerFactory.getLogger(ImpactRestController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImpactRestController.class);
 
     private final ImpactService impactService;
 
@@ -28,7 +25,7 @@ public class ImpactRestController {
     }
 
     @GetMapping(GET_IMPACT_MAPPING)
-    public ResponseEntity<ImpactDto> getImpact(@PathVariable String id)  {
+    public ResponseEntity<ImpactDto> getImpact(@PathVariable String id) {
         var impactDto = impactService.findImpactById(id);
         return new ResponseEntity<>(impactDto, HttpStatus.OK);
     }

@@ -428,7 +428,6 @@ class DimensionRestControllerTest {
 
             // when
             var insertedDimensionDto = insertEntityResponse.getBody();
-            System.out.println(insertedDimensionDto.getId());
             assertThat(insertedDimensionDto).isNotNull();
             var deleteEntity = new HttpEntity<>(insertedDimensionDto);
             var deleteEntityResponse = testRestTemplate.exchange(

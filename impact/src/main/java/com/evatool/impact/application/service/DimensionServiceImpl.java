@@ -50,7 +50,7 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public DimensionDto createDimension(DimensionDto dimensionDto)  {
+    public DimensionDto createDimension(DimensionDto dimensionDto) {
         if (dimensionDto.getId() != null) {
             logger.error("Id must be null.");
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Dimension.class.getSimpleName()));
@@ -60,7 +60,7 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public DimensionDto updateDimension(DimensionDto dimensionDto){
+    public DimensionDto updateDimension(DimensionDto dimensionDto) {
         this.findDimensionById(dimensionDto.getId());
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);
         return DimensionDtoMapper.toDto(dimensionRepository.save(dimension));

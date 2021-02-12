@@ -1,8 +1,6 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.PropertyViolationException;
-import com.evatool.impact.domain.entity.SuperEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -40,7 +38,8 @@ class DimensionServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.findDimensionById(dimension.getId().toString()));
+            var id = dimension.getId().toString();
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.findDimensionById(id));
         }
     }
 
@@ -66,7 +65,7 @@ class DimensionServiceImplTest {
     @Nested
     class Insert {
         @Test
-        void testInsertDimension_InsertedDimension_ReturnInsertedDimension()  {
+        void testInsertDimension_InsertedDimension_ReturnInsertedDimension() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -116,7 +115,7 @@ class DimensionServiceImplTest {
     @Nested
     class Delete {
         @Test
-        void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions(){
+        void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -138,7 +137,8 @@ class DimensionServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.deleteDimensionById(dimension.getId().toString()));
+            var id = dimension.getId().toString();
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.deleteDimensionById(id));
         }
     }
 

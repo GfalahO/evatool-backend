@@ -1,11 +1,8 @@
 package com.evatool.impact.application.json.mapper;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.UUID;
 
 public class ImpactStakeholderJsonMapper {
 

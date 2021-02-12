@@ -5,7 +5,6 @@ import com.evatool.impact.application.dto.mapper.StakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
-import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
@@ -29,7 +28,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public StakeholderDto findStakeholderById(String id)  {
+    public StakeholderDto findStakeholderById(String id) {
         if (!SuperEntity.isValidUuid(id)) {
             logger.error("Invalid UUID.");
             throw new InvalidUuidException(id);
@@ -61,7 +60,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto)  {
+    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto) {
         this.findStakeholderById(stakeholderDto.getId());
         var stakeholder = StakeholderDtoMapper.fromDto(stakeholderDto);
         return StakeholderDtoMapper.toDto(stakeholderRepository.save(stakeholder));

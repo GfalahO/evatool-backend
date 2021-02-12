@@ -37,7 +37,8 @@ class ImpactStakeholderServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.findStakeholderById(stakeholder.getId().toString()));
+            var id = stakeholder.getId().toString();
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.findStakeholderById(id));
         }
     }
 
@@ -81,7 +82,7 @@ class ImpactStakeholderServiceImplTest {
     @Nested
     class Update {
         @Test
-        void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder()  {
+        void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
             var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
@@ -135,7 +136,8 @@ class ImpactStakeholderServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.deleteStakeholderById(stakeholder.getId().toString()));
+            var id = stakeholder.getId().toString();
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.deleteStakeholderById(id));
         }
     }
 

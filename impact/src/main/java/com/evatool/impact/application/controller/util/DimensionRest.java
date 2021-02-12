@@ -4,7 +4,7 @@ import static com.evatool.impact.application.controller.util.RestSetting.*;
 
 public class DimensionRest {
 
-    private DimensionRest(){
+    private DimensionRest() {
 
     }
 

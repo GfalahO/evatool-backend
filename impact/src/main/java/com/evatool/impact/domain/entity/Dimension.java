@@ -34,7 +34,7 @@ public class Dimension extends SuperEntity {
     private String description;
 
     public Dimension() {
-super();
+        super();
     }
 
     public Dimension(String name, Type type, String description) {
@@ -54,7 +54,7 @@ super();
                 '}';
     }
 
-    public void setName(String name)  {
+    public void setName(String name) {
         if (name == null) {
             logger.error("Attempted to set name to null.");
             throw new PropertyViolationException("Name cannot be null.");

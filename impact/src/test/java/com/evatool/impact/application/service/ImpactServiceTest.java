@@ -80,7 +80,8 @@ class ImpactServiceTest {
 
     @Test
     void testFindImpactById_UnknownId() {
-        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findImpactById(UUID.randomUUID().toString()));
+        var id = UUID.randomUUID().toString();
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findImpactById(id));
     }
 
     @Test
@@ -94,9 +95,9 @@ class ImpactServiceTest {
         var impact = saveFullDummyImpact();
 
         // when
-        var impactDtos = impactService.getAllImpacts();
-        assertThat(impactDtos).hasSize(1);
-        assertThat(impactDtos.get(0).getId()).isEqualTo(impact.getId().toString());
+        var impactDtoList = impactService.getAllImpacts();
+        assertThat(impactDtoList).hasSize(1);
+        assertThat(impactDtoList.get(0).getId()).isEqualTo(impact.getId().toString());
     }
 
     // TODO [tzaika] add all remaining tests

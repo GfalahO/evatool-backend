@@ -71,7 +71,7 @@ public class Impact extends SuperEntity {
         this.description = description;
     }
 
-    public void setDimension(Dimension dimension){
+    public void setDimension(Dimension dimension) {
         if (dimension == null) {
             logger.error("Attempted to set dimension description to null.");
             throw new PropertyViolationException("Dimension cannot be null.");
@@ -79,7 +79,7 @@ public class Impact extends SuperEntity {
         this.dimension = dimension;
     }
 
-    public void setStakeholder(ImpactStakeholder stakeholder)  {
+    public void setStakeholder(ImpactStakeholder stakeholder) {
         if (stakeholder == null) {
             logger.error("Attempted to set stakeholder to null.");
             throw new PropertyViolationException("Stakeholder cannot be null.");

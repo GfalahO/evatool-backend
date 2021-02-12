@@ -25,10 +25,6 @@ public class SuperEntity {
     @Column(name = "ID", updatable = false, nullable = false)
     protected UUID id;
 
-    public SuperEntity() {
-
-    }
-
     // Allowed transitions: null -> null and null -> valid.
     public void setId(UUID id) {
         if (this.idAlreadySet()) {

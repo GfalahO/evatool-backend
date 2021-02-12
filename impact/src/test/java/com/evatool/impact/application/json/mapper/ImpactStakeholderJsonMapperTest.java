@@ -28,7 +28,7 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
-    void testFromJson_InvalidId_ThrowInvalidUuidException() throws JSONException {
+    void testFromJson_InvalidId_ThrowInvalidUuidException() {
         // given
         var id = "invalid uuid";
         var name = "name";

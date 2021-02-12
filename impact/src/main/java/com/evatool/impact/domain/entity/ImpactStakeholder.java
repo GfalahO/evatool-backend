@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "IMPACT_STAKEHOLDER")
 public class ImpactStakeholder extends SuperEntity {
 
-    private static final Logger logger =  LoggerFactory.getLogger(ImpactStakeholder.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholder.class);
 
     @Getter
     @Column(name = "NAME", nullable = false)
@@ -36,7 +36,7 @@ public class ImpactStakeholder extends SuperEntity {
                 '}';
     }
 
-    public void setName(String name)  {
+    public void setName(String name) {
         if (name == null) {
             logger.error("Attempted to set name to null.");
             throw new PropertyViolationException("Name cannot be null.");

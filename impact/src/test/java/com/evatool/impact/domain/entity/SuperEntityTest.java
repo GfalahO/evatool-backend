@@ -42,12 +42,13 @@ class SuperEntityTest {
         superEntity.setId(UUID.randomUUID());
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(UUID.randomUUID()));
+        var id = UUID.randomUUID();
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(id));
     }
 
     // TODO tests
     @Test
-    void testSetIdString_ValidToNullValue_ThrowPropertyViolationException(){
+    void testSetIdString_ValidToNullValue_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 
@@ -67,7 +68,8 @@ class SuperEntityTest {
         superEntity.setId(UUID.randomUUID());
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(UUID.randomUUID().toString()));
+        var id = UUID.randomUUID().toString();
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(id));
     }
 
     private SuperEntityImpl getSuperEntity() {
