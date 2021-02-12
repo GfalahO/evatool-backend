@@ -17,7 +17,7 @@ import static com.evatool.impact.application.controller.util.ImpactRest.*;
 @RequestMapping(IMPACT_REST_CONTROLLER_MAPPING)
 public class ImpactRestController {
 
-    private static Logger logger = LoggerFactory.getLogger(ImpactRestController.class);
+    private static final Logger logger =  LoggerFactory.getLogger(ImpactRestController.class);
 
     private final ImpactService impactService;
 

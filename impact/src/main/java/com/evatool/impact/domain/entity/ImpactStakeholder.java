@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "IMPACT_STAKEHOLDER")
 public class ImpactStakeholder extends SuperEntity {
 
-    Logger logger = LoggerFactory.getLogger(ImpactStakeholder.class);
+    private static final Logger logger =  LoggerFactory.getLogger(ImpactStakeholder.class);
 
     @Getter
     @Column(name = "NAME", nullable = false)

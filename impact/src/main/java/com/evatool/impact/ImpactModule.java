@@ -13,7 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl & tzaika] Event Tests (wait until 19.02.2021)
 
 // Team:
-// TODO [hbuhl] use logger: Logger logger = LoggerFactory.getLogger(MyClass.class)
+// TODO [hbuhl] use logger: private static final Logger logger =  LoggerFactory.getLogger(MyClass.class)
+// TODO Install SonarLint IDE plugin and remove warnings
 // TODO [hbuhl] Use poc-way of creating and inserting Rest Level 3 links
 // TODO [hbuhl & tzaika] Test if real events are asynchronous
 // TODO [tzaika] ImpactRest with Swagger
@@ -22,7 +23,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl & tzaika] Clean dependencies and put in root pom
 // TODO [hbuhl & tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel, @ApiModelProperty, @ApiParam)
 // TODO [hbuhl] Mandantenfähigkeit? (just for fun)
-// TODO Install SonarLint IDE plugin and remove warnings
 
 // TODO [hbuhl] use strings in request mappings for readability (wait until 19.02.2021) [Property file?]
 // TODO [hbuhl & tzaika] Use UUID class in Entity? (wait until 19.02.2021)

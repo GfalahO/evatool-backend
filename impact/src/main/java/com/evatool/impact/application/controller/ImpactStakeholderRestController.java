@@ -18,7 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RequestMapping(IMPACT_STAKEHOLDER_REST_CONTROLLER_MAPPING)
 public class ImpactStakeholderRestController {
 
-    private static Logger logger = LoggerFactory.getLogger(ImpactStakeholderRestController.class);
+    private static final Logger logger =  LoggerFactory.getLogger(ImpactStakeholderRestController.class);
 
     private final ImpactStakeholderService stakeholderService;
 

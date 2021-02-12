@@ -1,7 +1,6 @@
 package com.evatool.impact.domain.entity;
 
 import com.evatool.impact.common.exception.PropertyViolationException;
-import com.evatool.impact.domain.repository.DimensionRepository;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 import org.slf4j.Logger;
@@ -16,7 +15,7 @@ import java.util.UUID;
 @MappedSuperclass
 public class SuperEntity {
 
-    Logger logger = LoggerFactory.getLogger(SuperEntity.class);
+    private static final Logger logger = LoggerFactory.getLogger(SuperEntity.class);
 
     @Getter
     @Id
@@ -26,7 +25,7 @@ public class SuperEntity {
     protected String id;
 
     // Allowed transitions: null -> null and null -> valid.
-    public void setId(String id) throws IllegalArgumentException {
+    public void setId(String id) {
         if (this.idAlreadySet()) {
             throw new PropertyViolationException("Existing id cannot be set.");
         } else if (id != null && !this.idIsValid(id)) {

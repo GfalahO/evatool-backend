@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class DimensionServiceImpl implements DimensionService {
 
-    Logger logger = LoggerFactory.getLogger(DimensionServiceImpl.class);
+    private static final Logger logger =  LoggerFactory.getLogger(DimensionServiceImpl.class);
 
     private final DimensionRepository dimensionRepository;
 

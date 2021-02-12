@@ -19,7 +19,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class DimensionRestController {
 
     // TODO [tzaika] should we use logging?
-    private static Logger logger = LoggerFactory.getLogger(DimensionRestController.class);
+    private static final Logger logger =  LoggerFactory.getLogger(DimensionRestController.class);
 
     private final DimensionService dimensionService;
 

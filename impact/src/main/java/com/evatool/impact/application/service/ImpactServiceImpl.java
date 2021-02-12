@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class ImpactServiceImpl implements ImpactService {
 
-    Logger logger = LoggerFactory.getLogger(ImpactServiceImpl.class);
+    private static final Logger logger =  LoggerFactory.getLogger(ImpactServiceImpl.class);
 
     private final ImpactRepository impactRepository;
 

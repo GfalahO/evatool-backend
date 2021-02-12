@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "DIMENSION")
 public class Dimension extends SuperEntity {
 
-    Logger logger = LoggerFactory.getLogger(Dimension.class);
+    private static final Logger logger =  LoggerFactory.getLogger(Dimension.class);
 
     public enum Type {
         SOCIAL,
@@ -53,14 +53,14 @@ public class Dimension extends SuperEntity {
                 '}';
     }
 
-    public void setName(String name) throws IllegalArgumentException {
+    public void setName(String name) {
         if (name == null) {
             throw new PropertyViolationException("Name cannot be null.");
         }
         this.name = name;
     }
 
-    public void setDescription(String description) throws IllegalArgumentException {
+    public void setDescription(String description) {
         if (description == null) {
             throw new PropertyViolationException("Description cannot be null.");
         }

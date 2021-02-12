@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity(name = "IMPACT")
 public class Impact extends SuperEntity {
 
-    Logger logger = LoggerFactory.getLogger(Impact.class);
+    private static final Logger logger =  LoggerFactory.getLogger(Impact.class);
 
     // @Column(name = "VALUE", nullable = false)
     @Getter

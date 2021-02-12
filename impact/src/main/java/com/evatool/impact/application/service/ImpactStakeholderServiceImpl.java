@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
 
-    Logger logger = LoggerFactory.getLogger(ImpactStakeholderServiceImpl.class);
+    private static final Logger logger =  LoggerFactory.getLogger(ImpactStakeholderServiceImpl.class);
 
     private final ImpactStakeholderRepository stakeholderRepository;
 
