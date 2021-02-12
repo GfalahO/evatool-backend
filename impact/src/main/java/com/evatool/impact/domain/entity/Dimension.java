@@ -75,7 +75,7 @@ public class Dimension extends SuperEntity {
             return false;
         }
         for (var e : Type.values()) {
-            if (value.equalsIgnoreCase(e.toString())) {
+            if (value.equals(e.toString())) {
                 return true;
             }
         }

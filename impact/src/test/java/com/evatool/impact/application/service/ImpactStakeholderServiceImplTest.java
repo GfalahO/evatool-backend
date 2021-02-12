@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
-public class ImpactStakeholderServiceImplTest {
+class ImpactStakeholderServiceImplTest {
     @Autowired
     ImpactStakeholderService stakeholderService;
 
@@ -27,9 +27,9 @@ public class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    public class GetById {
+    class GetById {
         @Test
-        public void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
+        void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholder = createDummyStakeholder();
             stakeholder.setId(UUID.randomUUID().toString());
@@ -42,10 +42,10 @@ public class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    public class GetAll {
+    class GetAll {
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        public void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
+        void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 var stakeholderDto = createDummyStakeholderDto();
@@ -61,9 +61,9 @@ public class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    public class Insert {
+    class Insert {
         @Test
-        public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws EntityNotFoundException {
+        void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws EntityNotFoundException {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
@@ -79,9 +79,9 @@ public class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    public class Update {
+    class Update {
         @Test
-        public void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws EntityNotFoundException {
+        void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws EntityNotFoundException {
             // given
             var stakeholderDto = createDummyStakeholderDto();
             var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
@@ -98,7 +98,7 @@ public class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        public void testUpdateStakeholder_UpdatedNonExistingId_ThrowEntityNotFoundException() {
+        void testUpdateStakeholder_UpdatedNonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
             stakeholderDto.setId(UUID.randomUUID().toString());
@@ -111,9 +111,9 @@ public class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    public class Delete {
+    class Delete {
         @Test
-        public void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() throws EntityNotFoundException {
+        void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() throws EntityNotFoundException {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
@@ -123,11 +123,11 @@ public class ImpactStakeholderServiceImplTest {
 
             // then
             var stakeholders = stakeholderService.getAllStakeholders();
-            assertThat(stakeholders.size()).isEqualTo(0);
+            assertThat(stakeholders.size()).isZero();
         }
 
         @Test
-        public void testDeleteStakeholderById_DeleteNonExistingId_ThrowEntityNotFoundException() {
+        void testDeleteStakeholderById_DeleteNonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholder = createDummyStakeholder();
             stakeholder.setId(UUID.randomUUID().toString());
@@ -140,10 +140,10 @@ public class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    public class DeleteAll {
+    class DeleteAll {
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        public void testDeleteAll_InsertStakeholders_ReturnNoStakeholders(int value) {
+        void testDeleteAll_InsertStakeholders_ReturnNoStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 var stakeholderDto = createDummyStakeholderDto();
@@ -155,7 +155,7 @@ public class ImpactStakeholderServiceImplTest {
 
             // then
             var stakeholders = stakeholderService.getAllStakeholders();
-            assertThat(stakeholders.size()).isEqualTo(0);
+            assertThat(stakeholders.size()).isZero();
         }
     }
 }

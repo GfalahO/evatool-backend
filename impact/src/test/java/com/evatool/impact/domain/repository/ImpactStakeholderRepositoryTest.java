@@ -12,13 +12,13 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class ImpactStakeholderRepositoryTest {
+class ImpactStakeholderRepositoryTest {
 
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
 
     @Test
-    public void testFindById_InsertedStakeholder_ReturnStakeholder() {
+    void testFindById_InsertedStakeholder_ReturnStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
         stakeholderRepository.save(stakeholder);
@@ -31,7 +31,7 @@ public class ImpactStakeholderRepositoryTest {
     }
 
     @Test
-    public void testFindByName_InsertedStakeholder_ReturnStakeholder() {
+    void testFindByName_InsertedStakeholder_ReturnStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
         stakeholderRepository.save(stakeholder);
@@ -44,7 +44,7 @@ public class ImpactStakeholderRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedStakeholder_IdIsNotNull() {
+    void testSave_InsertedStakeholder_IdIsNotNull() {
         // given
         var stakeholder = createDummyStakeholder();
 
@@ -56,31 +56,7 @@ public class ImpactStakeholderRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedStakeholder_IdIsUuid() {
-        // given
-        var stakeholder = createDummyStakeholder();
-
-        // when
-        stakeholderRepository.save(stakeholder);
-
-        // then
-        UUID.fromString(stakeholder.getId());
-    }
-
-    @Test
-    public void testSave_PresetId_Allow() {
-        // given
-        var stakeholder = createDummyStakeholder();
-        stakeholder.setId(UUID.randomUUID().toString());
-
-        // when
-
-        // then
-        stakeholderRepository.save(stakeholder);
-    }
-
-    @Test
-    public void testSave_UpdatedStakeholder_ReturnUpdatedDimension() {
+    void testSave_UpdatedStakeholder_ReturnUpdatedDimension() {
         // given
         var stakeholder = createDummyStakeholder();
         stakeholderRepository.save(stakeholder);
@@ -96,7 +72,7 @@ public class ImpactStakeholderRepositoryTest {
     }
 
     @Test
-    public void testDelete_DeletedStakeholder_ReturnNull() {
+    void testDelete_DeletedStakeholder_ReturnNull() {
         // given
         var stakeholder = createDummyStakeholder();
         stakeholderRepository.save(stakeholder);

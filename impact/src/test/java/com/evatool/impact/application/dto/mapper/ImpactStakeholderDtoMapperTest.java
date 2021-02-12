@@ -8,9 +8,10 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ImpactStakeholderDtoMapperTest {
+class ImpactStakeholderDtoMapperTest {
+
     @Test
-    public void testToDot_NewStakeholder_EqualsStakeholderDto() {
+    void testToDot_NewStakeholder_EqualsStakeholderDto() {
         // given
         var stakeholder = createDummyStakeholder();
 
@@ -23,7 +24,7 @@ public class ImpactStakeholderDtoMapperTest {
     }
 
     @Test
-    public void testFromDto_NewStakeholderDto_EqualsStakeholder() {
+    void testFromDto_NewStakeholderDto_EqualsStakeholder() {
         // given
         var stakeholderDto = createDummyStakeholderDto();
 

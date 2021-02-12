@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 // TODO [tzaika] find a way to see data in h2-DB during debugging
 @SpringBootTest
-public class ImpactServiceTest {
+class ImpactServiceTest {
 
     @Autowired
     ImpactService impactService;
@@ -51,7 +51,7 @@ public class ImpactServiceTest {
     // https://docs.oracle.com/javase/tutorial/essential/exceptions/runtime.html
     @SneakyThrows
     @Test
-    public void testFindImpactById() {
+    void testFindImpactById() {
         // given
         var impact = saveFullDummyImpact();
 
@@ -71,22 +71,22 @@ public class ImpactServiceTest {
     }
 
     @Test
-    public void testFindImpactById_IdIsNull() {
+    void testFindImpactById_IdIsNull() {
         assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findImpactById(null));
     }
 
     @Test
-    public void testFindImpactById_UnknownId() {
+    void testFindImpactById_UnknownId() {
         assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findImpactById("unknownId"));
     }
 
     @Test
-    public void testGetAllImpacts_NoSavedImpacts() {
+    void testGetAllImpacts_NoSavedImpacts() {
         assertThat(impactService.getAllImpacts()).isEmpty();
     }
 
     @Test
-    public void testGetAllImpacts() {
+    void testGetAllImpacts() {
         // given
         var impact = saveFullDummyImpact();
 

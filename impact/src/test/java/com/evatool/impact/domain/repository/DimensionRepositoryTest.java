@@ -10,13 +10,13 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class DimensionRepositoryTest {
+class DimensionRepositoryTest {
 
     @Autowired
     private DimensionRepository dimensionRepository;
 
     @Test
-    public void testFindById_InsertedDimension_ReturnDimension() {
+    void testFindById_InsertedDimension_ReturnDimension() {
         // given
         var dimension = createDummyDimension();
         dimensionRepository.save(dimension);
@@ -29,7 +29,7 @@ public class DimensionRepositoryTest {
     }
 
     @Test
-    public void testFindByName_InsertedDimension_ReturnDimension() {
+    void testFindByName_InsertedDimension_ReturnDimension() {
         // given
         var dimension = createDummyDimension();
         dimensionRepository.save(dimension);
@@ -42,7 +42,7 @@ public class DimensionRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedDimension_IdIsNotNull() {
+    void testSave_InsertedDimension_IdIsNotNull() {
         // given
         var dimension = createDummyDimension();
 
@@ -54,31 +54,7 @@ public class DimensionRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedDimension_IdIsUuid() {
-        // given
-        var dimension = createDummyDimension();
-
-        // when
-        dimensionRepository.save(dimension);
-
-        // then
-        UUID.fromString(dimension.getId());
-    }
-
-    @Test
-    public void testSave_PresetId_Allow() {
-        // given
-        var dimension = createDummyDimension();
-        dimension.setId(UUID.randomUUID().toString());
-
-        // when
-
-        // then
-        dimensionRepository.save(dimension);
-    }
-
-    @Test
-    public void testSave_UpdatedDimension_ReturnUpdatedDimension() {
+    void testSave_UpdatedDimension_ReturnUpdatedDimension() {
         // given
         var dimension = createDummyDimension();
         dimensionRepository.save(dimension);
@@ -94,7 +70,7 @@ public class DimensionRepositoryTest {
     }
 
     @Test
-    public void testDelete_DeletedDimension_ReturnNull() {
+    void testDelete_DeletedDimension_ReturnNull() {
         // given
         var dimension = createDummyDimension();
         dimensionRepository.save(dimension);

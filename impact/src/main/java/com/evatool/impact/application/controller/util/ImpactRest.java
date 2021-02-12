@@ -3,6 +3,11 @@ package com.evatool.impact.application.controller.util;
 import static com.evatool.impact.application.controller.util.RestSetting.*;
 
 public class ImpactRest {
+
+    private ImpactRest() {
+
+    }
+
     public static final String IMPACT_REST_CONTROLLER_MAPPING = BASE_URI;
 
     public static final String IMPACTS = "impacts";

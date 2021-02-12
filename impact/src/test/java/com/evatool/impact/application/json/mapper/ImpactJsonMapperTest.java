@@ -8,9 +8,10 @@ import static com.evatool.impact.application.json.mapper.ImpactJsonMapper.toJson
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ImpactJsonMapperTest {
+class ImpactJsonMapperTest {
+
     @Test
-    public void testToJson_NewImpact_EqualsImpactJson() {
+    void testToJson_NewImpact_EqualsImpactJson() {
         // given
         var impact = createDummyImpact();
         impact.setId(UUID.randomUUID().toString());

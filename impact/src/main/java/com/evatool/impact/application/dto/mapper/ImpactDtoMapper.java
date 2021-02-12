@@ -7,6 +7,11 @@ import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.modelmapper.ModelMapper;
 
 public class ImpactDtoMapper {
+
+    private ImpactDtoMapper() {
+
+    }
+
     private static final ModelMapper modelMapper = new ModelMapper();
 
     public static Impact fromDto(ImpactDto impactDto, DimensionRepository dimensionRepository, ImpactStakeholderRepository stakeholderRepository) {

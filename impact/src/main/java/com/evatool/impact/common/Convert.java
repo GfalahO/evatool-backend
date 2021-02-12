@@ -2,9 +2,13 @@ package com.evatool.impact.common;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public class Convert {
+
+    private Convert() {
+
+    }
+
     public static <T> List<T> iterableToList(Iterable<T> iterable) {
         var list = new ArrayList<T>();
 

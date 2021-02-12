@@ -10,13 +10,13 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class ImpactRepositoryTest {
+class ImpactRepositoryTest {
 
     @Autowired
     private ImpactRepository impactRepository;
 
     @Test
-    public void testFindById_InsertedImpact_ReturnImpact() {
+    void testFindById_InsertedImpact_ReturnImpact() {
         // given
         var impact = createDummyImpact();
         impactRepository.save(impact);
@@ -29,7 +29,7 @@ public class ImpactRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedImpact_IdIsNotNull() {
+    void testSave_InsertedImpact_IdIsNotNull() {
         // given
         var impact = createDummyImpact();
 
@@ -41,7 +41,7 @@ public class ImpactRepositoryTest {
     }
 
     @Test
-    public void testSave_InsertedImpact_IdIsUuid() {
+    void testSave_InsertedImpact_IdIsUuid() {
         // given
         var impact = createDummyImpact();
 
@@ -54,19 +54,7 @@ public class ImpactRepositoryTest {
     }
 
     @Test
-    public void testSave_PresetId_Allow() {
-        // given
-        var impact = createDummyImpact();
-        impact.setId(UUID.randomUUID().toString());
-
-        // when
-
-        // then
-        impactRepository.save(impact);
-    }
-
-    @Test
-    public void testSave_UpdatedImpact_ReturnUpdatedDimension() {
+    void testSave_UpdatedImpact_ReturnUpdatedDimension() {
         // given
         var impact = createDummyImpact();
         impactRepository.save(impact);
@@ -83,7 +71,7 @@ public class ImpactRepositoryTest {
     }
 
     @Test
-    public void testDelete_DeletedImpact_ReturnNull() {
+    void testDelete_DeletedImpact_ReturnNull() {
         // given
         var impact = createDummyImpact();
         impactRepository.save(impact);

@@ -17,7 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
-public class DimensionServiceImplTest {
+class DimensionServiceImplTest {
+
     @Autowired
     DimensionService dimensionService;
 
@@ -27,9 +28,9 @@ public class DimensionServiceImplTest {
     }
 
     @Nested
-    public class GetById {
+    class GetById {
         @Test
-        public void testGetDimensionById_NonExistingId_ThrowEntityNotFoundException() {
+        void testGetDimensionById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID().toString());
@@ -42,10 +43,10 @@ public class DimensionServiceImplTest {
     }
 
     @Nested
-    public class GetAll {
+    class GetAll {
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        public void testGetAllDimensions_InsertedDimensions_ReturnDimensions(int value) {
+        void testGetAllDimensions_InsertedDimensions_ReturnDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 var dimensionDto = createDummyDimensionDto();
@@ -61,9 +62,9 @@ public class DimensionServiceImplTest {
     }
 
     @Nested
-    public class Insert {
+    class Insert {
         @Test
-        public void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws EntityNotFoundException {
+        void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws EntityNotFoundException {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -79,9 +80,9 @@ public class DimensionServiceImplTest {
     }
 
     @Nested
-    public class Update {
+    class Update {
         @Test
-        public void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws EntityNotFoundException {
+        void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws EntityNotFoundException {
             // given
             var dimensionDto = createDummyDimensionDto();
             var insertedDimension = dimensionService.createDimension(dimensionDto);
@@ -98,7 +99,7 @@ public class DimensionServiceImplTest {
         }
 
         @Test
-        public void testUpdateDimension_UpdatedNonExistingId_ThrowEntityNotFoundException() {
+        void testUpdateDimension_UpdatedNonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
@@ -111,9 +112,9 @@ public class DimensionServiceImplTest {
     }
 
     @Nested
-    public class Delete {
+    class Delete {
         @Test
-        public void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions() throws EntityNotFoundException {
+        void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions() throws EntityNotFoundException {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -123,11 +124,11 @@ public class DimensionServiceImplTest {
 
             // then
             var dimensions = dimensionService.getAllDimensions();
-            assertThat(dimensions.size()).isEqualTo(0);
+            assertThat(dimensions.size()).isZero();
         }
 
         @Test
-        public void testDeleteDimensionById_DeleteNonExistingId_ThrowEntityNotFoundException() {
+        void testDeleteDimensionById_DeleteNonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID().toString());
@@ -140,10 +141,10 @@ public class DimensionServiceImplTest {
     }
 
     @Nested
-    public class DeleteAll {
+    class DeleteAll {
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        public void testDeleteAll_InsertDimensions_ReturnNoDimensions(int value) {
+        void testDeleteAll_InsertDimensions_ReturnNoDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 var dimensionDto = createDummyDimensionDto();
@@ -155,7 +156,7 @@ public class DimensionServiceImplTest {
 
             // then
             var dimensions = dimensionService.getAllDimensions();
-            assertThat(dimensions.size()).isEqualTo(0);
+            assertThat(dimensions.size()).isZero();
         }
     }
 }

@@ -8,9 +8,10 @@ import java.util.UUID;
 import static com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper.fromJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ImpactStakeholderJsonMapperTest {
+class ImpactStakeholderJsonMapperTest {
+
     @Test
-    public void testFromJson_ImpactStakeholderJsonString_EqualsImpactStakeholderJson() throws JSONException {
+    void testFromJson_ImpactStakeholderJsonString_EqualsImpactStakeholderJson() throws JSONException {
         // given
         var id = UUID.randomUUID().toString();
         var name = "name";

@@ -5,6 +5,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ImpactStakeholderJsonMapper {
+
+    private ImpactStakeholderJsonMapper() {
+
+    }
+
     public static ImpactStakeholder fromJson(String json) throws JSONException {
         var jsonObject = new JSONObject(json);
         var impactStakeholder = new ImpactStakeholder();

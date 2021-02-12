@@ -5,6 +5,11 @@ import com.evatool.impact.domain.entity.Impact;
 import org.modelmapper.ModelMapper;
 
 public class ImpactJsonMapper {
+
+    private ImpactJsonMapper() {
+
+    }
+
     private static final ModelMapper modelMapper = new ModelMapper();
 
     public static ImpactJson toJson(Impact impact) {

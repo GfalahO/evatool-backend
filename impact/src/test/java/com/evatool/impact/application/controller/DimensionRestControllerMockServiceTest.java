@@ -37,7 +37,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(DimensionRestController.class)
 @ContextConfiguration(classes = {SwaggerConfig.class, ImpactModule.class})
-public class DimensionRestControllerMockServiceTest {
+class DimensionRestControllerMockServiceTest {
+
     @Autowired
     private MockMvc mvc;
 
@@ -45,9 +46,9 @@ public class DimensionRestControllerMockServiceTest {
     private DimensionService dimensionService;
 
     @Nested
-    public class GetById {
+    class GetById {
         @Test
-        public void testGetDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
+        void testGetDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID().toString();
@@ -76,7 +77,7 @@ public class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        public void testGetDimensionById_ExistingDimension_ReturnDimension() throws Exception {
+        void testGetDimensionById_ExistingDimension_ReturnDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -92,7 +93,7 @@ public class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        public void testGetDimensionById_NonExistingDimension_ReturnHttpStatusNotFound() throws Exception {
+        void testGetDimensionById_NonExistingDimension_ReturnHttpStatusNotFound() throws Exception {
             // given
             var nonExistingId = "wrong_id";
 
@@ -108,9 +109,9 @@ public class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    public class GetAll {
+    class GetAll {
         @Test
-        public void testGetAllDimensions_ExistingDimension_CorrectRestLevel3() throws Exception {
+        void testGetAllDimensions_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID().toString();
@@ -140,7 +141,7 @@ public class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        public void testGetAllDimensions_ExistingDimensions_ReturnDimensions() throws Exception {
+        void testGetAllDimensions_ExistingDimensions_ReturnDimensions() throws Exception {
             // given
             var dimension1 = createDummyDimensionDto();
             var dimension2 = createDummyDimensionDto();
@@ -161,7 +162,7 @@ public class DimensionRestControllerMockServiceTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        public void testGetAllDimensions_ExistingDimensions_ReturnDimensions(int value) throws Exception {
+        void testGetAllDimensions_ExistingDimensions_ReturnDimensions(int value) throws Exception {
             var allDimensionDtos = new ArrayList<DimensionDto>();
             for (int i = 0; i < value; i++) {
                 // given
@@ -181,9 +182,9 @@ public class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    public class Insert {
+    class Insert {
         @Test
-        public void testInsertDimension_InsertedDimension_CorrectRestLevel3() throws Exception {
+        void testInsertDimension_InsertedDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
@@ -203,7 +204,7 @@ public class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        public void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws Exception {
+        void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID().toString();
@@ -233,9 +234,9 @@ public class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    public class Update {
+    class Update {
         @Test
-        public void testUpdateDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
+        void testUpdateDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID().toString();
@@ -266,7 +267,7 @@ public class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        public void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
+        void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
@@ -287,9 +288,9 @@ public class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    public class Delete {
+    class Delete {
         @Test
-        public void testDeleteDimension_DeletedDimension_ReturnNull() throws Exception {
+        void testDeleteDimension_DeletedDimension_ReturnNull() throws Exception {
             // given
 
             // when

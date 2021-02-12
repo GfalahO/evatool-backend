@@ -6,6 +6,7 @@ import com.evatool.impact.common.exception.EntityNotFoundException;
 import java.util.List;
 
 public interface DimensionService {
+
     DimensionDto findDimensionById(String id) throws EntityNotFoundException;
 
     List<DimensionDto> getAllDimensions();

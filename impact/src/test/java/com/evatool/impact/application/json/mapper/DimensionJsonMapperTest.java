@@ -8,9 +8,10 @@ import static com.evatool.impact.application.json.mapper.DimensionJsonMapper.toJ
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DimensionJsonMapperTest {
+class DimensionJsonMapperTest {
+
     @Test
-    public void testToJson_NewDimension_EqualsDimensionJson() {
+    void testToJson_NewDimension_EqualsDimensionJson() {
         // given
         var dimension = createDummyDimension();
         dimension.setId(UUID.randomUUID().toString());

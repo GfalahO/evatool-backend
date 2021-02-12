@@ -3,6 +3,11 @@ package com.evatool.impact.application.controller.util;
 import static com.evatool.impact.application.controller.util.RestSetting.*;
 
 public class DimensionRest {
+
+    private DimensionRest(){
+
+    }
+
     public static final String DIMENSION_REST_CONTROLLER_MAPPING = BASE_URI;
 
     public static final String DIMENSIONS = "dimensions";
@@ -10,7 +15,7 @@ public class DimensionRest {
     public static final String GET_DIMENSION_MAPPING = "/dimensions/{id}";
     public static final String GET_DIMENSIONS_MAPPING = "/dimensions";
     public static final String POST_DIMENSION_MAPPING = "/dimensions";
-    public static final String PUT_DIMENSION_MAPPING = "/dimensions/{id}"; // DIMENSIONS_SLASH_ID
+    public static final String PUT_DIMENSION_MAPPING = "/dimensions/{id}";
     public static final String DELETE_DIMENSION_MAPPING = "/dimensions/{id}";
 
     public static String buildGetDimensionUri(String id) {

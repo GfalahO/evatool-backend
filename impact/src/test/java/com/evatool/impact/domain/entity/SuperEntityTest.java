@@ -8,9 +8,9 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class SuperEntityTest {
+class SuperEntityTest {
     @Test
-    public void testCreateEntity_CreatedSuperEntity_IdIsNull() {
+    void testCreateEntity_CreatedSuperEntity_IdIsNull() {
         // given
         var superEntity = getSuperEntity();
 
@@ -21,7 +21,7 @@ public class SuperEntityTest {
     }
 
     @Test
-    public void testSetId_ValidToNullValue_ThrowPropertyViolationException() {
+    void testSetId_ValidToNullValue_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 
@@ -33,7 +33,7 @@ public class SuperEntityTest {
     }
 
     @Test
-    public void testSetId_IllegalValue_ThrowPropertyViolationException() {
+    void testSetId_IllegalValue_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 
@@ -44,7 +44,7 @@ public class SuperEntityTest {
     }
 
     @Test
-    public void testSetId_IllegalValueSequence_ThrowPropertyViolationException() {
+    void testSetId_IllegalValueSequence_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 
@@ -52,29 +52,8 @@ public class SuperEntityTest {
         superEntity.setId(UUID.randomUUID().toString());
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(UUID.randomUUID().toString()));
-    }
-
-    @Test
-    public void testSetId_NullValue_DoNotThrowException() {
-        // given
-        var superEntity = getSuperEntity();
-
-        // when
-        superEntity.setId(null);
-
-        // then
-    }
-
-    @Test
-    public void testSetId_LegalValue_DoNotThrowException() {
-        // given
-        var superEntity = getSuperEntity();
-
-        // when
-        superEntity.setId(UUID.randomUUID().toString());
-
-        // then
+        var newId = UUID.randomUUID().toString();
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(newId));
     }
 
     private SuperEntityImpl getSuperEntity() {

@@ -14,7 +14,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Team:
 // TODO Install SonarLint IDE plugin and remove warnings
-// TODO [hbuhl] Mode Rest string to RestController
 // TODO [hbuhl] Use poc-way of creating and inserting Rest Level 3 links
 // TODO [hbuhl & tzaika] Test if real events are asynchronous
 // TODO [tzaika] ImpactRest with Swagger

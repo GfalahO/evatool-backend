@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Locale;
+
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
@@ -12,9 +14,10 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDt
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class DimensionDtoMapperTest {
+class DimensionDtoMapperTest {
+
     @Test
-    public void testToDot_NewDimension_EqualsDimensionDto() {
+    void testToDot_NewDimension_EqualsDimensionDto() {
         // given
         var dimension = createDummyDimension();
 
@@ -24,26 +27,27 @@ public class DimensionDtoMapperTest {
         // then
         assertThat(dimension.getId()).isEqualTo(dimensionDto.getId());
         assertThat(dimension.getName()).isEqualTo(dimensionDto.getName());
-        assertThat(dimension.getType().toString()).isEqualTo(dimensionDto.getType());
+        assertThat(dimension.getType()).hasToString(dimensionDto.getType());
         assertThat(dimension.getDescription()).isEqualTo(dimensionDto.getDescription());
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"ECONOMIC", "SOCIAL", "economic", "social", "Social", "Economic"})
-    public void testFromDto_LegalTypeValues_DoNotThrowException(String value) {
+    @ValueSource(strings = {"ECONOMIC", "SOCIAL"})
+    void testFromDto_LegalTypeValues_DoNotThrowException(String value) {
         // given
-        var dto = createDummyDimensionDto();
+        var dimensionDto = createDummyDimensionDto();
 
         // when
-        dto.setType(value);
+        dimensionDto.setType(value);
+        var dimension = DimensionDtoMapper.fromDto(dimensionDto);
 
         // then
-        DimensionDtoMapper.fromDto(dto);
+        assertThat(dimension.getType()).hasToString(value);
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "null", "ECONOMICd", "SOsCIAL", "economiac", "soscial", "Sodcial", "Econdomic"})
-    public void testFromDto_IllegalTypeValues_ThrowPropertyViolationException(String value) {
+    @ValueSource(strings = {"", "null", "economic", "social", "Social", "Economic", "ECONOMICd", "SOsCIAL", "economiac", "soscial", "Sodcial", "Econdomic"})
+    void testFromDto_IllegalTypeValues_ThrowPropertyViolationException(String value) {
         // given
         var dto = createDummyDimensionDto();
 
@@ -54,8 +58,9 @@ public class DimensionDtoMapperTest {
         assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> DimensionDtoMapper.fromDto(dto));
     }
 
-    @Test // TODO [tzaika] actually an integration test
-    public void testFromDto_NewDimensionDto_EqualsDimension() {
+    @Test
+        // TODO [tzaika] actually an integration test
+    void testFromDto_NewDimensionDto_EqualsDimension() {
         // given
         var dimensionDto = createDummyDimensionDto();
 

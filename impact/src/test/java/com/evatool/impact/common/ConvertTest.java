@@ -7,9 +7,9 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ConvertTest {
+class ConvertTest {
     @Test
-    public void testIterableToList_Iterable_ReturnList() {
+    void testIterableToList_Iterable_ReturnList() {
         // when
         var list = new ArrayList<>(Arrays.asList("a", "b", "c"));
 

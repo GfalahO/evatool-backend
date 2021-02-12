@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class ImpactStakeholderTest {
+class ImpactStakeholderTest {
+
     @Test
-    public void testSetName_NullValue_ThrowPropertyViolationException() {
+    void testSetName_NullValue_ThrowPropertyViolationException() {
         // given
         var stakeholder = createDummyStakeholder();
 

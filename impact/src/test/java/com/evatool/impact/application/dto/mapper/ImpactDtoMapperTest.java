@@ -10,10 +10,10 @@ import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ImpactDtoMapperTest {
+class ImpactDtoMapperTest {
 
     @Test
-    public void testToDto_NewImpact_EqualsImpactDto() {
+    void testToDto_NewImpact_EqualsImpactDto() {
         // given
         var impact = createDummyImpact();
         impact.getDimension().setId(UUID.randomUUID().toString());
@@ -37,7 +37,7 @@ public class ImpactDtoMapperTest {
 
     @Disabled // TODO [tzaika] actually an integration test
     @Test
-    public void testFromDto_NewImpactDto_EqualsImpact() {
+    void testFromDto_NewImpactDto_EqualsImpact() {
         // given
         var impactDto = createDummyImpactDto();
         impactDto.setDimension(createDummyDimensionDto());

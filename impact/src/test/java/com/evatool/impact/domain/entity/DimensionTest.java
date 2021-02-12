@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Test;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class DimensionTest {
+class DimensionTest {
+
     @Test
-    public void testSetName_NullValue_ThrowPropertyViolationException() {
+    void testSetName_NullValue_ThrowPropertyViolationException() {
         // given
         var dimension = createDummyDimension();
 
@@ -19,7 +20,7 @@ public class DimensionTest {
     }
 
     @Test
-    public void testSetDescription_NullValue_ThrowException() {
+    void testSetDescription_NullValue_ThrowException() {
         // given
         var dimension = createDummyDimension();
 
