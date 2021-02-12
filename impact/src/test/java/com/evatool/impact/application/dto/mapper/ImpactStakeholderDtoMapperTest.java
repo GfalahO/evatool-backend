@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ImpactStakeholderDtoMapperTest {
 
     @Test
-    void testToDot_NewStakeholder_EqualsStakeholderDto() {
+    void testToDto_NewStakeholder_EqualsStakeholderDto() {
         // given
         var stakeholder = createDummyStakeholder();
 

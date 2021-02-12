@@ -1,5 +1,6 @@
 package com.evatool.impact.application.json.mapper;
 
+import com.evatool.impact.common.exception.InvalidUuidException;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 
@@ -7,6 +8,7 @@ import java.util.UUID;
 
 import static com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper.fromJson;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ImpactStakeholderJsonMapperTest {
 
@@ -25,5 +27,16 @@ class ImpactStakeholderJsonMapperTest {
         assertThat(impactStakeholder.getName()).isEqualTo(name);
     }
 
-    // TODO [hbuhl] add test for invalid values of id and name.
+    @Test
+    void testFromJson_InvalidId_ThrowInvalidUuidException() throws JSONException {
+        // given
+        var id = "invalid uuid";
+        var name = "name";
+        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id, name);
+
+        // when
+
+        // then
+        assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> fromJson(json));
+    }
 }

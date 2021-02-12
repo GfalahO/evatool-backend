@@ -1,5 +1,6 @@
 package com.evatool.impact.domain.entity;
 
+import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
@@ -25,16 +26,28 @@ public class SuperEntity {
     protected UUID id;
 
     public SuperEntity() {
-        ///this.id = UUID.randomUUID();
+
     }
 
     // Allowed transitions: null -> null and null -> valid.
     public void setId(UUID id) {
         if (this.idAlreadySet()) {
-            logger.error("Attempted to set existing id to null.");
+            logger.error("Attempted to set existing id.");
             throw new PropertyViolationException("Existing id cannot be set.");
         }
         this.id = id;
+    }
+
+    public void setId(String id) {
+        if (this.idAlreadySet()) {
+            logger.error("Attempted to set existing id.");
+            throw new PropertyViolationException("Existing id cannot be set.");
+        }
+        if (!isValidUuid(id)) {
+            logger.error("Attempted to set invalid id.");
+            throw new InvalidUuidException(id);
+        }
+        this.setId(UUID.fromString(id));
     }
 
     private boolean idAlreadySet() {

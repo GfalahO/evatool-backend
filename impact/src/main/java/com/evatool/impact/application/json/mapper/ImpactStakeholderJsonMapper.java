@@ -16,8 +16,8 @@ public class ImpactStakeholderJsonMapper {
     public static ImpactStakeholder fromJson(String json) throws JSONException {
         var jsonObject = new JSONObject(json);
         var impactStakeholder = new ImpactStakeholder();
-        impactStakeholder.setId(UUID.fromString(jsonObject.getString("id")));
-        impactStakeholder.setName(jsonObject.getString("name"));
+        impactStakeholder.setId(jsonObject.getString("id"));
+        impactStakeholder.setName(jsonObject.getString("name")); // null is converted to "null".
         return impactStakeholder;
     }
 }
