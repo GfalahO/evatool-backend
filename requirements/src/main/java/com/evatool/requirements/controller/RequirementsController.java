@@ -52,8 +52,8 @@ public class RequirementsController {
 	}
 
 	@DeleteMapping("/requirements/{id}")
-	public void deleteRequirement(@RequestBody Requirement requirement) {
+	public void deleteRequirement(@PathVariable UUID id) {
 		logger.info("/requirements");
-		requirementRepository.delete(requirement);
+		requirementRepository.deleteById(id);
 	}
 }

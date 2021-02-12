@@ -40,7 +40,7 @@ public class RequirementsControllerTest {
 
         //delete requirement
         UUID idRequirement = requirement.getId();
-        requirementsController.deleteRequirement(requirement);
+        requirementsController.deleteRequirement(idRequirement);
 
         //check is requirement deleted
         Optional<Requirement> deletedRequirement = requirementsController.getRequirementById(idRequirement);
