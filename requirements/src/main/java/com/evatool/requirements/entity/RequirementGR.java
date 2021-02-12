@@ -1,18 +1,17 @@
+
 package com.evatool.requirements.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 public class RequirementGR {
 
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private UUID id = UUID.randomUUID();
     @ManyToOne
-    private RequirementsImpact requirementsImpact;
+    private RequirementsImpacts requirementsImpacts;
     @ManyToOne
     private Requirement requirement;
     private int points;
@@ -20,18 +19,22 @@ public class RequirementGR {
     public RequirementGR() {
     }
 
-    public RequirementGR(RequirementsImpact requirementsImpact, Requirement requirement, int points) {
-        this.requirementsImpact = requirementsImpact;
+    public RequirementGR(RequirementsImpacts requirementsImpacts, Requirement requirement, int points) {
+        this.requirementsImpacts = requirementsImpacts;
         this.requirement = requirement;
         this.points = points;
     }
 
-    public RequirementsImpact getRequirementsImpact() {
-        return requirementsImpact;
+    public RequirementsImpacts getRequirementsImpacts() {
+        return requirementsImpacts;
     }
 
-    public void setRequirementsImpact(RequirementsImpact requirementsImpact) {
-        this.requirementsImpact = requirementsImpact;
+    public void setRequirementsImpacts(RequirementsImpacts requirementsImpacts) {
+        if (requirementsImpacts == null) {
+            throw new IllegalArgumentException("RequirementsImpacts cannot be null.");
+        }
+
+        this.requirementsImpacts = requirementsImpacts;
     }
 
     public Requirement getRequirement() {
@@ -39,6 +42,9 @@ public class RequirementGR {
     }
 
     public void setRequirement(Requirement requirement) {
+        if (requirement == null) {
+            throw new IllegalArgumentException("Requirement cannot be null.");
+        }
         this.requirement = requirement;
     }
 
@@ -47,6 +53,10 @@ public class RequirementGR {
     }
 
     public void setPoints(int points) {
+        if (points < -1 || points > 1) {
+            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+        }
+
         this.points = points;
     }
 

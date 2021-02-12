@@ -5,28 +5,31 @@ import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
-public class ScenarioVariants {
+public class RequirementsVariants {
 
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private UUID id = UUID.randomUUID();
-    private String titel;
+    private String title;
     private String description;
 
-    public ScenarioVariants() {
+
+    public RequirementsVariants() {
     }
 
-    public ScenarioVariants(String titel, String description) {
-        this.titel = titel;
+    public RequirementsVariants(String title, String description) {
+        this.title = title;
         this.description = description;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String titel) {
+        if (titel == null) {
+            throw new IllegalArgumentException("Title cannot be null.");
+        }
+        this.title = titel;
     }
 
     public String getDescription() {
@@ -34,6 +37,9 @@ public class ScenarioVariants {
     }
 
     public void setDescription(String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null.");
+        }
         this.description = description;
     }
 

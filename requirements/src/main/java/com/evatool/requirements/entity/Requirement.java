@@ -1,8 +1,7 @@
+
 package com.evatool.requirements.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -10,57 +9,55 @@ import java.util.UUID;
 @Entity
 public class Requirement {
 
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //TODO Proejktid hinterlegen
     @Id
     private UUID id = UUID.randomUUID();
-    private String titel;
+    private String title;
     private String description;
     @ManyToMany
-    private Collection<ScenarioVariants> variants = new ArrayList<>();
-
-    /*    @OneToOne
-    private Requirement_GR requirement_gr;*/
+    private Collection<RequirementsVariants> variants = new ArrayList<>();
 
     public Requirement() {
     }
 
-    public Requirement(String titel, String description) {
-        this.titel = titel;
+    public Requirement(String title, String description) {
+        this.title = title;
         this.description = description;
     }
 
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String title) {
+        if (title == null) {
+            throw new IllegalArgumentException("Title cannot be null.");
+        }
+        this.title = title;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description) throws IllegalArgumentException {
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null.");
+        }
+
         this.description = description;
     }
 
-    public Collection<ScenarioVariants> getVariants() {
+    public Collection<RequirementsVariants> getVariants() {
         return variants;
     }
 
-    public void setVariants(Collection<ScenarioVariants> variants) {
+    public void setVariants(Collection<RequirementsVariants> variants) {
+        if (variants == null) {
+            throw new IllegalArgumentException("Variants cannot be null.");
+        }
         this.variants = variants;
     }
-
-/*
-    public Requirement_GR getRequirement_gr() {
-        return requirement_gr;
-    }
-
-    public void setRequirement_gr(Requirement_GR requirement_gr) {
-        this.requirement_gr = requirement_gr;
-    }*/
 
     public UUID getId() {
         return id;
@@ -69,5 +66,6 @@ public class Requirement {
     public void setId(UUID id) {
         this.id = id;
     }
+
 }
 
