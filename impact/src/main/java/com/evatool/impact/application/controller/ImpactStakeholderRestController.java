@@ -2,7 +2,8 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.ImpactStakeholderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 @RequestMapping(IMPACT_STAKEHOLDER_REST_CONTROLLER_MAPPING)
 public class ImpactStakeholderRestController {
+
+    private static Logger logger = LoggerFactory.getLogger(ImpactStakeholderRestController.class);
 
     private final ImpactStakeholderService stakeholderService;
 

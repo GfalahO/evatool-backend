@@ -8,7 +8,8 @@ import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.List;
 
 @Service
 public class ImpactServiceImpl implements ImpactService {
+
+    Logger logger = LoggerFactory.getLogger(ImpactServiceImpl.class);
 
     private final ImpactRepository impactRepository;
 

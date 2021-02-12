@@ -2,6 +2,8 @@ package com.evatool.impact.domain.entity;
 
 import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -10,6 +12,8 @@ import javax.persistence.ManyToOne;
 // @Table(name = "IMPACT")
 @Entity(name = "IMPACT")
 public class Impact extends SuperEntity {
+
+    Logger logger = LoggerFactory.getLogger(Impact.class);
 
     // @Column(name = "VALUE", nullable = false)
     @Getter

@@ -6,7 +6,8 @@ import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.repository.DimensionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.List;
 
 @Service
 public class DimensionServiceImpl implements DimensionService {
+
+    Logger logger = LoggerFactory.getLogger(DimensionServiceImpl.class);
 
     private final DimensionRepository dimensionRepository;
 

@@ -3,12 +3,16 @@ package com.evatool.impact.domain.entity;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 
 @Entity(name = "DIMENSION")
 @Table(name = "DIMENSION")
 public class Dimension extends SuperEntity {
+
+    Logger logger = LoggerFactory.getLogger(Dimension.class);
 
     public enum Type {
         SOCIAL,

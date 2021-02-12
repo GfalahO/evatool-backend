@@ -3,7 +3,8 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.service.ImpactService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,8 @@ import static com.evatool.impact.application.controller.util.ImpactRest.*;
 @RestController
 @RequestMapping(IMPACT_REST_CONTROLLER_MAPPING)
 public class ImpactRestController {
+
+    private static Logger logger = LoggerFactory.getLogger(ImpactRestController.class);
 
     private final ImpactService impactService;
 

@@ -1,8 +1,11 @@
 package com.evatool.impact.domain.entity;
 
 import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.domain.repository.DimensionRepository;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -12,6 +15,9 @@ import java.util.UUID;
 
 @MappedSuperclass
 public class SuperEntity {
+
+    Logger logger = LoggerFactory.getLogger(SuperEntity.class);
+
     @Getter
     @Id
     @GeneratedValue(generator = "UUID")
