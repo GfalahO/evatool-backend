@@ -10,4 +10,8 @@ public class RequirementDeletedEvent extends ApplicationEvent {
         super(dto);
         this.dto = dto;
     }
+
+    public RequirementDTO getValue(){
+        return this.dto;
+    }
 }
