@@ -13,8 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl & tzaika] Event Tests (wait until 19.02.2021)
 
 // Team:
-// TODO [hbuhl] use logger: private static final Logger logger =  LoggerFactory.getLogger(MyClass.class)
 // TODO Install SonarLint IDE plugin and remove warnings
+// TODO [hbuhl] Mode Rest string to RestController
 // TODO [hbuhl] Use poc-way of creating and inserting Rest Level 3 links
 // TODO [hbuhl & tzaika] Test if real events are asynchronous
 // TODO [tzaika] ImpactRest with Swagger

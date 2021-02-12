@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class DimensionServiceImpl implements DimensionService {
 
-    private static final Logger logger =  LoggerFactory.getLogger(DimensionServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DimensionServiceImpl.class);
 
     private final DimensionRepository dimensionRepository;
 
@@ -27,10 +27,12 @@ public class DimensionServiceImpl implements DimensionService {
     @Override
     public DimensionDto findDimensionById(String id) throws EntityNotFoundException {
         if (id == null) {
+            logger.error("{} with id 'null' not found.", Dimension.class.getSimpleName());
             throw new EntityNotFoundException(Dimension.class, "null");
         }
         var dimension = dimensionRepository.findById(id);
         if (dimension.isEmpty()) {
+            logger.error("{} with id '{}' not found.", Dimension.class.getSimpleName(), id);
             throw new EntityNotFoundException(Dimension.class, id);
         }
         return DimensionDtoMapper.toDto(dimension.get());
@@ -47,6 +49,7 @@ public class DimensionServiceImpl implements DimensionService {
     @Override
     public DimensionDto createDimension(DimensionDto dimensionDto) {
         if (dimensionDto.getId() != null) {
+            logger.error("Id must be null.");
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Dimension.class.getSimpleName()));
         }
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
@@ -62,11 +65,9 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public void deleteDimensionById(String id) throws EntityNotFoundException {
-        var dimension = dimensionRepository.findById(id);
-        if (dimension.isEmpty()) {
-            throw new EntityNotFoundException(Dimension.class, id);
-        }
-        dimensionRepository.delete(dimension.get());
+        var dimensionDto = this.findDimensionById(id);
+        var dimension = DimensionDtoMapper.fromDto(dimensionDto);
+        dimensionRepository.delete(dimension);
     }
 
     @Override

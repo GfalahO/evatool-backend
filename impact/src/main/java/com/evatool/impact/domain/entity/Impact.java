@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity(name = "IMPACT")
 public class Impact extends SuperEntity {
 
-    private static final Logger logger =  LoggerFactory.getLogger(Impact.class);
+    private static final Logger logger = LoggerFactory.getLogger(Impact.class);
 
     // @Column(name = "VALUE", nullable = false)
     @Getter
@@ -37,6 +37,7 @@ public class Impact extends SuperEntity {
     }
 
     public Impact(double value, String description, Dimension dimension, ImpactStakeholder stakeholder) {
+        this();
         this.setValue(value);
         this.setDescription(description);
         this.setDimension(dimension);
@@ -56,6 +57,7 @@ public class Impact extends SuperEntity {
 
     public void setValue(double value) {
         if (value < -1.0 || value > 1.0) {
+            logger.error("Attempted to set value outside its valid range.");
             throw new PropertyViolationException("Value must be in range [-1, 1]");
         }
         this.value = value;
@@ -63,6 +65,7 @@ public class Impact extends SuperEntity {
 
     public void setDescription(String description) {
         if (description == null) {
+            logger.error("Attempted to set description to null.");
             throw new PropertyViolationException("Description cannot be null.");
         }
         this.description = description;
@@ -70,6 +73,7 @@ public class Impact extends SuperEntity {
 
     public void setDimension(Dimension dimension) {
         if (dimension == null) {
+            logger.error("Attempted to set dimension description to null.");
             throw new PropertyViolationException("Dimension cannot be null.");
         }
         this.dimension = dimension;
@@ -77,6 +81,7 @@ public class Impact extends SuperEntity {
 
     public void setStakeholder(ImpactStakeholder stakeholder) {
         if (stakeholder == null) {
+            logger.error("Attempted to set stakeholder to null.");
             throw new PropertyViolationException("Stakeholder cannot be null.");
         }
         this.stakeholder = stakeholder;

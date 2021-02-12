@@ -18,7 +18,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RequestMapping(DIMENSION_REST_CONTROLLER_MAPPING)
 public class DimensionRestController {
 
-    // TODO [tzaika] should we use logging?
     private static final Logger logger =  LoggerFactory.getLogger(DimensionRestController.class);
 
     private final DimensionService dimensionService;
@@ -31,7 +30,6 @@ public class DimensionRestController {
     public ResponseEntity<DimensionDto> getDimension(@PathVariable String id) throws EntityNotFoundException {
         var dimensionDto = dimensionService.findDimensionById(id);
         addLinks(dimensionDto);
-        logger.info("Dimension with id {} retrieved.", id);
         return new ResponseEntity<>(dimensionDto, HttpStatus.OK);
     }
 

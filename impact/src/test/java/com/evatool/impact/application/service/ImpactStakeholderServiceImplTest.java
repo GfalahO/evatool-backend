@@ -127,7 +127,7 @@ public class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        public void testDeleteStakeholderById_DeleteNonExistingId_ReturnHttpStatusNotFound() {
+        public void testDeleteStakeholderById_DeleteNonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholder = createDummyStakeholder();
             stakeholder.setId(UUID.randomUUID().toString());

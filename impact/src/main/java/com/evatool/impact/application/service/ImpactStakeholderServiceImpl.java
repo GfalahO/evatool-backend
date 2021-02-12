@@ -27,10 +27,12 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     @Override
     public StakeholderDto findStakeholderById(String id) throws EntityNotFoundException {
         if (id == null) {
+            logger.error("{} with id 'null' not found.", ImpactStakeholder.class.getSimpleName());
             throw new EntityNotFoundException(ImpactStakeholder.class, "null");
         }
         var stakeholder = stakeholderRepository.findById(id);
         if (stakeholder.isEmpty()) {
+            logger.error("{} with id '{}' not found.", ImpactStakeholder.class.getSimpleName(), id);
             throw new EntityNotFoundException(ImpactStakeholder.class, id);
         }
         return StakeholderDtoMapper.toDto(stakeholder.get());
@@ -47,6 +49,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     @Override
     public StakeholderDto createStakeholder(StakeholderDto stakeholderDto) {
         if (stakeholderDto.getId() != null) {
+            logger.error("Id must be null.");
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", ImpactStakeholder.class.getSimpleName()));
         }
         var stakeholder = stakeholderRepository.save(StakeholderDtoMapper.fromDto(stakeholderDto));

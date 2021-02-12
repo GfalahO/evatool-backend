@@ -38,6 +38,7 @@ public class ImpactStakeholder extends SuperEntity {
 
     public void setName(String name) {
         if (name == null) {
+            logger.error("Attempted to set name to null.");
             throw new PropertyViolationException("Name cannot be null.");
         }
         this.name = name;
