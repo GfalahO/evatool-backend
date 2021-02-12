@@ -3,6 +3,7 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
@@ -18,6 +19,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping(DIMENSION_REST_CONTROLLER_MAPPING)
+@Api(DIMENSION_REST_CONTROLLER_MAPPING)
 public class DimensionRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(DimensionRestController.class);
@@ -29,7 +31,11 @@ public class DimensionRestController {
     }
 
     @GetMapping(GET_DIMENSION_MAPPING)
-    public ResponseEntity<DimensionDto> getDimension(@PathVariable String id) throws EntityNotFoundException {
+    @ApiOperation(value = "Return a Dimension by its id", response = DimensionDto.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The entity was found"),
+            @ApiResponse(code = 404, message = "The entity was not found")})
+    public ResponseEntity<DimensionDto> getDimension(@ApiParam("id") @PathVariable String id) throws EntityNotFoundException {
         var dimensionDto = dimensionService.findDimensionById(id);
         var entityModel = new EntityModel<>(dimensionDto);
         addLinks(entityModel);
@@ -37,6 +43,9 @@ public class DimensionRestController {
     }
 
     @GetMapping(GET_DIMENSIONS_MAPPING)
+    @ApiOperation(value = "Return all Dimensions", response = List.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "All entities returned")})
     public ResponseEntity<List<DimensionDto>> getAllDimensions() {
         var dimensionDtoList = dimensionService.getAllDimensions();
         var entityModelList = new ArrayList<EntityModel>();
@@ -46,7 +55,12 @@ public class DimensionRestController {
     }
 
     @PostMapping(POST_DIMENSION_MAPPING)
-    public ResponseEntity<DimensionDto> createDimension(@RequestBody DimensionDto dimensionDto) {
+    @ApiOperation(value = "Insert a new Dimension", response = DimensionDto.class)
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "The entity was inserted"),
+            @ApiResponse(code = 400, message = "The entity was invalid"),
+            @ApiResponse(code = 404, message = "The entity was not found")})
+    public ResponseEntity<DimensionDto> createDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
         var entityModel = new EntityModel<>(insertedDimensionDto);
         addLinks(entityModel);
@@ -54,7 +68,12 @@ public class DimensionRestController {
     }
 
     @PutMapping(PUT_DIMENSION_MAPPING)
-    public ResponseEntity<DimensionDto> updateDimension(@RequestBody DimensionDto dimensionDto) throws EntityNotFoundException {
+    @ApiOperation(value = "Update an existing Dimension", response = DimensionDto.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The entity was updated"),
+            @ApiResponse(code = 400, message = "The entity was invalid"),
+            @ApiResponse(code = 404, message = "The entity was not found")})
+    public ResponseEntity<DimensionDto> updateDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) throws EntityNotFoundException {
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
         var entityModel = new EntityModel<>(updatedDimensionDto);
         addLinks(entityModel);
@@ -62,7 +81,11 @@ public class DimensionRestController {
     }
 
     @DeleteMapping(DELETE_DIMENSION_MAPPING)
-    public ResponseEntity<Void> deleteDimension(@PathVariable String id) throws EntityNotFoundException {
+    @ApiOperation(value = "Delete a Dimension")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The entity was deleted"),
+            @ApiResponse(code = 404, message = "The entity was not found")})
+    public ResponseEntity<Void> deleteDimension(@ApiParam("id") @PathVariable String id) throws EntityNotFoundException {
         dimensionService.deleteDimensionById(id);
         return ResponseEntity.ok().build();
     }
