@@ -10,7 +10,7 @@ public class DimensionRest {
     public static final String GET_DIMENSION_MAPPING = "/dimensions/{id}";
     public static final String GET_DIMENSIONS_MAPPING = "/dimensions";
     public static final String POST_DIMENSION_MAPPING = "/dimensions";
-    public static final String PUT_DIMENSION_MAPPING = "/dimensions/{id}";
+    public static final String PUT_DIMENSION_MAPPING = "/dimensions/{id}"; // DIMENSIONS_SLASH_ID
     public static final String DELETE_DIMENSION_MAPPING = "/dimensions/{id}";
 
     public static String buildGetDimensionUri(String id) {
