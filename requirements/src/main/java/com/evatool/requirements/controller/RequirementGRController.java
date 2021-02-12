@@ -43,7 +43,7 @@ public class RequirementGRController {
 	public Collection<Requirement> getRequirement_grByInpact(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]/inpacts/requirement",id);
 		Optional<RequirementsImpacts> inpacts = requirementsImpactsRepository.findById(id);
-		if(inpacts.get()==null) return null;
+		if(inpacts.isEmpty()) return null;
 		List<Requirement> requirementList = new ArrayList<>();
 		requirement_grRepository.findByRequirementsImpacts(inpacts.get()).forEach(e->requirementList.add(e.getRequirement()));
 		return requirementList;
@@ -53,7 +53,7 @@ public class RequirementGRController {
 	public Collection<RequirementsImpacts> getRequirement_grByRequirement(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]/requirement/inpacts",id);
 		Optional<Requirement> requirement = requirementRepository.findById(id);
-		if(requirement.get()==null) return null;
+		if(requirement.isEmpty()) return null;
 		List<RequirementsImpacts> requirementsImpactsList = new ArrayList<>();
 		requirement_grRepository.findByRequirement(requirement.get()).forEach(e-> requirementsImpactsList.add(e.getRequirementsImpacts()));
 		return requirementsImpactsList;
