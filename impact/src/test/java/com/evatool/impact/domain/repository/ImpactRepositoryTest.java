@@ -6,31 +6,32 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getImpact;
+import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 public class ImpactRepositoryTest {
+
     @Autowired
     private ImpactRepository impactRepository;
 
     @Test
     public void testFindById_InsertedImpact_ReturnImpact() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
         impactRepository.save(impact);
 
         // when
-        var found = impactRepository.findById(impact.getId()).orElse(null);
+        var found = impactRepository.findById(impact.getId());
 
         // then
-        assertThat(found.getId()).isEqualTo(impact.getId());
+        assertThat(found.isPresent()).isTrue();
     }
 
     @Test
     public void testSave_InsertedImpact_IdIsNotNull() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
 
         // when
         impactRepository.save(impact);
@@ -42,19 +43,20 @@ public class ImpactRepositoryTest {
     @Test
     public void testSave_InsertedImpact_IdIsUuid() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
 
         // when
         impactRepository.save(impact);
 
         // then
-        UUID.fromString(impact.getId());
+        var uuid = UUID.fromString(impact.getId());
+        assertThat(uuid.toString()).isEqualTo(impact.getId());
     }
 
     @Test
     public void testSave_PresetId_Allow() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
         impact.setId(UUID.randomUUID().toString());
 
         // when
@@ -66,30 +68,31 @@ public class ImpactRepositoryTest {
     @Test
     public void testSave_UpdatedImpact_ReturnUpdatedDimension() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
         impactRepository.save(impact);
         var newValue = 0.125;
 
         // when
         impact.setValue(newValue);
         impactRepository.save(impact);
-        var changedDimension = impactRepository.findById(impact.getId()).orElse(null);
+        var impactOptional = impactRepository.findById(impact.getId());
 
         // then
-        assertThat(changedDimension.getValue()).isEqualTo(newValue);
+        assertThat(impactOptional.isPresent()).isTrue();
+        assertThat(impactOptional.get().getValue()).isEqualTo(newValue);
     }
 
     @Test
     public void testDelete_DeletedImpact_ReturnNull() {
         // given
-        var impact = getImpact();
+        var impact = createDummyImpact();
         impactRepository.save(impact);
 
         // when
         impactRepository.delete(impact);
-        var found = impactRepository.findById(impact.getId()).orElse(null);
+        var found = impactRepository.findById(impact.getId());
 
         // then
-        assertThat(found).isNull();
+        assertThat(found.isPresent()).isFalse();
     }
 }

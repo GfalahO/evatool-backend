@@ -2,17 +2,17 @@ package com.evatool.impact.application.dto.mapper;
 
 import org.junit.jupiter.api.Test;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
-import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
-import static com.evatool.impact.application.dto.mapper.StakeholderMapper.fromDto;
-import static com.evatool.impact.application.dto.mapper.StakeholderMapper.toDto;
+import static com.evatool.impact.application.dto.mapper.StakeholderDtoMapper.fromDto;
+import static com.evatool.impact.application.dto.mapper.StakeholderDtoMapper.toDto;
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ImpactStakeholderMapperTest {
+public class ImpactStakeholderDtoMapperTest {
     @Test
     public void testToDot_NewStakeholder_EqualsStakeholderDto() {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
 
         // when
         var stakeholderDto = toDto(stakeholder);
@@ -25,7 +25,7 @@ public class ImpactStakeholderMapperTest {
     @Test
     public void testFromDto_NewStakeholderDto_EqualsStakeholder() {
         // given
-        var stakeholderDto = getStakeholderDto();
+        var stakeholderDto = createDummyStakeholderDto();
 
         // when
         var stakeholder = fromDto(stakeholderDto);

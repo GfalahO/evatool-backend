@@ -9,54 +9,39 @@ import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 
 public class TestDataGenerator {
-    public static Dimension getDimension() {
-        return new Dimension("dimension", DimensionType.ECONOMIC, "dimension");
+
+    public static Dimension createDummyDimension() {
+        return new Dimension("dummyDimension", DimensionType.ECONOMIC, "dummyDimensionDescription");
     }
 
-    public static ImpactStakeholder getStakeholder() {
-        return new ImpactStakeholder("person");
+    public static ImpactStakeholder createDummyStakeholder() {
+        return new ImpactStakeholder("dummyStakeholder");
     }
 
-    public static Impact getImpact() {
-        return new Impact(0.0, "impact", getDimension(), getStakeholder());
+    public static Impact createDummyImpact() {
+        return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder());
     }
 
-    public static DimensionDto getDimensionDto() {
+    public static DimensionDto createDummyDimensionDto() {
         var dimensionDto = new DimensionDto();
-
-        dimensionDto.setName("name");
+        dimensionDto.setName("dummyDimension");
         dimensionDto.setType(DimensionType.ECONOMIC.toString());
-        dimensionDto.setDescription("description");
-
+        dimensionDto.setDescription("dummyDimensionDescription");
         return dimensionDto;
     }
 
-    public static StakeholderDto getStakeholderDto() {
+    public static StakeholderDto createDummyStakeholderDto() {
         var stakeholderDto = new StakeholderDto();
-
-        stakeholderDto.setName("name");
-
+        stakeholderDto.setName("dummyStakeholder");
         return stakeholderDto;
     }
 
-    public static ImpactDto getImpactDto() {
+    public static ImpactDto createDummyImpactDto() {
         var impactDto = new ImpactDto();
-
         impactDto.setValue(0.0);
-        impactDto.setDescription("description");
-
+        impactDto.setDescription("dummyImpactDescription");
+        impactDto.setDimension(createDummyDimensionDto());
+        impactDto.setStakeholder(createDummyStakeholderDto());
         return impactDto;
-    }
-
-    public static DimensionDto getEmptyDimensionDto() {
-        return new DimensionDto();
-    }
-
-    public static StakeholderDto getEmptyStakeholderDto() {
-        return new StakeholderDto();
-    }
-
-    public static ImpactDto getEmptyImpactDto() {
-        return new ImpactDto();
     }
 }

@@ -1,10 +1,9 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.StakeholderDto;
-import com.evatool.impact.application.dto.mapper.StakeholderMapper;
+import com.evatool.impact.application.dto.mapper.StakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.EntityNullException;
-import com.evatool.impact.common.exception.IdNullException;
+import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,53 +15,53 @@ import java.util.List;
 @Service
 public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
 
+    private final ImpactStakeholderRepository stakeholderRepository;
+
     @Autowired
-    private ImpactStakeholderRepository stakeholderRepository;
+    public ImpactStakeholderServiceImpl(ImpactStakeholderRepository stakeholderRepository) {
+        this.stakeholderRepository = stakeholderRepository;
+    }
 
     @Override
-    public StakeholderDto findStakeholderById(String id) throws EntityNotFoundException, IdNullException {
+    public StakeholderDto findStakeholderById(String id) throws EntityNotFoundException {
         if (id == null) {
-            throw new IdNullException(ImpactStakeholder.class);
+            throw new EntityNotFoundException(ImpactStakeholder.class, "null");
         }
         var stakeholder = stakeholderRepository.findById(id);
         if (stakeholder.isEmpty()) {
             throw new EntityNotFoundException(ImpactStakeholder.class, id);
         }
-        var stakeholderDto = StakeholderMapper.toDto(stakeholder.get());
-        return stakeholderDto;
+        return StakeholderDtoMapper.toDto(stakeholder.get());
     }
 
     @Override
     public List<StakeholderDto> getAllStakeholders() {
         var stakeholders = stakeholderRepository.findAll();
         var stakeholderDtoList = new ArrayList<StakeholderDto>();
-        stakeholders.forEach(s -> stakeholderDtoList.add(StakeholderMapper.toDto(s)));
+        stakeholders.forEach(s -> stakeholderDtoList.add(StakeholderDtoMapper.toDto(s)));
         return stakeholderDtoList;
     }
 
     @Override
     public StakeholderDto createStakeholder(StakeholderDto stakeholderDto) {
-        if (stakeholderDto == null) {
-            throw new EntityNullException(ImpactStakeholder.class);
+        if (stakeholderDto.getId() != null) {
+            throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", ImpactStakeholder.class.getSimpleName()));
         }
-        var stakeholder = stakeholderRepository.save(StakeholderMapper.fromDto(stakeholderDto));
-        return StakeholderMapper.toDto(stakeholder);
+        var stakeholder = stakeholderRepository.save(StakeholderDtoMapper.fromDto(stakeholderDto));
+        return StakeholderDtoMapper.toDto(stakeholder);
     }
 
     @Override
-    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto) throws EntityNotFoundException, IdNullException {
-        if (stakeholderDto == null) {
-            throw new EntityNullException(ImpactStakeholder.class);
-        }
+    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto) throws EntityNotFoundException {
         this.findStakeholderById(stakeholderDto.getId());
-        var stakeholder = StakeholderMapper.fromDto(stakeholderDto);
-        return StakeholderMapper.toDto(stakeholderRepository.save(stakeholder));
+        var stakeholder = StakeholderDtoMapper.fromDto(stakeholderDto);
+        return StakeholderDtoMapper.toDto(stakeholderRepository.save(stakeholder));
     }
 
     @Override
-    public void deleteStakeholderById(String id) throws EntityNotFoundException, IdNullException {
+    public void deleteStakeholderById(String id) throws EntityNotFoundException {
         var stakeholderDto = this.findStakeholderById(id);
-        var stakeholder = StakeholderMapper.fromDto(stakeholderDto);
+        var stakeholder = StakeholderDtoMapper.fromDto(stakeholderDto);
         stakeholderRepository.delete(stakeholder);
     }
 

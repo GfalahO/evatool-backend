@@ -1,37 +1,37 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.impact.application.controller.uri.StakeholderRestUri;
+import com.evatool.impact.ImpactModule;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.service.ImpactStakeholderService;
-import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.evatool.impact.common.config.SwaggerConfig;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.jupiter.api.Nested;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholderDto;
+import static com.evatool.impact.application.controller.util.StakeholderRest.buildGetStakeholdersRel;
+import static com.evatool.impact.application.controller.util.StakeholderRest.buildGetStakeholdersUri;
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholderDto;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ImpactStakeholderRestController.class)
+@ContextConfiguration(classes = {SwaggerConfig.class, ImpactModule.class})
 public class ImpactStakeholderRestControllerMockServiceTest {
     @Autowired
     private MockMvc mvc;
@@ -40,56 +40,41 @@ public class ImpactStakeholderRestControllerMockServiceTest {
     private ImpactStakeholderService stakeholderService;
 
     @Nested
-    public class GetById {
+    public class GetAll {
         @Test
-        public void testGetStakeholderById_ExistingStakeholder_ReturnStakeholder() throws Exception {
+        public void testGetAllStakeholders_ExistingStakeholder_CorrectRestLevel3() throws Exception {
             // given
-            var stakeholder = getStakeholderDto();
+            var stakeholderDto = createDummyStakeholderDto();
+            var id = UUID.randomUUID().toString();
+            stakeholderDto.setId(id);
 
             // when
-            when(stakeholderService.findStakeholderById(anyString())).thenReturn(stakeholder);
+            given(stakeholderService.getAllStakeholders()).willReturn(Collections.singletonList(stakeholderDto));
 
             // then
-            mvc.perform(get(StakeholderRestUri.buildGetStakeholderUri("dummy_id"))
+            mvc.perform(get(buildGetStakeholdersUri())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.name").value(stakeholder.getName()));
+                    .andExpect(jsonPath("$", hasSize(1)))
+                    .andExpect(jsonPath("$[0]..links").isNotEmpty())
+                    .andExpect(jsonPath("$[0]..links", hasSize(1)))
+                    .andExpect(jsonPath("$[0]..links[0].rel").value(buildGetStakeholdersRel()))
+                    .andExpect(jsonPath("$[0]..links[0].href").value("http://localhost" + buildGetStakeholdersUri()));
         }
 
-        @Test
-        public void testGetStakeholderById_NonExistingStakeholder_ReturnHttpStatusNotFound() throws Exception {
-            // given
-            var nonExistingId = "wrong_id";
-
-            // when
-            when(stakeholderService.findStakeholderById(anyString())).thenThrow(new EntityNotFoundException(ImpactStakeholder.class, nonExistingId));
-
-            // then
-            mvc.perform(get(StakeholderRestUri.buildGetStakeholderUri(nonExistingId))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.message").value(EntityNotFoundException.MESSAGE_FORMAT
-                            .replaceFirst("%s", ImpactStakeholder.class.getSimpleName())
-                            .replaceFirst("%s", nonExistingId)));
-        }
-    }
-
-    @Nested
-    public class GetAll {
         @Test
         public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders() throws Exception {
             // given
-            var stakeholder1 = getStakeholderDto();
-            var stakeholder2 = getStakeholderDto();
+            var stakeholder1 = createDummyStakeholderDto();
+            var stakeholder2 = createDummyStakeholderDto();
 
             // when
-            var allStakeholders = Arrays.asList(stakeholder1, stakeholder2);
-            given(stakeholderService.getAllStakeholders()).willReturn(allStakeholders);
+            var allStakeholderDtos = Arrays.asList(stakeholder1, stakeholder2);
+            given(stakeholderService.getAllStakeholders()).willReturn(allStakeholderDtos);
 
             // then
-            mvc.perform(get(StakeholderRestUri.buildGetStakeholdersUri())
+            mvc.perform(get(buildGetStakeholdersUri())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -101,82 +86,21 @@ public class ImpactStakeholderRestControllerMockServiceTest {
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         public void testGetAllStakeholders_ExistingStakeholders_ReturnStakeholders(int value) throws Exception {
-            var allStakeholders = new ArrayList<StakeholderDto>();
+            var allStakeholderDtos = new ArrayList<StakeholderDto>();
             for (int i = 0; i < value; i++) {
                 // given
-                var stakeholder = getStakeholderDto();
-                allStakeholders.add(stakeholder);
+                var stakeholderDto = createDummyStakeholderDto();
+                allStakeholderDtos.add(stakeholderDto);
             }
             // when
-            given(stakeholderService.getAllStakeholders()).willReturn(allStakeholders);
+            given(stakeholderService.getAllStakeholders()).willReturn(allStakeholderDtos);
 
             // then
-            mvc.perform(get(StakeholderRestUri.buildGetStakeholdersUri())
+            mvc.perform(get(buildGetStakeholdersUri())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(value)));
-        }
-    }
-
-    @Nested
-    public class Insert {
-        @Test
-        public void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws Exception {
-            // given
-            var stakeholder = getStakeholderDto();
-            stakeholder.setId(UUID.randomUUID().toString());
-
-            // when
-            when(stakeholderService.createStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
-
-            // then
-            mvc.perform(post(StakeholderRestUri.buildCreateStakeholderUri()).content(new ObjectMapper().writeValueAsString(stakeholder))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.id").exists())
-                    .andExpect(jsonPath("$.id").value(stakeholder.getId()))
-                    .andExpect(jsonPath("$.name").value(stakeholder.getName()));
-        }
-    }
-
-    @Nested
-    public class Update {
-        @Test
-        public void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws Exception {
-            // given
-            var stakeholder = getStakeholderDto();
-            stakeholder.setId(UUID.randomUUID().toString());
-
-            // when
-            when(stakeholderService.createStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
-            stakeholder.setName("new_name");
-            when(stakeholderService.updateStakeholder(any(StakeholderDto.class))).thenReturn(stakeholder);
-
-            // then
-            mvc.perform(put(StakeholderRestUri.buildUpdateStakeholderUri("dummy_id")).content(new ObjectMapper().writeValueAsString(stakeholder))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id").exists())
-                    .andExpect(jsonPath("$.name").value(stakeholder.getName()));
-        }
-    }
-
-    @Nested
-    public class Delete {
-        @Test
-        public void testDeleteStakeholder_DeletedStakeholder_ReturnNull() throws Exception {
-            // given
-
-            // when
-
-            // then
-            mvc.perform(delete(StakeholderRestUri.buildDeleteStakeholderUri("dummy_id"))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk());
         }
     }
 }

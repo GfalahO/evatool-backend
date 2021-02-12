@@ -2,22 +2,25 @@ package com.evatool.impact.domain.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.getStakeholder;
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 public class ImpactStakeholderRepositoryTest {
+
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
 
     @Test
     public void testFindById_InsertedStakeholder_ReturnStakeholder() {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
         stakeholderRepository.save(stakeholder);
 
         // when
@@ -30,7 +33,7 @@ public class ImpactStakeholderRepositoryTest {
     @Test
     public void testFindByName_InsertedStakeholder_ReturnStakeholder() {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
         stakeholderRepository.save(stakeholder);
 
         // when
@@ -43,7 +46,7 @@ public class ImpactStakeholderRepositoryTest {
     @Test
     public void testSave_InsertedStakeholder_IdIsNotNull() {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
 
         // when
         stakeholderRepository.save(stakeholder);
@@ -55,7 +58,7 @@ public class ImpactStakeholderRepositoryTest {
     @Test
     public void testSave_InsertedStakeholder_IdIsUuid() {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
 
         // when
         stakeholderRepository.save(stakeholder);
@@ -67,7 +70,7 @@ public class ImpactStakeholderRepositoryTest {
     @Test
     public void testSave_PresetId_Allow() {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
         stakeholder.setId(UUID.randomUUID().toString());
 
         // when
@@ -79,7 +82,7 @@ public class ImpactStakeholderRepositoryTest {
     @Test
     public void testSave_UpdatedStakeholder_ReturnUpdatedDimension() {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
         stakeholderRepository.save(stakeholder);
         var newName = "new_name";
 
@@ -95,7 +98,7 @@ public class ImpactStakeholderRepositoryTest {
     @Test
     public void testDelete_DeletedStakeholder_ReturnNull() {
         // given
-        var stakeholder = getStakeholder();
+        var stakeholder = createDummyStakeholder();
         stakeholderRepository.save(stakeholder);
 
         // when

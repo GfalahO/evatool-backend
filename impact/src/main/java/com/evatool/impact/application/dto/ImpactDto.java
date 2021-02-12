@@ -3,6 +3,8 @@ package com.evatool.impact.application.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+// TODO [future feature] using HATEOAS
+// extends RepresentationModel<ImpactDto>
 public class ImpactDto {
     @Getter
     @Setter
@@ -10,11 +12,11 @@ public class ImpactDto {
 
     @Getter
     @Setter
-    private String stakeholderId;
+    private StakeholderDto stakeholder; // Is using nested Dtos ok? Why not use stakeholderId and stakeholderName?
 
     @Getter
     @Setter
-    private String dimensionId;
+    private DimensionDto dimension;
 
     @Getter
     @Setter
@@ -28,10 +30,10 @@ public class ImpactDto {
     public String toString() {
         return "ImpactDto{" +
                 "id='" + id + '\'' +
+                ", stakeholder=" + stakeholder +
+                ", dimension=" + dimension +
                 ", value=" + value +
                 ", description='" + description + '\'' +
-                ", dimensionId='" + dimensionId + '\'' +
-                ", stakeholderId='" + stakeholderId + '\'' +
                 '}';
     }
 }

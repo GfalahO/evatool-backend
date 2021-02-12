@@ -9,12 +9,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConvertTest {
     @Test
-    public void testIterableToList_() {
+    public void testIterableToList_Iterable_ReturnList() {
         // when
-        var list = new ArrayList<String>();
+        var list = new ArrayList<>(Arrays.asList("a", "b", "c"));
 
         // given
-        list.addAll(Arrays.asList("a", "b", "c"));
 
         // then
         assertThat(Convert.iterableToList(list).size()).isEqualTo(list.size());

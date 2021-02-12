@@ -8,49 +8,63 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.evatool.impact.application.dto.mapper.DimensionMapper.fromDto;
-import static com.evatool.impact.application.dto.mapper.DimensionMapper.toDto;
+import static com.evatool.impact.application.controller.util.DimensionRest.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(DIMENSION_REST_CONTROLLER_MAPPING)
 public class DimensionRestController {
 
-    @Autowired
-    private DimensionService dimensionService;
+    private final DimensionService dimensionService;
 
-    @GetMapping("/dimension/{id}")
-    public ResponseEntity<DimensionDto> getDimension(@PathVariable String id) throws EntityNotFoundException {
-        var dimension = dimensionService.findDimensionById(id);
-        return new ResponseEntity<>(toDto(dimension), HttpStatus.OK);
+    @Autowired
+    public DimensionRestController(DimensionService dimensionService) {
+        this.dimensionService = dimensionService;
     }
 
-    @GetMapping("/dimensions")
+    @GetMapping(GET_DIMENSION_MAPPING)
+    public ResponseEntity<DimensionDto> getDimension(@PathVariable String id) throws EntityNotFoundException {
+        var dimensionDto = dimensionService.findDimensionById(id);
+        addLinks(dimensionDto);
+        return new ResponseEntity<>(dimensionDto, HttpStatus.OK);
+    }
+
+    @GetMapping(GET_DIMENSIONS_MAPPING)
     public List<DimensionDto> getAllDimensions() {
-        var dimensions = dimensionService.getAllDimensions();
-        var dimensionDtoList = new ArrayList<DimensionDto>();
-        dimensions.forEach(s -> dimensionDtoList.add(toDto(s)));
+        var dimensionDtoList = dimensionService.getAllDimensions();
+        dimensionDtoList.forEach(this::addLinks);
         return dimensionDtoList;
     }
 
-    @PostMapping("/dimension")
+    @PostMapping(POST_DIMENSION_MAPPING)
     public ResponseEntity<DimensionDto> createDimension(@RequestBody DimensionDto dimensionDto) {
-        var dimension = dimensionService.createDimension(fromDto(dimensionDto));
-        return new ResponseEntity<>(toDto(dimension), HttpStatus.CREATED);
+        var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
+        addLinks(insertedDimensionDto);
+        return new ResponseEntity<>(insertedDimensionDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/dimension/{id}")
+    @PutMapping(PUT_DIMENSION_MAPPING)
     public ResponseEntity<DimensionDto> updateDimension(@RequestBody DimensionDto dimensionDto) throws EntityNotFoundException {
-        var dimension = dimensionService.updateDimension(fromDto(dimensionDto));
-        return new ResponseEntity<>(toDto(dimension), HttpStatus.OK);
-
+        var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
+        addLinks(updatedDimensionDto);
+        return new ResponseEntity<>(updatedDimensionDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/dimension/{id}")
-    public ResponseEntity<Void> deleteStakeholder(@PathVariable String id) throws EntityNotFoundException {
+    @DeleteMapping(DELETE_DIMENSION_MAPPING)
+    public ResponseEntity<Void> deleteDimension(@PathVariable String id) throws EntityNotFoundException {
         dimensionService.deleteDimensionById(id);
         return ResponseEntity.ok().build();
+    }
+
+    private void addLinks(DimensionDto dimensionDto) {
+        dimensionDto.add(linkTo(DimensionRestController.class).slash(GET_DIMENSIONS).withRel(buildGetDimensionsRel()));
+        dimensionDto.add(linkTo(DimensionRestController.class).slash(POST_DIMENSION).withRel(buildPostDimensionRel()));
+        if (dimensionDto.getId() != null) {
+            dimensionDto.add(linkTo(DimensionRestController.class).slash(GET_DIMENSION).slash(dimensionDto.getId()).withSelfRel());
+            dimensionDto.add(linkTo(DimensionRestController.class).slash(PUT_DIMENSION).slash(dimensionDto.getId()).withRel(buildPutDimensionRel()));
+            dimensionDto.add(linkTo(DimensionRestController.class).slash(DELETE_DIMENSION).slash(dimensionDto.getId()).withRel(buildDeleteDimensionRel()));
+        }
     }
 }

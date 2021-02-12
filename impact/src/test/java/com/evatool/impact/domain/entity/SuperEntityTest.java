@@ -21,7 +21,7 @@ public class SuperEntityTest {
     }
 
     @Test
-    public void testSetId_ValidToNullValue_ThrowException() {
+    public void testSetId_ValidToNullValue_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 
@@ -33,7 +33,7 @@ public class SuperEntityTest {
     }
 
     @Test
-    public void testSetId_IllegalValue_ThrowException() {
+    public void testSetId_IllegalValue_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 
@@ -44,7 +44,7 @@ public class SuperEntityTest {
     }
 
     @Test
-    public void testSetId_IllegalValueSequence_ThrowException() {
+    public void testSetId_IllegalValueSequence_ThrowPropertyViolationException() {
         // given
         var superEntity = getSuperEntity();
 
@@ -53,6 +53,17 @@ public class SuperEntityTest {
 
         // then
         assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(UUID.randomUUID().toString()));
+    }
+
+    @Test
+    public void testSetId_NullValue_DoNotThrowException() {
+        // given
+        var superEntity = getSuperEntity();
+
+        // when
+        superEntity.setId(null);
+
+        // then
     }
 
     @Test
@@ -70,7 +81,7 @@ public class SuperEntityTest {
         return new SuperEntityImpl();
     }
 
-    private class SuperEntityImpl extends SuperEntity {
+    private static class SuperEntityImpl extends SuperEntity {
 
     }
 }
