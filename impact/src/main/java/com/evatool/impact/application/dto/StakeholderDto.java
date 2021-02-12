@@ -2,9 +2,8 @@ package com.evatool.impact.application.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
 
-public class StakeholderDto extends RepresentationModel<StakeholderDto> {
+public class StakeholderDto {
     @Getter
     @Setter
     private String id;
