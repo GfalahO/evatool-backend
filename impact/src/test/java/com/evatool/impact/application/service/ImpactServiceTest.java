@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -56,17 +58,17 @@ class ImpactServiceTest {
         var impact = saveFullDummyImpact();
 
         // when
-        var impactDto = impactService.findImpactById(impact.getId());
+        var impactDto = impactService.findImpactById(impact.getId().toString());
 
         // then
-        assertThat(impactDto.getId()).isEqualTo(impact.getId());
+        assertThat(impactDto.getId()).isEqualTo(impact.getId().toString());
         assertThat(impactDto.getValue()).isEqualTo(impact.getValue());
         assertThat(impactDto.getDescription()).isEqualTo(impact.getDescription());
-        assertThat(impactDto.getDimension().getId()).isEqualTo(impact.getDimension().getId());
+        assertThat(impactDto.getDimension().getId()).isEqualTo(impact.getDimension().getId().toString());
         assertThat(impactDto.getDimension().getType()).isEqualTo(impact.getDimension().getType().toString());
         assertThat(impactDto.getDimension().getName()).isEqualTo(impact.getDimension().getName());
         assertThat(impactDto.getDimension().getDescription()).isEqualTo(impact.getDimension().getDescription());
-        assertThat(impactDto.getStakeholder().getId()).isEqualTo(impact.getStakeholder().getId());
+        assertThat(impactDto.getStakeholder().getId()).isEqualTo(impact.getStakeholder().getId().toString());
         assertThat(impactDto.getStakeholder().getName()).isEqualTo(impact.getStakeholder().getName());
     }
 
@@ -77,7 +79,7 @@ class ImpactServiceTest {
 
     @Test
     void testFindImpactById_UnknownId() {
-        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findImpactById("unknownId"));
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findImpactById(UUID.randomUUID().toString()));
     }
 
     @Test
@@ -93,7 +95,7 @@ class ImpactServiceTest {
         // when
         var impactDtos = impactService.getAllImpacts();
         assertThat(impactDtos).hasSize(1);
-        assertThat(impactDtos.get(0).getId()).isEqualTo(impact.getId());
+        assertThat(impactDtos.get(0).getId()).isEqualTo(impact.getId().toString());
     }
 
     // TODO [tzaika] add all remaining tests

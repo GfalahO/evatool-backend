@@ -6,6 +6,7 @@ import com.evatool.impact.domain.entity.Dimension;
 import org.modelmapper.ModelMapper;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 public class DimensionDtoMapper {
 
@@ -20,7 +21,11 @@ public class DimensionDtoMapper {
             throw new PropertyViolationException(String.format(
                     "Dimension type must be in %s.", Arrays.asList(Dimension.Type.values())));
         }
-        return modelMapper.map(dimensionDto, Dimension.class);
+        var dimension = modelMapper.map(dimensionDto, Dimension.class);
+        if (dimensionDto.getId() != null) {
+            dimension.setId(UUID.fromString(dimensionDto.getId()));
+        }
+        return dimension;
     }
 
     public static DimensionDto toDto(Dimension dimension) {

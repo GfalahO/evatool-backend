@@ -1,6 +1,8 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.domain.entity.SuperEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,12 +35,12 @@ class DimensionServiceImplTest {
         void testGetDimensionById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimension = createDummyDimension();
-            dimension.setId(UUID.randomUUID().toString());
+            dimension.setId(UUID.randomUUID());
 
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.findDimensionById(dimension.getId()));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.findDimensionById(dimension.getId().toString()));
         }
     }
 
@@ -64,7 +66,7 @@ class DimensionServiceImplTest {
     @Nested
     class Insert {
         @Test
-        void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws EntityNotFoundException {
+        void testInsertDimension_InsertedDimension_ReturnInsertedDimension()  {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -82,7 +84,7 @@ class DimensionServiceImplTest {
     @Nested
     class Update {
         @Test
-        void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws EntityNotFoundException {
+        void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() {
             // given
             var dimensionDto = createDummyDimensionDto();
             var insertedDimension = dimensionService.createDimension(dimensionDto);
@@ -114,7 +116,7 @@ class DimensionServiceImplTest {
     @Nested
     class Delete {
         @Test
-        void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions() throws EntityNotFoundException {
+        void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions(){
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -131,12 +133,12 @@ class DimensionServiceImplTest {
         void testDeleteDimensionById_DeleteNonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimension = createDummyDimension();
-            dimension.setId(UUID.randomUUID().toString());
+            dimension.setId(UUID.randomUUID());
 
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.deleteDimensionById(dimension.getId()));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.deleteDimensionById(dimension.getId().toString()));
         }
     }
 

@@ -3,6 +3,8 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.service.ImpactService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.InvalidUuidException;
+import com.evatool.impact.common.exception.PropertyViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,7 @@ public class ImpactRestController {
     }
 
     @GetMapping(GET_IMPACT_MAPPING)
-    public ResponseEntity<ImpactDto> getImpact(@PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<ImpactDto> getImpact(@PathVariable String id)  {
         var impactDto = impactService.findImpactById(id);
         return new ResponseEntity<>(impactDto, HttpStatus.OK);
     }
@@ -43,13 +45,13 @@ public class ImpactRestController {
     }
 
     @PutMapping(PUT_IMPACT_MAPPING)
-    public ResponseEntity<ImpactDto> updateImpact(@RequestBody ImpactDto impactDto) throws EntityNotFoundException {
+    public ResponseEntity<ImpactDto> updateImpact(@RequestBody ImpactDto impactDto) {
         var updatedImpactDto = impactService.updateImpact(impactDto);
         return new ResponseEntity<>(updatedImpactDto, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE_IMPACT_MAPPING)
-    public ResponseEntity<Void> deleteImpact(@PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<Void> deleteImpact(@PathVariable String id) {
         impactService.deleteImpactById(id);
         return ResponseEntity.ok().build();
     }

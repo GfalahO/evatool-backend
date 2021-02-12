@@ -41,19 +41,6 @@ class ImpactRepositoryTest {
     }
 
     @Test
-    void testSave_InsertedImpact_IdIsUuid() {
-        // given
-        var impact = createDummyImpact();
-
-        // when
-        impactRepository.save(impact);
-
-        // then
-        var uuid = UUID.fromString(impact.getId());
-        assertThat(uuid).hasToString(impact.getId());
-    }
-
-    @Test
     void testSave_UpdatedImpact_ReturnUpdatedDimension() {
         // given
         var impact = createDummyImpact();

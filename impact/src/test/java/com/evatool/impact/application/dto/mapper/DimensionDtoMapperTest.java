@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Locale;
+import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
@@ -17,15 +18,16 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class DimensionDtoMapperTest {
 
     @Test
-    void testToDot_NewDimension_EqualsDimensionDto() {
+    void testToDot_Dimension_EqualsDimensionDto() {
         // given
         var dimension = createDummyDimension();
+        dimension.setId(UUID.randomUUID());
 
         // when
         var dimensionDto = toDto(dimension);
 
         // then
-        assertThat(dimension.getId()).isEqualTo(dimensionDto.getId());
+        assertThat(dimension.getId()).hasToString(dimensionDto.getId());
         assertThat(dimension.getName()).isEqualTo(dimensionDto.getName());
         assertThat(dimension.getType()).hasToString(dimensionDto.getType());
         assertThat(dimension.getDescription()).isEqualTo(dimensionDto.getDescription());
@@ -36,6 +38,7 @@ class DimensionDtoMapperTest {
     void testFromDto_LegalTypeValues_DoNotThrowException(String value) {
         // given
         var dimensionDto = createDummyDimensionDto();
+        dimensionDto.setId(UUID.randomUUID().toString());
 
         // when
         dimensionDto.setType(value);
@@ -63,12 +66,13 @@ class DimensionDtoMapperTest {
     void testFromDto_NewDimensionDto_EqualsDimension() {
         // given
         var dimensionDto = createDummyDimensionDto();
+        dimensionDto.setId(UUID.randomUUID().toString());
 
         // when
         var dimension = fromDto(dimensionDto);
 
         // then
-        assertThat(dimensionDto.getId()).isEqualTo(dimension.getId());
+        assertThat(dimensionDto.getId()).isEqualTo(dimension.getId().toString());
         assertThat(dimensionDto.getName()).isEqualTo(dimension.getName());
         assertThat(dimensionDto.getDescription()).isEqualTo(dimension.getDescription());
     }

@@ -14,16 +14,18 @@ class ImpactJsonMapperTest {
     void testToJson_NewImpact_EqualsImpactJson() {
         // given
         var impact = createDummyImpact();
-        impact.setId(UUID.randomUUID().toString());
+        impact.setId(UUID.randomUUID());
+        impact.getDimension().setId(UUID.randomUUID());
+        impact.getStakeholder().setId(UUID.randomUUID());
 
         // when
         var impactJson = toJson(impact);
 
         // then
-        assertThat(impactJson.getId()).isEqualTo(impact.getId());
+        assertThat(impactJson.getId()).isEqualTo(impact.getId().toString());
         assertThat(impactJson.getValue()).isEqualTo(impact.getValue());
         assertThat(impactJson.getDescription()).isEqualTo(impact.getDescription());
-        assertThat(impactJson.getDimensionId()).isEqualTo(impact.getDimension().getId());
-        assertThat(impactJson.getStakeholderId()).isEqualTo(impact.getStakeholder().getId());
+        assertThat(impactJson.getDimensionId()).isEqualTo(impact.getDimension().getId().toString());
+        assertThat(impactJson.getStakeholderId()).isEqualTo(impact.getStakeholder().getId().toString());
     }
 }

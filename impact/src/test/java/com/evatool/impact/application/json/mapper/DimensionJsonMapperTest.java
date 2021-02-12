@@ -14,13 +14,13 @@ class DimensionJsonMapperTest {
     void testToJson_NewDimension_EqualsDimensionJson() {
         // given
         var dimension = createDummyDimension();
-        dimension.setId(UUID.randomUUID().toString());
+        dimension.setId(UUID.randomUUID());
 
         // when
         var dimensionJson = toJson(dimension);
 
         // then
-        assertThat(dimensionJson.getId()).isEqualTo(dimension.getId());
+        assertThat(dimensionJson.getId()).isEqualTo(dimension.getId().toString());
         assertThat(dimensionJson.getName()).isEqualTo(dimension.getName());
         assertThat(dimensionJson.getType()).isEqualTo(dimension.getType().toString());
         assertThat(dimensionJson.getDescription()).isEqualTo(dimension.getDescription());

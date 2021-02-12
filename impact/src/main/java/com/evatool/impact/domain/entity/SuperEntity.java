@@ -21,17 +21,18 @@ public class SuperEntity {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "ID", nullable = false)
-    protected String id;
+    @Column(name = "ID", updatable = false, nullable = false)
+    protected UUID id;
+
+    public SuperEntity() {
+        ///this.id = UUID.randomUUID();
+    }
 
     // Allowed transitions: null -> null and null -> valid.
-    public void setId(String id) {
+    public void setId(UUID id)  {
         if (this.idAlreadySet()) {
             logger.error("Attempted to set existing id to null.");
             throw new PropertyViolationException("Existing id cannot be set.");
-        } else if (id != null && !this.idIsValid(id)) {
-            logger.error("Attempted to set invalid id.");
-            throw new PropertyViolationException("Id must be a valid UUID.");
         }
         this.id = id;
     }
@@ -40,11 +41,12 @@ public class SuperEntity {
         return this.id != null;
     }
 
-    private boolean idIsValid(String id) {
+    public static boolean isValidUuid(String id) {
         try {
-            var uuid = UUID.fromString(id);
-            return uuid.toString().equals(id);
+            UUID.fromString(id);
+            return true;
         } catch (IllegalArgumentException ex) {
+            logger.error(ex.getMessage(), ex);
             return false;
         }
     }

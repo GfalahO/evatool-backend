@@ -3,8 +3,11 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
+import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ImpactServiceImpl implements ImpactService {
@@ -33,11 +37,15 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public ImpactDto findImpactById(String id) throws EntityNotFoundException {
+    public ImpactDto findImpactById(String id) {
         if (id == null) {
             throw new EntityNotFoundException(Impact.class, "null");
         }
-        var impact = impactRepository.findById(id);
+        if (!SuperEntity.isValidUuid(id)) {
+            logger.error("Invalid UUID.");
+            throw new InvalidUuidException(id);
+        }
+        var impact = impactRepository.findById(UUID.fromString(id));
         if (impact.isEmpty()) {
             throw new EntityNotFoundException(Impact.class, id);
         }
@@ -62,7 +70,7 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public ImpactDto updateImpact(ImpactDto impactDto) throws EntityNotFoundException {
+    public ImpactDto updateImpact(ImpactDto impactDto) {
         this.findImpactById(impactDto.getId());
         var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
         return ImpactDtoMapper.toDto(impactRepository.save(impact));
@@ -70,7 +78,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     @Override
     public void deleteImpactById(String id) {
-        impactRepository.deleteById(id);
+        impactRepository.deleteById(UUID.fromString(id));
     }
 
     @Override

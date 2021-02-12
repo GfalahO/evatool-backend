@@ -3,8 +3,11 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.StakeholderDto;
 import com.evatool.impact.application.dto.mapper.StakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +15,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
 
-    private static final Logger logger =  LoggerFactory.getLogger(ImpactStakeholderServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholderServiceImpl.class);
 
     private final ImpactStakeholderRepository stakeholderRepository;
 
@@ -25,12 +29,16 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public StakeholderDto findStakeholderById(String id) throws EntityNotFoundException {
+    public StakeholderDto findStakeholderById(String id)  {
         if (id == null) {
             logger.error("{} with id 'null' not found.", ImpactStakeholder.class.getSimpleName());
             throw new EntityNotFoundException(ImpactStakeholder.class, "null");
         }
-        var stakeholder = stakeholderRepository.findById(id);
+        if (!SuperEntity.isValidUuid(id)) {
+            logger.error("Invalid UUID.");
+            throw new InvalidUuidException(id);
+        }
+        var stakeholder = stakeholderRepository.findById(UUID.fromString(id));
         if (stakeholder.isEmpty()) {
             logger.error("{} with id '{}' not found.", ImpactStakeholder.class.getSimpleName(), id);
             throw new EntityNotFoundException(ImpactStakeholder.class, id);
@@ -57,14 +65,14 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto) throws EntityNotFoundException {
+    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto)  {
         this.findStakeholderById(stakeholderDto.getId());
         var stakeholder = StakeholderDtoMapper.fromDto(stakeholderDto);
         return StakeholderDtoMapper.toDto(stakeholderRepository.save(stakeholder));
     }
 
     @Override
-    public void deleteStakeholderById(String id) throws EntityNotFoundException {
+    public void deleteStakeholderById(String id) {
         var stakeholderDto = this.findStakeholderById(id);
         var stakeholder = StakeholderDtoMapper.fromDto(stakeholderDto);
         stakeholderRepository.delete(stakeholder);

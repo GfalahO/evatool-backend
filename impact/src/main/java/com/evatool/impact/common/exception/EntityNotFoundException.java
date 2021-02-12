@@ -1,6 +1,6 @@
 package com.evatool.impact.common.exception;
 
-public class EntityNotFoundException extends Exception {
+public class EntityNotFoundException extends RuntimeException {
     public static final String MESSAGE_FORMAT = "'%s' with id '%s' was not found.";
 
     public EntityNotFoundException(Class<?> c, String id) {

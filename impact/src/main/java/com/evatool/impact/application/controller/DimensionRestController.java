@@ -3,6 +3,8 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.InvalidUuidException;
+import com.evatool.impact.common.exception.PropertyViolationException;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +37,7 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<DimensionDto> getDimension(@ApiParam("id") @PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<DimensionDto> getDimension(@ApiParam("id") @PathVariable String id)  {
         var dimensionDto = dimensionService.findDimensionById(id);
         var entityModel = new EntityModel<>(dimensionDto);
         addLinks(entityModel);
@@ -60,7 +62,7 @@ public class DimensionRestController {
             @ApiResponse(code = 201, message = "The entity was inserted"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<DimensionDto> createDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
+    public ResponseEntity<DimensionDto> createDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto)  {
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
         var entityModel = new EntityModel<>(insertedDimensionDto);
         addLinks(entityModel);
@@ -73,7 +75,7 @@ public class DimensionRestController {
             @ApiResponse(code = 200, message = "The entity was updated"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<DimensionDto> updateDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) throws EntityNotFoundException {
+    public ResponseEntity<DimensionDto> updateDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto)  {
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
         var entityModel = new EntityModel<>(updatedDimensionDto);
         addLinks(entityModel);
@@ -85,7 +87,7 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<Void> deleteDimension(@ApiParam("id") @PathVariable String id) throws EntityNotFoundException {
+    public ResponseEntity<Void> deleteDimension(@ApiParam("id") @PathVariable String id)  {
         dimensionService.deleteDimensionById(id);
         return ResponseEntity.ok().build();
     }

@@ -1,10 +1,13 @@
 package com.evatool.impact.application.dto.mapper;
 
 import com.evatool.impact.application.dto.ImpactDto;
+import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.modelmapper.ModelMapper;
+
+import java.util.UUID;
 
 public class ImpactDtoMapper {
 
@@ -16,8 +19,11 @@ public class ImpactDtoMapper {
 
     public static Impact fromDto(ImpactDto impactDto, DimensionRepository dimensionRepository, ImpactStakeholderRepository stakeholderRepository) {
         var impact = modelMapper.map(impactDto, Impact.class);
-        impact.setDimension(dimensionRepository.findById(impactDto.getDimension().getId()).orElse(null));
-        impact.setStakeholder(stakeholderRepository.findById(impactDto.getStakeholder().getId()).orElse(null));
+        if (impactDto.getId() != null) {
+            impact.setId(UUID.fromString(impactDto.getId()));
+        }
+        impact.setDimension(dimensionRepository.findById(UUID.fromString(impactDto.getDimension().getId())).orElse(null));
+        impact.setStakeholder(stakeholderRepository.findById(UUID.fromString(impactDto.getStakeholder().getId())).orElse(null));
         return impact;
     }
 

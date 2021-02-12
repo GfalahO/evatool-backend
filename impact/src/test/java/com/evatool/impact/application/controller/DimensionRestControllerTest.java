@@ -15,6 +15,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
@@ -65,7 +66,7 @@ class DimensionRestControllerTest {
         void testGetDimensionById_NonExistingDimension_ReturnHttpStatusNotFound() {
             // given
             var responseEntity = testRestTemplate.getForEntity(
-                    DimensionRest.buildGetDimensionUri("wrong_id"), DimensionDto.class);
+                    DimensionRest.buildGetDimensionUri(UUID.randomUUID().toString()), DimensionDto.class);
 
             // when
 
@@ -249,13 +250,13 @@ class DimensionRestControllerTest {
             // then
             assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(putResponse.getBody()).isNotNull();
-            assertThat(putResponse.getBody().getId()).isEqualTo(updatedDimension.getId());
+            assertThat(putResponse.getBody().getId()).isEqualTo(updatedDimension.getId().toString());
             assertThat(putResponse.getBody().getName()).isEqualTo(updatedDimension.getName());
 
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(getResponse.getBody()).isNotNull();
             assertThat(getResponse.getBody().getId()).isNotNull();
-            assertThat(getResponse.getBody().getId()).isEqualTo(updatedDimension.getId());
+            assertThat(getResponse.getBody().getId()).isEqualTo(updatedDimension.getId().toString());
             assertThat(getResponse.getBody().getName()).isEqualTo(updatedDimension.getName());
         }
 
@@ -263,13 +264,13 @@ class DimensionRestControllerTest {
         void testUpdateDimension_UpdateNonExistingId_ReturnHttpStatusNotFound() {
             // given
             var dimension = createDummyDimension();
-            dimension.setId(UUID.randomUUID().toString());
+            dimension.setId(UUID.randomUUID());
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
 
             // when
             var putResponse = testRestTemplate.exchange(
-                    DimensionRest.buildPutDimensionUri(dimension.getId()), HttpMethod.PUT, httpEntity, DimensionDto.class);
+                    DimensionRest.buildPutDimensionUri(dimension.getId().toString()), HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
             assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -427,6 +428,7 @@ class DimensionRestControllerTest {
 
             // when
             var insertedDimensionDto = insertEntityResponse.getBody();
+            System.out.println(insertedDimensionDto.getId());
             assertThat(insertedDimensionDto).isNotNull();
             var deleteEntity = new HttpEntity<>(insertedDimensionDto);
             var deleteEntityResponse = testRestTemplate.exchange(
@@ -469,7 +471,7 @@ class DimensionRestControllerTest {
                     DimensionRest.buildDeleteDimensionUri("null"), HttpMethod.DELETE, httpEntity, Void.class);
 
             //then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
     }
 }

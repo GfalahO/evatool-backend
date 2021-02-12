@@ -32,12 +32,12 @@ class ImpactStakeholderServiceImplTest {
         void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholder = createDummyStakeholder();
-            stakeholder.setId(UUID.randomUUID().toString());
+            stakeholder.setId(UUID.randomUUID());
 
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.findStakeholderById(stakeholder.getId()));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.findStakeholderById(stakeholder.getId().toString()));
         }
     }
 
@@ -63,7 +63,7 @@ class ImpactStakeholderServiceImplTest {
     @Nested
     class Insert {
         @Test
-        void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() throws EntityNotFoundException {
+        void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
@@ -81,7 +81,7 @@ class ImpactStakeholderServiceImplTest {
     @Nested
     class Update {
         @Test
-        void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() throws EntityNotFoundException {
+        void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder()  {
             // given
             var stakeholderDto = createDummyStakeholderDto();
             var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
@@ -113,7 +113,7 @@ class ImpactStakeholderServiceImplTest {
     @Nested
     class Delete {
         @Test
-        void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() throws EntityNotFoundException {
+        void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
@@ -130,12 +130,12 @@ class ImpactStakeholderServiceImplTest {
         void testDeleteStakeholderById_DeleteNonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholder = createDummyStakeholder();
-            stakeholder.setId(UUID.randomUUID().toString());
+            stakeholder.setId(UUID.randomUUID());
 
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.deleteStakeholderById(stakeholder.getId()));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.deleteStakeholderById(stakeholder.getId().toString()));
         }
     }
 

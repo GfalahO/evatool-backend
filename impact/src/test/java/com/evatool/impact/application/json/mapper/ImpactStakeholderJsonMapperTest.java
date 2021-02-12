@@ -21,7 +21,9 @@ class ImpactStakeholderJsonMapperTest {
         var impactStakeholder = fromJson(json);
 
         // then
-        assertThat(impactStakeholder.getId()).isEqualTo(id);
+        assertThat(impactStakeholder.getId()).hasToString(id);
         assertThat(impactStakeholder.getName()).isEqualTo(name);
     }
+
+    // TODO [hbuhl] add test for invalid values of id and name.
 }

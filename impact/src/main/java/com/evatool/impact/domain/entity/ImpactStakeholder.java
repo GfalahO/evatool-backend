@@ -20,7 +20,7 @@ public class ImpactStakeholder extends SuperEntity {
     private String name;
 
     public ImpactStakeholder() {
-
+        super();
     }
 
     public ImpactStakeholder(String name) {
@@ -36,7 +36,7 @@ public class ImpactStakeholder extends SuperEntity {
                 '}';
     }
 
-    public void setName(String name) {
+    public void setName(String name)  {
         if (name == null) {
             logger.error("Attempted to set name to null.");
             throw new PropertyViolationException("Name cannot be null.");
