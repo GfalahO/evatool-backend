@@ -25,7 +25,7 @@ class ImpactRepositoryTest {
         var found = impactRepository.findById(impact.getId());
 
         // then
-        assertThat(found.isPresent()).isTrue();
+        assertThat(found).isPresent();
     }
 
     @Test
@@ -50,7 +50,7 @@ class ImpactRepositoryTest {
 
         // then
         var uuid = UUID.fromString(impact.getId());
-        assertThat(uuid.toString()).isEqualTo(impact.getId());
+        assertThat(uuid).hasToString(impact.getId());
     }
 
     @Test
@@ -66,7 +66,7 @@ class ImpactRepositoryTest {
         var impactOptional = impactRepository.findById(impact.getId());
 
         // then
-        assertThat(impactOptional.isPresent()).isTrue();
+        assertThat(impactOptional).isPresent();
         assertThat(impactOptional.get().getValue()).isEqualTo(newValue);
     }
 
@@ -81,6 +81,6 @@ class ImpactRepositoryTest {
         var found = impactRepository.findById(impact.getId());
 
         // then
-        assertThat(found.isPresent()).isFalse();
+        assertThat(found).isNotPresent();
     }
 }
