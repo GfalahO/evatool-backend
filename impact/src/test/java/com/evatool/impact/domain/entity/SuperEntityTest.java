@@ -46,7 +46,6 @@ class SuperEntityTest {
         assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(id));
     }
 
-    // TODO tests
     @Test
     void testSetIdString_ValidToNullValue_ThrowPropertyViolationException() {
         // given
