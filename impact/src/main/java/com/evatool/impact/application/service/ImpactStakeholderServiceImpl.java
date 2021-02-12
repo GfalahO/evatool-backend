@@ -30,10 +30,6 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
 
     @Override
     public StakeholderDto findStakeholderById(String id)  {
-        if (id == null) {
-            logger.error("{} with id 'null' not found.", ImpactStakeholder.class.getSimpleName());
-            throw new EntityNotFoundException(ImpactStakeholder.class, "null");
-        }
         if (!SuperEntity.isValidUuid(id)) {
             logger.error("Invalid UUID.");
             throw new InvalidUuidException(id);

@@ -29,10 +29,6 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public DimensionDto findDimensionById(String id) {
-        if (id == null) {
-            logger.error("{} with id 'null' not found.", Dimension.class.getSimpleName());
-            throw new EntityNotFoundException(Dimension.class, "null");
-        } // TODO Merge error catchers...
         if (!SuperEntity.isValidUuid(id)) {
             logger.error("Invalid UUID.");
             throw new InvalidUuidException(id);

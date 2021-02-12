@@ -1,6 +1,7 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
@@ -74,7 +75,7 @@ class ImpactServiceTest {
 
     @Test
     void testFindImpactById_IdIsNull() {
-        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findImpactById(null));
+        assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> impactService.findImpactById(null));
     }
 
     @Test

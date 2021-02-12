@@ -38,9 +38,6 @@ public class ImpactServiceImpl implements ImpactService {
 
     @Override
     public ImpactDto findImpactById(String id) {
-        if (id == null) {
-            throw new EntityNotFoundException(Impact.class, "null");
-        }
         if (!SuperEntity.isValidUuid(id)) {
             logger.error("Invalid UUID.");
             throw new InvalidUuidException(id);

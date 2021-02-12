@@ -277,7 +277,7 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testUpdateDimension_UpdateNullId_ReturnHttpStatusNotFound() {
+        void testUpdateDimension_UpdateNullId_ReturnHttpStatusBadRequest() {
             // given
             var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
@@ -288,7 +288,7 @@ class DimensionRestControllerTest {
                     DimensionRest.buildPutDimensionUri(UUID.randomUUID().toString()), HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
         @Test
