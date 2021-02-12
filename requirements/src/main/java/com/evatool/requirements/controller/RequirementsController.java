@@ -49,14 +49,14 @@ public class RequirementsController {
 	@PostMapping("/requirements")
 	public Requirement newRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
-		eventPublisher.publishEvent(new RequirementCreatedEvent(null));
+		//eventPublisher.publishEvent(new RequirementCreatedEvent(null));
 		return requirementRepository.save(requirement);
 	}
 
 	@PutMapping("/requirements/{id}")
 	public Requirement updateRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
-		eventPublisher.publishEvent(new RequirementUpdatedEvent(null));
+		//eventPublisher.publishEvent(new RequirementUpdatedEvent(null));
 		return requirementRepository.save(requirement);
 	}
 
@@ -64,7 +64,7 @@ public class RequirementsController {
 	public void deleteRequirement(@PathVariable UUID id) {
 		logger.info("/requirements");
 		requirementRepository.deleteById(id);
-		eventPublisher.publishEvent(new RequirementDeletedEvent(null));
+		//eventPublisher.publishEvent(new RequirementDeletedEvent(null));
 
 	}
 }
