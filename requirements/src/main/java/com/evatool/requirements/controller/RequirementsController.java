@@ -2,6 +2,10 @@ package com.evatool.requirements.controller;
 
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
+import com.evatool.requirements.events.RequirementCreatedEvent;
+import com.evatool.requirements.events.RequirementDeletedEvent;
+import com.evatool.requirements.events.RequirementEventPublisher;
+import com.evatool.requirements.events.RequirementUpdatedEvent;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.service.RequirementDTOService;
 import org.slf4j.Logger;
@@ -25,6 +29,9 @@ public class RequirementsController {
 	@Autowired
 	private RequirementDTOService dtoService;
 
+	@Autowired
+	private RequirementEventPublisher eventPublisher;
+
 	@GetMapping("/requirements")
 	public List<RequirementDTO> getRequirementList() {
 		logger.info("/requirements");
@@ -42,12 +49,14 @@ public class RequirementsController {
 	@PostMapping("/requirements")
 	public Requirement newRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
+		eventPublisher.publishEvent(new RequirementCreatedEvent(null));
 		return requirementRepository.save(requirement);
 	}
 
 	@PutMapping("/requirements/{id}")
 	public Requirement updateRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
+		eventPublisher.publishEvent(new RequirementUpdatedEvent(null));
 		return requirementRepository.save(requirement);
 	}
 
@@ -55,5 +64,7 @@ public class RequirementsController {
 	public void deleteRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
 		requirementRepository.delete(requirement);
+		eventPublisher.publishEvent(new RequirementDeletedEvent(null));
+
 	}
 }
