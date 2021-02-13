@@ -8,15 +8,15 @@ public class DimensionRest {
 
     }
 
-    public static final String DIMENSION_REST_CONTROLLER_MAPPING = BASE_URI;
+    public static final String DIMENSION_REST_CONTROLLER_MAPPING = BASE_URI + "/";
 
     public static final String DIMENSIONS = "dimensions";
 
-    public static final String GET_DIMENSION_MAPPING = "/dimensions/{id}";
-    public static final String GET_DIMENSIONS_MAPPING = "/dimensions";
-    public static final String POST_DIMENSION_MAPPING = "/dimensions";
-    public static final String PUT_DIMENSION_MAPPING = "/dimensions/{id}";
-    public static final String DELETE_DIMENSION_MAPPING = "/dimensions/{id}";
+    public static final String GET_DIMENSION_MAPPING = "dimensions/{id}";
+    public static final String GET_DIMENSIONS_MAPPING = "dimensions";
+    public static final String POST_DIMENSION_MAPPING = "dimensions";
+    public static final String PUT_DIMENSION_MAPPING = "dimensions/{id}";
+    public static final String DELETE_DIMENSION_MAPPING = "dimensions/{id}";
 
     public static String buildGetDimensionUri(String id) {
         return DIMENSION_REST_CONTROLLER_MAPPING + GET_DIMENSION_MAPPING.replace("{id}", id);
