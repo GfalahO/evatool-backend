@@ -34,7 +34,7 @@ public class DimensionRestController {
         var dimensionDto = dimensionService.findDimensionById(id);
         var entityModel = new EntityModel<>(dimensionDto);
         addLinks(entityModel);
-        return new ResponseEntity(entityModel, HttpStatus.OK);
+        return new ResponseEntity(dimensionDto, HttpStatus.OK);
     }
 
     @GetMapping(GET_DIMENSIONS_MAPPING)
@@ -44,7 +44,7 @@ public class DimensionRestController {
         var entityModelList = new ArrayList<EntityModel>();
         dimensionDtoList.forEach(s -> entityModelList.add(new EntityModel<>(s)));
         entityModelList.forEach(this::addLinks);
-        return new ResponseEntity(entityModelList, HttpStatus.OK);
+        return new ResponseEntity(dimensionDtoList, HttpStatus.OK);
     }
 
     @PostMapping(POST_DIMENSION_MAPPING)
@@ -53,7 +53,7 @@ public class DimensionRestController {
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
         var entityModel = new EntityModel<>(insertedDimensionDto);
         addLinks(entityModel);
-        return new ResponseEntity(entityModel, HttpStatus.CREATED);
+        return new ResponseEntity(insertedDimensionDto, HttpStatus.CREATED);
     }
 
     @PutMapping(PUT_DIMENSION_MAPPING)
@@ -62,7 +62,7 @@ public class DimensionRestController {
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
         var entityModel = new EntityModel<>(updatedDimensionDto);
         addLinks(entityModel);
-        return new ResponseEntity(entityModel, HttpStatus.OK);
+        return new ResponseEntity(updatedDimensionDto, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE_DIMENSION_MAPPING)
