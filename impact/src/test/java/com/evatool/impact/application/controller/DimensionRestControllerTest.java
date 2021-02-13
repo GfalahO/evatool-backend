@@ -15,7 +15,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
-import java.util.Locale;
 import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
