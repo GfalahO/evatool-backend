@@ -10,6 +10,8 @@ import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import java.util.UUID;
 
 @Service
 public class ImpactServiceImpl implements ImpactService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ImpactServiceImpl.class);
 
     private final ImpactRepository impactRepository;
 
@@ -34,10 +38,12 @@ public class ImpactServiceImpl implements ImpactService {
     @Override
     public ImpactDto findImpactById(String id) {
         if (!SuperEntity.isValidUuid(id)) {
+            logger.error("Invalid UUID.");
             throw new InvalidUuidException(id);
         }
         var impact = impactRepository.findById(UUID.fromString(id));
         if (impact.isEmpty()) {
+            logger.error("{} with id '{}' not found.", Impact.class.getSimpleName(), id);
             throw new EntityNotFoundException(Impact.class, id);
         }
         return ImpactDtoMapper.toDto(impact.get());

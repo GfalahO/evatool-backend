@@ -3,12 +3,16 @@ package com.evatool.impact.domain.entity;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 
 @Entity(name = "DIMENSION")
 @Table(name = "DIMENSION")
 public class Dimension extends SuperEntity {
+
+    private static final Logger logger = LoggerFactory.getLogger(Dimension.class);
 
     public enum Type {
         SOCIAL,
@@ -52,6 +56,7 @@ public class Dimension extends SuperEntity {
 
     public void setName(String name) {
         if (name == null) {
+            logger.error("Attempted to set name to null.");
             throw new PropertyViolationException("Name cannot be null.");
         }
         this.name = name;
@@ -59,6 +64,7 @@ public class Dimension extends SuperEntity {
 
     public void setDescription(String description) {
         if (description == null) {
+            logger.error("Attempted to set description to null.");
             throw new PropertyViolationException("Description cannot be null.");
         }
         this.description = description;

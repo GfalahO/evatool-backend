@@ -8,6 +8,8 @@ import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.DimensionRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.UUID;
 
 @Service
 public class DimensionServiceImpl implements DimensionService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DimensionServiceImpl.class);
 
     private final DimensionRepository dimensionRepository;
 
@@ -26,10 +30,12 @@ public class DimensionServiceImpl implements DimensionService {
     @Override
     public DimensionDto findDimensionById(String id) {
         if (!SuperEntity.isValidUuid(id)) {
+            logger.error("Invalid UUID.");
             throw new InvalidUuidException(id);
         }
         var dimension = dimensionRepository.findById(UUID.fromString(id));
         if (dimension.isEmpty()) {
+            logger.error("{} with id '{}' not found.", Dimension.class.getSimpleName(), id);
             throw new EntityNotFoundException(Dimension.class, id);
         }
         return DimensionDtoMapper.toDto(dimension.get());
@@ -46,6 +52,7 @@ public class DimensionServiceImpl implements DimensionService {
     @Override
     public DimensionDto createDimension(DimensionDto dimensionDto) {
         if (dimensionDto.getId() != null) {
+            logger.error("Id must be null.");
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Dimension.class.getSimpleName()));
         }
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));

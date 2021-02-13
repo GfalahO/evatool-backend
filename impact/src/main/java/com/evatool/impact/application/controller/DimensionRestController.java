@@ -3,6 +3,8 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
 import io.swagger.annotations.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 @RequestMapping(DIMENSION_REST_CONTROLLER_MAPPING)
 public class DimensionRestController {
+
+    private static final Logger logger = LoggerFactory.getLogger(DimensionRestController.class);
 
     private final DimensionService dimensionService;
 
