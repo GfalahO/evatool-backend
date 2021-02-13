@@ -89,12 +89,12 @@ public class DimensionRestController {
     }
 
     private void addLinks(EntityModel<DimensionDto> entityModel) {
-        entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(buildGetDimensionsRel()));
-        entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(buildPostDimensionRel()));
+        entityModel.add(linkTo(DimensionRestController.class).withRel(buildGetDimensionsRel()));
+        entityModel.add(linkTo(DimensionRestController.class).withRel(buildPostDimensionRel()));
         if (entityModel.getContent().getId() != null) {
-            entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(entityModel.getContent().getId()).withSelfRel());
-            entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(entityModel.getContent().getId()).withRel(buildPutDimensionRel()));
-            entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(entityModel.getContent().getId()).withRel(buildDeleteDimensionRel()));
+            entityModel.add(linkTo(DimensionRestController.class).slash(entityModel.getContent().getId()).withSelfRel());
+            entityModel.add(linkTo(DimensionRestController.class).slash(entityModel.getContent().getId()).withRel(buildPutDimensionRel()));
+            entityModel.add(linkTo(DimensionRestController.class).slash(entityModel.getContent().getId()).withRel(buildDeleteDimensionRel()));
         }
     }
 }
