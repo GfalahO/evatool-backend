@@ -17,6 +17,7 @@ import static com.evatool.impact.application.controller.util.DimensionRest.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
+@RequestMapping(DIMENSION_REST_CONTROLLER_MAPPING)
 public class DimensionRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(DimensionRestController.class);
