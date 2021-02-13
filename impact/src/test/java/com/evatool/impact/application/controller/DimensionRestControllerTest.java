@@ -3,6 +3,7 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.controller.util.DimensionRest;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
+import com.evatool.impact.common.exception.handle.ErrorMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class DimensionRestControllerTest {
@@ -72,10 +74,71 @@ class DimensionRestControllerTest {
             // then
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
+
+        @Test
+        void testGetDimensionById_NonExistingDimension_ReturnErrorMessage() {
+            var responseEntity = testRestTemplate.getForEntity(
+                    DimensionRest.buildGetDimensionUri(UUID.randomUUID().toString()), ErrorMessage.class);
+
+            // when
+
+            // then
+            var errorMessage = responseEntity.getBody();
+            assertThat(errorMessage.getTimestamp()).isNotNull();
+            assertThat(errorMessage.getMessage()).isNotNull();
+            assertThat(errorMessage.getUri()).isNotNull();
+        }
+
+        @Test
+        void testGetDimensionById_InvalidId_ReturnHttpStatusBadRequest() {
+            // given
+            var responseEntity = testRestTemplate.getForEntity(
+                    DimensionRest.buildGetDimensionUri("invalid id"), DimensionDto.class);
+
+            // when
+
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void testGetDimensionById_InvalidId_ReturnErrorMessage() {
+            // given
+            var responseEntity = testRestTemplate.getForEntity(
+                    DimensionRest.buildGetDimensionUri("invalid id"), ErrorMessage.class);
+
+            // when
+
+            // then
+            var errorMessage = responseEntity.getBody();
+            assertThat(errorMessage.getTimestamp()).isNotNull();
+            assertThat(errorMessage.getMessage()).isNotNull();
+            assertThat(errorMessage.getUri()).isNotNull();
+        }
     }
 
     @Nested
     class GetAll {
+        @Test
+        void testGetDimensions_ExistingDimensions_ReturnDimensions() {
+            // given
+            var dimensionDto = createDummyDimensionDto();
+            dimensionService.createDimension(dimensionDto);
+
+            // when
+            var getResponse = testRestTemplate.getForEntity(
+                    DimensionRest.buildGetDimensionsUri(), DimensionDto[].class);
+            var dimensionDtoList = getResponse.getBody();
+
+            // then
+            assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(dimensionDtoList).isNotNull().hasSize(1);
+            assertThat(dimensionDtoList[0].getId()).isNotNull();
+            assertThat(dimensionDtoList[0].getName()).isEqualTo(dimensionDto.getName());
+            assertThat(dimensionDtoList[0].getDescription()).isEqualTo(dimensionDto.getDescription());
+            assertThat(dimensionDtoList[0].getType()).isEqualTo(dimensionDto.getType());
+        }
+
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testGetDimensions_ExistingDimensions_ReturnDimensions(int value) {
@@ -88,11 +151,11 @@ class DimensionRestControllerTest {
             // when
             var getResponse = testRestTemplate.getForEntity(
                     DimensionRest.buildGetDimensionsUri(), DimensionDto[].class);
-            var dimensionDtos = getResponse.getBody();
+            var dimensionDtoList = getResponse.getBody();
 
             // then
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(dimensionDtos).isNotNull().hasSize(value);
+            assertThat(dimensionDtoList).isNotNull().hasSize(value);
         }
     }
 
@@ -219,6 +282,7 @@ class DimensionRestControllerTest {
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
+        // Insert with non-null id is not allowed.
         @Test
         void testInsertDimension_InsertInvalidId_ReturnHttpStatusBadRequest() {
             // given

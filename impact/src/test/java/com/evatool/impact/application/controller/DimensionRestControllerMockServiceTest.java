@@ -6,6 +6,8 @@ import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
 import com.evatool.impact.common.config.SwaggerConfig;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.InvalidUuidException;
+import com.evatool.impact.common.exception.handle.ErrorMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,6 +29,7 @@ import java.util.UUID;
 import static com.evatool.impact.application.controller.util.DimensionRest.*;
 import static com.evatool.impact.application.controller.util.DimensionRest.buildDeleteDimensionRel;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -110,6 +114,55 @@ class DimensionRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isNotFound());
         }
+
+        @Test
+        void testGetDimensionById_NonExistingDimension_ReturnErrorMessage() throws Exception {
+            // given
+            var nonExistingId = UUID.randomUUID().toString();
+
+            // when
+            when(dimensionService.findDimensionById(anyString())).thenThrow(EntityNotFoundException.class);
+
+            // then
+            mvc.perform(get(buildGetDimensionUri(nonExistingId))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                    .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
+                    .andExpect(jsonPath("$.uri").isNotEmpty());
+        }
+
+        @Test
+        void testGetDimensionById_InvalidId_ReturnHttpStatusBadRequest() throws Exception {
+            // given
+            var nonExistingId = "invalid id";
+
+            // when
+            when(dimensionService.findDimensionById(anyString())).thenThrow(InvalidUuidException.class);
+
+            // then
+            mvc.perform(get(buildGetDimensionUri(nonExistingId))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        void testGetDimensionById_InvalidId_ReturnErrorMessage() throws Exception {
+            // given
+            var nonExistingId = "invalid id";
+
+            // when
+            when(dimensionService.findDimensionById(anyString())).thenThrow(InvalidUuidException.class);
+
+            // then
+            mvc.perform(get(buildGetDimensionUri(nonExistingId))
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                    .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
+                    .andExpect(jsonPath("$.uri").isNotEmpty());
+        }
     }
 
     @Nested
@@ -150,11 +203,13 @@ class DimensionRestControllerMockServiceTest {
         void testGetAllDimensions_ExistingDimensions_ReturnDimensions() throws Exception {
             // given
             var dimension1 = createDummyDimensionDto();
+            dimension1.setId(UUID.randomUUID().toString());
             var dimension2 = createDummyDimensionDto();
+            dimension2.setId(UUID.randomUUID().toString());
 
             // when
-            var allDimensionDtos = Arrays.asList(dimension1, dimension2);
-            given(dimensionService.getAllDimensions()).willReturn(allDimensionDtos);
+            var dimensionDtoList = Arrays.asList(dimension1, dimension2);
+            given(dimensionService.getAllDimensions()).willReturn(dimensionDtoList);
 
             // then
             mvc.perform(get(buildGetDimensionsUri())
@@ -162,21 +217,27 @@ class DimensionRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(2)))
+                    .andExpect(jsonPath("$[0].id").value(dimension1.getId()))
                     .andExpect(jsonPath("$[0].name").value(dimension1.getName()))
-                    .andExpect(jsonPath("$[1].name").value(dimension2.getName()));
+                    .andExpect(jsonPath("$[0].description").value(dimension1.getDescription()))
+                    .andExpect(jsonPath("$[0].type").value(dimension1.getType()))
+                    .andExpect(jsonPath("$[1].id").value(dimension2.getId()))
+                    .andExpect(jsonPath("$[1].name").value(dimension2.getName()))
+                    .andExpect(jsonPath("$[1].description").value(dimension2.getDescription()))
+                    .andExpect(jsonPath("$[1].type").value(dimension2.getType()));
         }
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testGetAllDimensions_ExistingDimensions_ReturnDimensions(int value) throws Exception {
-            var allDimensionDtos = new ArrayList<DimensionDto>();
+            var dimensionDtoList = new ArrayList<DimensionDto>();
             for (int i = 0; i < value; i++) {
                 // given
                 var dimensionDto = createDummyDimensionDto();
-                allDimensionDtos.add(dimensionDto);
+                dimensionDtoList.add(dimensionDto);
             }
             // when
-            given(dimensionService.getAllDimensions()).willReturn(allDimensionDtos);
+            given(dimensionService.getAllDimensions()).willReturn(dimensionDtoList);
 
             // then
             mvc.perform(get(buildGetDimensionsUri())
