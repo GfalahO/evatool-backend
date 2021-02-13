@@ -2,11 +2,7 @@ package com.evatool.impact.application.controller.util;
 
 public class RestSetting {
 
-    private RestSetting() {
-
-    }
-
-    public static final String BASE_URI = "/api/impact";
+    public static final String BASE_URI = "";
 
     public static final String GET_REL_PREFIX = "get";
     public static final String GET_ALL_REL_PREFIX = "get all";

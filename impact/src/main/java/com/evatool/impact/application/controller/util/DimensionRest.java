@@ -4,10 +4,6 @@ import static com.evatool.impact.application.controller.util.RestSetting.*;
 
 public class DimensionRest {
 
-    private DimensionRest() {
-
-    }
-
     public static final String DIMENSION_REST_CONTROLLER_MAPPING = BASE_URI;
 
     public static final String DIMENSIONS = "dimensions";
