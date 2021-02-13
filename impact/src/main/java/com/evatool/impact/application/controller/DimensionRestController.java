@@ -29,44 +29,60 @@ public class DimensionRestController {
     }
 
     @GetMapping(GET_DIMENSION_MAPPING)
-
-    public ResponseEntity<DimensionDto> getDimension( @PathVariable String id)  {
+    @ApiOperation(value = "Return a Dimension by its id", response = DimensionDto.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The entity was found"),
+            @ApiResponse(code = 404, message = "The entity was not found")})
+    public ResponseEntity<DimensionDto> getDimension(@ApiParam("id") @PathVariable String id)  {
         var dimensionDto = dimensionService.findDimensionById(id);
         var entityModel = new EntityModel<>(dimensionDto);
         addLinks(entityModel);
-        return new ResponseEntity(dimensionDto, HttpStatus.OK);
+        return new ResponseEntity(entityModel, HttpStatus.OK);
     }
 
     @GetMapping(GET_DIMENSIONS_MAPPING)
-
+    @ApiOperation(value = "Return all Dimensions", response = List.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "All entities returned")})
     public ResponseEntity<List<DimensionDto>> getAllDimensions() {
         var dimensionDtoList = dimensionService.getAllDimensions();
         var entityModelList = new ArrayList<EntityModel>();
         dimensionDtoList.forEach(s -> entityModelList.add(new EntityModel<>(s)));
         entityModelList.forEach(this::addLinks);
-        return new ResponseEntity(dimensionDtoList, HttpStatus.OK);
+        return new ResponseEntity(entityModelList, HttpStatus.OK);
     }
 
     @PostMapping(POST_DIMENSION_MAPPING)
-
+    @ApiOperation(value = "Insert a new Dimension", response = DimensionDto.class)
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "The entity was inserted"),
+            @ApiResponse(code = 400, message = "The entity was invalid"),
+            @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<DimensionDto> createDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto)  {
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
         var entityModel = new EntityModel<>(insertedDimensionDto);
         addLinks(entityModel);
-        return new ResponseEntity(insertedDimensionDto, HttpStatus.CREATED);
+        return new ResponseEntity(entityModel, HttpStatus.CREATED);
     }
 
     @PutMapping(PUT_DIMENSION_MAPPING)
-
+    @ApiOperation(value = "Update an existing Dimension", response = DimensionDto.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The entity was updated"),
+            @ApiResponse(code = 400, message = "The entity was invalid"),
+            @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<DimensionDto> updateDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto)  {
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
         var entityModel = new EntityModel<>(updatedDimensionDto);
         addLinks(entityModel);
-        return new ResponseEntity(updatedDimensionDto, HttpStatus.OK);
+        return new ResponseEntity(entityModel, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE_DIMENSION_MAPPING)
-
+    @ApiOperation(value = "Delete a Dimension")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The entity was deleted"),
+            @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<Void> deleteDimension(@ApiParam("id") @PathVariable String id)  {
         dimensionService.deleteDimensionById(id);
         return ResponseEntity.ok().build();
