@@ -63,6 +63,7 @@ public class ImpactServiceImpl implements ImpactService {
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Impact.class.getSimpleName()));
         }
         var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
+        // TODO Fire ImpactCreatedEvent
         return ImpactDtoMapper.toDto(impactRepository.save(impact));
     }
 
@@ -70,11 +71,13 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto updateImpact(ImpactDto impactDto) {
         this.findImpactById(impactDto.getId());
         var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
+        // TODO Fire ImpactUpdatedEvent
         return ImpactDtoMapper.toDto(impactRepository.save(impact));
     }
 
     @Override
     public void deleteImpactById(String id) {
+        // TODO Fire ImpactDeletedEvent
         impactRepository.deleteById(UUID.fromString(id));
     }
 

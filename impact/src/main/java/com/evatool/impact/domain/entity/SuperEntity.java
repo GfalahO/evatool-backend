@@ -46,13 +46,12 @@ public class SuperEntity {
         return this.id != null;
     }
 
-    // TODO comment where events are fired from us
-    public static boolean isValidUuid(String id) { // TODO return UUID or null?
+    public static boolean isValidUuid(String id) {
         if (id == null) {
             return false;
         }
         try {
-            UUID.fromString(id);
+            UUID.fromString(id); // TODO [tzaika] the result of UUID.fromString is not used. Is there a clean way of returning it and not make code ugly?
             return true;
         } catch (IllegalArgumentException ex) {
             logger.error(ex.getMessage(), ex);

@@ -56,6 +56,7 @@ public class DimensionServiceImpl implements DimensionService {
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Dimension.class.getSimpleName()));
         }
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
+        // TODO Fire DimensionCreatedEvent
         return DimensionDtoMapper.toDto(dimension);
     }
 
@@ -63,6 +64,7 @@ public class DimensionServiceImpl implements DimensionService {
     public DimensionDto updateDimension(DimensionDto dimensionDto) {
         this.findDimensionById(dimensionDto.getId());
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);
+        // TODO Fire DimensionUpdatedEvent
         return DimensionDtoMapper.toDto(dimensionRepository.save(dimension));
     }
 
@@ -70,6 +72,7 @@ public class DimensionServiceImpl implements DimensionService {
     public void deleteDimensionById(String id) {
         var dimensionDto = this.findDimensionById(id);
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);
+        // TODO Fire DimensionDeletedEvent
         dimensionRepository.delete(dimension);
     }
 
