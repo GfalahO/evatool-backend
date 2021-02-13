@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
+@Table(name = "REQ_RequirementPoint")
 public class RequirementPoint {
 
     @Id
@@ -64,7 +65,4 @@ public class RequirementPoint {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
 }

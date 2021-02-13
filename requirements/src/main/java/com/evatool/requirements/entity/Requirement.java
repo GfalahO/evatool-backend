@@ -1,15 +1,17 @@
 
 package com.evatool.requirements.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
 @Entity
+@Table(name = "REQ_Requirement")
 public class Requirement {
 
-    //TODO Proejktid hinterlegen
     @Id
     private UUID id = UUID.randomUUID();
     private UUID projectId;
@@ -62,10 +64,6 @@ public class Requirement {
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public UUID getProjectId() {
