@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
+@Table(name = "REQ_RequirementImpacts")
 public class RequirementsImpacts {
 
     @Id
