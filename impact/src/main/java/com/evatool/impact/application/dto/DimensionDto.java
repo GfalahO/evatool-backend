@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
-public class DimensionDto extends RepresentationModel<DimensionDto> {
+public class DimensionDto {
     @Getter
     @Setter
     private String id;
