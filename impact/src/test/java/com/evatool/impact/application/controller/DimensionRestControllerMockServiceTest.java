@@ -24,7 +24,9 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.util.DimensionRest.*;
+import static com.evatool.impact.application.controller.util.DimensionRest.buildDeleteDimensionRel;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -64,16 +66,18 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.links").isNotEmpty())
                     .andExpect(jsonPath("$.links", hasSize(5)))
-                    .andExpect(jsonPath("$.links[0].rel").value(buildGetDimensionsRel()))
-                    .andExpect(jsonPath("$.links[0].href").value("http://localhost" + buildGetDimensionsUri()))
-                    .andExpect(jsonPath("$.links[1].rel").value(buildPostDimensionRel()))
-                    .andExpect(jsonPath("$.links[1].href").value("http://localhost" + buildPostDimensionUri()))
-                    .andExpect(jsonPath("$.links[2].rel").value("self"))
-                    .andExpect(jsonPath("$.links[2].href").value("http://localhost" + buildGetDimensionUri(id)))
-                    .andExpect(jsonPath("$.links[3].rel").value(buildPutDimensionRel()))
-                    .andExpect(jsonPath("$.links[3].href").value("http://localhost" + buildPutDimensionUri(id)))
-                    .andExpect(jsonPath("$.links[4].rel").value(buildDeleteDimensionRel()))
-                    .andExpect(jsonPath("$.links[4].href").value("http://localhost" + buildDeleteDimensionUri(id)));
+                    .andExpect(jsonPath("$.links[*].rel").value(containsInAnyOrder(
+                            buildGetDimensionsRel(),
+                            buildPostDimensionRel(),
+                            "self",
+                            buildPutDimensionRel(),
+                            buildDeleteDimensionRel())))
+                    .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
+                            "http://localhost" + buildGetDimensionsUri(),
+                            "http://localhost" + buildPostDimensionUri(),
+                            "http://localhost" + buildGetDimensionUri(id),
+                            "http://localhost" + buildPutDimensionUri(id),
+                            "http://localhost" + buildDeleteDimensionUri(id))));
         }
 
         @Test
@@ -128,16 +132,18 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(jsonPath("$", hasSize(1)))
                     .andExpect(jsonPath("$[0]..links").isNotEmpty())
                     .andExpect(jsonPath("$[0]..links", hasSize(1)))
-                    .andExpect(jsonPath("$[0]..links[0].rel").value(buildGetDimensionsRel()))
-                    .andExpect(jsonPath("$[0]..links[0].href").value("http://localhost" + buildGetDimensionsUri()))
-                    .andExpect(jsonPath("$[0]..links[1].rel").value(buildPostDimensionRel()))
-                    .andExpect(jsonPath("$[0]..links[1].href").value("http://localhost" + buildPostDimensionUri()))
-                    .andExpect(jsonPath("$[0]..links[2].rel").value("self"))
-                    .andExpect(jsonPath("$[0]..links[2].href").value("http://localhost" + buildGetDimensionUri(id)))
-                    .andExpect(jsonPath("$[0]..links[3].rel").value(buildPutDimensionRel()))
-                    .andExpect(jsonPath("$[0]..links[3].href").value("http://localhost" + buildPutDimensionUri(id)))
-                    .andExpect(jsonPath("$[0]..links[4].rel").value(buildDeleteDimensionRel()))
-                    .andExpect(jsonPath("$[0]..links[4].href").value("http://localhost" + buildDeleteDimensionUri(id)));
+                    .andExpect(jsonPath("$[0].links[*].rel").value(containsInAnyOrder(
+                            buildGetDimensionsRel(),
+                            buildPostDimensionRel(),
+                            "self",
+                            buildPutDimensionRel(),
+                            buildDeleteDimensionRel())))
+                    .andExpect(jsonPath("$[0].links[*].href").value(containsInAnyOrder(
+                            "http://localhost" + buildGetDimensionsUri(),
+                            "http://localhost" + buildPostDimensionUri(),
+                            "http://localhost" + buildGetDimensionUri(id),
+                            "http://localhost" + buildPutDimensionUri(id),
+                            "http://localhost" + buildDeleteDimensionUri(id))));
         }
 
         @Test
@@ -220,16 +226,18 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.links").isNotEmpty())
                     .andExpect(jsonPath("$.links", hasSize(5)))
-                    .andExpect(jsonPath("$.links[0].rel").value(buildGetDimensionsRel()))
-                    .andExpect(jsonPath("$.links[0].href").value("http://localhost" + buildGetDimensionsUri()))
-                    .andExpect(jsonPath("$.links[1].rel").value(buildPostDimensionRel()))
-                    .andExpect(jsonPath("$.links[1].href").value("http://localhost" + buildPostDimensionUri()))
-                    .andExpect(jsonPath("$.links[2].rel").value("self"))
-                    .andExpect(jsonPath("$.links[2].href").value("http://localhost" + buildGetDimensionUri(id)))
-                    .andExpect(jsonPath("$.links[3].rel").value(buildPutDimensionRel()))
-                    .andExpect(jsonPath("$.links[3].href").value("http://localhost" + buildPutDimensionUri(id)))
-                    .andExpect(jsonPath("$.links[4].rel").value(buildDeleteDimensionRel()))
-                    .andExpect(jsonPath("$.links[4].href").value("http://localhost" + buildDeleteDimensionUri(id)));
+                    .andExpect(jsonPath("$.links[*].rel").value(containsInAnyOrder(
+                            buildGetDimensionsRel(),
+                            buildPostDimensionRel(),
+                            "self",
+                            buildPutDimensionRel(),
+                            buildDeleteDimensionRel())))
+                    .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
+                            "http://localhost" + buildGetDimensionsUri(),
+                            "http://localhost" + buildPostDimensionUri(),
+                            "http://localhost" + buildGetDimensionUri(id),
+                            "http://localhost" + buildPutDimensionUri(id),
+                            "http://localhost" + buildDeleteDimensionUri(id))));
         }
     }
 
@@ -254,16 +262,18 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.links").isNotEmpty())
                     .andExpect(jsonPath("$.links", hasSize(5)))
-                    .andExpect(jsonPath("$.links[0].rel").value(buildGetDimensionsRel()))
-                    .andExpect(jsonPath("$.links[0].href").value("http://localhost" + buildGetDimensionsUri()))
-                    .andExpect(jsonPath("$.links[1].rel").value(buildPostDimensionRel()))
-                    .andExpect(jsonPath("$.links[1].href").value("http://localhost" + buildPostDimensionUri()))
-                    .andExpect(jsonPath("$.links[2].rel").value("self"))
-                    .andExpect(jsonPath("$.links[2].href").value("http://localhost" + buildGetDimensionUri(id)))
-                    .andExpect(jsonPath("$.links[3].rel").value(buildPutDimensionRel()))
-                    .andExpect(jsonPath("$.links[3].href").value("http://localhost" + buildPutDimensionUri(id)))
-                    .andExpect(jsonPath("$.links[4].rel").value(buildDeleteDimensionRel()))
-                    .andExpect(jsonPath("$.links[4].href").value("http://localhost" + buildDeleteDimensionUri(id)));
+                    .andExpect(jsonPath("$.links[*].rel").value(containsInAnyOrder(
+                            buildGetDimensionsRel(),
+                            buildPostDimensionRel(),
+                            "self",
+                            buildPutDimensionRel(),
+                            buildDeleteDimensionRel())))
+                    .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
+                            "http://localhost" + buildGetDimensionsUri(),
+                            "http://localhost" + buildPostDimensionUri(),
+                            "http://localhost" + buildGetDimensionUri(id),
+                            "http://localhost" + buildPutDimensionUri(id),
+                            "http://localhost" + buildDeleteDimensionUri(id))));
         }
 
         @Test
