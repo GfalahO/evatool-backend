@@ -17,7 +17,7 @@ public class StakeholderDtoMapper {
     public static ImpactStakeholder fromDto(StakeholderDto stakeholderDto) {
         var stakeholder = modelMapper.map(stakeholderDto, ImpactStakeholder.class);
         if (stakeholderDto.getId() != null) {
-            stakeholder.setId(UUID.fromString(stakeholderDto.getId()));
+            stakeholder.setId(stakeholderDto.getId());
         }
         return stakeholder;
     }

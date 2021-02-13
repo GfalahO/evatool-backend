@@ -23,7 +23,7 @@ public class DimensionDtoMapper {
         }
         var dimension = modelMapper.map(dimensionDto, Dimension.class);
         if (dimensionDto.getId() != null) {
-            dimension.setId(UUID.fromString(dimensionDto.getId()));
+            dimension.setId(dimensionDto.getId());
         }
         return dimension;
     }

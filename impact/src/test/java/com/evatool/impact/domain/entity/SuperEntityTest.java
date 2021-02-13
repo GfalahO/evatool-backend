@@ -1,5 +1,6 @@
 package com.evatool.impact.domain.entity;
 
+import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +56,7 @@ class SuperEntityTest {
         superEntity.setId(UUID.randomUUID());
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId((String) null));
+        assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> superEntity.setId((String) null));
     }
 
     @Test

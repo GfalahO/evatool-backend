@@ -121,9 +121,9 @@ class DimensionRestControllerTest {
         @Test
         void testInsertDimension_InsertNullDto_ReturnHttpStatusUnsupportedMediaType() {
             // given
+            var httpEntity = new HttpEntity<>(null);
 
             // when
-            var httpEntity = new HttpEntity<>(null);
             var responseEntity = testRestTemplate.postForEntity(
                     DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
 
@@ -216,9 +216,19 @@ class DimensionRestControllerTest {
             var responseEntity = testRestTemplate.postForEntity(
                     DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
 
-            assertThat(responseEntity.getBody()).isNotNull();
-            httpEntity = new HttpEntity<>(responseEntity.getBody());
-            responseEntity = testRestTemplate.postForEntity(
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void testInsertDimension_InsertInvalidId_ReturnHttpStatusBadRequest() {
+            // given
+            var dimensionDto = createDummyDimensionDto();
+            dimensionDto.setId("invalid id");
+
+            // when
+            var httpEntity = new HttpEntity<>(dimensionDto);
+            var responseEntity = testRestTemplate.postForEntity(
                     DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
 
             // then
@@ -286,6 +296,27 @@ class DimensionRestControllerTest {
             // when
             var putResponse = testRestTemplate.exchange(
                     DimensionRest.buildPutDimensionUri(UUID.randomUUID().toString()), HttpMethod.PUT, httpEntity, DimensionDto.class);
+
+            // then
+            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void testInsertDimension_UpdateInvalidId_ReturnHttpStatusBadRequest() {
+            // given
+            var dimension = createDummyDimension();
+            var dimensionDto = toDto(dimension);
+            var httpEntity = new HttpEntity<>(dimensionDto);
+            var postResponse = testRestTemplate.postForEntity(
+                    DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
+
+            // when
+            assertThat(postResponse.getBody()).isNotNull();
+            var updatedDimensionDto = postResponse.getBody();
+            updatedDimensionDto.setId("invalid id");
+            var putEntity = new HttpEntity<>(updatedDimensionDto);
+            var putResponse = testRestTemplate.exchange(
+                    DimensionRest.buildPutDimensionUri(postResponse.getBody().getId()), HttpMethod.PUT, putEntity, DimensionDto.class);
 
             // then
             assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -468,6 +499,22 @@ class DimensionRestControllerTest {
             // when
             var responseEntity = testRestTemplate.exchange(
                     DimensionRest.buildDeleteDimensionUri("null"), HttpMethod.DELETE, httpEntity, Void.class);
+
+            //then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void testDeleteDimension_DeleteInvalidId_ReturnHttpStatusBadRequest() {
+            // given
+            var dimension = createDummyDimension();
+            var dimensionDto = toDto(dimension);
+            dimensionDto.setId("invalid id");
+            var httpEntity = new HttpEntity<>(dimensionDto);
+
+            // when
+            var responseEntity = testRestTemplate.exchange(
+                    DimensionRest.buildDeleteDimensionUri(dimensionDto.getId()), HttpMethod.DELETE, httpEntity, Void.class);
 
             //then
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);

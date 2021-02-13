@@ -19,7 +19,7 @@ public class ImpactDtoMapper {
     public static Impact fromDto(ImpactDto impactDto, DimensionRepository dimensionRepository, ImpactStakeholderRepository stakeholderRepository) {
         var impact = modelMapper.map(impactDto, Impact.class);
         if (impactDto.getId() != null) {
-            impact.setId(UUID.fromString(impactDto.getId()));
+            impact.setId(impactDto.getId());
         }
         impact.setDimension(dimensionRepository.findById(UUID.fromString(impactDto.getDimension().getId())).orElse(null));
         impact.setStakeholder(stakeholderRepository.findById(UUID.fromString(impactDto.getStakeholder().getId())).orElse(null));

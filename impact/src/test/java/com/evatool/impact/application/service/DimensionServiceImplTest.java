@@ -1,6 +1,7 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.InvalidUuidException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,26 @@ class DimensionServiceImplTest {
             // then
             var id = dimension.getId().toString();
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.findDimensionById(id));
+        }
+
+        @Test
+        void testGetDimensionById_NullId_ThrowInvalidUuidException() {
+            // given
+
+            // when
+
+            // then
+            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> dimensionService.findDimensionById(null));
+        }
+
+        @Test
+        void testGetDimensionById_InvalidId_ThrowInvalidUuidException() {
+            // given
+
+            // when
+
+            // then
+            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> dimensionService.findDimensionById("invalid id"));
         }
     }
 

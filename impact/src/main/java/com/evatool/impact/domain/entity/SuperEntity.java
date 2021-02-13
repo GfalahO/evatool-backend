@@ -35,10 +35,6 @@ public class SuperEntity {
     }
 
     public void setId(String id) {
-        if (this.idAlreadySet()) {
-            logger.error("Attempted to set existing id.");
-            throw new PropertyViolationException("Existing id cannot be set.");
-        }
         if (!isValidUuid(id)) {
             logger.error("Attempted to set invalid id.");
             throw new InvalidUuidException(id);
@@ -50,7 +46,8 @@ public class SuperEntity {
         return this.id != null;
     }
 
-    public static boolean isValidUuid(String id) {
+    // TODO comment where events are fired from us
+    public static boolean isValidUuid(String id) { // TODO return UUID or null?
         if (id == null) {
             return false;
         }

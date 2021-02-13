@@ -43,6 +43,7 @@ public class ImpactServiceImpl implements ImpactService {
         }
         var impact = impactRepository.findById(UUID.fromString(id));
         if (impact.isEmpty()) {
+            logger.error("{} with id '{}' not found.", Impact.class.getSimpleName(), id);
             throw new EntityNotFoundException(Impact.class, id);
         }
         return ImpactDtoMapper.toDto(impact.get());
