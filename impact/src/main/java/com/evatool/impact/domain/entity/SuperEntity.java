@@ -4,8 +4,6 @@ import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -15,8 +13,6 @@ import java.util.UUID;
 
 @MappedSuperclass
 public class SuperEntity {
-
-    private static final Logger logger = LoggerFactory.getLogger(SuperEntity.class);
 
     @Getter
     @Id
@@ -28,7 +24,6 @@ public class SuperEntity {
     // Allowed transitions: null -> null and null -> valid.
     public void setId(UUID id) {
         if (this.idAlreadySet()) {
-            logger.error("Attempted to set existing id.");
             throw new PropertyViolationException("Existing id cannot be set.");
         }
         this.id = id;
@@ -36,7 +31,6 @@ public class SuperEntity {
 
     public void setId(String id) {
         if (!isValidUuid(id)) {
-            logger.error("Attempted to set invalid id.");
             throw new InvalidUuidException(id);
         }
         this.setId(UUID.fromString(id));
@@ -54,7 +48,6 @@ public class SuperEntity {
             UUID.fromString(id); // TODO [tzaika] the result of UUID.fromString is not used. Is there a clean way of returning it and not make code ugly?
             return true;
         } catch (IllegalArgumentException ex) {
-            logger.error(ex.getMessage(), ex);
             return false;
         }
     }
