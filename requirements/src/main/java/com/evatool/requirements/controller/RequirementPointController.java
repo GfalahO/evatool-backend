@@ -2,7 +2,7 @@ package com.evatool.requirements.controller;
 
 import com.evatool.requirements.entity.RequirementsImpacts;
 import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.entity.RequirementGR;
+import com.evatool.requirements.entity.RequirementPoint;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.repository.RequirementGRRepository;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-public class RequirementGRController {
+public class RequirementPointController {
 
-	Logger logger = LoggerFactory.getLogger(RequirementGRController.class);
+	Logger logger = LoggerFactory.getLogger(RequirementPointController.class);
 
 	@Autowired
 	private RequirementGRRepository requirement_grRepository;
@@ -28,19 +28,19 @@ public class RequirementGRController {
 	private RequirementsImpactsRepository requirementsImpactsRepository;
 
 	@GetMapping("/requirement_gr")
-	public List<RequirementGR> getRequirement_grList() {
+	public List<RequirementPoint> getRequirement_grList() {
 		logger.info("/requirement_gr");
 		return requirement_grRepository.findAll();
 	}
 
 	@GetMapping("/requirement_gr/{id}")
-	public Optional<RequirementGR> getRequirement_grById(@PathVariable UUID id) {
+	public Optional<RequirementPoint> getRequirement_grById(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]",id);
 		return requirement_grRepository.findById(id);
 	}
 
-	@GetMapping("/requirement_gr/{id}/inpacts/requirement")
-	public Collection<Requirement> getRequirement_grByInpact(@PathVariable UUID id) {
+	@GetMapping("/requirement_gr/{id}/impacts/requirement")
+	public Collection<Requirement> getRequirement_grByImpact(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]/inpacts/requirement",id);
 		Optional<RequirementsImpacts> inpacts = requirementsImpactsRepository.findById(id);
 		if(inpacts.isEmpty()) return null;
@@ -49,9 +49,9 @@ public class RequirementGRController {
 		return requirementList;
 	}
 
-	@GetMapping("/requirement_gr/{id}/requirement/inpacts")
+	@GetMapping("/requirement_gr/{id}/requirement/impacts")
 	public Collection<RequirementsImpacts> getRequirement_grByRequirement(@PathVariable UUID id) {
-		logger.info("/requirement_gr/[{}]/requirement/inpacts",id);
+		logger.info("/requirement_gr/[{}]/requirement/impacts",id);
 		Optional<Requirement> requirement = requirementRepository.findById(id);
 		if(requirement.isEmpty()) return null;
 		List<RequirementsImpacts> requirementsImpactsList = new ArrayList<>();
@@ -59,7 +59,7 @@ public class RequirementGRController {
 		return requirementsImpactsList;
 	}
 
-	public Collection<RequirementGR> getRequirement_grByRequirementList(Requirement requirement, RequirementsImpacts requirementsImpacts)
+	public Collection<RequirementPoint> getRequirement_grByRequirementList(Requirement requirement, RequirementsImpacts requirementsImpacts)
 	{
 		logger.info("getRequirement_grByRequirementList [{}]",requirement,requirementsImpacts);
 		return requirement_grRepository.findByRequirementAndRequirementsImpacts(requirement, requirementsImpacts);

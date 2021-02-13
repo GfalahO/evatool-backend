@@ -12,6 +12,7 @@ public class Requirement {
     //TODO Proejktid hinterlegen
     @Id
     private UUID id = UUID.randomUUID();
+    private UUID projectId;
     private String title;
     private String description;
     @ManyToMany
@@ -29,7 +30,7 @@ public class Requirement {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(String title) throws IllegalArgumentException {
         if (title == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
@@ -52,7 +53,7 @@ public class Requirement {
         return variants;
     }
 
-    public void setVariants(Collection<RequirementsVariants> variants) {
+    public void setVariants(Collection<RequirementsVariants> variants) throws IllegalArgumentException {
         if (variants == null) {
             throw new IllegalArgumentException("Variants cannot be null.");
         }
@@ -67,5 +68,15 @@ public class Requirement {
         this.id = id;
     }
 
+    public UUID getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(UUID projectId) throws IllegalArgumentException {
+        if (projectId == null) {
+            throw new IllegalArgumentException("ProjectId cannot be null.");
+        }
+        this.projectId = projectId;
+    }
 }
 

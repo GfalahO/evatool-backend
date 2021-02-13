@@ -39,4 +39,16 @@ public class RequirementTest {
         // then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirement.setVariants(null));
     }
+
+
+    @Test
+    public void testSetProjectId_NullValue_ThrowException() {
+        // given
+        var requirement = getRequirement();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirement.setProjectId(null));
+    }
 }

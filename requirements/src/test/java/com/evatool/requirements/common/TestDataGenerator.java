@@ -2,7 +2,7 @@ package com.evatool.requirements.common;
 
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.entity.RequirementGR;
+import com.evatool.requirements.entity.RequirementPoint;
 import com.evatool.requirements.entity.RequirementsImpacts;
 import com.evatool.requirements.entity.RequirementsVariants;
 
@@ -20,14 +20,14 @@ public class TestDataGenerator {
         return new RequirementsVariants("Title","Description");
     }
 
-    public static RequirementGR getRequirementGR(Requirement requirement, RequirementsImpacts requirementsImpacts) {
+    public static RequirementPoint getRequirementGR(Requirement requirement, RequirementsImpacts requirementsImpacts) {
 
-        return new RequirementGR(requirementsImpacts, requirement, 3);
+        return new RequirementPoint(requirementsImpacts, requirement, 3);
     }
 
-    public static RequirementGR getRequirementGR() {
+    public static RequirementPoint getRequirementGR() {
 
-        return new RequirementGR(getRequirementsImpacts(), getRequirement(), 3);
+        return new RequirementPoint(getRequirementsImpacts(), getRequirement(), 3);
     }
 
     public static RequirementDTO getRequirementDTO() {

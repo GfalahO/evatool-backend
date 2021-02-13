@@ -25,11 +25,11 @@ public class RequirementsVariants {
         return title;
     }
 
-    public void setTitle(String titel) {
-        if (titel == null) {
+    public void setTitle(String title) {
+        if (title == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
-        this.title = titel;
+        this.title = title;
     }
 
     public String getDescription() {

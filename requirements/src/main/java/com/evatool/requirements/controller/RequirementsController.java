@@ -2,10 +2,7 @@ package com.evatool.requirements.controller;
 
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.events.RequirementCreatedEvent;
-import com.evatool.requirements.events.RequirementDeletedEvent;
 import com.evatool.requirements.events.RequirementEventPublisher;
-import com.evatool.requirements.events.RequirementUpdatedEvent;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.service.RequirementDTOService;
 import org.slf4j.Logger;
@@ -24,7 +21,7 @@ public class RequirementsController {
 	private RequirementRepository requirementRepository;
 
 	@Autowired
-	private RequirementGRController requirement_grController;
+	private RequirementPointController requirement_grController;
 
 	@Autowired
 	private RequirementDTOService dtoService;

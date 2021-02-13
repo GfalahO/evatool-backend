@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class RequirementGR {
+public class RequirementPoint {
 
     @Id
     private UUID id = UUID.randomUUID();
@@ -16,10 +16,10 @@ public class RequirementGR {
     private Requirement requirement;
     private int points;
 
-    public RequirementGR() {
+    public RequirementPoint() {
     }
 
-    public RequirementGR(RequirementsImpacts requirementsImpacts, Requirement requirement, int points) {
+    public RequirementPoint(RequirementsImpacts requirementsImpacts, Requirement requirement, int points) {
         this.requirementsImpacts = requirementsImpacts;
         this.requirement = requirement;
         this.points = points;
@@ -41,7 +41,7 @@ public class RequirementGR {
         return requirement;
     }
 
-    public void setRequirement(Requirement requirement) {
+    public void setRequirement(Requirement requirement) throws IllegalArgumentException {
         if (requirement == null) {
             throw new IllegalArgumentException("Requirement cannot be null.");
         }
@@ -52,7 +52,7 @@ public class RequirementGR {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(int points) throws IllegalArgumentException {
         if (points < -1 || points > 1) {
             throw new IllegalArgumentException("Value must be in range [-1, 1]");
         }
