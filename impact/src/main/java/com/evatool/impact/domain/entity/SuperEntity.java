@@ -27,6 +27,7 @@ public class SuperEntity {
 
     // Allowed transitions: null -> null and null -> valid.
     public void setId(UUID id) {
+        logger.debug("Set id (UUID)");
         if (this.idAlreadySet()) {
             logger.error("Attempted to set existing id.");
             throw new PropertyViolationException("Existing id cannot be set.");
@@ -35,6 +36,7 @@ public class SuperEntity {
     }
 
     public void setId(String id) {
+        logger.debug("Set id (String)");
         if (!isValidUuid(id)) {
             logger.error("Attempted to set invalid id.");
             throw new InvalidUuidException(id);
@@ -51,7 +53,7 @@ public class SuperEntity {
             return false;
         }
         try {
-            UUID.fromString(id); // TODO [tzaika] the result of UUID.fromString is not used. Is there a clean way of returning it and not make code ugly?
+            UUID.fromString(id); // TODO [tzaika] Question: the result of UUID.fromString is not used. Is there a clean way of returning it and not make code ugly?
             return true;
         } catch (IllegalArgumentException ex) {
             logger.error(ex.getMessage(), ex);

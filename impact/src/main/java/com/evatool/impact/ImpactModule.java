@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Features:
 // TODO [hbuhl & tzaika] Events (wait until 19.02.2021)
-// TODO [hbuhl & tzaika] Logging
-    
+// TODO [tzaika] Logging
+
 // Tests:
 // TODO [hbuhl] ErrorMessage tests in Tests (Mock + Integration) [Done: GetById]
 // TODO [tzaika] Implement Impact API Tests

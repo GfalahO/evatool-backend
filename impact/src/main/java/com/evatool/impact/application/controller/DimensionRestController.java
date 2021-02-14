@@ -34,6 +34,7 @@ public class DimensionRestController {
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<DimensionDto> getDimension(@ApiParam("Id") @PathVariable String id) {
+        logger.info(GET_DIMENSION_MAPPING);
         var dimensionDto = dimensionService.findDimensionById(id);
         var entityModel = new EntityModel<>(dimensionDto);
         addLinks(entityModel);
@@ -45,6 +46,7 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "All entities returned")})
     public ResponseEntity<List<DimensionDto>> getAllDimensions() {
+        logger.info(GET_DIMENSIONS_MAPPING);
         var dimensionDtoList = dimensionService.getAllDimensions();
         var entityModelList = new ArrayList<EntityModel>();
         dimensionDtoList.forEach(s -> entityModelList.add(new EntityModel<>(s)));
@@ -59,6 +61,7 @@ public class DimensionRestController {
             @ApiResponse(code = 400, message = "The entity was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<DimensionDto> createDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
+        logger.info(POST_DIMENSION_MAPPING);
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
         var entityModel = new EntityModel<>(insertedDimensionDto);
         addLinks(entityModel);
@@ -72,6 +75,7 @@ public class DimensionRestController {
             @ApiResponse(code = 400, message = "The entity was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<DimensionDto> updateDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
+        logger.info(PUT_DIMENSION_MAPPING);
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
         var entityModel = new EntityModel<>(updatedDimensionDto);
         addLinks(entityModel);
@@ -79,16 +83,18 @@ public class DimensionRestController {
     }
 
     @DeleteMapping(DELETE_DIMENSION_MAPPING)
-    @ApiOperation(value = "Delete a Dimension")
+    @ApiOperation(value = "Delete an existing Dimension")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
             @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<Void> deleteDimension(@ApiParam("Id") @PathVariable String id) {
+        logger.info(DELETE_DIMENSION_MAPPING);
         dimensionService.deleteDimensionById(id);
         return ResponseEntity.ok().build();
     }
 
     private void addLinks(EntityModel<DimensionDto> entityModel) {
+        logger.debug("Adding HATEOAS Rest Level 3 links.");
         entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(buildGetDimensionsRel()));
         entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(buildPostDimensionRel()));
         if (entityModel.getContent().getId() != null) {

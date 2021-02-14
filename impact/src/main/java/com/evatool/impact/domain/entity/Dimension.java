@@ -55,6 +55,7 @@ public class Dimension extends SuperEntity {
     }
 
     public void setName(String name) {
+        logger.debug("Set Name");
         if (name == null) {
             logger.error("Attempted to set name to null.");
             throw new PropertyViolationException("Name cannot be null.");
@@ -63,6 +64,7 @@ public class Dimension extends SuperEntity {
     }
 
     public void setDescription(String description) {
+        logger.debug("Set Description");
         if (description == null) {
             logger.error("Attempted to set description to null.");
             throw new PropertyViolationException("Description cannot be null.");

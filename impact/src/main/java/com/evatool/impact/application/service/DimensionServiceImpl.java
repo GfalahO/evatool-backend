@@ -29,13 +29,14 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public DimensionDto findDimensionById(String id) {
+        logger.info("Get Dimension");
         if (!SuperEntity.isValidUuid(id)) {
-            logger.error("Invalid UUID.");
+            logger.error("Invalid UUID");
             throw new InvalidUuidException(id);
         }
         var dimension = dimensionRepository.findById(UUID.fromString(id));
         if (dimension.isEmpty()) {
-            logger.error("{} with id '{}' not found.", Dimension.class.getSimpleName(), id);
+            logger.error("{} with id '{}' not found", Dimension.class.getSimpleName(), id);
             throw new EntityNotFoundException(Dimension.class, id);
         }
         return DimensionDtoMapper.toDto(dimension.get());
@@ -43,6 +44,7 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public List<DimensionDto> getAllDimensions() {
+        logger.info("Get Dimensions");
         var dimensions = dimensionRepository.findAll();
         var dimensionDtoList = new ArrayList<DimensionDto>();
         dimensions.forEach(s -> dimensionDtoList.add(DimensionDtoMapper.toDto(s)));
@@ -51,8 +53,9 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public DimensionDto createDimension(DimensionDto dimensionDto) {
+        logger.info("Create Dimension");
         if (dimensionDto.getId() != null) {
-            logger.error("Id must be null.");
+            logger.error("Id must be null");
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Dimension.class.getSimpleName()));
         }
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
@@ -62,6 +65,7 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public DimensionDto updateDimension(DimensionDto dimensionDto) {
+        logger.info("Update Dimension");
         this.findDimensionById(dimensionDto.getId());
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);
         // TODO Fire DimensionUpdatedEvent
@@ -70,6 +74,7 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public void deleteDimensionById(String id) {
+        logger.info("Delete Dimension");
         var dimensionDto = this.findDimensionById(id);
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);
         // TODO Fire DimensionDeletedEvent
@@ -78,6 +83,7 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public void deleteDimensions() {
+        logger.info("Delete Dimensions");
         dimensionRepository.deleteAll();
     }
 }

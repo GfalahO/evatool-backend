@@ -56,6 +56,7 @@ public class Impact extends SuperEntity {
     }
 
     public void setValue(double value) {
+        logger.debug("Set Value");
         if (value < -1.0 || value > 1.0) {
             logger.error("Attempted to set value outside its valid range.");
             throw new PropertyViolationException("Value must be in range [-1, 1]");
@@ -64,6 +65,7 @@ public class Impact extends SuperEntity {
     }
 
     public void setDescription(String description) {
+        logger.debug("Set Description");
         if (description == null) {
             logger.error("Attempted to set description to null.");
             throw new PropertyViolationException("Description cannot be null.");
@@ -72,6 +74,7 @@ public class Impact extends SuperEntity {
     }
 
     public void setDimension(Dimension dimension) {
+        logger.debug("Set Dimension");
         if (dimension == null) {
             logger.error("Attempted to set dimension description to null.");
             throw new PropertyViolationException("Dimension cannot be null.");
@@ -80,6 +83,7 @@ public class Impact extends SuperEntity {
     }
 
     public void setStakeholder(ImpactStakeholder stakeholder) {
+        logger.debug("Set Stakeholder");
         if (stakeholder == null) {
             logger.error("Attempted to set stakeholder to null.");
             throw new PropertyViolationException("Stakeholder cannot be null.");
