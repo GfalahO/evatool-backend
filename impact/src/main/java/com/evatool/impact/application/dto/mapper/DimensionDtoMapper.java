@@ -17,7 +17,7 @@ public class DimensionDtoMapper {
 
     public static Dimension fromDto(DimensionDto dimensionDto) {
         logger.info("Mapping Dto to Entity");
-        if (!Dimension.isValidType(dimensionDto.getType())) {
+        if (!Dimension.isValidType(dimensionDto.getType())) { // TODO remove
             logger.error("Invalid Dimension Type");
             throw new PropertyViolationException(String.format(
                     "Dimension type must be in %s.", Arrays.asList(Dimension.Type.values())));
