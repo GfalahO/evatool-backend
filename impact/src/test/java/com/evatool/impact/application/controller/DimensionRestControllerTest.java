@@ -268,7 +268,7 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testInsertDimension_InsertWithNotNullId_ReturnHttpStatusBadRequest() {
+        void testInsertDimension_InsertNotNullId_ReturnHttpStatusBadRequest() {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
