@@ -48,7 +48,7 @@ class DimensionDtoMapperTest {
         assertThat(dimension.getType()).hasToString(value);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest // TODO Move to entity test...
     @ValueSource(strings = {"", "null", "economic", "social", "Social", "Economic", "ECONOMICd", "SOsCIAL", "economiac", "soscial", "Sodcial", "Econdomic"})
     void testFromDto_IllegalTypeValues_ThrowPropertyViolationException(String value) {
         // given

@@ -24,7 +24,6 @@ public class Dimension extends SuperEntity {
     private String name;
 
     @Getter
-    @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = false)
     private Type type;
@@ -61,6 +60,14 @@ public class Dimension extends SuperEntity {
             throw new PropertyViolationException("Name cannot be null.");
         }
         this.name = name;
+    }
+
+    public void setType(Type type){
+        if(type == null){
+            logger.error("Attempted to set type to null");
+            throw new PropertyViolationException("Type cannot be null.");
+        }
+        this.type = type;
     }
 
     public void setDescription(String description) {
