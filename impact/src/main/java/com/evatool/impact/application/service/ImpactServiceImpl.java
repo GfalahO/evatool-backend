@@ -37,13 +37,14 @@ public class ImpactServiceImpl implements ImpactService {
 
     @Override
     public ImpactDto findImpactById(String id) {
+        logger.info("Get Impact");
         if (!SuperEntity.isValidUuid(id)) {
             logger.error("Invalid UUID.");
             throw new InvalidUuidException(id);
         }
         var impact = impactRepository.findById(UUID.fromString(id));
         if (impact.isEmpty()) {
-            logger.error("{} with id '{}' not found.", Impact.class.getSimpleName(), id);
+            logger.error("Entity not found");
             throw new EntityNotFoundException(Impact.class, id);
         }
         return ImpactDtoMapper.toDto(impact.get());
@@ -51,6 +52,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     @Override
     public List<ImpactDto> getAllImpacts() {
+        logger.info("Get Impacts");
         var impacts = impactRepository.findAll();
         var impactDtoList = new ArrayList<ImpactDto>();
         impacts.forEach(impact -> impactDtoList.add(ImpactDtoMapper.toDto(impact)));
@@ -59,7 +61,9 @@ public class ImpactServiceImpl implements ImpactService {
 
     @Override
     public ImpactDto createImpact(ImpactDto impactDto) {
+        logger.info("Create Impact");
         if (impactDto.getId() != null) {
+            logger.error("Id must be null");
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Impact.class.getSimpleName()));
         }
         var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
@@ -69,6 +73,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     @Override
     public ImpactDto updateImpact(ImpactDto impactDto) {
+        logger.info("Update Impact");
         this.findImpactById(impactDto.getId());
         var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
         // TODO Fire ImpactUpdatedEvent
@@ -77,12 +82,14 @@ public class ImpactServiceImpl implements ImpactService {
 
     @Override
     public void deleteImpactById(String id) {
+        logger.info("Delete Impact");
         // TODO Fire ImpactDeletedEvent
         impactRepository.deleteById(UUID.fromString(id));
     }
 
     @Override
     public void deleteImpacts() {
+        logger.info("Delete Impacts");
         impactRepository.deleteAll();
     }
 }

@@ -36,7 +36,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         }
         var stakeholder = stakeholderRepository.findById(UUID.fromString(id));
         if (stakeholder.isEmpty()) {
-            logger.error("{} with id '{}' not found", ImpactStakeholder.class.getSimpleName(), id);
+            logger.error("Entity not found");
             throw new EntityNotFoundException(ImpactStakeholder.class, id);
         }
         return StakeholderDtoMapper.toDto(stakeholder.get());

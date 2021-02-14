@@ -36,7 +36,7 @@ public class DimensionServiceImpl implements DimensionService {
         }
         var dimension = dimensionRepository.findById(UUID.fromString(id));
         if (dimension.isEmpty()) {
-            logger.error("{} with id '{}' not found", Dimension.class.getSimpleName(), id);
+            logger.error("Entity not found");
             throw new EntityNotFoundException(Dimension.class, id);
         }
         return DimensionDtoMapper.toDto(dimension.get());
