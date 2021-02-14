@@ -252,7 +252,7 @@ class DimensionRestControllerTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"", "typo"})
+        @ValueSource(strings = {"", "typo", "Economic", "Social", "economic", "social"}) // Type must be fully capitalized.
         void testInsertDimension_InsertDimensionWithIllegalType_ReturnHttpStatusBadRequest(String value) {
             // given
             DimensionDto dimensionDto = createDummyDimensionDto();

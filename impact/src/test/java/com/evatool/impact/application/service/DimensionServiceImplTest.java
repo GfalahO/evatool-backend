@@ -99,6 +99,8 @@ class DimensionServiceImplTest {
             assertThat(insertedDimension.getId()).isEqualTo(retrievedDimension.getId());
             assertThat(insertedDimension.getName()).isEqualTo(retrievedDimension.getName());
         }
+
+        // Test error cases
     }
 
     @Nested
@@ -131,6 +133,8 @@ class DimensionServiceImplTest {
             // then
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.updateDimension(dimensionDto));
         }
+
+        // More error test cases
     }
 
     @Nested
@@ -161,6 +165,8 @@ class DimensionServiceImplTest {
             var id = dimension.getId().toString();
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.deleteDimensionById(id));
         }
+
+        // More error test cases
     }
 
     @Nested
