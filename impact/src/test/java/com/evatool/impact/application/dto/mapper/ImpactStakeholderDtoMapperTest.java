@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static com.evatool.impact.application.dto.mapper.StakeholderDtoMapper.fromDto;
-import static com.evatool.impact.application.dto.mapper.StakeholderDtoMapper.toDto;
+import static com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper.fromDto;
+import static com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholderDto;
 import static org.assertj.core.api.Assertions.assertThat;

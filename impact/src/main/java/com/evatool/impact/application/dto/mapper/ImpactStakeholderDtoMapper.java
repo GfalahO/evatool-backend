@@ -6,11 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.UUID;
+public class ImpactStakeholderDtoMapper {
 
-public class StakeholderDtoMapper {
-
-    private static final Logger logger = LoggerFactory.getLogger(StakeholderDtoMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholderDtoMapper.class);
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
