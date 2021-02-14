@@ -19,21 +19,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest webRequest) {
-        logger.error("{} handled. Returning HttpStatus NOT_FOUND (404).", EntityNotFoundException.class.getSimpleName());
+        logger.error("{} handled. Returning HttpStatus NOT_FOUND (404).", exception.getClass().getSimpleName());
         var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(PropertyViolationException.class)
     public ResponseEntity<ErrorMessage> handlePropertyViolationException(PropertyViolationException exception, WebRequest webRequest) {
-        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400).", PropertyViolationException.class.getSimpleName());
+        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400).", exception.getClass().getSimpleName());
         var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidUuidException.class)
     public ResponseEntity<ErrorMessage> handleInvalidUuidException(InvalidUuidException exception, WebRequest webRequest) {
-        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400).", InvalidUuidException.class.getSimpleName());
+        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400).", exception.getClass().getSimpleName());
         var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }

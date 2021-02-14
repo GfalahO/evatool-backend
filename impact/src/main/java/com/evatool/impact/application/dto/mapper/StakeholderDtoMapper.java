@@ -24,7 +24,7 @@ public class StakeholderDtoMapper {
     }
 
     public static StakeholderDto toDto(ImpactStakeholder stakeholder) {
-        logger.info("Mapping Entity from Dto");
+        logger.info("Mapping Entity to Dto");
         return modelMapper.map(stakeholder, StakeholderDto.class);
     }
 }

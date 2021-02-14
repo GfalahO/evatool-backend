@@ -31,7 +31,7 @@ public class DimensionDtoMapper {
     }
 
     public static DimensionDto toDto(Dimension dimension) {
-        logger.info("Mapping Entity from Dto");
+        logger.info("Mapping Entity to Dto");
         return modelMapper.map(dimension, DimensionDto.class);
     }
 }

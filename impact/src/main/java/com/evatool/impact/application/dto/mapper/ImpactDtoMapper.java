@@ -28,7 +28,7 @@ public class ImpactDtoMapper {
     }
 
     public static ImpactDto toDto(Impact impact) {
-        logger.info("Mapping Entity from Dto");
+        logger.info("Mapping Entity to Dto");
         return modelMapper.map(impact, ImpactDto.class);
     }
 }
