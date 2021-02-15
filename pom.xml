@@ -9,6 +9,7 @@
         <module>variants</module>
         <module>analysis</module>
         <module>requirements</module>
+        <module>global</module>
     </modules>
 
     <parent>
