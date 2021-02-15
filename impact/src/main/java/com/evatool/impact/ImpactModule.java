@@ -3,6 +3,10 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// NOW:
+// TODO [hbuhl & tzaika] Build Tool Chain (bis 19.02.2021)
+// TODO [hbuhl] Redo Event Testing (after async test behaviour has been validated in real application) [Config in root?]
+
 // Features:
 // TODO [hbuhl & tzaika] Events
 // TODO [tzaika] Logging
@@ -17,8 +21,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [tzaika] use new wireframe in impact wiki
 
 // SIG:
-// TODO [hbuhl & tzaika] Build Tool Chain (bis 19.02.2021)
-// TODO [hbuhl] Redo Event Testing (after async test behaviour has been validated in real application) [Config in root?]
 
 @SpringBootApplication
 public class ImpactModule {
