@@ -1,11 +1,9 @@
 package com.evatool.requirements.controller;
 
+import com.evatool.global.events.RequirementCreatedEvent;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.events.RequirementCreatedEvent;
-import com.evatool.requirements.events.RequirementDeletedEvent;
 import com.evatool.requirements.events.RequirementEventPublisher;
-import com.evatool.requirements.events.RequirementUpdatedEvent;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.service.RequirementDTOService;
 import org.slf4j.Logger;
@@ -13,7 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class RequirementsController {
@@ -49,7 +50,7 @@ public class RequirementsController {
 	@PostMapping("/requirements")
 	public Requirement newRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
-		//eventPublisher.publishEvent(new RequirementCreatedEvent(null));
+		eventPublisher.publishEvent(new RequirementCreatedEvent("TEST"));
 		return requirementRepository.save(requirement);
 	}
 
