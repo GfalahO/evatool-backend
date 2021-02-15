@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel?, @ApiModelProperty?, @ApiParam)
 
 // Tests:
-// TODO [tzaika] Implement Impact API Testsl
+// TODO [tzaika] Implement Impact API Tests
 // TODO [hbuhl & tzaika] Event Tests (wait until 19.02.2021)
 
 // Team:
