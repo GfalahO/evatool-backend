@@ -10,7 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Tests:
 // TODO [hbuhl] ErrorMessage tests in Tests (Mock + Integration) [Done: GetById]
 // TODO [hbuhl] More ServiceImpl tests
-// TODO [hbuhl] Consider removing modelmapper and mapping manually (+ write better tests after removing modelmapper)
+// TODO [hbuhl] remove modelmapper and map manually
+//  (+ all setter logic in entities, not mapper)
+//  (+ write better tests after removing modelmapper)
+//  (+ remove default constructors?)
 // TODO [tzaika] Implement Impact API Tests
 // TODO [hbuhl & tzaika] Event Tests (wait until 19.02.2021)
 
