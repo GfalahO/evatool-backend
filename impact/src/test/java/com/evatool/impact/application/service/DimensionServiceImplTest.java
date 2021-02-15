@@ -2,6 +2,7 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.InvalidUuidException;
+import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -100,7 +101,17 @@ class DimensionServiceImplTest {
             assertThat(insertedDimension.getName()).isEqualTo(retrievedDimension.getName());
         }
 
-        // not null id
+        @Test
+        void testInsertDimension_NotNullId_ThrowPropertyViolationException() {
+            // given
+            var dimensionDto = createDummyDimensionDto();
+
+            // when
+            dimensionDto.setId("not null");
+
+            // then
+            assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimensionService.createDimension(dimensionDto));
+        }
     }
 
     @Nested
@@ -123,7 +134,7 @@ class DimensionServiceImplTest {
         }
 
         @Test
-        void testUpdateDimension_UpdatedNonExistingId_ThrowEntityNotFoundException() {
+        void testUpdateDimension_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
@@ -134,8 +145,29 @@ class DimensionServiceImplTest {
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.updateDimension(dimensionDto));
         }
 
-        // Null id
-        // invalid id
+        @Test
+        void testUpdateDimension_NullId_ThrowInvalidUuidException() {
+            // given
+            var dimensionDto = createDummyDimensionDto();
+            dimensionDto.setId(null);
+
+            // when
+
+            // then
+            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> dimensionService.updateDimension(dimensionDto));
+        }
+
+        @Test
+        void testUpdateDimension_InvalidId_ThrowInvalidUuidException() {
+            // given
+            var dimensionDto = createDummyDimensionDto();
+            dimensionDto.setId("invalid id");
+
+            // when
+
+            // then
+            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> dimensionService.updateDimension(dimensionDto));
+        }
     }
 
     @Nested
@@ -155,7 +187,7 @@ class DimensionServiceImplTest {
         }
 
         @Test
-        void testDeleteDimensionById_DeleteNonExistingId_ThrowEntityNotFoundException() {
+        void testDeleteDimensionById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID());
@@ -169,6 +201,28 @@ class DimensionServiceImplTest {
 
         // Null id
         // invalid id
+
+        @Test
+        void testDeleteDimensionById_NullId_ThrowInvalidUuidException() {
+            // given
+            var id = (String) null;
+
+            // when
+
+            // then
+            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> dimensionService.deleteDimensionById(id));
+        }
+
+        @Test
+        void testDeleteDimensionById_InvalidId_ThrowInvalidUuidException() {
+            // given
+            var id = "invalid id";
+
+            // when
+
+            // then
+            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> dimensionService.deleteDimensionById(id));
+        }
     }
 
     @Nested

@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Tests:
 // TODO [hbuhl & tzaika] ErrorMessage tests in Tests (Mock + Integration) [Done: GetById]
-// TODO [hbuhl] More ServiceImpl tests (Dimension + Stakeholder)
 // TODO [tzaika] Implement Impact API Tests
 // TODO [hbuhl & tzaika] Event Tests (wait until 19.02.2021)
 
