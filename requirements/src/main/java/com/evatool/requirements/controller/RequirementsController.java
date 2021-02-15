@@ -1,6 +1,5 @@
 package com.evatool.requirements.controller;
 
-import com.evatool.global.events.RequirementCreatedEvent;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.events.RequirementEventPublisher;
@@ -50,7 +49,7 @@ public class RequirementsController {
 	@PostMapping("/requirements")
 	public Requirement newRequirement(@RequestBody Requirement requirement) {
 		logger.info("/requirements");
-		eventPublisher.publishEvent(new RequirementCreatedEvent("TEST"));
+		//eventPublisher.publishEvent(new RequirementCreatedEvent(null));
 		return requirementRepository.save(requirement);
 	}
 
