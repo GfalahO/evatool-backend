@@ -7,6 +7,11 @@
         <artifactId>evatool</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    <modules>
+        <module>
+            ../global
+        </module>
+    </modules>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>requirements</artifactId>
