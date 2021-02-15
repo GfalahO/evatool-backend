@@ -13,11 +13,13 @@ public class ImpactStakeholderJsonMapper {
 
     public static ImpactStakeholder fromJson(String json) {
         logger.info("Mapping Json to Entity");
-        var impactStakeholder = new ImpactStakeholder();
+        ImpactStakeholder impactStakeholder;
         try {
             var jsonObject = new JSONObject(json);
+            impactStakeholder = new ImpactStakeholder(
+                    jsonObject.getString("name")
+            );
             impactStakeholder.setId(jsonObject.getString("id"));
-            impactStakeholder.setName(jsonObject.getString("name"));
         } catch (JSONException jex) {
             logger.error("Invalid Json", jex);
             throw new InvalidEventJsonPayloadException(json, jex);

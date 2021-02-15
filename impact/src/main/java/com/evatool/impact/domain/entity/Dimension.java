@@ -37,15 +37,20 @@ public class Dimension extends SuperEntity {
         super();
     }
 
-    public Dimension(String name, String type, String description) {
+    private Dimension(String name, String description) {
         this();
         this.setName(name);
-        this.setType(type);
         this.setDescription(description);
     }
 
+    public Dimension(String name, String type, String description) {
+        this(name, description);
+        this.setType(type);
+    }
+
     public Dimension(String name, Type type, String description) {
-        this(name, type.toString(), description);
+        this(name, description);
+        this.setType(type);
     }
 
     @Override
