@@ -1,11 +1,11 @@
 package com.evatool.requirements.controller;
 
+import com.evatool.global.events.RequirementCreatedEvent;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.events.RequirementCreatedEvent;
-import com.evatool.requirements.events.RequirementDeletedEvent;
+
 import com.evatool.requirements.events.RequirementEventPublisher;
-import com.evatool.requirements.events.RequirementUpdatedEvent;
+
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.service.RequirementDTOService;
 import org.slf4j.Logger;
@@ -36,6 +36,7 @@ public class RequirementsController {
 	public List<RequirementDTO> getRequirementList() {
 		logger.info("/requirements");
 		List<Requirement> resultList = requirementRepository.findAll();
+		eventPublisher.publishEvent(new RequirementCreatedEvent("TEST EVENT"));
 		if(resultList.size()==0){return Arrays.asList();}
 		return dtoService.findAll(resultList);
 	}
