@@ -72,6 +72,39 @@ class SuperEntityTest {
         assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(id));
     }
 
+    @Test
+    void testProbeExistingId_InvalidId_ThrowInvalidUuidException() {
+        // given
+        var id = "invalid id";
+
+        // when
+
+        // then
+        assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> SuperEntity.probeExistingId(id));
+    }
+
+    @Test
+    void testProbeExistingId_NullId_ThrowInvalidUuidException() {
+        // given
+        var id = (String) null;
+
+        // when
+
+        // then
+        assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> SuperEntity.probeExistingId(id));
+    }
+
+    @Test
+    void testProbeNonExistingId_NullId_ThrowInvalidUuidException() {
+        // given
+        var id = "not null";
+
+        // when
+
+        // then
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> SuperEntity.probeNonExistingId(id));
+    }
+
     private SuperEntityImpl getSuperEntity() {
         return new SuperEntityImpl();
     }
