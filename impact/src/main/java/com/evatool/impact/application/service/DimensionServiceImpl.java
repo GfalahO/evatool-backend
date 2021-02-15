@@ -3,7 +3,6 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.SuperEntity;
@@ -30,10 +29,7 @@ public class DimensionServiceImpl implements DimensionService {
     @Override
     public DimensionDto findDimensionById(String id) {
         logger.info("Get Dimension");
-        if (!SuperEntity.isValidUuid(id)) {
-            logger.error("Invalid UUID");
-            throw new InvalidUuidException(id);
-        }
+        SuperEntity.probeExistingId(id);
         var dimension = dimensionRepository.findById(UUID.fromString(id));
         if (dimension.isEmpty()) {
             logger.error("Entity not found");
@@ -54,10 +50,7 @@ public class DimensionServiceImpl implements DimensionService {
     @Override
     public DimensionDto createDimension(DimensionDto dimensionDto) {
         logger.info("Create Dimension");
-        if (dimensionDto.getId() != null) {
-            logger.error("Id must be null");
-            throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Dimension.class.getSimpleName()));
-        }
+        SuperEntity.probeNonExistingId(dimensionDto.getId());
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
         // TODO Fire DimensionCreatedEvent
         return DimensionDtoMapper.toDto(dimension);

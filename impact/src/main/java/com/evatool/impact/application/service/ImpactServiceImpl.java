@@ -3,7 +3,6 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.SuperEntity;
@@ -38,10 +37,7 @@ public class ImpactServiceImpl implements ImpactService {
     @Override
     public ImpactDto findImpactById(String id) {
         logger.info("Get Impact");
-        if (!SuperEntity.isValidUuid(id)) {
-            logger.error("Invalid UUID.");
-            throw new InvalidUuidException(id);
-        }
+        SuperEntity.probeExistingId(id);
         var impact = impactRepository.findById(UUID.fromString(id));
         if (impact.isEmpty()) {
             logger.error("Entity not found");
@@ -62,10 +58,7 @@ public class ImpactServiceImpl implements ImpactService {
     @Override
     public ImpactDto createImpact(ImpactDto impactDto) {
         logger.info("Create Impact");
-        if (impactDto.getId() != null) {
-            logger.error("Id must be null");
-            throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Impact.class.getSimpleName()));
-        }
+        SuperEntity.probeNonExistingId(impactDto.getId());
         var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
         // TODO Fire ImpactCreatedEvent
         return ImpactDtoMapper.toDto(impactRepository.save(impact));

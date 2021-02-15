@@ -17,13 +17,14 @@ public class DimensionDtoMapper {
 
     public static Dimension fromDto(DimensionDto dimensionDto) {
         logger.info("Mapping Dto to Entity");
-        var dimension = new Dimension();
+        var dimension = new Dimension(
+                dimensionDto.getName(),
+                dimensionDto.getType(),
+                dimensionDto.getDescription()
+        );
         if (dimensionDto.getId() != null) {
             dimension.setId(dimensionDto.getId());
         }
-        dimension.setName(dimensionDto.getName());
-        dimension.setType(dimensionDto.getType());
-        dimension.setDescription(dimensionDto.getDescription());
         return dimension;
     }
 

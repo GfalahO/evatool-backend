@@ -18,6 +18,10 @@ public class SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(SuperEntity.class);
 
+    protected SuperEntity() {
+
+    }
+
     @Getter
     @Id
     @GeneratedValue(generator = "UUID")
@@ -57,6 +61,18 @@ public class SuperEntity {
         } catch (IllegalArgumentException ex) {
             logger.error(ex.getMessage(), ex);
             return false;
+        }
+    }
+
+    public static void probeExistingId(String id) {
+        var entity = new SuperEntity();
+        entity.setId(id);
+    }
+
+    public static void probeNonExistingId(String id) {
+        if (id != null) {
+            logger.error("Id must be null");
+            throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", Dimension.class.getSimpleName()));
         }
     }
 }

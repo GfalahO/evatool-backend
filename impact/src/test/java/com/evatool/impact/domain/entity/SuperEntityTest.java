@@ -77,6 +77,8 @@ class SuperEntityTest {
     }
 
     private static class SuperEntityImpl extends SuperEntity {
-
+        public SuperEntityImpl() {
+            super();
+        }
     }
 }

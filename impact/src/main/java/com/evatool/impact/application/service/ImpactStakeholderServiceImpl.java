@@ -3,7 +3,6 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.entity.SuperEntity;
@@ -30,10 +29,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     @Override
     public ImpactStakeholderDto findStakeholderById(String id) {
         logger.info("Get Stakeholder");
-        if (!SuperEntity.isValidUuid(id)) {
-            logger.error("Invalid UUID");
-            throw new InvalidUuidException(id);
-        }
+        SuperEntity.probeExistingId(id);
         var stakeholder = stakeholderRepository.findById(UUID.fromString(id));
         if (stakeholder.isEmpty()) {
             logger.error("Entity not found");
@@ -54,10 +50,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     @Override
     public ImpactStakeholderDto createStakeholder(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Create Stakeholder");
-        if (impactStakeholderDto.getId() != null) {
-            logger.error("Id must be null");
-            throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", ImpactStakeholder.class.getSimpleName()));
-        }
+        SuperEntity.probeNonExistingId(impactStakeholderDto.getId());
         var stakeholder = stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactStakeholderDto));
         return ImpactStakeholderDtoMapper.toDto(stakeholder);
     }

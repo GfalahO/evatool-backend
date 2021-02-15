@@ -18,14 +18,15 @@ public class ImpactDtoMapper {
 
     public static Impact fromDto(ImpactDto impactDto, DimensionRepository dimensionRepository, ImpactStakeholderRepository stakeholderRepository) {
         logger.info("Mapping Dto to Entity");
-        var impact = new Impact();
+        var impact = new Impact(
+                impactDto.getValue(),
+                impactDto.getDescription(),
+                dimensionRepository.findById(UUID.fromString(impactDto.getDimension().getId())).orElse(null),
+                stakeholderRepository.findById(UUID.fromString(impactDto.getStakeholder().getId())).orElse(null)
+        );
         if (impactDto.getId() != null) {
             impact.setId(impactDto.getId());
         }
-        impact.setValue(impactDto.getValue());
-        impact.setDescription(impactDto.getDescription());
-        impact.setDimension(dimensionRepository.findById(UUID.fromString(impactDto.getDimension().getId())).orElse(null));
-        impact.setStakeholder(stakeholderRepository.findById(UUID.fromString(impactDto.getStakeholder().getId())).orElse(null));
         return impact;
     }
 
