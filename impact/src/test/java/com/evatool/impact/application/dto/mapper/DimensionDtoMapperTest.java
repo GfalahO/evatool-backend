@@ -33,34 +33,6 @@ class DimensionDtoMapperTest {
         assertThat(dimension.getDescription()).isEqualTo(dimensionDto.getDescription());
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"ECONOMIC", "SOCIAL"})
-    void testFromDto_LegalTypeValues_DoNotThrowException(String value) {
-        // given
-        var dimensionDto = createDummyDimensionDto();
-        dimensionDto.setId(UUID.randomUUID().toString());
-
-        // when
-        dimensionDto.setType(value);
-        var dimension = DimensionDtoMapper.fromDto(dimensionDto);
-
-        // then
-        assertThat(dimension.getType()).hasToString(value);
-    }
-
-    @ParameterizedTest // TODO Move to entity test...
-    @ValueSource(strings = {"", "null", "economic", "social", "Social", "Economic", "ECONOMICd", "SOsCIAL", "economiac", "soscial", "Sodcial", "Econdomic"})
-    void testFromDto_IllegalTypeValues_ThrowPropertyViolationException(String value) {
-        // given
-        var dto = createDummyDimensionDto();
-
-        // when
-        dto.setType(value);
-
-        // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> DimensionDtoMapper.fromDto(dto));
-    }
-
     @Test
         // TODO [tzaika] actually an integration test
     void testFromDto_NewDimensionDto_EqualsDimension() {
