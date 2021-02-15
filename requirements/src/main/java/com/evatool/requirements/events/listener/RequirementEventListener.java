@@ -1,9 +1,5 @@
 package com.evatool.requirements.events.listener;
 
-import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.entity.RequirementsVariants;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.context.ApplicationEvent;

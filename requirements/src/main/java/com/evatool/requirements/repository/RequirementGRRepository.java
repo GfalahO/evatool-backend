@@ -1,7 +1,7 @@
 
 package com.evatool.requirements.repository;
 
-import com.evatool.requirements.entity.RequirementsImpacts;
+import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementPoint;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,9 +13,9 @@ import java.util.UUID;
 @Repository
 public interface RequirementGRRepository extends JpaRepository<RequirementPoint, UUID> {
 
-    public Collection<RequirementPoint> findByRequirementsImpacts(RequirementsImpacts requirementsImpacts);
+    public Collection<RequirementPoint> findByRequirementsImpact(RequirementsImpact requirementsImpact);
 
     public Collection<RequirementPoint> findByRequirement(Requirement requirement);
-    public Collection<RequirementPoint> findByRequirementAndRequirementsImpacts(Requirement requirement, RequirementsImpacts requirementsImpacts);
+    public Collection<RequirementPoint> findByRequirementAndRequirementsImpact(Requirement requirement, RequirementsImpact requirementsImpact);
 }
 

@@ -1,6 +1,6 @@
 package com.evatool.requirements.domain.repository;
 
-import com.evatool.requirements.entity.RequirementsImpacts;
+import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import static com.evatool.requirements.common.TestDataGenerator.getRequirementsI
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class RequirementsImpactsRepositoryTest {
+public class RequirementsImpactRepositoryTest {
 
     @Autowired
     private RequirementsImpactsRepository requirementsImpactsRepository;
@@ -21,11 +21,11 @@ public class RequirementsImpactsRepositoryTest {
     @Test
     public void testFindById_InsertedImpact_ReturnImpact() {
         // given
-        RequirementsImpacts impact = getRequirementsImpacts();
+        RequirementsImpact impact = getRequirementsImpacts();
         requirementsImpactsRepository.save(impact);
 
         // when
-        RequirementsImpacts found = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
+        RequirementsImpact found = requirementsImpactsRepository.findById(impact.getId()).orElse(null);
 
         // then
         assertThat(found.getId()).isEqualTo(impact.getId());
@@ -34,36 +34,36 @@ public class RequirementsImpactsRepositoryTest {
     @Test
     public void testSave_InsertedImpact_IdIsNotNull() {
         // given
-        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        RequirementsImpact requirementsImpact = getRequirementsImpacts();
 
         // when
-        requirementsImpactsRepository.save(requirementsImpacts);
+        requirementsImpactsRepository.save(requirementsImpact);
 
         // then
-        assertThat(requirementsImpacts.getId()).isNotNull();
+        assertThat(requirementsImpact.getId()).isNotNull();
     }
 
     @Test
     public void testSave_InsertedImpact_IdIsUuid() {
         // given
-        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        RequirementsImpact requirementsImpact = getRequirementsImpacts();
 
         // when
-        requirementsImpactsRepository.save(requirementsImpacts);
+        requirementsImpactsRepository.save(requirementsImpact);
 
         // then
-        UUID.fromString(requirementsImpacts.getId().toString());
+        UUID.fromString(requirementsImpact.getId().toString());
     }
 
     @Test
     public void testDelete_DeletedImpact_ReturnNull() {
         // given
-        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
-        requirementsImpactsRepository.save(requirementsImpacts);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts();
+        requirementsImpactsRepository.save(requirementsImpact);
 
         // when
-        requirementsImpactsRepository.delete(requirementsImpacts);
-        var found = requirementsImpactsRepository.findById(requirementsImpacts.getId()).orElse(null);
+        requirementsImpactsRepository.delete(requirementsImpact);
+        var found = requirementsImpactsRepository.findById(requirementsImpact.getId()).orElse(null);
 
         // then
         assertThat(found).isNull();

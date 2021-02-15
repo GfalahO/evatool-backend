@@ -2,7 +2,7 @@ package com.evatool.requirements.domain.repository;
 
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementPoint;
-import com.evatool.requirements.entity.RequirementsImpacts;
+import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementGRRepository;
 import com.evatool.requirements.repository.RequirementRepository;
@@ -32,12 +32,12 @@ public class RequirementPointRepositoryTest {
     @Test
     public void testFindById_ExistingRequirementGR_ReturnRequirement() {
         // given
-        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        RequirementsImpact requirementsImpact = getRequirementsImpacts();
         Requirement requirement = getRequirement();
         requirementRepository.save(requirement);
-        requirementsImpactsRepository.save(requirementsImpacts);
+        requirementsImpactsRepository.save(requirementsImpact);
 
-        RequirementPoint requirementPoint = getRequirementGR(requirement,requirementsImpacts);
+        RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpact);
         requirementGRRepository.save(requirementPoint);
 
         // when
@@ -49,12 +49,12 @@ public class RequirementPointRepositoryTest {
 
     @Test
     public void testSave_InsertedRequirementGR_IdIsNotNull() {
-        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        RequirementsImpact requirementsImpact = getRequirementsImpacts();
         Requirement requirement = getRequirement();
         requirementRepository.save(requirement);
-        requirementsImpactsRepository.save(requirementsImpacts);
+        requirementsImpactsRepository.save(requirementsImpact);
         // given
-        RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpacts);
+        RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpact);
 
         // when
         requirementGRRepository.save(requirementPoint);
@@ -65,12 +65,12 @@ public class RequirementPointRepositoryTest {
 
     @Test
     public void testSave_InsertedRequirementGR_IdIsUuid() {
-        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        RequirementsImpact requirementsImpact = getRequirementsImpacts();
         Requirement requirement = getRequirement();
         requirementRepository.save(requirement);
-        requirementsImpactsRepository.save(requirementsImpacts);
+        requirementsImpactsRepository.save(requirementsImpact);
         // given
-        RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpacts);
+        RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpact);
 
         // when
         requirementGRRepository.save(requirementPoint);
@@ -81,12 +81,12 @@ public class RequirementPointRepositoryTest {
 
     @Test
     public void testDelete_DeletedRequirementGR_ReturnNull() {
-        RequirementsImpacts requirementsImpacts = getRequirementsImpacts();
+        RequirementsImpact requirementsImpact = getRequirementsImpacts();
         Requirement requirement = getRequirement();
         requirementRepository.save(requirement);
-        requirementsImpactsRepository.save(requirementsImpacts);
+        requirementsImpactsRepository.save(requirementsImpact);
         // given
-        RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpacts);
+        RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpact);
         requirementGRRepository.save(requirementPoint);
 
         // when

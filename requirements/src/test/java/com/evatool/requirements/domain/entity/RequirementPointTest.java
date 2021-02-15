@@ -28,7 +28,7 @@ public class RequirementPointTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementPoint.setRequirementsImpacts(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementPoint.setRequirementsImpact(null));
     }
 
     @ParameterizedTest

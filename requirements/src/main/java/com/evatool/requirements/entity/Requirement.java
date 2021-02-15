@@ -1,8 +1,6 @@
 
 package com.evatool.requirements.entity;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +16,7 @@ public class Requirement {
     private String title;
     private String description;
     @ManyToMany
-    private Collection<RequirementsVariants> variants = new ArrayList<>();
+    private Collection<RequirementsVariant> variants = new ArrayList<>();
 
     public Requirement() {
     }
@@ -51,11 +49,11 @@ public class Requirement {
         this.description = description;
     }
 
-    public Collection<RequirementsVariants> getVariants() {
+    public Collection<RequirementsVariant> getVariants() {
         return variants;
     }
 
-    public void setVariants(Collection<RequirementsVariants> variants) throws IllegalArgumentException {
+    public void setVariants(Collection<RequirementsVariant> variants) throws IllegalArgumentException {
         if (variants == null) {
             throw new IllegalArgumentException("Variants cannot be null.");
         }

@@ -1,26 +1,35 @@
+
 package com.evatool.requirements.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "REQ_RequirementVariants")
-public class RequirementsVariants {
+@Table(name = "REQ_RequirementImpact")
+public class RequirementsImpact {
 
     @Id
     private UUID id = UUID.randomUUID();
     private String title;
     private String description;
+    private int value;
 
+    private Dimension dimension;
 
-    public RequirementsVariants() {
+    public RequirementsImpact() {
     }
 
-    public RequirementsVariants(String title, String description) {
+    public RequirementsImpact(String title, String description, int value, Dimension dimension) {
         this.title = title;
         this.description = description;
+        this.value = value;
+        this.dimension=dimension;
+    }
+
+    public enum Dimension{
+        SAFETY,PRIVAT
     }
 
     public String getTitle() {
@@ -43,6 +52,25 @@ public class RequirementsVariants {
             throw new IllegalArgumentException("Description cannot be null.");
         }
         this.description = description;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        if (value < -1 || value > 1) {
+            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+        }
+        this.value = value;
+    }
+
+    public Dimension getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(Dimension dimension) {
+        this.dimension = dimension;
     }
 
     public UUID getId() {

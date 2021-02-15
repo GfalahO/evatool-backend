@@ -1,6 +1,6 @@
 package com.evatool.requirements.controller;
 
-import com.evatool.requirements.entity.RequirementsImpacts;
+import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementPoint;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
@@ -42,26 +42,26 @@ public class RequirementPointController {
 	@GetMapping("/requirement_gr/{id}/impacts/requirement")
 	public Collection<Requirement> getRequirement_grByImpact(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]/inpacts/requirement",id);
-		Optional<RequirementsImpacts> inpacts = requirementsImpactsRepository.findById(id);
+		Optional<RequirementsImpact> inpacts = requirementsImpactsRepository.findById(id);
 		if(inpacts.isEmpty()) return null;
 		List<Requirement> requirementList = new ArrayList<>();
-		requirement_grRepository.findByRequirementsImpacts(inpacts.get()).forEach(e->requirementList.add(e.getRequirement()));
+		requirement_grRepository.findByRequirementsImpact(inpacts.get()).forEach(e->requirementList.add(e.getRequirement()));
 		return requirementList;
 	}
 
 	@GetMapping("/requirement_gr/{id}/requirement/impacts")
-	public Collection<RequirementsImpacts> getRequirement_grByRequirement(@PathVariable UUID id) {
+	public Collection<RequirementsImpact> getRequirement_grByRequirement(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]/requirement/impacts",id);
 		Optional<Requirement> requirement = requirementRepository.findById(id);
 		if(requirement.isEmpty()) return null;
-		List<RequirementsImpacts> requirementsImpactsList = new ArrayList<>();
-		requirement_grRepository.findByRequirement(requirement.get()).forEach(e-> requirementsImpactsList.add(e.getRequirementsImpacts()));
-		return requirementsImpactsList;
+		List<RequirementsImpact> requirementsImpactList = new ArrayList<>();
+		requirement_grRepository.findByRequirement(requirement.get()).forEach(e-> requirementsImpactList.add(e.getRequirementsImpact()));
+		return requirementsImpactList;
 	}
 
-	public Collection<RequirementPoint> getRequirement_grByRequirementList(Requirement requirement, RequirementsImpacts requirementsImpacts)
+	public Collection<RequirementPoint> getRequirement_grByRequirementList(Requirement requirement, RequirementsImpact requirementsImpact)
 	{
-		logger.info("getRequirement_grByRequirementList [{}]",requirement,requirementsImpacts);
-		return requirement_grRepository.findByRequirementAndRequirementsImpacts(requirement, requirementsImpacts);
+		logger.info("getRequirement_grByRequirementList [{}]",requirement, requirementsImpact);
+		return requirement_grRepository.findByRequirementAndRequirementsImpact(requirement, requirementsImpact);
 	}
 }

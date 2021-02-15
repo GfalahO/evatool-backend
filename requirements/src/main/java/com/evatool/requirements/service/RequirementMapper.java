@@ -2,7 +2,7 @@ package com.evatool.requirements.service;
 
 import com.evatool.requirements.controller.RequirementPointController;
 import com.evatool.requirements.dto.RequirementDTO;
-import com.evatool.requirements.entity.RequirementsImpacts;
+import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +36,8 @@ public class RequirementMapper {
             requirementDTO.setVariantsUUID(variants.getId());
 
         });
-        Collection<RequirementsImpacts> requirementsImpactsList = requirement_grController.getRequirement_grByRequirement(requirement.getId());
-        requirementsImpactsList.forEach(inpacts -> {
+        Collection<RequirementsImpact> requirementsImpactList = requirement_grController.getRequirement_grByRequirement(requirement.getId());
+        requirementsImpactList.forEach(inpacts -> {
             requirementDTO.getImpactTitles().put(inpacts.getId(),inpacts.getTitle());
 
 
@@ -52,9 +52,9 @@ public class RequirementMapper {
         return requirementDTO;
     }
 
-    private Integer calculatePoints(RequirementsImpacts requirementsImpacts, Collection<RequirementPoint> requirement_grCollection) {
-        int basicValue = requirementsImpacts.getValue();
-        int returnValue = requirementsImpacts.getValue();
+    private Integer calculatePoints(RequirementsImpact requirementsImpact, Collection<RequirementPoint> requirement_grCollection) {
+        int basicValue = requirementsImpact.getValue();
+        int returnValue = requirementsImpact.getValue();
 
         for(RequirementPoint requirement_gr :requirement_grCollection){
             returnValue+=requirement_gr.getPoints();
