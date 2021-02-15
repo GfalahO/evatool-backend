@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 import java.util.Arrays;
 
-@Entity(name = "DIMENSION")
-@Table(name = "DIMENSION")
+@Entity(name = "IMP_DIMENSION")
+@Table(name = "IMP_DIMENSION")
 public class Dimension extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Dimension.class);

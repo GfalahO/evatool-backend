@@ -9,8 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity(name = "IMPACT_STAKEHOLDER")
-@Table(name = "IMPACT_STAKEHOLDER")
+@Entity(name = "IMP_STAKEHOLDER")
+@Table(name = "IMP_STAKEHOLDER")
 public class ImpactStakeholder extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholder.class);

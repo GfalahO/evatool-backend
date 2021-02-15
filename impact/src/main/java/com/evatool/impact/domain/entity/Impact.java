@@ -9,8 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 // TODO [future feature] assign data sources; use real DB
-// @Table(name = "IMPACT")
-@Entity(name = "IMPACT")
+// @Table(name = "IMP_IMPACT")
+@Entity(name = "IMP_IMPACT")
 public class Impact extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Impact.class);
