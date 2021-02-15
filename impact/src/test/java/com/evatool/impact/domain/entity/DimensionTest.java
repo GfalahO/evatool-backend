@@ -20,14 +20,25 @@ class DimensionTest {
     }
 
     @Test
-    void testSetType_NullValue_ThrowException() {
+    void testSetTypeType_NullValue_ThrowException() {
         // given
         var dimension = createDummyDimension();
 
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setType(null));
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setType((Dimension.Type) null));
+    }
+
+    @Test
+    void testSetTypeString_NullValue_ThrowException() {
+        // given
+        var dimension = createDummyDimension();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setType((String) null));
     }
 
     @Test

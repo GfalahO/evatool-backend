@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity(name = "DIMENSION")
 @Table(name = "DIMENSION")
@@ -62,12 +63,21 @@ public class Dimension extends SuperEntity {
         this.name = name;
     }
 
-    public void setType(Type type){
-        if(type == null){
+    public void setType(Type type) {
+        if (type == null) {
             logger.error("Attempted to set type to null");
             throw new PropertyViolationException("Type cannot be null.");
         }
         this.type = type;
+    }
+
+    public void setType(String type) {
+        if (!isValidType(type)) {
+            logger.error("Invalid Dimension Type");
+            throw new PropertyViolationException(String.format(
+                    "Dimension type must be in %s.", Arrays.asList(Dimension.Type.values())));
+        }
+        this.setType(Type.valueOf(type));
     }
 
     public void setDescription(String description) {
@@ -79,7 +89,7 @@ public class Dimension extends SuperEntity {
         this.description = description;
     }
 
-    public static boolean isValidType(String value) {
+    private boolean isValidType(String value) {
         if (value == null) {
             return false;
         }
