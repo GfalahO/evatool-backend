@@ -17,15 +17,18 @@ public class DimensionDtoMapper {
 
     public static Dimension fromDto(DimensionDto dimensionDto) {
         logger.info("Mapping Dto to Entity");
-        if (!Dimension.isValidType(dimensionDto.getType())) { // TODO remove
+        if (!Dimension.isValidType(dimensionDto.getType())) { // TODO Move to entity
             logger.error("Invalid Dimension Type");
             throw new PropertyViolationException(String.format(
                     "Dimension type must be in %s.", Arrays.asList(Dimension.Type.values())));
         }
-        var dimension = modelMapper.map(dimensionDto, Dimension.class);
+        var dimension = new Dimension();
         if (dimensionDto.getId() != null) {
             dimension.setId(dimensionDto.getId());
         }
+        dimension.setName(dimensionDto.getName());
+        dimension.setType(Dimension.Type.valueOf(dimensionDto.getType()));
+        dimension.setDescription(dimensionDto.getDescription());
         return dimension;
     }
 

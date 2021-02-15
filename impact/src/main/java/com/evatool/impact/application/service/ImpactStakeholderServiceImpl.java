@@ -1,6 +1,6 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.impact.application.dto.StakeholderDto;
+import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.InvalidUuidException;
@@ -28,7 +28,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public StakeholderDto findStakeholderById(String id) {
+    public ImpactStakeholderDto findStakeholderById(String id) {
         logger.info("Get Stakeholder");
         if (!SuperEntity.isValidUuid(id)) {
             logger.error("Invalid UUID");
@@ -43,30 +43,30 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public List<StakeholderDto> getAllStakeholders() {
+    public List<ImpactStakeholderDto> getAllStakeholders() {
         logger.info("Get Stakeholders");
         var stakeholders = stakeholderRepository.findAll();
-        var stakeholderDtoList = new ArrayList<StakeholderDto>();
+        var stakeholderDtoList = new ArrayList<ImpactStakeholderDto>();
         stakeholders.forEach(s -> stakeholderDtoList.add(ImpactStakeholderDtoMapper.toDto(s)));
         return stakeholderDtoList;
     }
 
     @Override
-    public StakeholderDto createStakeholder(StakeholderDto stakeholderDto) {
+    public ImpactStakeholderDto createStakeholder(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Create Stakeholder");
-        if (stakeholderDto.getId() != null) {
+        if (impactStakeholderDto.getId() != null) {
             logger.error("Id must be null");
             throw new PropertyViolationException(String.format("A newly created '%s' must have null id.", ImpactStakeholder.class.getSimpleName()));
         }
-        var stakeholder = stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(stakeholderDto));
+        var stakeholder = stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactStakeholderDto));
         return ImpactStakeholderDtoMapper.toDto(stakeholder);
     }
 
     @Override
-    public StakeholderDto updateStakeholder(StakeholderDto stakeholderDto) {
+    public ImpactStakeholderDto updateStakeholder(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Update Stakeholder");
-        this.findStakeholderById(stakeholderDto.getId());
-        var stakeholder = ImpactStakeholderDtoMapper.fromDto(stakeholderDto);
+        this.findStakeholderById(impactStakeholderDto.getId());
+        var stakeholder = ImpactStakeholderDtoMapper.fromDto(impactStakeholderDto);
         return ImpactStakeholderDtoMapper.toDto(stakeholderRepository.save(stakeholder));
     }
 

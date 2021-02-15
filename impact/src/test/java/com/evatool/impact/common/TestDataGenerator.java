@@ -2,7 +2,7 @@ package com.evatool.impact.common;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.StakeholderDto;
+import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
@@ -29,8 +29,8 @@ public class TestDataGenerator {
         return dimensionDto;
     }
 
-    public static StakeholderDto createDummyStakeholderDto() {
-        var stakeholderDto = new StakeholderDto();
+    public static ImpactStakeholderDto createDummyStakeholderDto() {
+        var stakeholderDto = new ImpactStakeholderDto();
         stakeholderDto.setName("dummyStakeholder");
         return stakeholderDto;
     }

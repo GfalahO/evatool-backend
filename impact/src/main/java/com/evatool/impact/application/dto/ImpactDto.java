@@ -12,7 +12,7 @@ public class ImpactDto {
 
     @Getter
     @Setter
-    private StakeholderDto stakeholder;
+    private ImpactStakeholderDto stakeholder;
 
     @Getter
     @Setter

@@ -3,7 +3,7 @@ package com.evatool.impact.application.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class StakeholderDto {
+public class ImpactStakeholderDto {
     @Getter
     @Setter
     private String id;
@@ -14,7 +14,7 @@ public class StakeholderDto {
 
     @Override
     public String toString() {
-        return "StakeholderDto{" +
+        return "ImpactStakeholderDto{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';

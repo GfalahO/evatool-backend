@@ -1,6 +1,7 @@
 package com.evatool.impact.application.dto.mapper;
 
-import com.evatool.impact.application.dto.StakeholderDto;
+import com.evatool.impact.application.dto.DimensionDto;
+import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -12,17 +13,18 @@ public class ImpactStakeholderDtoMapper {
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    public static ImpactStakeholder fromDto(StakeholderDto stakeholderDto) {
+    public static ImpactStakeholder fromDto(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Mapping Dto to Entity");
-        var stakeholder = modelMapper.map(stakeholderDto, ImpactStakeholder.class);
-        if (stakeholderDto.getId() != null) {
-            stakeholder.setId(stakeholderDto.getId());
+        var stakeholder = new ImpactStakeholder();
+        if (impactStakeholderDto.getId() != null) {
+            stakeholder.setId(impactStakeholderDto.getId());
         }
+        stakeholder.setName(impactStakeholderDto.getName());
         return stakeholder;
     }
 
-    public static StakeholderDto toDto(ImpactStakeholder stakeholder) {
+    public static ImpactStakeholderDto toDto(ImpactStakeholder impactStakeholder) {
         logger.info("Mapping Entity to Dto");
-        return modelMapper.map(stakeholder, StakeholderDto.class);
+        return modelMapper.map(impactStakeholder, ImpactStakeholderDto.class);
     }
 }
