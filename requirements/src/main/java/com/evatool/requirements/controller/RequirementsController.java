@@ -1,5 +1,6 @@
 package com.evatool.requirements.controller;
 
+
 import com.evatool.global.events.RequirementCreatedEvent;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
@@ -36,7 +37,7 @@ public class RequirementsController {
 	public List<RequirementDTO> getRequirementList() {
 		logger.info("/requirements");
 		List<Requirement> resultList = requirementRepository.findAll();
-		eventPublisher.publishEvent(new RequirementCreatedEvent("TEST EVENT"));
+		//eventPublisher.publishEvent(new RequirementCreatedEvent("TEST EVENT"));
 		if(resultList.size()==0){return Arrays.asList();}
 		return dtoService.findAll(resultList);
 	}

@@ -7,10 +7,7 @@
         <artifactId>evatool</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.evatool</groupId>
     <artifactId>global</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>global</name>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
