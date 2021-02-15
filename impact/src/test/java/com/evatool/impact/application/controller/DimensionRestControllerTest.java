@@ -3,7 +3,6 @@ package com.evatool.impact.application.controller;
 import com.evatool.impact.application.controller.util.DimensionRest;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
-import com.evatool.impact.common.exception.handle.ErrorMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -76,20 +75,6 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testGetDimensionById_NonExistingDimension_ReturnErrorMessage() {
-            var responseEntity = testRestTemplate.getForEntity(
-                    DimensionRest.buildGetDimensionUri(UUID.randomUUID().toString()), ErrorMessage.class);
-
-            // when
-
-            // then
-            var errorMessage = responseEntity.getBody();
-            assertThat(errorMessage.getTimestamp()).isNotNull();
-            assertThat(errorMessage.getMessage()).isNotNull();
-            assertThat(errorMessage.getUri()).isNotNull();
-        }
-
-        @Test
         void testGetDimensionById_InvalidId_ReturnHttpStatusBadRequest() {
             // given
             var responseEntity = testRestTemplate.getForEntity(
@@ -99,21 +84,6 @@ class DimensionRestControllerTest {
 
             // then
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
-        void testGetDimensionById_InvalidId_ReturnErrorMessage() {
-            // given
-            var responseEntity = testRestTemplate.getForEntity(
-                    DimensionRest.buildGetDimensionUri("invalid id"), ErrorMessage.class);
-
-            // when
-
-            // then
-            var errorMessage = responseEntity.getBody();
-            assertThat(errorMessage.getTimestamp()).isNotNull();
-            assertThat(errorMessage.getMessage()).isNotNull();
-            assertThat(errorMessage.getUri()).isNotNull();
         }
     }
 
@@ -272,22 +242,6 @@ class DimensionRestControllerTest {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID().toString());
-
-            // when
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var responseEntity = testRestTemplate.postForEntity(
-                    DimensionRest.buildPostDimensionUri(), httpEntity, DimensionDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        // Insert with non-null id is not allowed.
-        @Test
-        void testInsertDimension_InsertInvalidId_ReturnHttpStatusBadRequest() {
-            // given
-            var dimensionDto = createDummyDimensionDto();
-            dimensionDto.setId("invalid id");
 
             // when
             var httpEntity = new HttpEntity<>(dimensionDto);
