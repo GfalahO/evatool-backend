@@ -4,12 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Features:
-// TODO [hbuhl & tzaika] Events (wait until 19.02.2021)
+// TODO [hbuhl & tzaika] Events
 // TODO [tzaika] Logging
 // TODO [tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel?, @ApiModelProperty?, @ApiParam)
 
 // Tests:
-// TODO [tzaika] Implement Impact API Tests
+// TODO [tzaika] Implement Impact API Testsl
 // TODO [hbuhl & tzaika] Event Tests (wait until 19.02.2021)
 
 // Team:
@@ -17,11 +17,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [tzaika] use new wireframe in impact wiki
 
 // SIG:
-// TODO [hbuhl & tzaika] Build Tool Chain (bis 19.02.2021) [wait for server access]
+// TODO [hbuhl & tzaika] Build Tool Chain (bis 19.02.2021)
 // TODO [hbuhl] Redo Event Testing (after async test behaviour has been validated in real application) [Config in root?]
-
-// Bente:
-// TODO Config files in root
 
 @SpringBootApplication
 public class ImpactModule {
