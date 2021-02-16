@@ -1,4 +1,4 @@
-package com.evatool.impact.common.config;
+package com.evatool.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
