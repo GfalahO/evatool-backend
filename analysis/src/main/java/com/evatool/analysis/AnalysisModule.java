@@ -8,6 +8,9 @@ public class AnalysisModule {
 
     public static void main(String[] args) {
         SpringApplication.run(AnalysisModule.class, args);
-        System.out.println("Analysis Module startet");
+        System.out.println("Analysis-Module startet");
+        // Quality Gate
+        // Quality Gate
+        // Quality Gate
     }
 }
