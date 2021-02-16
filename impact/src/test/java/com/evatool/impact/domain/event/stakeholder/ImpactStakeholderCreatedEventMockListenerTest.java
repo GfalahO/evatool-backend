@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 class ImpactStakeholderCreatedEventMockListenerTest {
 
     @MockBean
-    private StakeholderCreatedEventListener stakeholderCreatedEventListener;
+    private ImpactStakeholderCreatedEventListener impactStakeholderCreatedEventListener;
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
@@ -36,7 +36,7 @@ class ImpactStakeholderCreatedEventMockListenerTest {
         applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
 
         // then
-        verify(stakeholderCreatedEventListener, times(1)).onApplicationEvent(any(StakeholderCreatedEvent.class));
+        verify(impactStakeholderCreatedEventListener, times(1)).onApplicationEvent(any(StakeholderCreatedEvent.class));
     }
 
     @ParameterizedTest
@@ -52,7 +52,7 @@ class ImpactStakeholderCreatedEventMockListenerTest {
         }
 
         // then
-        verify(stakeholderCreatedEventListener, times(value)).onApplicationEvent(any(StakeholderCreatedEvent.class));
+        verify(impactStakeholderCreatedEventListener, times(value)).onApplicationEvent(any(StakeholderCreatedEvent.class));
     }
 
     @Test
@@ -64,6 +64,6 @@ class ImpactStakeholderCreatedEventMockListenerTest {
         applicationEventPublisher.publishEvent(new TestEvent(this));
 
         // then
-        verify(stakeholderCreatedEventListener, times(0)).onApplicationEvent(any(StakeholderCreatedEvent.class));
+        verify(impactStakeholderCreatedEventListener, times(0)).onApplicationEvent(any(StakeholderCreatedEvent.class));
     }
 }

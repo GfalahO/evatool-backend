@@ -5,16 +5,12 @@ import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -25,7 +21,7 @@ class ImpactStakeholderCreatedEventTest {
     private ImpactStakeholderRepository stakeholderRepository;
 
     @Autowired
-    private StakeholderCreatedEventListener stakeholderCreatedEventListener;
+    private ImpactStakeholderCreatedEventListener impactStakeholderCreatedEventListener;
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;

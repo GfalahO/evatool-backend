@@ -4,14 +4,12 @@ import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
 
-@Component
-public class StakeholderCreatedEventListener implements ApplicationListener<StakeholderCreatedEvent> {
+public class ImpactStakeholderUpdatedEventListener implements ApplicationListener<StakeholderCreatedEvent> { // TODO change event!
 
     private final ImpactStakeholderRepository stakeholderRepository;
 
-    public StakeholderCreatedEventListener(ImpactStakeholderRepository stakeholderRepository) {
+    public ImpactStakeholderUpdatedEventListener(ImpactStakeholderRepository stakeholderRepository) {
         this.stakeholderRepository = stakeholderRepository;
     }
 
@@ -19,6 +17,6 @@ public class StakeholderCreatedEventListener implements ApplicationListener<Stak
     public void onApplicationEvent(final StakeholderCreatedEvent event) {
         var jsonPayload = event.getJsonPayload();
         var stakeholder = ImpactStakeholderJsonMapper.fromJson(jsonPayload);
-        stakeholderRepository.save(stakeholder);
+        //stakeholderRepository.save(stakeholder);
     }
 }
