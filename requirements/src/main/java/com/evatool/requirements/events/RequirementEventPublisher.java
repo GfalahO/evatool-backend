@@ -1,22 +1,25 @@
 package com.evatool.requirements.events;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import com.evatool.global.event.RequirementCreated;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RequirementEventPublisher {
 
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
-    Logger logger = LoggerFactory.getLogger(RequirementEventPublisher.class);
+    private final ApplicationEventPublisher applicationEventPublisher;
 
-    public void publishEvent(ApplicationEvent applicationEvent){
-        logger.info("Publishing Event: "+ applicationEvent.getClass());
-        applicationEventPublisher.publishEvent(applicationEvent);
+    @Autowired
+    public RequirementEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
+
+    public void publishRequirementEvent(final String message) {
+        System.out.println("Publishing custom event: " + message);
+        // RequirementCreated requirementCreated = new RequirementCreated(this, message);
+        applicationEventPublisher.publishEvent(null); //(requirementCreated);
     }
 
 }
