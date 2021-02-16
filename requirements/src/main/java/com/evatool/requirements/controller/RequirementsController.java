@@ -1,7 +1,9 @@
 package com.evatool.requirements.controller;
 
+import com.evatool.global.event.RequirementCreated;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
+import com.evatool.requirements.events.RequirementEventPublisher;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.service.RequirementDTOService;
 import org.slf4j.Logger;
@@ -28,14 +30,14 @@ public class RequirementsController {
     @Autowired
     private RequirementDTOService dtoService;
 
-    // @Autowired
-    // private RequirementEventPublisher eventPublisher;
+     @Autowired
+     private RequirementEventPublisher eventPublisher;
 
     @GetMapping("/requirements")
     public List<RequirementDTO> getRequirementList() {
         logger.info("/requirements");
         List<Requirement> resultList = requirementRepository.findAll();
-        // eventPublisher.publishRequirementEvent("TEST EVENT PUBLISHED");
+        eventPublisher.publishRequirementEvent(new RequirementCreated("TEST EVENT PUBLISHED"));
         if (resultList.size() == 0) {
             return Arrays.asList();
         }
@@ -51,7 +53,7 @@ public class RequirementsController {
     @PostMapping("/requirements")
     public Requirement newRequirement(@RequestBody Requirement requirement) {
         logger.info("/requirements");
-        //eventPublisher.publishEvent(new RequirementCreatedEvent(null));
+        eventPublisher.publishRequirementEvent(new RequirementCreated("TEST"));
         return requirementRepository.save(requirement);
     }
 

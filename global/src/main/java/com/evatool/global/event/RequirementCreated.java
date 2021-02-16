@@ -6,8 +6,8 @@ public class RequirementCreated extends ApplicationEvent {
 
     private String message;
 
-    public RequirementCreated(Object source, String message) {
-        super(source);
+    public RequirementCreated( String message) {
+        super(message);
         this.message = message;
     }
     
