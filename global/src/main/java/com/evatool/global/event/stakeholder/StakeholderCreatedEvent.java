@@ -10,7 +10,6 @@ public class StakeholderCreatedEvent extends ApplicationEvent {
 
     public StakeholderCreatedEvent(Object source, String jsonPayload) {
         super(source);
-        System.out.println("StakeholderCreatedEvent");
         this.jsonPayload = jsonPayload;
     }
 }
