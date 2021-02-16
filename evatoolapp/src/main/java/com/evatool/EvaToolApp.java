@@ -1,5 +1,8 @@
 package com.evatool;
 
+import com.evatool.analysis.event.StakeholderCreatedEventPublisher;
+import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,6 +15,6 @@ public class EvaToolApp {
         // dummy.setId("TestId");
         // dummy.setDescription("TestDescription");
         // System.out.println(dummy.toString());
-    }
 
+    }
 }

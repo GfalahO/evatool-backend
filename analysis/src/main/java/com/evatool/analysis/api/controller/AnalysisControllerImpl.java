@@ -1,9 +1,11 @@
 package com.evatool.analysis.api.controller;
 
 import com.evatool.analysis.api.interfaces.AnalysisController;
+import com.evatool.analysis.event.StakeholderCreatedEventPublisher;
 import com.evatool.analysis.model.Analysis;
 import com.evatool.analysis.repository.AnalysisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,4 +34,14 @@ public class AnalysisControllerImpl implements AnalysisController {
         return currentAnalysis.get();
     }
 
+
+
+    @Autowired
+    private StakeholderCreatedEventPublisher applicationEventPublisher;
+    // Hallo analysis Gruppe das hier ist nur ein test
+    @GetMapping("/event")
+    public ResponseEntity<Void> eventTest() {
+        applicationEventPublisher.onStakeholderCreated();
+        return ResponseEntity.ok().build();
+    }
 }
