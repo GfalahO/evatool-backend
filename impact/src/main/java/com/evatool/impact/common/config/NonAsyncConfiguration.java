@@ -5,6 +5,6 @@ import org.springframework.context.annotation.Profile;
 
 @Configuration
 @Profile("non-async")
-public class NonAsynchronousSpringEventConfig {
-
+public class NonAsyncConfiguration {
+    
 }

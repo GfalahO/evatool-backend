@@ -13,7 +13,6 @@ public class StakeholderCreatedEventPublisher {
     }
 
     public void onStakeholderCreated() {
-        System.out.println("onStakeholderCreated");
         var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, "Test Payload");
         applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
     }

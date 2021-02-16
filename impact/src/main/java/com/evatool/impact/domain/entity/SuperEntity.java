@@ -7,10 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -24,8 +21,10 @@ public class SuperEntity {
 
     @Getter
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    //@GeneratedValue(generator = "UUID")
+    //@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(generator = "SuperEntityUuidGenerator")
+    @GenericGenerator(name = "SuperEntityUuidGenerator", strategy = "com.evatool.impact.domain.entity.SuperEntityUuidGenerator")
     @Column(name = "ID", updatable = false, nullable = false)
     protected UUID id;
 

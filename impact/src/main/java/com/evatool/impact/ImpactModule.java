@@ -3,6 +3,8 @@ package com.evatool.impact;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// TODO Get events to work (commit backup)
+// TODO Move configs to global
 // TODO [hbuhl] Redo Event Testing (after async test behaviour has been validated in real application) [Config in root?]
 // TODO [hbuhl & tzaika] Build Tool Chain (bis 19.02.2021)
 

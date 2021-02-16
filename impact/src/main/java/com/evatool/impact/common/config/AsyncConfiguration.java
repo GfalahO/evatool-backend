@@ -9,7 +9,7 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
 @Configuration
 @Profile("!non-async")
-public class AsynchronousSpringEventConfig {
+public class AsyncConfiguration {
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
         var eventMulticaster = new SimpleApplicationEventMulticaster();

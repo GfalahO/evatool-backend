@@ -35,12 +35,12 @@ public class AnalysisControllerImpl implements AnalysisController {
     }
 
 
-
     @Autowired
     private StakeholderCreatedEventPublisher applicationEventPublisher;
+
     // Hallo analysis Gruppe das hier ist nur ein test
     @GetMapping("/event")
-    public ResponseEntity<Void> eventTest() {
+    public ResponseEntity<Void> eventTest() throws InterruptedException {
         applicationEventPublisher.onStakeholderCreated();
         return ResponseEntity.ok().build();
     }
