@@ -8,6 +8,8 @@ public interface DimensionService {
 
     DimensionDto findDimensionById(String id);
 
+    // TODO [tzaika or hbuhl] findDimensionByType(String type);
+
     List<DimensionDto> getAllDimensions();
 
     DimensionDto createDimension(DimensionDto dimensionDto);

@@ -31,7 +31,7 @@ public class DimensionRestController {
     }
 
     @GetMapping(DIMENSIONS_ID)
-    @ApiOperation(value = "Return a Dimension by its id", response = DimensionDto.class)
+    @ApiOperation(value = "Read dimension by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 404, message = "The entity was not found")})
@@ -46,7 +46,7 @@ public class DimensionRestController {
     }
 
     @GetMapping(DIMENSIONS)
-    @ApiOperation(value = "Return all Dimensions", response = List.class)
+    @ApiOperation(value = "Read all dimensions")
     @ApiResponses({
             @ApiResponse(code = 200, message = "All entities returned")})
     public ResponseEntity<List<DimensionDto>> getAllDimensions() {
@@ -61,7 +61,7 @@ public class DimensionRestController {
     }
 
     @PostMapping(DIMENSIONS)
-    @ApiOperation(value = "Insert a new Dimension", response = DimensionDto.class)
+    @ApiOperation(value = "Create a new dimension")
     @ApiResponses({
             @ApiResponse(code = 201, message = "The entity was inserted"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
@@ -75,7 +75,7 @@ public class DimensionRestController {
     }
 
     @PutMapping(DIMENSIONS)
-    @ApiOperation(value = "Update an existing Dimension", response = DimensionDto.class)
+    @ApiOperation(value = "Update a dimension")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was updated"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
@@ -89,7 +89,7 @@ public class DimensionRestController {
     }
 
     @DeleteMapping(DIMENSIONS_ID)
-    @ApiOperation(value = "Delete an existing Dimension")
+    @ApiOperation(value = "Delete dimension by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
             @ApiResponse(code = 404, message = "The entity was not found")})
@@ -101,7 +101,7 @@ public class DimensionRestController {
 
     private void addLinks(EntityModel<DimensionDto> entityModel) {
         logger.debug("Adding HATEOAS Rest Level 3 links.");
-        entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).withRel(GET_DIMENSIONS));
+        entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(GET_DIMENSIONS));
         entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).withRel(CREATE_DIMENSIONS));
         if (entityModel.getContent().getId() != null) {
             entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).slash(entityModel.getContent().getId()).withSelfRel());
