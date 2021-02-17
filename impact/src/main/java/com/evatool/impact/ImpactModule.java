@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Features:
 // TODO [hbuhl & tzaika] Events
+// TODO Publisher and Listener logger
 // TODO [hbuhl & tzaika] Logging
 // TODO [tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel?, @ApiModelProperty?, @ApiParam)
 

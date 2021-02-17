@@ -4,7 +4,9 @@ import com.evatool.global.event.impact.ImpactDeletedEvent;
 import com.evatool.impact.application.json.mapper.ImpactJsonMapper;
 import com.evatool.impact.domain.entity.Impact;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ImpactDeletedEventPublisher {
 
     private ApplicationEventPublisher applicationEventPublisher;

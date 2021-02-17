@@ -3,9 +3,11 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.SuperEntity;
+import com.evatool.impact.domain.event.dimension.DimensionCreatedEventPublisher;
+import com.evatool.impact.domain.event.dimension.DimensionDeletedEventPublisher;
+import com.evatool.impact.domain.event.dimension.DimensionUpdatedEventPublisher;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +24,17 @@ public class DimensionServiceImpl implements DimensionService {
 
     private final DimensionRepository dimensionRepository;
 
-    public DimensionServiceImpl(DimensionRepository dimensionRepository) {
+    private final DimensionCreatedEventPublisher dimensionCreatedEventPublisher;
+
+    private final DimensionUpdatedEventPublisher dimensionUpdatedEventPublisher;
+
+    private final DimensionDeletedEventPublisher dimensionDeletedEventPublisher;
+
+    public DimensionServiceImpl(DimensionRepository dimensionRepository, DimensionCreatedEventPublisher dimensionCreatedEventPublisher, DimensionUpdatedEventPublisher dimensionupdatedEventPublisher, DimensionDeletedEventPublisher dimensionDeletedEventPublisher) {
         this.dimensionRepository = dimensionRepository;
+        this.dimensionCreatedEventPublisher = dimensionCreatedEventPublisher;
+        this.dimensionUpdatedEventPublisher = dimensionupdatedEventPublisher;
+        this.dimensionDeletedEventPublisher = dimensionDeletedEventPublisher;
     }
 
     @Override
@@ -52,7 +63,7 @@ public class DimensionServiceImpl implements DimensionService {
         logger.info("Create Dimension");
         SuperEntity.probeNonExistingId(dimensionDto.getId());
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
-        // TODO Fire DimensionCreatedEvent
+        dimensionCreatedEventPublisher.onDimensionCreated(dimension);
         return DimensionDtoMapper.toDto(dimension);
     }
 
@@ -60,9 +71,9 @@ public class DimensionServiceImpl implements DimensionService {
     public DimensionDto updateDimension(DimensionDto dimensionDto) {
         logger.info("Update Dimension");
         this.findDimensionById(dimensionDto.getId());
-        var dimension = DimensionDtoMapper.fromDto(dimensionDto);
-        // TODO Fire DimensionUpdatedEvent
-        return DimensionDtoMapper.toDto(dimensionRepository.save(dimension));
+        var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
+        dimensionUpdatedEventPublisher.onDimensionUpdated(dimension);
+        return DimensionDtoMapper.toDto(dimension);
     }
 
     @Override
@@ -70,8 +81,8 @@ public class DimensionServiceImpl implements DimensionService {
         logger.info("Delete Dimension");
         var dimensionDto = this.findDimensionById(id);
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);
-        // TODO Fire DimensionDeletedEvent
         dimensionRepository.delete(dimension);
+        dimensionDeletedEventPublisher.onDimensionDeleted(dimension);
     }
 
     @Override
