@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Features:
-// TODO [hbuhl & tzaika] Event Listener
-// TODO [hbuhl & tzaika] Logging
+// TODO [hbuhl & tzaika] Event Listener (wait for other group to implement events)
 // TODO [tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel?, @ApiModelProperty?, @ApiParam)
+// see DimensionService TODO [tzaika or hbuhl] findDimensionsByType(String type);
 
 // Tests:
 // TODO [tzaika] Implement Impact API Tests

@@ -2,7 +2,6 @@ package com.evatool.impact.application.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
 
 public class DimensionDto {
     @Getter

@@ -2,7 +2,6 @@ package com.evatool.impact.domain.event.dimension;
 
 import com.evatool.global.event.dimension.DimensionCreatedEvent;
 import com.evatool.impact.application.json.mapper.DimensionJsonMapper;
-import com.evatool.impact.application.service.ImpactServiceImpl;
 import com.evatool.impact.domain.entity.Dimension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
