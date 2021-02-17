@@ -2,8 +2,20 @@ package com.evatool.impact.domain.entity;
 
 import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
+import net.bytebuddy.implementation.bind.annotation.Super;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +26,7 @@ class SuperEntityTest {
     @Test
     void testCreateEntity_CreatedSuperEntity_IdIsNull() {
         // given
-        var superEntity = getSuperEntity();
+        var superEntity = new SuperEntity();
 
         // when
 
@@ -25,7 +37,7 @@ class SuperEntityTest {
     @Test
     void testSetIdUuid_ValidToNullValue_ThrowPropertyViolationException() {
         // given
-        var superEntity = getSuperEntity();
+        var superEntity = new SuperEntity();
 
         // when
         superEntity.setId(UUID.randomUUID());
@@ -37,7 +49,7 @@ class SuperEntityTest {
     @Test
     void testSetIdUuid_IllegalValueSequence_ThrowPropertyViolationException() {
         // given
-        var superEntity = getSuperEntity();
+        var superEntity = new SuperEntity();
 
         // when
         superEntity.setId(UUID.randomUUID());
@@ -50,7 +62,7 @@ class SuperEntityTest {
     @Test
     void testSetIdString_ValidToNullValue_ThrowPropertyViolationException() {
         // given
-        var superEntity = getSuperEntity();
+        var superEntity = new SuperEntity();
 
         // when
         superEntity.setId(UUID.randomUUID());
@@ -62,7 +74,7 @@ class SuperEntityTest {
     @Test
     void testSetIdString_IllegalValueSequence_ThrowPropertyViolationException() {
         // given
-        var superEntity = getSuperEntity();
+        var superEntity = new SuperEntity();
 
         // when
         superEntity.setId(UUID.randomUUID());
@@ -95,7 +107,7 @@ class SuperEntityTest {
     }
 
     @Test
-    void testProbeNonExistingId_NullId_ThrowInvalidUuidException() {
+    void testProbeNonExistingId_NotNullId_ThrowInvalidUuidException() {
         // given
         var id = "not null";
 
@@ -105,11 +117,8 @@ class SuperEntityTest {
         assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> SuperEntity.probeNonExistingId(id));
     }
 
-    private SuperEntityImpl getSuperEntity() {
-        return new SuperEntityImpl();
-    }
-
-    private static class SuperEntityImpl extends SuperEntity {
+    @Entity
+    public class SuperEntityImpl extends SuperEntity {
         public SuperEntityImpl() {
             super();
         }
