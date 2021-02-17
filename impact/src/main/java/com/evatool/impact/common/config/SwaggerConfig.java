@@ -14,7 +14,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.evatool.impact.application.controller.util.RestSetting.BASE_URI;
 import static com.google.common.base.Predicates.or;
 import static springfox.documentation.builders.PathSelectors.regex;
 
@@ -30,7 +29,7 @@ public class SwaggerConfig {
     }
 
     private Predicate<String> postPaths() {
-        return or(regex(BASE_URI + "/posts.*"), regex(BASE_URI + "/javainuse.*"));
+        return or(regex("/posts.*"), regex("/javainuse.*"));
     }
 
     private ApiInfo apiInfo() {
