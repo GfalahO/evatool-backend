@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Features:
 // TODO [hbuhl & tzaika] Event Listener (wait for other group to implement events)
 // TODO [tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel?, @ApiModelProperty?, @ApiParam)
-// TODO [hbuhl & tzaika] Rest Level 3: What links to include
+// see DimensionService TODO [tzaika or hbuhl] findDimensionsByType(String type);
 
 // Tests:
 // TODO [tzaika] Implement Impact API Tests
-// TODO [hbuhl & tzaika] Event Tests (Publisher tests, Listener: wait for other teams to implement events)
+// TODO [hbuhl & tzaika] Event Tests
 
 // Misc:
 // TODO [hbuhl & tzaika] GitHub Issues in backend repo: https://github.com/EVATool/evatool-backend/labels/Team%20Impact

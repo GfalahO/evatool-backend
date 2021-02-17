@@ -3,8 +3,6 @@ package com.evatool.impact.application.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-// TODO [future feature] using HATEOAS
-// extends RepresentationModel<ImpactDto>
 public class ImpactDto {
     @Getter
     @Setter
