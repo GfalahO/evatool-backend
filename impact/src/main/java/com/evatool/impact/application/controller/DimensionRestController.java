@@ -35,30 +35,29 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<DimensionDto> getDimension(@ApiParam("Id") @PathVariable String id) {
+    public ResponseEntity<EntityModel<DimensionDto>> getDimension(@ApiParam("Id") @PathVariable String id) {
         logger.info(DIMENSIONS_ID);
         var dimensionDto = dimensionService.findDimensionById(id);
         var entityModel = EntityModel.of(dimensionDto);
         addLinks(entityModel);
-        return new ResponseEntity(entityModel, HttpStatus.OK);
+        return new ResponseEntity<>(entityModel, HttpStatus.OK);
     }
 
     @GetMapping(DIMENSIONS)
     @ApiOperation(value = "Read all dimensions")
     @ApiResponses({
             @ApiResponse(code = 200, message = "All entities returned")})
-    public ResponseEntity<List<DimensionDto>> getAllDimensions(@ApiParam(value = "Type", required = false) @RequestParam(value = "type", required = false) String type) {
+    public ResponseEntity<List<EntityModel<DimensionDto>>> getAllDimensions(@RequestParam(value = "type", required = false) String type) {
         logger.info(DIMENSIONS);
-        List<DimensionDto> dimensionDtoList;
-        if (type != null) {
-            dimensionDtoList = dimensionService.findDimensionsByType(type);
-        } else {
-            dimensionDtoList = dimensionService.getAllDimensions();
-        }
-        var entityModelList = new ArrayList<EntityModel>();
-        dimensionDtoList.forEach(s -> entityModelList.add(EntityModel.of(s)));
-        entityModelList.forEach(this::addLinks);
-        return new ResponseEntity(entityModelList, HttpStatus.OK);
+
+        List<DimensionDto> dimensionDtoList = type == null
+                ? dimensionService.getAllDimensions()
+                : dimensionService.findDimensionsByType(type);
+
+        var entityModels = new ArrayList<EntityModel<DimensionDto>>();
+        dimensionDtoList.forEach(s -> entityModels.add(EntityModel.of(s)));
+        entityModels.forEach(this::addLinks);
+        return new ResponseEntity<>(entityModels, HttpStatus.OK);
     }
 
     @PostMapping(DIMENSIONS)
@@ -67,12 +66,12 @@ public class DimensionRestController {
             @ApiResponse(code = 201, message = "The entity was inserted"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<DimensionDto> createDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
+    public ResponseEntity<EntityModel<DimensionDto>> createDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
         logger.info(DIMENSIONS);
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
         var entityModel = EntityModel.of(insertedDimensionDto);
         addLinks(entityModel);
-        return new ResponseEntity(entityModel, HttpStatus.CREATED);
+        return new ResponseEntity<>(entityModel, HttpStatus.CREATED);
     }
 
     @PutMapping(DIMENSIONS)
@@ -81,12 +80,12 @@ public class DimensionRestController {
             @ApiResponse(code = 200, message = "The entity was updated"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<DimensionDto> updateDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
+    public ResponseEntity<EntityModel<DimensionDto>> updateDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
         logger.info(DIMENSIONS);
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
         var entityModel = EntityModel.of(updatedDimensionDto);
         addLinks(entityModel);
-        return new ResponseEntity(entityModel, HttpStatus.OK);
+        return new ResponseEntity<>(entityModel, HttpStatus.OK);
     }
 
     @DeleteMapping(DIMENSIONS_ID)
@@ -105,9 +104,10 @@ public class DimensionRestController {
         entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(GET_DIMENSIONS));
         entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(CREATE_DIMENSIONS));
         entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(UPDATE_DIMENSIONS));
-        if (entityModel.getContent().getId() != null) {
-            entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(entityModel.getContent().getId()).withSelfRel());
-            entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(entityModel.getContent().getId()).withRel(DELETE_DIMENSIONS));
+        var dimensionDto = entityModel.getContent();
+        if (dimensionDto != null && dimensionDto.getId() != null) {
+            entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(dimensionDto.getId()).withSelfRel());
+            entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(dimensionDto.getId()).withRel(DELETE_DIMENSIONS));
         }
     }
 }
