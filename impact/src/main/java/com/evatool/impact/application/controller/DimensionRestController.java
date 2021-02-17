@@ -38,9 +38,7 @@ public class DimensionRestController {
     public ResponseEntity<DimensionDto> getDimension(@ApiParam("Id") @PathVariable String id) {
         logger.info(DIMENSIONS_ID);
         var dimensionDto = dimensionService.findDimensionById(id);
-        // TODO [hbuhl] why to use deprecated stuff?
-        // we must find a way to use same functionality but not deprecated; google will help
-        var entityModel = new EntityModel<>(dimensionDto);
+        var entityModel = EntityModel.of(dimensionDto);
         addLinks(entityModel);
         return new ResponseEntity(entityModel, HttpStatus.OK);
     }
@@ -50,12 +48,10 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "All entities returned")})
     public ResponseEntity<List<DimensionDto>> getAllDimensions() {
-        // TODO [hbuhl] why are we logging something? Why is that info important to log?
-        // TODO [hbuhl] we just have a lot of junk in our code. That is very bad.
         logger.info(DIMENSIONS);
         var dimensionDtoList = dimensionService.getAllDimensions();
         var entityModelList = new ArrayList<EntityModel>();
-        dimensionDtoList.forEach(s -> entityModelList.add(new EntityModel<>(s)));
+        dimensionDtoList.forEach(s -> entityModelList.add(EntityModel.of(s)));
         entityModelList.forEach(this::addLinks);
         return new ResponseEntity(entityModelList, HttpStatus.OK);
     }
@@ -69,7 +65,7 @@ public class DimensionRestController {
     public ResponseEntity<DimensionDto> createDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
         logger.info(DIMENSIONS);
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
-        var entityModel = new EntityModel<>(insertedDimensionDto);
+        var entityModel = EntityModel.of(insertedDimensionDto);
         addLinks(entityModel);
         return new ResponseEntity(entityModel, HttpStatus.CREATED);
     }
@@ -83,7 +79,7 @@ public class DimensionRestController {
     public ResponseEntity<DimensionDto> updateDimension(@ApiParam("Entity") @RequestBody DimensionDto dimensionDto) {
         logger.info(DIMENSIONS);
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
-        var entityModel = new EntityModel<>(updatedDimensionDto);
+        var entityModel = EntityModel.of(updatedDimensionDto);
         addLinks(entityModel);
         return new ResponseEntity(entityModel, HttpStatus.OK);
     }
@@ -103,9 +99,9 @@ public class DimensionRestController {
         logger.debug("Adding HATEOAS Rest Level 3 links.");
         entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).withRel(GET_DIMENSIONS));
         entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).withRel(CREATE_DIMENSIONS));
+        entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).withRel(UPDATE_DIMENSIONS));
         if (entityModel.getContent().getId() != null) {
             entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).slash(entityModel.getContent().getId()).withSelfRel());
-            entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).slash(entityModel.getContent().getId()).withRel(UPDATE_DIMENSIONS));
             entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).slash(entityModel.getContent().getId()).withRel(DELETE_DIMENSIONS));
         }
     }

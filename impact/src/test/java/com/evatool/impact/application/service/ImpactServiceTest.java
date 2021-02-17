@@ -50,8 +50,6 @@ class ImpactServiceTest {
         return impactRepository.save(impact);
     }
 
-    // TODO [hbuhl] checked exception on service method call is not best practice
-    // https://docs.oracle.com/javase/tutorial/essential/exceptions/runtime.html
     @SneakyThrows
     @Test
     void testFindImpactById() {

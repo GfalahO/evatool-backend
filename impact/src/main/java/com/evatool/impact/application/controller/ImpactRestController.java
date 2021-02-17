@@ -16,7 +16,6 @@ public class ImpactRestController {
 
     private final ImpactService impactService;
 
-    // TODO [tzaika] add @Autowired [hbuhl] why deleted?
     public ImpactRestController(ImpactService impactService) {
         this.impactService = impactService;
     }

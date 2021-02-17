@@ -75,11 +75,9 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
                             "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS,
+                            "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS + "/" + id,
-                            "http://localhost" + DIMENSIONS + "/" + id,
-                            "http://localhost" + DIMENSIONS + "/" + id))); // TODO [hbuhl] is { DIMENSIONS + "/" + id } so complex that we need ab build-method? We can read it directly and there is no need to go into the method to check
-
-            // TODO [hbuhl] we write code to read it later and not to use complex things for something very simple; please take it as an advise
+                            "http://localhost" + DIMENSIONS + "/" + id)));
         }
 
         @Test
@@ -166,7 +164,7 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(jsonPath("$[0].links[*].href").value(containsInAnyOrder(
                             "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS,
-                            "http://localhost" + DIMENSIONS + "/" + id,
+                            "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS + "/" + id,
                             "http://localhost" + DIMENSIONS + "/" + id)));
         }
@@ -268,7 +266,7 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
                             "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS,
-                            "http://localhost" + DIMENSIONS + "/" + id,
+                            "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS + "/" + id,
                             "http://localhost" + DIMENSIONS + "/" + id)));
         }
@@ -325,7 +323,7 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
                             "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS,
-                            "http://localhost" + DIMENSIONS + "/" + id,
+                            "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS + "/" + id,
                             "http://localhost" + DIMENSIONS + "/" + id)));
         }
