@@ -98,11 +98,11 @@ public class DimensionRestController {
     private void addLinks(EntityModel<DimensionDto> entityModel) {
         logger.debug("Adding HATEOAS Rest Level 3 links.");
         entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(GET_DIMENSIONS));
-        entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).withRel(CREATE_DIMENSIONS));
-        entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).withRel(UPDATE_DIMENSIONS));
+        entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(CREATE_DIMENSIONS));
+        entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).withRel(UPDATE_DIMENSIONS));
         if (entityModel.getContent().getId() != null) {
-            entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).slash(entityModel.getContent().getId()).withSelfRel());
-            entityModel.add(linkTo(DimensionRestController.class).slash(_DIMENSIONS).slash(entityModel.getContent().getId()).withRel(DELETE_DIMENSIONS));
+            entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(entityModel.getContent().getId()).withSelfRel());
+            entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(entityModel.getContent().getId()).withRel(DELETE_DIMENSIONS));
         }
     }
 }
