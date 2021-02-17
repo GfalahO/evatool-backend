@@ -2,6 +2,9 @@ package com.evatool.impact.application.controller;
 
 public class UriUtil {
 
+    public static final String STAKEHOLDERS = "/stakeholders";
+    public static final String GET_STAKEHOLDER = "get stakeholder";
+
     public static final String IMPACTS = "/impacts";
     public static final String IMPACTS_ID = "/impacts/{id}";
 
