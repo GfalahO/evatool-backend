@@ -2,52 +2,49 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.service.ImpactService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.evatool.impact.application.controller.util.ImpactRest.*;
+import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
+import static com.evatool.impact.application.controller.UriUtil.IMPACTS_ID;
 
 @RestController
-@RequestMapping(IMPACT_REST_CONTROLLER_MAPPING)
 public class ImpactRestController {
-
-    private static final Logger logger = LoggerFactory.getLogger(ImpactRestController.class);
 
     private final ImpactService impactService;
 
+    // TODO [tzaika] add @Autowired [hbuhl] why deleted?
     public ImpactRestController(ImpactService impactService) {
         this.impactService = impactService;
     }
 
-    @GetMapping(GET_IMPACT_MAPPING)
+    @GetMapping(IMPACTS_ID)
     public ResponseEntity<ImpactDto> getImpact(@PathVariable String id) {
         var impactDto = impactService.findImpactById(id);
         return new ResponseEntity<>(impactDto, HttpStatus.OK);
     }
 
-    @GetMapping(GET_IMPACTS_MAPPING)
+    @GetMapping(IMPACTS)
     public List<ImpactDto> getAllImpacts() {
         return impactService.getAllImpacts();
     }
 
-    @PostMapping(POST_IMPACT_MAPPING)
+    @PostMapping(IMPACTS)
     public ResponseEntity<ImpactDto> createImpact(@RequestBody ImpactDto impactDto) {
         var insertedImpactDto = impactService.createImpact(impactDto);
         return new ResponseEntity<>(insertedImpactDto, HttpStatus.CREATED);
     }
 
-    @PutMapping(PUT_IMPACT_MAPPING)
+    @PutMapping(IMPACTS)
     public ResponseEntity<ImpactDto> updateImpact(@RequestBody ImpactDto impactDto) {
         var updatedImpactDto = impactService.updateImpact(impactDto);
         return new ResponseEntity<>(updatedImpactDto, HttpStatus.OK);
     }
 
-    @DeleteMapping(DELETE_IMPACT_MAPPING)
+    @DeleteMapping(IMPACTS_ID)
     public ResponseEntity<Void> deleteImpact(@PathVariable String id) {
         impactService.deleteImpactById(id);
         return ResponseEntity.ok().build();
