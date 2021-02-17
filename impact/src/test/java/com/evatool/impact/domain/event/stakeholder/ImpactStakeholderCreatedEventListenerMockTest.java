@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-class ImpactStakeholderCreatedEventMockListenerTest {
+class ImpactStakeholderCreatedEventListenerMockTest {
 
     @MockBean
     private ImpactStakeholderCreatedEventListener impactStakeholderCreatedEventListener;

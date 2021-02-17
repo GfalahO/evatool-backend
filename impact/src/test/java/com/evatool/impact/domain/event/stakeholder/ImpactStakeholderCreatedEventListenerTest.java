@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-class ImpactStakeholderCreatedEventTest {
+class ImpactStakeholderCreatedEventListenerTest {
 
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
