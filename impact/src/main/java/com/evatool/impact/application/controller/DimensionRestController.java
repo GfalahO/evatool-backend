@@ -47,9 +47,14 @@ public class DimensionRestController {
     @ApiOperation(value = "Read all dimensions")
     @ApiResponses({
             @ApiResponse(code = 200, message = "All entities returned")})
-    public ResponseEntity<List<DimensionDto>> getAllDimensions() {
+    public ResponseEntity<List<DimensionDto>> getAllDimensions(@ApiParam(value = "Type", required = false) @RequestParam(value = "type", required = false) String type) {
         logger.info(DIMENSIONS);
-        var dimensionDtoList = dimensionService.getAllDimensions();
+        List<DimensionDto> dimensionDtoList;
+        if (type != null) {
+            dimensionDtoList = dimensionService.findDimensionsByType(type);
+        } else {
+            dimensionDtoList = dimensionService.getAllDimensions();
+        }
         var entityModelList = new ArrayList<EntityModel>();
         dimensionDtoList.forEach(s -> entityModelList.add(EntityModel.of(s)));
         entityModelList.forEach(this::addLinks);

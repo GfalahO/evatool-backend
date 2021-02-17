@@ -7,6 +7,7 @@ import com.evatool.impact.common.config.SwaggerConfig;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.domain.entity.Dimension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,12 +20,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.UUID;
+import java.util.*;
 
 import static com.evatool.impact.application.controller.UriUtil.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -215,6 +214,44 @@ class DimensionRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(value)));
+        }
+    }
+
+    @Nested
+    class GetByType {
+        @Test
+        void testGetByType_ExistingDimensions_ReturnDimensions() throws Exception {
+            // given
+            var socialDimensions = new ArrayList<DimensionDto>();
+            for (int i = 0; i < 3; i++) {
+                var socialDimension = createDummyDimensionDto();
+                socialDimension.setType(Dimension.Type.SOCIAL.toString());
+                socialDimensions.add(socialDimension);
+            }
+
+            var economicDimensions = new ArrayList<DimensionDto>();
+            for (int i = 0; i < 4; i++) {
+                var economicDimension = createDummyDimensionDto();
+                economicDimension.setType(Dimension.Type.ECONOMIC.toString());
+                economicDimensions.add(economicDimension);
+            }
+
+            // when
+            given(dimensionService.findDimensionsByType(Dimension.Type.SOCIAL.toString())).willReturn(socialDimensions);
+            given(dimensionService.findDimensionsByType(Dimension.Type.ECONOMIC.toString())).willReturn(economicDimensions);
+
+            // then
+            mvc.perform(get(DIMENSIONS).param("type", Dimension.Type.SOCIAL.toString())
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(socialDimensions.size())));
+
+            mvc.perform(get(DIMENSIONS + "?type=" + Dimension.Type.ECONOMIC.toString())
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(economicDimensions.size())));
         }
     }
 
