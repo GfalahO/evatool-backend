@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.*;
 
 import static com.evatool.impact.application.controller.UriUtil.*;
-import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;

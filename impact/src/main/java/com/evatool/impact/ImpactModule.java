@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl & tzaika] Event Listener (wait for other group to implement events)
 // TODO [tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel?, @ApiModelProperty?, @ApiParam)
 // TODO [hbuhl & tzaika] Rest Level 3: What links to include
+// TODO [hbuhl & tzaika] Logging
+// TODO [hbuhl & tzaika] DTO Validator (package DTO)
 
 // Tests:
 // TODO [tzaika] Implement Impact API Tests
