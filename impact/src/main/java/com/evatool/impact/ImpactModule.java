@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl & tzaika] GitHub Issues in backend repo: https://github.com/EVATool/evatool-backend/labels/Team%20Impact
 // TODO [tzaika] use new wireframe in impact domain model wiki
 // TODO [hbuhl & tzaika] make API and Event spec better
+// TODO Use CDC pattern to solve eventing problem?
 
 // SIG:
 // TODO [hbuhl] Redo Event Testing (wiki and present)
