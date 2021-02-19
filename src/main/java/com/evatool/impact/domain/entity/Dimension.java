@@ -2,7 +2,6 @@ package com.evatool.impact.domain.entity;
 
 import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
-import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

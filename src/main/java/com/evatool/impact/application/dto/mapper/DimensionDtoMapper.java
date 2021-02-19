@@ -1,15 +1,16 @@
 package com.evatool.impact.application.dto.mapper;
 
 import com.evatool.impact.application.dto.DimensionDto;
-import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-
 public class DimensionDtoMapper {
+
+    private DimensionDtoMapper() {
+
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(DimensionDtoMapper.class);
 

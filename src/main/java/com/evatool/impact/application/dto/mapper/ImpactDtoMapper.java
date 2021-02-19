@@ -12,6 +12,10 @@ import java.util.UUID;
 
 public class ImpactDtoMapper {
 
+    private ImpactDtoMapper() {
+
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(ImpactDtoMapper.class);
 
     private static final ModelMapper modelMapper = new ModelMapper();

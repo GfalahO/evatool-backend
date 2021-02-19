@@ -24,7 +24,7 @@ public class ImpactRestController {
         this.impactService = impactService;
     }
 
-    @ApiOperation(value = "Read com.evatool.impact by ID")
+    @ApiOperation(value = "Read impact by ID")
     @GetMapping(IMPACTS_ID)
     public ResponseEntity<EntityModel<ImpactDto>> getImpact(@ApiParam("id") @PathVariable String id) {
         var impactDto = impactService.findImpactById(id);
@@ -32,26 +32,26 @@ public class ImpactRestController {
     }
 
     @ApiOperation(value = "Read all impacts")
-    @GetMapping(IMPACTS)
+    @GetMapping(IMPACTS_URI)
     public List<ImpactDto> getAllImpacts() {
         return impactService.getAllImpacts();
     }
 
-    @ApiOperation(value = "Create a new com.evatool.impact")
-    @PostMapping(IMPACTS)
+    @ApiOperation(value = "Create a new impact")
+    @PostMapping(IMPACTS_URI)
     public ResponseEntity<EntityModel<ImpactDto>> createImpact(@RequestBody ImpactDto impactDto) {
         var insertedImpactDto = impactService.createImpact(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(insertedImpactDto), HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Update an com.evatool.impact")
-    @PutMapping(IMPACTS)
+    @ApiOperation(value = "Update an impact")
+    @PutMapping(IMPACTS_URI)
     public ResponseEntity<EntityModel<ImpactDto>> updateImpact(@RequestBody ImpactDto impactDto) {
         var updatedImpactDto = impactService.updateImpact(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(updatedImpactDto), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Delete com.evatool.impact by ID")
+    @ApiOperation(value = "Delete impact by ID")
     @DeleteMapping(IMPACTS_ID)
     public ResponseEntity<Void> deleteImpact(@PathVariable String id) {
         impactService.deleteImpactById(id);

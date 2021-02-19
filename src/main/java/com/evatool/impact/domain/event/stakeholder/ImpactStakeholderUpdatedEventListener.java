@@ -22,6 +22,6 @@ public class ImpactStakeholderUpdatedEventListener implements ApplicationListene
         logger.info("Event received");
         var jsonPayload = event.getJsonPayload();
         var stakeholder = ImpactStakeholderJsonMapper.fromJson(jsonPayload);
-        //stakeholderRepository.save(stakeholder);
+        stakeholderRepository.save(stakeholder);
     }
 }

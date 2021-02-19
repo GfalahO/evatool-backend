@@ -5,6 +5,10 @@ import java.util.List;
 
 public class Convert {
 
+    private Convert() {
+
+    }
+
     public static <T> List<T> iterableToList(Iterable<T> iterable) {
         var list = new ArrayList<T>();
 

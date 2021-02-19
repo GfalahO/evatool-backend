@@ -3,7 +3,6 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;

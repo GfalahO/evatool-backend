@@ -56,7 +56,7 @@ public class SuperEntity {
             UUID.fromString(id); // TODO [tzaika] Question: the result of UUID.fromString is not used. Is there a clean way of returning it and not make code ugly?
             return true;
         } catch (IllegalArgumentException ex) {
-            logger.error(ex.getMessage(), ex);
+            logger.error("Exception: [{}]", ex.getMessage());
             return false;
         }
     }

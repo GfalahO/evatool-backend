@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 
 public class ImpactJsonMapper {
 
+    private ImpactJsonMapper() {
+
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(ImpactJsonMapper.class);
 
     private static final ModelMapper modelMapper = new ModelMapper();

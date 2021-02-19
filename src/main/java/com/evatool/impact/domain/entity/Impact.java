@@ -92,15 +92,13 @@ public class Impact extends SuperEntity {
     }
 }
 
-// TODO [hbuhl & tzaika] Event Listener (wait for other group to implement events)
-// TODO [hbuhl & tzaika] Rest Level 3: What links to include
+// TODO [hbuhl] Event Listener (wait for other group to implement events)
+// TODO [hbuhl & tzaika] Rest Level 3: What links to include (and do it uniformly everywhere)
 // TODO [hbuhl & tzaika] Logging
 // TODO [hbuhl & tzaika] DTO Validator (package DTO)
-// TODO Implement 422 and other http return codes
+// TODO [hbuhl & tzaika] Implement 422 and other http return codes (in decision)
+
 // TODO [tzaika] Implement Impact API Tests
-// TODO [hbuhl & tzaika] Event Tests
+// TODO [hbuhl] Event Tests
+
 // TODO [tzaika] use new wireframe in impact domain model wiki
-// TODO After new repo structure:
-//  Remove public modifiers and use default
-//  logger.error("Exception: [{}]", ex.getMessage())
-// TODO [tzaika] Fix remnants of module structure change
