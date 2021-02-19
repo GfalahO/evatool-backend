@@ -21,22 +21,11 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
     @Bean
     public LinkDiscoverers discoverers() {
         List<LinkDiscoverer> plugins = new ArrayList<>();
         plugins.add(new CollectionJsonLinkDiscoverer());
         return new LinkDiscoverers(SimplePluginRegistry.create(plugins));
-    }
-
-    private Predicate<String> postPaths() {
-        return or(regex("/posts.*"), regex("/javainuse.*"));
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("JavaInUse API")
-                .description("JavaInUse API reference for developers")
-                .termsOfServiceUrl("http://javainuse.com")
-                .contact("javainuse@gmail.com").license("JavaInUse License")
-                .licenseUrl("javainuse@gmail.com").version("1.0").build();
     }
 }

@@ -91,3 +91,17 @@ public class Impact extends SuperEntity {
         this.stakeholder = stakeholder;
     }
 }
+
+// TODO [hbuhl & tzaika] Event Listener (wait for other group to implement events)
+// TODO [tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel?, @ApiModelProperty?, @ApiParam)
+// TODO [hbuhl & tzaika] Rest Level 3: What links to include
+// TODO [hbuhl & tzaika] Logging
+// TODO [hbuhl & tzaika] DTO Validator (package DTO)
+// TODO Implement 422 and other http return codes
+// TODO [tzaika] Implement Impact API Tests
+// TODO [hbuhl & tzaika] Event Tests
+// TODO [tzaika] use new wireframe in impact domain model wiki
+// TODO After new repo structure:
+//  Rename GitHub Action paths (build, deploy)
+//  Remove public modifiers and use default
+//  logger.error("Exception: [{}]", ex.getMessage())

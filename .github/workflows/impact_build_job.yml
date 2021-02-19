@@ -1,13 +1,13 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: CI with Maven for com.evatool.impact module only
+name: CI with Maven for impact module only
 
 on:
   push:
-    branches: [ com.evatool.impact ]
+    branches: [ impact ]
   pull_request:
-    branches: [ com.evatool.impact ]
+    branches: [ impact ]
 
 jobs:
   impact_build_job:
