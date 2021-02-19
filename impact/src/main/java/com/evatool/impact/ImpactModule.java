@@ -9,6 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl & tzaika] Rest Level 3: What links to include
 // TODO [hbuhl & tzaika] Logging
 // TODO [hbuhl & tzaika] DTO Validator (package DTO)
+// TODO Implement 422 and other http return codes
+
+// TODO After new repo structure:
+//  Redo .run xml configs
+//  Rename GitHub Action paths (build, deploy)
+//  Remove public modifiers and use default
 
 // Tests:
 // TODO [tzaika] Implement Impact API Tests
