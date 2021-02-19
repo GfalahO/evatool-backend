@@ -105,3 +105,4 @@ public class Impact extends SuperEntity {
 //  Rename GitHub Action paths (build, deploy)
 //  Remove public modifiers and use default
 //  logger.error("Exception: [{}]", ex.getMessage())
+// TODO [tzaika] h2 console on remote server
