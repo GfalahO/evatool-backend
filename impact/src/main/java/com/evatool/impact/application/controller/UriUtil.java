@@ -2,6 +2,9 @@ package com.evatool.impact.application.controller;
 
 public class UriUtil {
 
+    public static final String STAKEHOLDERS = "/stakeholders";
+    public static final String GET_STAKEHOLDER = "get stakeholder";
+
     public static final String IMPACTS = "/impacts";
     public static final String IMPACTS_ID = "/impacts/{id}";
 
@@ -10,6 +13,7 @@ public class UriUtil {
 
     public static final String _DIMENSIONS = "dimensions";
     public static final String GET_DIMENSIONS = "get " + _DIMENSIONS;
+    public static final String GET_DIMENSIONS_BY_TYPE = "get " + _DIMENSIONS + " by type";
     public static final String GET_ALL_DIMENSIONS = "get all " + _DIMENSIONS;
     public static final String CREATE_DIMENSIONS = "create " + _DIMENSIONS;
     public static final String UPDATE_DIMENSIONS = "update " + _DIMENSIONS;

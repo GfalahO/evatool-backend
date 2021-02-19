@@ -6,7 +6,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // Features:
 // TODO [hbuhl & tzaika] Event Listener (wait for other group to implement events)
 // TODO [tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel?, @ApiModelProperty?, @ApiParam)
-// see DimensionService TODO [tzaika or hbuhl] findDimensionsByType(String type);
+// TODO [hbuhl & tzaika] Rest Level 3: What links to include
+// TODO [hbuhl & tzaika] Logging
+// TODO [hbuhl & tzaika] DTO Validator (package DTO)
+// TODO Implement 422 and other http return codes
+
+// TODO After new repo structure:
+//  Redo .run xml configs
+//  Rename GitHub Action paths (build, deploy)
+//  Remove public modifiers and use default
 
 // Tests:
 // TODO [tzaika] Implement Impact API Tests
@@ -16,6 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // TODO [hbuhl & tzaika] GitHub Issues in backend repo: https://github.com/EVATool/evatool-backend/labels/Team%20Impact
 // TODO [tzaika] use new wireframe in impact domain model wiki
 // TODO [hbuhl & tzaika] make API and Event spec better
+// TODO Use CDC pattern to solve eventing problem?
 
 // SIG:
 // TODO [hbuhl] Redo Event Testing (wiki and present)

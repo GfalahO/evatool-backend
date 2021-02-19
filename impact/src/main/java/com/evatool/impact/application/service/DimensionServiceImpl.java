@@ -50,6 +50,15 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
+    public List<DimensionDto> findDimensionsByType(String type) {
+        logger.info("Get Dimensions by type");
+        var dimensions = dimensionRepository.findDimensionsByType(type);
+        var dimensionDtoList = new ArrayList<DimensionDto>();
+        dimensions.forEach(s -> dimensionDtoList.add(DimensionDtoMapper.toDto(s)));
+        return dimensionDtoList;
+    }
+
+    @Override
     public List<DimensionDto> getAllDimensions() {
         logger.info("Get Dimensions");
         var dimensions = dimensionRepository.findAll();
