@@ -3,6 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.domain.entity.Dimension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -62,6 +63,35 @@ class DimensionServiceImplTest {
 
             // then
             assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> dimensionService.findDimensionById("invalid id"));
+        }
+    }
+
+    @Nested
+    class GetByType {
+        @Test
+        void testGetByType_ExistingDimensions_ReturnDimensions() {
+            // given
+            int n_socialDimensions = 3;
+            for (int i = 0; i < n_socialDimensions; i++) {
+                var socialDimension = createDummyDimensionDto();
+                socialDimension.setType(Dimension.Type.SOCIAL.toString());
+                dimensionService.createDimension(socialDimension);
+            }
+
+            int n_economicDimensions = 4;
+            for (int i = 0; i < n_economicDimensions; i++) {
+                var economicDimension = createDummyDimensionDto();
+                economicDimension.setType(Dimension.Type.ECONOMIC.toString());
+                dimensionService.createDimension(economicDimension);
+            }
+
+            // when
+            var socialDimensions = dimensionService.findDimensionsByType(Dimension.Type.SOCIAL.toString());
+            var economicDimension = dimensionService.findDimensionsByType(Dimension.Type.ECONOMIC.toString());
+
+            // then
+            assertThat(socialDimensions.size()).isEqualTo(n_socialDimensions);
+            assertThat(economicDimension.size()).isEqualTo(n_economicDimensions);
         }
     }
 

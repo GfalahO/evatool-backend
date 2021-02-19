@@ -2,6 +2,7 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
+import com.evatool.impact.domain.entity.Dimension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.DIMENSIONS;
@@ -22,6 +25,12 @@ import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class DimensionRestControllerTest {
@@ -125,6 +134,40 @@ class DimensionRestControllerTest {
             // then
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(dimensionDtoList).isNotNull().hasSize(value);
+        }
+    }
+
+    @Nested
+    class GetByType {
+        @Test
+        void testGetByType_ExistingDimensions_ReturnDimensions() throws Exception {
+            // given
+            int n_socialDimensions = 3;
+            for (int i = 0; i < n_socialDimensions; i++) {
+                var socialDimension = createDummyDimensionDto();
+                socialDimension.setType(Dimension.Type.SOCIAL.toString());
+                dimensionService.createDimension(socialDimension);
+            }
+
+            int n_economicDimensions = 4;
+            for (int i = 0; i < n_economicDimensions; i++) {
+                var economicDimension = createDummyDimensionDto();
+                economicDimension.setType(Dimension.Type.ECONOMIC.toString());
+                dimensionService.createDimension(economicDimension);
+            }
+
+            // when
+            var getSocialResponse = testRestTemplate.getForEntity(
+                    DIMENSIONS + "?type=" + Dimension.Type.SOCIAL.toString(), DimensionDto[].class);
+            var socialDimensions = getSocialResponse.getBody();
+
+            var getEconomicResponse = testRestTemplate.getForEntity(
+                    DIMENSIONS + "?type=" + Dimension.Type.ECONOMIC.toString(), DimensionDto[].class);
+            var economicDimensions = getEconomicResponse.getBody();
+
+            // then
+            assertThat(socialDimensions).hasSize(n_socialDimensions);
+            assertThat(economicDimensions).hasSize(n_economicDimensions);
         }
     }
 
