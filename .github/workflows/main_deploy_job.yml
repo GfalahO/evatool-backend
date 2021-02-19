@@ -1,0 +1,63 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Deploy Spring Application to remote Server (main)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Build with Maven
+        run: mvn -B clean install --file pom.xml
+
+      - name: Transfer docker file to remote server
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: docker/Dockerfile
+          remote: evatool/Dockerfile
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+
+      - name: Transfer docker script to remote server
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: docker/deploy.sh
+          remote: evatool/deploy.sh
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+
+      - name: Transfer jar to remote server
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: target/evatool-0.0.1-SNAPSHOT.jar
+          remote: evatool/evatoolapp.jar
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          privatekey: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+
+      - name: Run docker script
+        uses: appleboy/ssh-action@master
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USER }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          PORT: ${{ secrets.PORT }}
+          SCRIPT: sh evatool/deploy.sh
