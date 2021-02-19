@@ -101,4 +101,6 @@ public class Impact extends SuperEntity {
 // TODO [tzaika] Implement Impact API Tests
 // TODO [hbuhl] Event Tests
 
-// TODO [tzaika] use new wireframe in impact domain model wiki
+// TODO [hbuhl] Finish wiki for delivery
+// TODO [tzaika] Use new wireframe in impact domain model wiki
+// TODO [tzaika] Finish impact domain model decision
