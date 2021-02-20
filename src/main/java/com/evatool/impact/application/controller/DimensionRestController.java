@@ -101,6 +101,7 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "All dimension types returned")})
     public ResponseEntity<List<Dimension.Type>> getDimensionTypes() {
+        logger.info("GET " + DIMENSION_TYPES);
         return new ResponseEntity<>(dimensionService.getAllDimensionTypes(), HttpStatus.OK);
     }
 

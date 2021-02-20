@@ -3,9 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,13 +26,12 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
 
     @Override
     public ImpactStakeholderDto findStakeholderById(UUID id) {
+        logger.info("Get Stakeholder");
         if (id == null) {
             throw new EntityNotFoundException(ImpactStakeholder.class, "null");
         }
-        logger.info("Get Stakeholder");
         var stakeholder = stakeholderRepository.findById(id);
         if (stakeholder.isEmpty()) {
-            logger.error("Entity not found");
             throw new EntityNotFoundException(ImpactStakeholder.class, id);
         }
         return ImpactStakeholderDtoMapper.toDto(stakeholder.get());

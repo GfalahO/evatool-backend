@@ -102,10 +102,13 @@ class DimensionRestControllerMockServiceTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.*", hasSize(3)))
+                    .andExpect(jsonPath("$.*", hasSize(6)))
                     .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                    .andExpect(jsonPath("$.status").isNotEmpty())
+                    .andExpect(jsonPath("$.error").isNotEmpty())
+                    .andExpect(jsonPath("$.trace").isNotEmpty())
                     .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
-                    .andExpect(jsonPath("$.uri").isNotEmpty());
+                    .andExpect(jsonPath("$.path").isNotEmpty());
         }
     }
 
@@ -242,26 +245,6 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(jsonPath("$.id").exists())
                     .andExpect(jsonPath("$.name").value(dimensionDto.getName()));
         }
-
-        @Test
-        void testUpdateDimension_NonExistingDimension_ReturnHttpStatusNotFoundAndErrorMessage() throws Exception {
-            // given
-            var dimensionDto = createDummyDimensionDto();
-            dimensionDto.setId(UUID.randomUUID());
-
-            // when
-            when(dimensionService.updateDimension(any(DimensionDto.class))).thenThrow(EntityNotFoundException.class);
-
-            // then
-            mvc.perform(put(DIMENSIONS).content(new ObjectMapper().writeValueAsString(dimensionDto))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.*", hasSize(3)))
-                    .andExpect(jsonPath("$.timestamp").isNotEmpty())
-                    .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
-                    .andExpect(jsonPath("$.uri").isNotEmpty());
-        }
     }
 
     @Nested
@@ -278,24 +261,6 @@ class DimensionRestControllerMockServiceTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk());
-        }
-
-        @Test
-        void testDeleteDimension_NonExistingDimension_ReturnHttpStatusNotFoundAndErrorMessage() throws Exception {
-            // given
-
-            // when
-            doThrow(EntityNotFoundException.class).when(dimensionService).deleteDimensionById(any(UUID.class));
-
-            // then
-            mvc.perform(delete(DIMENSIONS + "/" + UUID.randomUUID().toString())
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.*", hasSize(3)))
-                    .andExpect(jsonPath("$.timestamp").isNotEmpty())
-                    .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
-                    .andExpect(jsonPath("$.uri").isNotEmpty());
         }
     }
 }

@@ -23,5 +23,6 @@ public class ImpactStakeholderDeletedEventListener implements ApplicationListene
         var jsonPayload = event.getJsonPayload();
         var stakeholder = ImpactStakeholderJsonMapper.fromJson(jsonPayload);
         stakeholderRepository.delete(stakeholder);
+        logger.info("Event successfully processed");
     }
 }

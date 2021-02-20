@@ -3,9 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.event.impact.ImpactCreatedEventPublisher;
 import com.evatool.impact.domain.event.impact.ImpactDeletedEventPublisher;
 import com.evatool.impact.domain.event.impact.ImpactUpdatedEventPublisher;
@@ -48,13 +46,12 @@ public class ImpactServiceImpl implements ImpactService {
 
     @Override
     public ImpactDto findImpactById(UUID id) {
+        logger.info("Get Impact");
         if (id == null) {
             throw new EntityNotFoundException(Impact.class, "null");
         }
-        logger.info("Get Impact");
         var impact = impactRepository.findById(id);
         if (impact.isEmpty()) {
-            logger.error("Entity not found");
             throw new EntityNotFoundException(Impact.class, id);
         }
         return ImpactDtoMapper.toDto(impact.get());

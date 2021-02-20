@@ -1,6 +1,6 @@
 package com.evatool.impact.application.json.mapper;
 
-import com.evatool.impact.common.exception.InvalidEventJsonPayloadException;
+import com.evatool.impact.common.exception.InvalidEventPayloadException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,8 +27,7 @@ public class ImpactStakeholderJsonMapper {
             );
             impactStakeholder.setId(UUID.fromString(jsonObject.getString("id")));
         } catch (JSONException jex) {
-            //logger.error("Exception: [{}]", jex.getMessage()); // TODO What to do here? throw or handle? But how can this be handled? data will be inconsistent with other module.
-            throw new InvalidEventJsonPayloadException(json, jex);
+            throw new InvalidEventPayloadException(json, jex);
         }
         return impactStakeholder;
     }

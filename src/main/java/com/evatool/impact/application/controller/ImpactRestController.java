@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +38,7 @@ public class ImpactRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<EntityModel<ImpactDto>> getImpact(@ApiParam("id") @PathVariable UUID id) {
+    public ResponseEntity<EntityModel<ImpactDto>> getImpact(@ApiParam("id") @Valid @PathVariable UUID id) {
         logger.info("GET " + IMPACTS_ID);
         var impactDto = impactService.findImpactById(id);
         return new ResponseEntity<>(getImpactWithLinks(impactDto), HttpStatus.OK);
@@ -58,7 +59,7 @@ public class ImpactRestController {
             @ApiResponse(code = 201, message = "The entity was inserted"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<EntityModel<ImpactDto>> createImpact(@ApiParam("entity") @RequestBody ImpactDto impactDto) {
+    public ResponseEntity<EntityModel<ImpactDto>> createImpact(@ApiParam("entity") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("POST " + IMPACTS);
         var insertedImpactDto = impactService.createImpact(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(insertedImpactDto), HttpStatus.CREATED);
@@ -70,7 +71,7 @@ public class ImpactRestController {
             @ApiResponse(code = 200, message = "The entity was updated"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<EntityModel<ImpactDto>> updateImpact(@ApiParam("entity") @RequestBody ImpactDto impactDto) {
+    public ResponseEntity<EntityModel<ImpactDto>> updateImpact(@ApiParam("entity") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("PUT " + IMPACTS);
         var updatedImpactDto = impactService.updateImpact(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(updatedImpactDto), HttpStatus.OK);
@@ -81,7 +82,7 @@ public class ImpactRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<Void> deleteImpact(@ApiParam("id") @PathVariable UUID id) {
+    public ResponseEntity<Void> deleteImpact(@ApiParam("id") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + IMPACTS_ID);
         impactService.deleteImpactById(id);
         return ResponseEntity.ok().build();

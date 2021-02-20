@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity(name = "IMP_STAKEHOLDER")
 @Table(name = "IMP_STAKEHOLDER")
@@ -17,12 +16,12 @@ public class ImpactStakeholder extends SuperEntity {
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholder.class);
 
     @Getter
-    @NotNull
     @Column(name = "NAME", nullable = false)
     private String name;
 
     public ImpactStakeholder() {
         super();
+        logger.debug("{} created", ImpactStakeholder.class.getSimpleName());
     }
 
     public ImpactStakeholder(String name) {
@@ -41,7 +40,7 @@ public class ImpactStakeholder extends SuperEntity {
     public void setName(String name) {
         logger.debug("Set Name");
         if (name == null) {
-            logger.error("Attempted to set name to null.");
+            logger.error("Attempted to set name to null");
             throw new PropertyViolationException("Name cannot be null.");
         }
         this.name = name;

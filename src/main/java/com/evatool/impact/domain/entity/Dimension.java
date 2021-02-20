@@ -6,8 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 
 @Entity(name = "IMP_DIMENSION")
 @Table(name = "IMP_DIMENSION")
@@ -21,23 +19,20 @@ public class Dimension extends SuperEntity {
     }
 
     @Getter
-    @NotNull
     @Column(name = "NAME", nullable = false)
     private String name;
 
     @Getter
-    @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = false)
     private Type type;
 
     @Getter
-    @NotNull
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
     public Dimension() {
         super();
+        logger.debug("{} created", Dimension.class.getSimpleName());
     }
 
     public Dimension(String name, Type type, String description) {
@@ -60,7 +55,7 @@ public class Dimension extends SuperEntity {
     public void setName(String name) {
         logger.debug("Set Name");
         if (name == null) {
-            logger.error("Attempted to set name to null.");
+            logger.error("Attempted to set name to null");
             throw new PropertyViolationException("Name cannot be null.");
         }
         this.name = name;
@@ -77,21 +72,9 @@ public class Dimension extends SuperEntity {
     public void setDescription(String description) {
         logger.debug("Set Description");
         if (description == null) {
-            logger.error("Attempted to set description to null.");
+            logger.error("Attempted to set description to null");
             throw new PropertyViolationException("Description cannot be null.");
         }
         this.description = description;
-    }
-
-    private boolean isValidType(String value) {
-        if (value == null) {
-            return false;
-        }
-        for (var e : Type.values()) {
-            if (value.equals(e.toString())) {
-                return true;
-            }
-        }
-        return false;
     }
 }
