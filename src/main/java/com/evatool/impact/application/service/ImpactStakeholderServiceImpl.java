@@ -2,7 +2,9 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.slf4j.Logger;
@@ -28,7 +30,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     public ImpactStakeholderDto findStakeholderById(UUID id) {
         logger.info("Get Stakeholder");
         if (id == null) {
-            throw new EntityNotFoundException(ImpactStakeholder.class, "null");
+            throw new EntityIdRequiredException();
         }
         var stakeholder = stakeholderRepository.findById(id);
         if (stakeholder.isEmpty()) {
@@ -49,6 +51,9 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     @Override
     public ImpactStakeholderDto createStakeholder(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Create Stakeholder");
+        if (impactStakeholderDto.getId() != null) {
+            throw new EntityIdMustBeNullException();
+        }
         var stakeholder = stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactStakeholderDto));
         return ImpactStakeholderDtoMapper.toDto(stakeholder);
     }

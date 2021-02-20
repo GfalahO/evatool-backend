@@ -94,8 +94,6 @@ public class Impact extends SuperEntity {
 }
 
 // TODO [hbuhl] Event Listener (wait for other group to implement events)
-// TODO [hbuhl & tzaika] Rest Level 3: What links to include (and do it uniformly everywhere)
-// TODO [hbuhl & tzaika] Implement 422 http return code
 // TODO Rework tests
 
 // TODO [tzaika] Implement Impact API Tests

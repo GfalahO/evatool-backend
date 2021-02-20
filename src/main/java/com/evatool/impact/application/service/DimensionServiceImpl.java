@@ -2,7 +2,9 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.event.dimension.DimensionCreatedEventPublisher;
 import com.evatool.impact.domain.event.dimension.DimensionDeletedEventPublisher;
@@ -41,7 +43,7 @@ public class DimensionServiceImpl implements DimensionService {
     public DimensionDto findDimensionById(UUID id) {
         logger.info("Get Dimension");
         if (id == null) {
-            throw new EntityNotFoundException(Dimension.class, "null");
+            throw new EntityIdRequiredException();
         }
         var dimension = dimensionRepository.findById(id);
         if (dimension.isEmpty()) {
@@ -77,6 +79,9 @@ public class DimensionServiceImpl implements DimensionService {
     @Override
     public DimensionDto createDimension(DimensionDto dimensionDto) {
         logger.info("Create Dimension");
+        if (dimensionDto.getId() != null) {
+            throw new EntityIdMustBeNullException();
+        }
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
         dimensionCreatedEventPublisher.onDimensionCreated(dimension);
         return DimensionDtoMapper.toDto(dimension);

@@ -1,6 +1,5 @@
 package com.evatool.impact.application.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +9,6 @@ import java.util.UUID;
 public class ImpactStakeholderDto {
     @Getter
     @Setter
-    @JsonSerialize
     private UUID id;
 
     @Getter

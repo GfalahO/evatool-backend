@@ -37,6 +37,7 @@ public class ImpactRestController {
     @ApiOperation(value = "Read impact by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was found"),
+            @ApiResponse(code = 400, message = "The id was invalid"),
             @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<EntityModel<ImpactDto>> getImpact(@ApiParam("id") @Valid @PathVariable UUID id) {
         logger.info("GET " + IMPACTS_ID);
@@ -95,7 +96,7 @@ public class ImpactRestController {
         entityModel.add(linkTo(methodOn(ImpactRestController.class).updateImpact(impactDto)).withRel(UPDATE_IMPACT));
         entityModel.add(linkTo(methodOn(ImpactRestController.class).deleteImpact(impactDto.getId())).withRel(DELETE_IMPACT));
         entityModel.add(linkTo(ImpactRestController.class).slash(STAKEHOLDERS).slash(impactDto.getStakeholder().getId()).withRel(GET_STAKEHOLDER));
-        entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(impactDto.getDimension().getId()).withRel(GET_DIMENSION));
+        entityModel.add(linkTo(ImpactRestController.class).slash(DIMENSIONS).slash(impactDto.getDimension().getId()).withRel(GET_DIMENSION));
         return entityModel;
     }
 

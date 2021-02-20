@@ -1,7 +1,6 @@
 package com.evatool.impact.application.dto;
 
 import com.evatool.impact.domain.entity.Dimension;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,6 @@ import java.util.UUID;
 public class DimensionDto {
     @Getter
     @Setter
-    @JsonSerialize
     private UUID id;
 
     @Getter

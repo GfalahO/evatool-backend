@@ -261,6 +261,21 @@ class DimensionRestControllerTest {
             // then
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
+
+        @Test
+        void testInsertDimension_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
+            // given
+            DimensionDto dimensionDto = createDummyDimensionDto();
+            dimensionDto.setId(UUID.randomUUID());
+
+            // when
+            var httpEntity = new HttpEntity<>(dimensionDto);
+            var responseEntity = testRestTemplate.postForEntity(
+                    DIMENSIONS, httpEntity, DimensionDto.class);
+
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @Nested
@@ -314,7 +329,7 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testUpdateDimension_UpdateNullId_ReturnHttpStatusNotFound() {
+        void testUpdateDimension_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
@@ -325,7 +340,7 @@ class DimensionRestControllerTest {
                     DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
         @Test

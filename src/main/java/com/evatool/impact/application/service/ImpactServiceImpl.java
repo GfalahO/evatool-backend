@@ -2,7 +2,9 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.event.impact.ImpactCreatedEventPublisher;
 import com.evatool.impact.domain.event.impact.ImpactDeletedEventPublisher;
@@ -48,7 +50,7 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto findImpactById(UUID id) {
         logger.info("Get Impact");
         if (id == null) {
-            throw new EntityNotFoundException(Impact.class, "null");
+            throw new EntityIdRequiredException();
         }
         var impact = impactRepository.findById(id);
         if (impact.isEmpty()) {
@@ -69,6 +71,9 @@ public class ImpactServiceImpl implements ImpactService {
     @Override
     public ImpactDto createImpact(ImpactDto impactDto) {
         logger.info("Create Impact");
+        if (impactDto.getId() != null) {
+            throw new EntityIdMustBeNullException();
+        }
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository));
         impactCreatedEventPublisher.onImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);

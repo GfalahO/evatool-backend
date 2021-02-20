@@ -1,5 +1,7 @@
 package com.evatool.impact.common.exception.handle;
 
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,33 +24,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
-//    @ExceptionHandler(ConstraintViolationException.class)
-//    public ResponseEntity<ErrorMessage> handleConstraintViolationException(ConstraintViolationException exception, WebRequest webRequest) {
-//        logger.info("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
-//        var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-//        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-//    }
-//
-//    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-//    public ResponseEntity<ErrorMessage> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception, WebRequest webRequest) {
-//        logger.info("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
-//        var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-//        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-//    }
-//
-//    @ExceptionHandler(HttpMessageNotReadableException.class)
-//    public ResponseEntity<ErrorMessage> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception, WebRequest webRequest) {
-//        logger.info("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
-//        var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-//        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-//    }
-//
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception, WebRequest webRequest) {
-//        logger.info("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
-//        var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-//        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-//    }
+    @ExceptionHandler(EntityIdRequiredException.class)
+    public ResponseEntity<ErrorMessage> handleEntityIdRequiredException(EntityIdRequiredException exception, WebRequest webRequest) {
+        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
+        var errorMessage = new ErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(EntityIdMustBeNullException.class)
+    public ResponseEntity<ErrorMessage> handleEntityIdMustBeNullException(EntityIdMustBeNullException exception, WebRequest webRequest) {
+        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
+        var errorMessage = new ErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 
     private String getUri(WebRequest webRequest) {
         return ((ServletWebRequest) webRequest).getRequest().getRequestURI();
