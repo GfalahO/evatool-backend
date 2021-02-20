@@ -1,11 +1,11 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.event.impact.ImpactCreatedEventPublisher;
 import com.evatool.impact.domain.event.impact.ImpactDeletedEventPublisher;
 import com.evatool.impact.domain.event.impact.ImpactUpdatedEventPublisher;
@@ -47,12 +47,13 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public ImpactDto findImpactById(String id) {
+    public ImpactDto findImpactById(UUID id) {
         logger.info("Get Impact");
-        SuperEntity.probeExistingId(id);
-        var impact = impactRepository.findById(UUID.fromString(id));
+        if (id == null) {
+            throw new EntityIdRequiredException();
+        }
+        var impact = impactRepository.findById(id);
         if (impact.isEmpty()) {
-            logger.error("Entity not found");
             throw new EntityNotFoundException(Impact.class, id);
         }
         return ImpactDtoMapper.toDto(impact.get());
@@ -70,7 +71,9 @@ public class ImpactServiceImpl implements ImpactService {
     @Override
     public ImpactDto createImpact(ImpactDto impactDto) {
         logger.info("Create Impact");
-        SuperEntity.probeNonExistingId(impactDto.getId());
+        if (impactDto.getId() != null) {
+            throw new EntityIdMustBeNullException();
+        }
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository));
         impactCreatedEventPublisher.onImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -86,7 +89,7 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public void deleteImpactById(String id) {
+    public void deleteImpactById(UUID id) {
         logger.info("Delete Impact");
         var impactDto = this.findImpactById(id);
         var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);

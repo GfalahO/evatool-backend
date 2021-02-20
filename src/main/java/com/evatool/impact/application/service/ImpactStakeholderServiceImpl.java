@@ -2,10 +2,10 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +27,13 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public ImpactStakeholderDto findStakeholderById(String id) {
+    public ImpactStakeholderDto findStakeholderById(UUID id) {
         logger.info("Get Stakeholder");
-        SuperEntity.probeExistingId(id);
-        var stakeholder = stakeholderRepository.findById(UUID.fromString(id));
+        if (id == null) {
+            throw new EntityIdRequiredException();
+        }
+        var stakeholder = stakeholderRepository.findById(id);
         if (stakeholder.isEmpty()) {
-            logger.error("Entity not found");
             throw new EntityNotFoundException(ImpactStakeholder.class, id);
         }
         return ImpactStakeholderDtoMapper.toDto(stakeholder.get());
@@ -43,14 +44,16 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         logger.info("Get Stakeholders");
         var stakeholders = stakeholderRepository.findAll();
         var stakeholderDtoList = new ArrayList<ImpactStakeholderDto>();
-        stakeholders.forEach(s -> stakeholderDtoList.add(ImpactStakeholderDtoMapper.toDto(s)));
+        stakeholders.forEach(stakeholder -> stakeholderDtoList.add(ImpactStakeholderDtoMapper.toDto(stakeholder)));
         return stakeholderDtoList;
     }
 
     @Override
     public ImpactStakeholderDto createStakeholder(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Create Stakeholder");
-        SuperEntity.probeNonExistingId(impactStakeholderDto.getId());
+        if (impactStakeholderDto.getId() != null) {
+            throw new EntityIdMustBeNullException();
+        }
         var stakeholder = stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactStakeholderDto));
         return ImpactStakeholderDtoMapper.toDto(stakeholder);
     }
@@ -64,7 +67,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public void deleteStakeholderById(String id) {
+    public void deleteStakeholderById(UUID id) {
         logger.info("Delete Stakeholder");
         var stakeholderDto = this.findStakeholderById(id);
         var stakeholder = ImpactStakeholderDtoMapper.fromDto(stakeholderDto);

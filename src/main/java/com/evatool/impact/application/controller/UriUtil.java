@@ -2,6 +2,10 @@ package com.evatool.impact.application.controller;
 
 public class UriUtil {
 
+    private UriUtil() {
+
+    }
+
     public static final String STAKEHOLDERS = "/stakeholders";
     public static final String GET_STAKEHOLDER = "get stakeholder";
 
@@ -10,19 +14,20 @@ public class UriUtil {
 
     public static final String DIMENSIONS = "/dimensions";
     public static final String DIMENSIONS_ID = "/dimensions/{id}";
+    public static final String DIMENSION_TYPES = "/dimensions/types";
 
-    public static final String _DIMENSIONS = "dimensions";
-    public static final String GET_DIMENSIONS = "get " + _DIMENSIONS;
-    public static final String GET_DIMENSIONS_BY_TYPE = "get " + _DIMENSIONS + " by type";
-    public static final String GET_ALL_DIMENSIONS = "get all " + _DIMENSIONS;
-    public static final String CREATE_DIMENSIONS = "create " + _DIMENSIONS;
-    public static final String UPDATE_DIMENSIONS = "update " + _DIMENSIONS;
-    public static final String DELETE_DIMENSIONS = "delete " + _DIMENSIONS;
+    public static final String DIMENSION_NAME = "dimension";
+    public static final String GET_DIMENSION = "get " + DIMENSION_NAME;
+    public static final String GET_ALL_DIMENSIONS_BY_TYPE = "get " + DIMENSION_NAME + "s by type";
+    public static final String GET_ALL_DIMENSIONS = "get all " + DIMENSION_NAME + "s";
+    public static final String CREATE_DIMENSION = "create " + DIMENSION_NAME;
+    public static final String UPDATE_DIMENSION = "update " + DIMENSION_NAME;
+    public static final String DELETE_DIMENSION = "delete " + DIMENSION_NAME;
 
-    public static final String _IMPACTS = "impacts";
-    public static final String GET_IMPACTS = "get " + _IMPACTS;
-    public static final String GET_ALL_IMPACTS = "get all " + _IMPACTS;
-    public static final String CREATE_IMPACTS = "create " + _IMPACTS;
-    public static final String UPDATE_IMPACTS = "update " + _IMPACTS;
-    public static final String DELETE_IMPACTS = "delete " + _IMPACTS;
+    public static final String IMPACT_NAME = "impact";
+    public static final String GET_IMPACT = "get " + IMPACT_NAME;
+    public static final String GET_ALL_IMPACTS = "get all " + IMPACT_NAME + "s";
+    public static final String CREATE_IMPACT = "create " + IMPACT_NAME;
+    public static final String UPDATE_IMPACT = "update " + IMPACT_NAME;
+    public static final String DELETE_IMPACT = "delete " + IMPACT_NAME;
 }

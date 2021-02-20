@@ -3,9 +3,10 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ImpactStakeholderService {
-    ImpactStakeholderDto findStakeholderById(String id);
+    ImpactStakeholderDto findStakeholderById(UUID id);
 
     List<ImpactStakeholderDto> getAllStakeholders();
 
@@ -13,7 +14,7 @@ public interface ImpactStakeholderService {
 
     ImpactStakeholderDto updateStakeholder(ImpactStakeholderDto impactStakeholderDto);
 
-    void deleteStakeholderById(String id);
+    void deleteStakeholderById(UUID id);
 
     void deleteStakeholders();
 }

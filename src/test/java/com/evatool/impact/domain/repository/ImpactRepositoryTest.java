@@ -13,10 +13,18 @@ class ImpactRepositoryTest {
     @Autowired
     private ImpactRepository impactRepository;
 
+    @Autowired
+    private DimensionRepository dimensionRepository;
+
+    @Autowired
+    private ImpactStakeholderRepository stakeholderRepository;
+
     @Test
     void testFindById_InsertedImpact_ReturnImpact() {
         // given
         var impact = createDummyImpact();
+        dimensionRepository.save(impact.getDimension());
+        stakeholderRepository.save(impact.getStakeholder());
         impactRepository.save(impact);
 
         // when
@@ -32,6 +40,8 @@ class ImpactRepositoryTest {
         var impact = createDummyImpact();
 
         // when
+        dimensionRepository.save(impact.getDimension());
+        stakeholderRepository.save(impact.getStakeholder());
         impactRepository.save(impact);
 
         // then
@@ -42,6 +52,8 @@ class ImpactRepositoryTest {
     void testSave_UpdatedImpact_ReturnUpdatedDimension() {
         // given
         var impact = createDummyImpact();
+        dimensionRepository.save(impact.getDimension());
+        stakeholderRepository.save(impact.getStakeholder());
         impactRepository.save(impact);
         var newValue = 0.125;
 
@@ -59,6 +71,8 @@ class ImpactRepositoryTest {
     void testDelete_DeletedImpact_ReturnNull() {
         // given
         var impact = createDummyImpact();
+        dimensionRepository.save(impact.getDimension());
+        stakeholderRepository.save(impact.getStakeholder());
         impactRepository.save(impact);
 
         // when

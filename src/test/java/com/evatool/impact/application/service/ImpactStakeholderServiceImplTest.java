@@ -1,7 +1,8 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -29,6 +30,7 @@ class ImpactStakeholderServiceImplTest {
 
     @Nested
     class GetById {
+
         @Test
         void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
             // given
@@ -38,13 +40,14 @@ class ImpactStakeholderServiceImplTest {
             // when
 
             // then
-            var id = stakeholder.getId().toString();
+            var id = stakeholder.getId();
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.findStakeholderById(id));
         }
     }
 
     @Nested
     class GetAll {
+
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
@@ -64,6 +67,7 @@ class ImpactStakeholderServiceImplTest {
 
     @Nested
     class Insert {
+
         @Test
         void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() {
             // given
@@ -80,20 +84,21 @@ class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        void testInsertStakeholder_NotNullId_ThrowPropertyViolationException() {
+        void testInsertStakeholder_ExistingId_ThrowEntityIdMustBeNullException() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
             // when
-            stakeholderDto.setId("not null");
+            stakeholderDto.setId(UUID.randomUUID());
 
             // then
-            assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> stakeholderService.createStakeholder(stakeholderDto));
+            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> stakeholderService.createStakeholder(stakeholderDto));
         }
     }
 
     @Nested
     class Update {
+
         @Test
         void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() {
             // given
@@ -115,7 +120,7 @@ class ImpactStakeholderServiceImplTest {
         void testUpdateStakeholder_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
-            stakeholderDto.setId(UUID.randomUUID().toString());
+            stakeholderDto.setId(UUID.randomUUID());
 
             // when
 
@@ -124,32 +129,20 @@ class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        void testUpdateStakeholder_NullId_ThrowInvalidUuidException() {
+        void testUpdateStakeholder_NullId_ThrowEntityIdRequiredException() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
-            stakeholderDto.setId(null);
 
             // when
 
             // then
-            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> stakeholderService.updateStakeholder(stakeholderDto));
-        }
-
-        @Test
-        void testUpdateStakeholder_InvalidId_ThrowInvalidUuidException() {
-            // given
-            var stakeholderDto = createDummyStakeholderDto();
-            stakeholderDto.setId("invalid id");
-
-            // when
-
-            // then
-            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> stakeholderService.updateStakeholder(stakeholderDto));
+            assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> stakeholderService.updateStakeholder(stakeholderDto));
         }
     }
 
     @Nested
     class Delete {
+
         @Test
         void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() {
             // given
@@ -173,35 +166,14 @@ class ImpactStakeholderServiceImplTest {
             // when
 
             // then
-            var id = stakeholder.getId().toString();
+            var id = stakeholder.getId();
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.deleteStakeholderById(id));
-        }
-
-        @Test
-        void testDeleteStakeholderById_NullId_ThrowInvalidUuidException() {
-            // given
-            var id = (String) null;
-
-            // when
-
-            // then
-            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> stakeholderService.deleteStakeholderById(id));
-        }
-
-        @Test
-        void testDeleteStakeholderById_InvalidId_ThrowInvalidUuidException() {
-            // given
-            var id = "invalid id";
-
-            // when
-
-            // then
-            assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> stakeholderService.deleteStakeholderById(id));
         }
     }
 
     @Nested
     class DeleteAll {
+
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testDeleteAll_InsertStakeholders_ReturnNoStakeholders(int value) {

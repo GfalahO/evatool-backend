@@ -34,6 +34,7 @@ public class Impact extends SuperEntity {
 
     public Impact() {
         super();
+        logger.debug("{} created", Impact.class.getSimpleName());
     }
 
     public Impact(double value, String description, Dimension dimension, ImpactStakeholder stakeholder) {
@@ -58,7 +59,7 @@ public class Impact extends SuperEntity {
     public void setValue(double value) {
         logger.debug("Set Value");
         if (value < -1.0 || value > 1.0) {
-            logger.error("Attempted to set value outside its valid range.");
+            logger.error("Attempted to set value outside its valid range");
             throw new PropertyViolationException("Value must be in range [-1, 1]");
         }
         this.value = value;
@@ -67,7 +68,7 @@ public class Impact extends SuperEntity {
     public void setDescription(String description) {
         logger.debug("Set Description");
         if (description == null) {
-            logger.error("Attempted to set description to null.");
+            logger.error("Attempted to set description to null");
             throw new PropertyViolationException("Description cannot be null.");
         }
         this.description = description;
@@ -76,7 +77,7 @@ public class Impact extends SuperEntity {
     public void setDimension(Dimension dimension) {
         logger.debug("Set Dimension");
         if (dimension == null) {
-            logger.error("Attempted to set dimension description to null.");
+            logger.error("Attempted to set dimension description to null");
             throw new PropertyViolationException("Dimension cannot be null.");
         }
         this.dimension = dimension;
@@ -85,24 +86,15 @@ public class Impact extends SuperEntity {
     public void setStakeholder(ImpactStakeholder stakeholder) {
         logger.debug("Set Stakeholder");
         if (stakeholder == null) {
-            logger.error("Attempted to set stakeholder to null.");
+            logger.error("Attempted to set stakeholder to null");
             throw new PropertyViolationException("Stakeholder cannot be null.");
         }
         this.stakeholder = stakeholder;
     }
 }
 
-// TODO [hbuhl & tzaika] Event Listener (wait for other group to implement events)
-// TODO [tzaika] add swagger API documentation (@Api, @ApiOperation, @ApiResponses, @ApiModel?, @ApiModelProperty?, @ApiParam)
-// TODO [hbuhl & tzaika] Rest Level 3: What links to include
-// TODO [hbuhl & tzaika] Logging
-// TODO [hbuhl & tzaika] DTO Validator (package DTO)
-// TODO Implement 422 and other http return codes
-// TODO [tzaika] Implement Impact API Tests
-// TODO [hbuhl & tzaika] Event Tests
-// TODO [tzaika] use new wireframe in impact domain model wiki
-// TODO After new repo structure:
-//  Rename GitHub Action paths (build, deploy)
-//  Remove public modifiers and use default
-//  logger.error("Exception: [{}]", ex.getMessage())
+// TODO [tzaika] Implement Impact (Service + Controller + Tests)
 // TODO [tzaika] h2 console on remote server
+
+// TODO [tzaika] Use new wireframe in impact domain model wiki
+// TODO [tzaika] Finish impact domain model decision

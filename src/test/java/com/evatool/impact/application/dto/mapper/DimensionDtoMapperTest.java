@@ -22,25 +22,25 @@ class DimensionDtoMapperTest {
         var dimensionDto = toDto(dimension);
 
         // then
-        assertThat(dimension.getId()).hasToString(dimensionDto.getId());
+        assertThat(dimension.getId()).isEqualTo(dimensionDto.getId());
         assertThat(dimension.getName()).isEqualTo(dimensionDto.getName());
-        assertThat(dimension.getType()).hasToString(dimensionDto.getType());
+        assertThat(dimension.getType()).isEqualTo(dimensionDto.getType());
         assertThat(dimension.getDescription()).isEqualTo(dimensionDto.getDescription());
     }
 
     @Test
-        // TODO [tzaika] actually an integration test
     void testFromDto_NewDimensionDto_EqualsDimension() {
         // given
         var dimensionDto = createDummyDimensionDto();
-        dimensionDto.setId(UUID.randomUUID().toString());
+        dimensionDto.setId(UUID.randomUUID());
 
         // when
         var dimension = fromDto(dimensionDto);
 
         // then
-        assertThat(dimensionDto.getId()).isEqualTo(dimension.getId().toString());
+        assertThat(dimensionDto.getId()).isEqualTo(dimension.getId());
         assertThat(dimensionDto.getName()).isEqualTo(dimension.getName());
+        assertThat(dimensionDto.getType()).isEqualTo(dimension.getType());
         assertThat(dimensionDto.getDescription()).isEqualTo(dimension.getDescription());
     }
 }

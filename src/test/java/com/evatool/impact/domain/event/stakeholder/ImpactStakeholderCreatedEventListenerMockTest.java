@@ -1,8 +1,6 @@
 package com.evatool.impact.domain.event.stakeholder;
 
-import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
-import com.evatool.impact.domain.event.TestEvent;
-import org.junit.jupiter.api.Test;
+import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +19,10 @@ import static org.mockito.Mockito.verify;
 class ImpactStakeholderCreatedEventListenerMockTest {
 
     @MockBean
-    private ImpactStakeholderCreatedEventListener impactStakeholderCreatedEventListener;
+    private ImpactStakeholderDeletedEventListener impactStakeholderDeletedEventListener;
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
-
-    @Test
-    void testOnApplicationEvent_PublishEvent_ReceivePublishedEvent() {
-        // given
-        var stakeholder = createDummyStakeholder();
-
-        // when
-        var stakeholderCreatedEvent = new StakeholderCreatedEvent(applicationEventPublisher, "");
-        applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
-
-        // then
-        verify(impactStakeholderCreatedEventListener, times(1)).onApplicationEvent(any(StakeholderCreatedEvent.class));
-    }
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
@@ -47,23 +32,11 @@ class ImpactStakeholderCreatedEventListenerMockTest {
             var stakeholder = createDummyStakeholder();
 
             // when
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(applicationEventPublisher, "");
-            applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
+            var stakeholderDeletedEvent = new StakeholderDeletedEvent(applicationEventPublisher, "");
+            applicationEventPublisher.publishEvent(stakeholderDeletedEvent);
         }
 
         // then
-        verify(impactStakeholderCreatedEventListener, times(value)).onApplicationEvent(any(StakeholderCreatedEvent.class));
-    }
-
-    @Test
-    void testOnApplicationEvent_PublishWrongEvent_DoNotReceivePublishedEvent() {
-        // given
-        var stakeholder = createDummyStakeholder();
-
-        // when
-        applicationEventPublisher.publishEvent(new TestEvent(this));
-
-        // then
-        verify(impactStakeholderCreatedEventListener, times(0)).onApplicationEvent(any(StakeholderCreatedEvent.class));
+        verify(impactStakeholderDeletedEventListener, times(value)).onApplicationEvent(any(StakeholderDeletedEvent.class));
     }
 }

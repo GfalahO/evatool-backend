@@ -3,10 +3,11 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ImpactService {
 
-    ImpactDto findImpactById(String id);
+    ImpactDto findImpactById(UUID id);
 
     List<ImpactDto> getAllImpacts();
 
@@ -14,7 +15,7 @@ public interface ImpactService {
 
     ImpactDto updateImpact(ImpactDto impactDto);
 
-    void deleteImpactById(String id);
+    void deleteImpactById(UUID id);
 
     void deleteImpacts();
 }

@@ -1,6 +1,5 @@
 package com.evatool.impact.application.dto.mapper;
 
-import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import org.modelmapper.ModelMapper;
@@ -8,6 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ImpactStakeholderDtoMapper {
+
+    private ImpactStakeholderDtoMapper() {
+
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholderDtoMapper.class);
 
@@ -18,9 +21,7 @@ public class ImpactStakeholderDtoMapper {
         var stakeholder = new ImpactStakeholder(
                 impactStakeholderDto.getName()
         );
-        if (impactStakeholderDto.getId() != null) {
-            stakeholder.setId(impactStakeholderDto.getId());
-        }
+        stakeholder.setId(impactStakeholderDto.getId());
         return stakeholder;
     }
 

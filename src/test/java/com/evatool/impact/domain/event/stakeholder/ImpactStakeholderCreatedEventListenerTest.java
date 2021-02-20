@@ -32,21 +32,21 @@ class ImpactStakeholderCreatedEventListenerTest {
     }
 
     @Test
-    void testOnApplicationEvent_PublishEvent_StakeholderIsInserted() {
+    void testOnApplicationEvent_PublishEvent_StakeholderCreated() {
         // given
-        var id = UUID.randomUUID().toString();
+        var id = UUID.randomUUID();
         var name = "name";
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id, name);
+        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
         // when
         var stakeholderCreatedEvent = new StakeholderCreatedEvent(applicationEventPublisher, json);
         applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
 
         // then
-        var stakeholder = stakeholderRepository.findById(UUID.fromString(id)).orElse(null);
+        var stakeholder = stakeholderRepository.findById(id).orElse(null);
         assertThat(stakeholder).isNotNull();
         assertThat(stakeholder.getId()).isNotNull();
-        assertThat(stakeholder.getId()).hasToString(id);
+        assertThat(stakeholder.getId()).isEqualTo(id);
         assertThat(stakeholder.getName()).isEqualTo(name);
     }
 }

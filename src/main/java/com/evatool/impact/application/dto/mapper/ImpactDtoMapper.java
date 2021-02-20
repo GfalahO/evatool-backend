@@ -8,9 +8,11 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.UUID;
-
 public class ImpactDtoMapper {
+
+    private ImpactDtoMapper() {
+
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactDtoMapper.class);
 
@@ -21,12 +23,10 @@ public class ImpactDtoMapper {
         var impact = new Impact(
                 impactDto.getValue(),
                 impactDto.getDescription(),
-                dimensionRepository.findById(UUID.fromString(impactDto.getDimension().getId())).orElse(null),
-                stakeholderRepository.findById(UUID.fromString(impactDto.getStakeholder().getId())).orElse(null)
+                dimensionRepository.findById(impactDto.getDimension().getId()).orElse(null),
+                stakeholderRepository.findById(impactDto.getStakeholder().getId()).orElse(null)
         );
-        if (impactDto.getId() != null) {
-            impact.setId(impactDto.getId());
-        }
+        impact.setId(impactDto.getId());
         return impact;
     }
 

@@ -103,25 +103,12 @@ class DimensionRepositoryTest {
         }
 
         // when
-        var socialDimensions = dimensionRepository.findDimensionsByType(Dimension.Type.SOCIAL.toString());
-        var economicDimension = dimensionRepository.findDimensionsByType(Dimension.Type.ECONOMIC.toString());
+        var socialDimensions = dimensionRepository.findDimensionsByType(Dimension.Type.SOCIAL);
+        var economicDimension = dimensionRepository.findDimensionsByType(Dimension.Type.ECONOMIC);
 
         // then
         assertThat(socialDimensions.size()).isEqualTo(n_socialDimensions);
         assertThat(economicDimension.size()).isEqualTo(n_economicDimensions);
-    }
-
-    @Test
-    void testFindByType_FindValueNotInEnum_Allow() {
-        // given
-        var socialDimension = createDummyDimension();
-        dimensionRepository.save(socialDimension);
-
-        // when
-        var socialDimensions = dimensionRepository.findDimensionsByType("invalid type but its ok");
-
-        // then
-        assertThat(socialDimensions.size()).isZero();
     }
 
     @Nested

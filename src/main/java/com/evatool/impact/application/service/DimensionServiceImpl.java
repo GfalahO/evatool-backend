@@ -2,9 +2,10 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.domain.entity.Dimension;
-import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.event.dimension.DimensionCreatedEventPublisher;
 import com.evatool.impact.domain.event.dimension.DimensionDeletedEventPublisher;
 import com.evatool.impact.domain.event.dimension.DimensionUpdatedEventPublisher;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,23 +40,24 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public DimensionDto findDimensionById(String id) {
+    public DimensionDto findDimensionById(UUID id) {
         logger.info("Get Dimension");
-        SuperEntity.probeExistingId(id);
-        var dimension = dimensionRepository.findById(UUID.fromString(id));
+        if (id == null) {
+            throw new EntityIdRequiredException();
+        }
+        var dimension = dimensionRepository.findById(id);
         if (dimension.isEmpty()) {
-            logger.error("Entity not found");
             throw new EntityNotFoundException(Dimension.class, id);
         }
         return DimensionDtoMapper.toDto(dimension.get());
     }
 
     @Override
-    public List<DimensionDto> findDimensionsByType(String type) {
+    public List<DimensionDto> findDimensionsByType(Dimension.Type type) {
         logger.info("Get Dimensions by type");
         var dimensions = dimensionRepository.findDimensionsByType(type);
         var dimensionDtoList = new ArrayList<DimensionDto>();
-        dimensions.forEach(s -> dimensionDtoList.add(DimensionDtoMapper.toDto(s)));
+        dimensions.forEach(dimension -> dimensionDtoList.add(DimensionDtoMapper.toDto(dimension)));
         return dimensionDtoList;
     }
 
@@ -63,14 +66,22 @@ public class DimensionServiceImpl implements DimensionService {
         logger.info("Get Dimensions");
         var dimensions = dimensionRepository.findAll();
         var dimensionDtoList = new ArrayList<DimensionDto>();
-        dimensions.forEach(s -> dimensionDtoList.add(DimensionDtoMapper.toDto(s)));
+        dimensions.forEach(dimension -> dimensionDtoList.add(DimensionDtoMapper.toDto(dimension)));
         return dimensionDtoList;
+    }
+
+    @Override
+    public List<Dimension.Type> getAllDimensionTypes() {
+        logger.info("Get Dimension Types");
+        return Arrays.asList(Dimension.Type.values());
     }
 
     @Override
     public DimensionDto createDimension(DimensionDto dimensionDto) {
         logger.info("Create Dimension");
-        SuperEntity.probeNonExistingId(dimensionDto.getId());
+        if (dimensionDto.getId() != null) {
+            throw new EntityIdMustBeNullException();
+        }
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
         dimensionCreatedEventPublisher.onDimensionCreated(dimension);
         return DimensionDtoMapper.toDto(dimension);
@@ -86,7 +97,7 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public void deleteDimensionById(String id) {
+    public void deleteDimensionById(UUID id) {
         logger.info("Delete Dimension");
         var dimensionDto = this.findDimensionById(id);
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);

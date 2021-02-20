@@ -20,6 +20,7 @@ public class DimensionCreatedEventPublisher {
     }
 
     public void onDimensionCreated(final Dimension dimension) {
+        logger.info("Preparing to publish event");
         var dimensionJson = DimensionJsonMapper.toJson(dimension);
         var dimensionCreatedEvent = new DimensionCreatedEvent(this, dimensionJson.toString());
         applicationEventPublisher.publishEvent(dimensionCreatedEvent);

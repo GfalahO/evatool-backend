@@ -1,7 +1,6 @@
 package com.evatool.impact.domain.repository;
 
 import com.evatool.impact.domain.entity.Dimension;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +13,6 @@ public interface DimensionRepository extends CrudRepository<Dimension, UUID> {
 
     Optional<Dimension> findByName(String name);
 
-    @Query(value = "select * from imp_dimension where type = ?1", nativeQuery = true)
-    List<Dimension> findDimensionsByType(String type);
+    List<Dimension> findDimensionsByType(Dimension.Type type);
 
 }
