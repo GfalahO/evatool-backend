@@ -46,6 +46,23 @@ class DimensionRestControllerMockServiceTest {
 
     @Nested
     class GetById {
+
+        @Test
+        void testGetDimensionById_ExistingDimension_ReturnDimension() throws Exception {
+            // given
+            var dimensionDto = createDummyDimensionDto();
+
+            // when
+            when(dimensionService.findDimensionById(any(UUID.class))).thenReturn(dimensionDto);
+
+            // then
+            mvc.perform(get(DIMENSIONS + "/" + UUID.randomUUID().toString())
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.name").value(dimensionDto.getName()));
+        }
+
         @Test
         void testGetDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
@@ -74,23 +91,7 @@ class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        void testGetDimensionById_ExistingDimension_ReturnDimension() throws Exception {
-            // given
-            var dimensionDto = createDummyDimensionDto();
-
-            // when
-            when(dimensionService.findDimensionById(any(UUID.class))).thenReturn(dimensionDto);
-
-            // then
-            mvc.perform(get(DIMENSIONS + "/" + UUID.randomUUID().toString())
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.name").value(dimensionDto.getName()));
-        }
-
-        @Test
-        void testGetDimensionById_NonExistingDimension_ReturnHttpStatusNotFoundAndErrorMessage() throws Exception {
+        void testGetDimensionById_NonExistingDimension_ReturnErrorMessage() throws Exception {
             // given
             var id = UUID.randomUUID().toString();
 
@@ -166,6 +167,7 @@ class DimensionRestControllerMockServiceTest {
 
     @Nested
     class GetByType {
+
         @Test
         void testGetByType_ExistingDimensions_ReturnDimensions() throws Exception {
             // given
@@ -249,8 +251,9 @@ class DimensionRestControllerMockServiceTest {
 
     @Nested
     class Delete {
+
         @Test
-        void testDeleteDimension_DeletedDimension_ReturnNull() throws Exception {
+        void testDeleteDimension_DeletedDimension_ReturnNoDimensions() throws Exception {
             // given
 
             // when

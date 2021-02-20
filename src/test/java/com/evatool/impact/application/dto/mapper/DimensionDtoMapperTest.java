@@ -29,7 +29,6 @@ class DimensionDtoMapperTest {
     }
 
     @Test
-        // TODO [tzaika] actually an integration test
     void testFromDto_NewDimensionDto_EqualsDimension() {
         // given
         var dimensionDto = createDummyDimensionDto();
@@ -41,6 +40,7 @@ class DimensionDtoMapperTest {
         // then
         assertThat(dimensionDto.getId()).isEqualTo(dimension.getId());
         assertThat(dimensionDto.getName()).isEqualTo(dimension.getName());
+        assertThat(dimensionDto.getType()).isEqualTo(dimension.getType());
         assertThat(dimensionDto.getDescription()).isEqualTo(dimension.getDescription());
     }
 }

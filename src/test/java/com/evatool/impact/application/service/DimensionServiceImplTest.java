@@ -1,5 +1,7 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.Dimension;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
-import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
+import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -31,6 +32,7 @@ class DimensionServiceImplTest {
 
     @Nested
     class GetById {
+
         @Test
         void testGetDimensionById_NonExistingId_ThrowEntityNotFoundException() {
             // given
@@ -47,6 +49,7 @@ class DimensionServiceImplTest {
 
     @Nested
     class GetByType {
+
         @Test
         void testGetByType_ExistingDimensions_ReturnDimensions() {
             // given
@@ -76,6 +79,7 @@ class DimensionServiceImplTest {
 
     @Nested
     class GetAll {
+
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testGetAllDimensions_InsertedDimensions_ReturnDimensions(int value) {
@@ -93,20 +97,25 @@ class DimensionServiceImplTest {
         }
     }
 
-    @Test
-    void testGetAllDimensionTypes_ReturnAllDimensionTypes() {
-        // given
+    @Nested
+    class GetDimensionTypes {
 
-        // when
-        var dimensionTypes = dimensionService.getAllDimensionTypes();
+        @Test
+        void testGetAllDimensionTypes_ReturnAllDimensionTypes() {
+            // given
 
-        // then
-        assertThat(dimensionTypes.size()).isEqualTo(Dimension.Type.values().length);
-        assertThat(dimensionTypes).isEqualTo(Arrays.asList(Dimension.Type.values()));
+            // when
+            var dimensionTypes = dimensionService.getAllDimensionTypes();
+
+            // then
+            assertThat(dimensionTypes.size()).isEqualTo(Dimension.Type.values().length);
+            assertThat(dimensionTypes).isEqualTo(Arrays.asList(Dimension.Type.values()));
+        }
     }
 
     @Nested
     class Insert {
+
         @Test
         void testInsertDimension_InsertedDimension_ReturnInsertedDimension() {
             // given
@@ -121,10 +130,23 @@ class DimensionServiceImplTest {
             assertThat(insertedDimension.getId()).isEqualTo(retrievedDimension.getId());
             assertThat(insertedDimension.getName()).isEqualTo(retrievedDimension.getName());
         }
+
+        @Test
+        void testInsertDimension_ExistingId_ThrowEntityIdMustBeNullException() {
+            // given
+            var dimensionDto = createDummyDimensionDto();
+
+            // when
+            dimensionDto.setId(UUID.randomUUID());
+
+            // then
+            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> dimensionService.createDimension(dimensionDto));
+        }
     }
 
     @Nested
     class Update {
+
         @Test
         void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() {
             // given
@@ -153,10 +175,22 @@ class DimensionServiceImplTest {
             // then
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.updateDimension(dimensionDto));
         }
+
+        @Test
+        void testUpdateDimension_NullId_ThrowEntityIdRequiredException() {
+            // given
+            var dimensionDto = createDummyDimensionDto();
+
+            // when
+
+            // then
+            assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> dimensionService.updateDimension(dimensionDto));
+        }
     }
 
     @Nested
     class Delete {
+
         @Test
         void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions() {
             // given
@@ -187,6 +221,7 @@ class DimensionServiceImplTest {
 
     @Nested
     class DeleteAll {
+
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testDeleteAll_InsertDimensions_ReturnNoDimensions(int value) {

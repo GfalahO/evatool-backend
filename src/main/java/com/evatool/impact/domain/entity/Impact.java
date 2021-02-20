@@ -94,7 +94,7 @@ public class Impact extends SuperEntity {
 }
 
 // TODO [hbuhl] Event Listener (wait for other group to implement events)
-// TODO Rework tests
+// TODO [tzaika] Implement Impact (Service + Controller)
 
 // TODO [tzaika] Implement Impact API Tests
 // TODO [hbuhl] Event Tests (wait for other group to implement events)

@@ -14,9 +14,10 @@ class ConvertTest {
         var list = new ArrayList<>(Arrays.asList("a", "b", "c"));
 
         // given
+        var converted = Convert.iterableToList(list);
 
         // then
-        assertThat(Convert.iterableToList(list).size()).isEqualTo(list.size());
-        assertThat(Convert.iterableToList(list)).isEqualTo(list);
+        assertThat(converted.size()).isEqualTo(list.size());
+        assertThat(converted).isEqualTo(list);
     }
 }

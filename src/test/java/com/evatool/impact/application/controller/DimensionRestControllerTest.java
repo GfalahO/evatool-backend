@@ -46,6 +46,7 @@ class DimensionRestControllerTest {
 
     @Nested
     class GetById {
+
         @Test
         void testGetDimensionById_InsertedDimension_ReturnDimension() {
             // given
@@ -83,6 +84,7 @@ class DimensionRestControllerTest {
 
     @Nested
     class GetAll {
+
         @Test
         void testGetDimensions_ExistingDimensions_ReturnDimensions() {
             // given
@@ -125,6 +127,7 @@ class DimensionRestControllerTest {
 
     @Nested
     class GetByType {
+
         @Test
         void testGetByType_ExistingDimensions_ReturnDimensions() throws Exception {
             // given
@@ -157,21 +160,26 @@ class DimensionRestControllerTest {
         }
     }
 
-    @Test
-    void testGetDimensionTypes_ReturnDimensionTypes() {
-        // given
+    @Nested
+    class GetDimensionTypes {
 
-        // when
-        var dimensionTypes = testRestTemplate.getForEntity(
-                DIMENSION_TYPES, Dimension.Type[].class);
+        @Test
+        void testGetDimensionTypes_ReturnDimensionTypes() {
+            // given
 
-        // then
-        assertThat(dimensionTypes.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(dimensionTypes.getBody()).isEqualTo(Dimension.Type.values());
+            // when
+            var dimensionTypes = testRestTemplate.getForEntity(
+                    DIMENSION_TYPES, Dimension.Type[].class);
+
+            // then
+            assertThat(dimensionTypes.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(dimensionTypes.getBody()).isEqualTo(Dimension.Type.values());
+        }
     }
 
     @Nested
     class Insert {
+
         @Test
         void testInsertDimension_InsertDimension_ReturnInsertedDimension() {
             // given
@@ -188,20 +196,6 @@ class DimensionRestControllerTest {
             assertThat(responseEntity.getBody()).isNotNull();
             assertThat(responseEntity.getBody().getId()).isNotNull();
             assertThat(responseEntity.getBody().getName()).isEqualTo(dimension.getName());
-        }
-
-        // Note: RestController code is not being executed. The error is automatically thrown.
-        @Test
-        void testInsertDimension_InsertNullDto_ReturnHttpStatusUnsupportedMediaType() {
-            // given
-            var httpEntity = new HttpEntity<>(null);
-
-            // when
-            var responseEntity = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
         }
 
         @Test
@@ -280,6 +274,7 @@ class DimensionRestControllerTest {
 
     @Nested
     class Update {
+
         @Test
         void testUpdateDimension_InsertedDimension_ReturnUpdatedDimension() {
             // given
@@ -326,21 +321,6 @@ class DimensionRestControllerTest {
 
             // then
             assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        }
-
-        @Test
-        void testUpdateDimension_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
-            // given
-            var dimension = createDummyDimension();
-            var dimensionDto = toDto(dimension);
-            var httpEntity = new HttpEntity<>(dimensionDto);
-
-            // when
-            var putResponse = testRestTemplate.exchange(
-                    DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
-
-            // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
         @Test
@@ -409,43 +389,25 @@ class DimensionRestControllerTest {
             assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
-        // Note: RestController code is not being executed. The error is automatically thrown.
         @Test
-        void testUpdateDimension_UpdateNullDtoIntoExistingId_ReturnHttpStatusBadRequest() {
+        void testUpdateDimension_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
             var httpEntity = new HttpEntity<>(dimensionDto);
-            var postResponse = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
 
             // when
-            assertThat(postResponse.getBody()).isNotNull();
-            var putEntity = new HttpEntity<>(null);
             var putResponse = testRestTemplate.exchange(
-                    DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
+                    DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        // Note: RestController code is not being executed. The error is automatically thrown.
-        @Test
-        void testUpdateDimension_UpdateNullDtoIntoNonExistingId_ReturnHttpStatusBadRequest() {
-            // given
-
-            // when
-            var putEntity = new HttpEntity<>(null);
-            var putResponse = testRestTemplate.exchange(
-                    DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
-
-            // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
     @Nested
     class Delete {
+
         @Test
         void testDeleteDimension_ExistingDimension_DeleteDimensionAndReturnHttpStatusOK() {
             // given

@@ -21,9 +21,7 @@ public class ImpactStakeholderDtoMapper {
         var stakeholder = new ImpactStakeholder(
                 impactStakeholderDto.getName()
         );
-        if (impactStakeholderDto.getId() != null) {
-            stakeholder.setId(impactStakeholderDto.getId());
-        }
+        stakeholder.setId(impactStakeholderDto.getId());
         return stakeholder;
     }
 

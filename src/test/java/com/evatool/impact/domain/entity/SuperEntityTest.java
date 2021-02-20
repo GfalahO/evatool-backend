@@ -31,24 +31,11 @@ class SuperEntityTest {
         superEntity.setId(UUID.randomUUID());
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId((UUID) null));
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(null));
     }
 
     @Test
     void testSetIdUuid_IllegalValueSequence_ThrowPropertyViolationException() {
-        // given
-        var superEntity = new SuperEntity();
-
-        // when
-        superEntity.setId(UUID.randomUUID());
-
-        // then
-        var id = UUID.randomUUID();
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(id));
-    }
-
-    @Test
-    void testSetIdString_IllegalValueSequence_ThrowPropertyViolationException() {
         // given
         var superEntity = new SuperEntity();
 

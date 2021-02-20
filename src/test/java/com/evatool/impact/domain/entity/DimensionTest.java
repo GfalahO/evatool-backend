@@ -36,7 +36,7 @@ class DimensionTest {
     }
 
     @Test
-    void testSetDescription_NullValue_ThrowException() {
+    void testSetDescription_NullValue_ThrowPropertyViolationException() {
         // given
         var dimension = createDummyDimension();
 

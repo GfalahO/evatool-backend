@@ -23,9 +23,7 @@ public class DimensionDtoMapper {
                 dimensionDto.getType(),
                 dimensionDto.getDescription()
         );
-        if (dimensionDto.getId() != null) {
-            dimension.setId(dimensionDto.getId());
-        }
+        dimension.setId(dimensionDto.getId());
         return dimension;
     }
 

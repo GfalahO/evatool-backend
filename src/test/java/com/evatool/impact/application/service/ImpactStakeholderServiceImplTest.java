@@ -1,5 +1,7 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.common.exception.EntityIdMustBeNullException;
+import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +30,7 @@ class ImpactStakeholderServiceImplTest {
 
     @Nested
     class GetById {
+
         @Test
         void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
             // given
@@ -44,6 +47,7 @@ class ImpactStakeholderServiceImplTest {
 
     @Nested
     class GetAll {
+
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
@@ -63,6 +67,7 @@ class ImpactStakeholderServiceImplTest {
 
     @Nested
     class Insert {
+
         @Test
         void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() {
             // given
@@ -77,10 +82,23 @@ class ImpactStakeholderServiceImplTest {
             assertThat(insertedStakeholder.getId()).isEqualTo(retrievedStakeholder.getId());
             assertThat(insertedStakeholder.getName()).isEqualTo(retrievedStakeholder.getName());
         }
+
+        @Test
+        void testInsertStakeholder_ExistingId_ThrowEntityIdMustBeNullException() {
+            // given
+            var stakeholderDto = createDummyStakeholderDto();
+
+            // when
+            stakeholderDto.setId(UUID.randomUUID());
+
+            // then
+            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> stakeholderService.createStakeholder(stakeholderDto));
+        }
     }
 
     @Nested
     class Update {
+
         @Test
         void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() {
             // given
@@ -109,10 +127,22 @@ class ImpactStakeholderServiceImplTest {
             // then
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.updateStakeholder(stakeholderDto));
         }
+
+        @Test
+        void testUpdateStakeholder_NullId_ThrowEntityIdRequiredException() {
+            // given
+            var stakeholderDto = createDummyStakeholderDto();
+
+            // when
+
+            // then
+            assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> stakeholderService.updateStakeholder(stakeholderDto));
+        }
     }
 
     @Nested
     class Delete {
+
         @Test
         void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() {
             // given
@@ -143,6 +173,7 @@ class ImpactStakeholderServiceImplTest {
 
     @Nested
     class DeleteAll {
+
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testDeleteAll_InsertStakeholders_ReturnNoStakeholders(int value) {
