@@ -1,13 +1,15 @@
 package com.evatool.impact.domain.event.stakeholder;
 
-import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
+import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
-public class ImpactStakeholderDeletedEventListener implements ApplicationListener<StakeholderCreatedEvent> { // TODO change event!
+@Component
+public class ImpactStakeholderDeletedEventListener implements ApplicationListener<StakeholderDeletedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholderDeletedEventListener.class);
 
@@ -18,11 +20,11 @@ public class ImpactStakeholderDeletedEventListener implements ApplicationListene
     }
 
     @Override
-    public void onApplicationEvent(final StakeholderCreatedEvent event) {
-        logger.info("Event received");
+    public void onApplicationEvent(final StakeholderDeletedEvent event) {
+        logger.warn("Event received");
         var jsonPayload = event.getJsonPayload();
         var stakeholder = ImpactStakeholderJsonMapper.fromJson(jsonPayload);
         stakeholderRepository.delete(stakeholder);
-        logger.info("Event successfully processed");
+        logger.warn("Event successfully processed");
     }
 }

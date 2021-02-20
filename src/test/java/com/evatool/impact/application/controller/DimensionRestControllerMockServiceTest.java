@@ -116,34 +116,6 @@ class DimensionRestControllerMockServiceTest {
     @Nested
     class GetAll {
 
-        @Test
-        void testGetAllDimensions_ExistingDimensions_ReturnDimensions() throws Exception {
-            // given
-            var dimension1 = createDummyDimensionDto();
-            dimension1.setId(UUID.randomUUID());
-            var dimension2 = createDummyDimensionDto();
-            dimension2.setId(UUID.randomUUID());
-
-            // when
-            var dimensionDtoList = Arrays.asList(dimension1, dimension2);
-            given(dimensionService.getAllDimensions()).willReturn(dimensionDtoList);
-
-            // then
-            mvc.perform(get(DIMENSIONS)
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[0].id").value(dimension1.getId().toString()))
-                    .andExpect(jsonPath("$[0].name").value(dimension1.getName()))
-                    .andExpect(jsonPath("$[0].description").value(dimension1.getDescription()))
-                    .andExpect(jsonPath("$[0].type").value(dimension1.getType().toString()))
-                    .andExpect(jsonPath("$[1].id").value(dimension2.getId().toString()))
-                    .andExpect(jsonPath("$[1].name").value(dimension2.getName()))
-                    .andExpect(jsonPath("$[1].description").value(dimension2.getDescription()))
-                    .andExpect(jsonPath("$[1].type").value(dimension2.getType().toString()));
-        }
-
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testGetAllDimensions_ExistingDimensions_ReturnDimensions(int value) throws Exception {

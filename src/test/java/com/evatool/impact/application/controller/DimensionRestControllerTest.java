@@ -85,26 +85,6 @@ class DimensionRestControllerTest {
     @Nested
     class GetAll {
 
-        @Test
-        void testGetDimensions_ExistingDimensions_ReturnDimensions() {
-            // given
-            var dimensionDto = createDummyDimensionDto();
-            dimensionService.createDimension(dimensionDto);
-
-            // when
-            var getResponse = testRestTemplate.getForEntity(
-                    DIMENSIONS, DimensionDto[].class);
-            var dimensionDtoList = getResponse.getBody();
-
-            // then
-            assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(dimensionDtoList).isNotNull().hasSize(1);
-            assertThat(dimensionDtoList[0].getId()).isNotNull();
-            assertThat(dimensionDtoList[0].getName()).isEqualTo(dimensionDto.getName());
-            assertThat(dimensionDtoList[0].getDescription()).isEqualTo(dimensionDto.getDescription());
-            assertThat(dimensionDtoList[0].getType()).isEqualTo(dimensionDto.getType());
-        }
-
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
         void testGetDimensions_ExistingDimensions_ReturnDimensions(int value) {
