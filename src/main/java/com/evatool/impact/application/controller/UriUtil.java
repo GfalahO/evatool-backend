@@ -17,7 +17,7 @@ public class UriUtil {
 
     public static final String DIMENSION_NAME = "dimension";
     public static final String GET_DIMENSION = "get " + DIMENSION_NAME;
-    public static final String GET_DIMENSIONS_BY_TYPE = "get " + DIMENSION_NAME + "s by type";
+    public static final String GET_ALL_DIMENSIONS_BY_TYPE = "get " + DIMENSION_NAME + "s by type";
     public static final String GET_ALL_DIMENSIONS = "get all " + DIMENSION_NAME + "s";
     public static final String CREATE_DIMENSION = "create " + DIMENSION_NAME;
     public static final String UPDATE_DIMENSION = "update " + DIMENSION_NAME;
