@@ -14,6 +14,8 @@ public interface DimensionService {
 
     List<DimensionDto> getAllDimensions();
 
+    List<Dimension.Type> getAllDimensionTypes();
+
     DimensionDto createDimension(DimensionDto dimensionDto);
 
     DimensionDto updateDimension(DimensionDto dimensionDto);

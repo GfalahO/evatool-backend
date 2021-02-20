@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,6 +70,11 @@ public class DimensionServiceImpl implements DimensionService {
         var dimensionDtoList = new ArrayList<DimensionDto>();
         dimensions.forEach(dimension -> dimensionDtoList.add(DimensionDtoMapper.toDto(dimension)));
         return dimensionDtoList;
+    }
+
+    @Override
+    public List<Dimension.Type> getAllDimensionTypes() {
+        return Arrays.asList(Dimension.Type.values());
     }
 
     @Override

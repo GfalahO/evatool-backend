@@ -14,6 +14,7 @@ public class UriUtil {
 
     public static final String DIMENSIONS = "/dimensions";
     public static final String DIMENSIONS_ID = "/dimensions/{id}";
+    public static final String DIMENSION_TYPES = "/dimensions/types";
 
     public static final String DIMENSION_NAME = "dimension";
     public static final String GET_DIMENSION = "get " + DIMENSION_NAME;

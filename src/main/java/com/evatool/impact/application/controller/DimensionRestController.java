@@ -90,13 +90,20 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<Void> deleteDimension(@ApiParam("id") @Valid @PathVariable UUID id) { // TODO remove @Valid?
+    public ResponseEntity<Void> deleteDimension(@ApiParam("id") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + DIMENSIONS_ID);
         dimensionService.deleteDimensionById(id);
         return ResponseEntity.ok().build();
     }
 
-    // TODO getDimensionTypes
+    @GetMapping(DIMENSION_TYPES)
+    @ApiOperation(value = "Get all dimension types")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "All dimension types returned")})
+    public ResponseEntity<List<Dimension.Type>> getDimensionTypes() {
+        return new ResponseEntity<>(dimensionService.getAllDimensionTypes(), HttpStatus.OK);
+    }
+
 
     private EntityModel<DimensionDto> getDimensionWithLinks(DimensionDto dimensionDto) {
         logger.debug("Adding HATEOAS Rest Level 3 links");

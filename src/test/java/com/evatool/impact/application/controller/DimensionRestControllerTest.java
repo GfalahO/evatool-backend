@@ -15,9 +15,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.DIMENSIONS;
+import static com.evatool.impact.application.controller.UriUtil.DIMENSION_TYPES;
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
@@ -153,6 +155,19 @@ class DimensionRestControllerTest {
             assertThat(socialDimensions).hasSize(n_socialDimensions);
             assertThat(economicDimensions).hasSize(n_economicDimensions);
         }
+    }
+
+    @Test
+    void testGetDimensionTypes_ReturnDimensionTypes() {
+        // given
+
+        // when
+        var dimensionTypes = testRestTemplate.getForEntity(
+                DIMENSION_TYPES, Dimension.Type[].class);
+
+        // then
+        assertThat(dimensionTypes.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(dimensionTypes.getBody()).isEqualTo(Dimension.Type.values());
     }
 
     @Nested

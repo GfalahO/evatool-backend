@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
@@ -90,6 +91,18 @@ class DimensionServiceImplTest {
             // then
             assertThat(dimensions.size()).isEqualTo(value);
         }
+    }
+
+    @Test
+    void testGetAllDimensionTypes_ReturnAllDimensionTypes() {
+        // given
+
+        // when
+        var dimensionTypes = dimensionService.getAllDimensionTypes();
+
+        // then
+        assertThat(dimensionTypes.size()).isEqualTo(Dimension.Type.values().length);
+        assertThat(dimensionTypes).isEqualTo(Arrays.asList(Dimension.Type.values()));
     }
 
     @Nested
