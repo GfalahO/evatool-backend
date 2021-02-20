@@ -42,7 +42,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         logger.info("Get Stakeholders");
         var stakeholders = stakeholderRepository.findAll();
         var stakeholderDtoList = new ArrayList<ImpactStakeholderDto>();
-        stakeholders.forEach(s -> stakeholderDtoList.add(ImpactStakeholderDtoMapper.toDto(s)));
+        stakeholders.forEach(stakeholder -> stakeholderDtoList.add(ImpactStakeholderDtoMapper.toDto(stakeholder)));
         return stakeholderDtoList;
     }
 

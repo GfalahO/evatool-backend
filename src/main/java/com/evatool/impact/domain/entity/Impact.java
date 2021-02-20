@@ -96,10 +96,10 @@ public class Impact extends SuperEntity {
 // TODO [hbuhl & tzaika] Rest Level 3: What links to include (and do it uniformly everywhere)
 // TODO [hbuhl & tzaika] Logging
 // TODO [hbuhl & tzaika] DTO Validator (package DTO)
-// TODO [hbuhl & tzaika] Implement 422 http return code (in decision)
+// TODO [hbuhl & tzaika] Implement 422 http return code
 
 // TODO [tzaika] Implement Impact API Tests
-// TODO [hbuhl] Event Tests
+// TODO [hbuhl] Event Tests (wait for other group to implement events)
 
 // TODO [tzaika] Use new wireframe in impact domain model wiki
 // TODO [tzaika] Finish impact domain model decision

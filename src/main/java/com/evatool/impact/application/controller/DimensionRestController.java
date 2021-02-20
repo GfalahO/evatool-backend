@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,13 +46,15 @@ public class DimensionRestController {
     @ApiOperation(value = "Read all dimensions")
     @ApiResponses({
             @ApiResponse(code = 200, message = "All entities returned")})
-    public ResponseEntity<List<EntityModel<DimensionDto>>> getAllDimensions(@RequestParam(value = "type", required = false) String type) {
-        logger.info("GET " + DIMENSIONS);
-
-        List<DimensionDto> dimensionDtoList = type == null
-                ? dimensionService.getAllDimensions()
-                : dimensionService.findDimensionsByType(type);
-
+    public ResponseEntity<List<EntityModel<DimensionDto>>> getAllDimensions(@ApiParam(value = "type", required = false) @RequestParam(value = "type", required = false) String type) {
+        List<DimensionDto> dimensionDtoList;
+        if (type == null) {
+            logger.info("GET " + DIMENSIONS);
+            dimensionDtoList = dimensionService.getAllDimensions();
+        } else {
+            logger.info("GET " + DIMENSIONS + "?type={}", type);
+            dimensionDtoList = dimensionService.findDimensionsByType(type);
+        }
         return new ResponseEntity<>(getDimensionsWithLinks(dimensionDtoList), HttpStatus.OK);
     }
 

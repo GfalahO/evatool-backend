@@ -54,7 +54,7 @@ public class DimensionServiceImpl implements DimensionService {
         logger.info("Get Dimensions by type");
         var dimensions = dimensionRepository.findDimensionsByType(type);
         var dimensionDtoList = new ArrayList<DimensionDto>();
-        dimensions.forEach(s -> dimensionDtoList.add(DimensionDtoMapper.toDto(s)));
+        dimensions.forEach(dimension -> dimensionDtoList.add(DimensionDtoMapper.toDto(dimension)));
         return dimensionDtoList;
     }
 
@@ -63,7 +63,7 @@ public class DimensionServiceImpl implements DimensionService {
         logger.info("Get Dimensions");
         var dimensions = dimensionRepository.findAll();
         var dimensionDtoList = new ArrayList<DimensionDto>();
-        dimensions.forEach(s -> dimensionDtoList.add(DimensionDtoMapper.toDto(s)));
+        dimensions.forEach(dimension -> dimensionDtoList.add(DimensionDtoMapper.toDto(dimension)));
         return dimensionDtoList;
     }
 
