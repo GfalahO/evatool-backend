@@ -25,7 +25,7 @@ public class ImpactDtoMapper {
         var impact = new Impact(
                 impactDto.getValue(),
                 impactDto.getDescription(),
-                dimensionRepository.findById(UUID.fromString(impactDto.getDimension().getId())).orElse(null),
+                dimensionRepository.findById(impactDto.getDimension().getId()).orElse(null),
                 stakeholderRepository.findById(UUID.fromString(impactDto.getStakeholder().getId())).orElse(null)
         );
         if (impactDto.getId() != null) {

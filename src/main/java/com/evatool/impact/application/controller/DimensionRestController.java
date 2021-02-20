@@ -2,6 +2,7 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
+import com.evatool.impact.domain.entity.Dimension;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -36,7 +38,7 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<EntityModel<DimensionDto>> getDimension(@ApiParam("id") @PathVariable String id) {
+    public ResponseEntity<EntityModel<DimensionDto>> getDimension(@ApiParam("id") @PathVariable UUID id) {
         logger.info("GET " + DIMENSIONS_ID);
         var dimensionDto = dimensionService.findDimensionById(id);
         return new ResponseEntity<>(getDimensionWithLinks(dimensionDto), HttpStatus.OK);
@@ -46,7 +48,7 @@ public class DimensionRestController {
     @ApiOperation(value = "Read all dimensions")
     @ApiResponses({
             @ApiResponse(code = 200, message = "All entities returned")})
-    public ResponseEntity<List<EntityModel<DimensionDto>>> getAllDimensions(@ApiParam(value = "type", required = false) @RequestParam(value = "type", required = false) String type) {
+    public ResponseEntity<List<EntityModel<DimensionDto>>> getAllDimensions(@ApiParam(value = "type", required = false) @RequestParam(value = "type", required = false) Dimension.Type type) {
         List<DimensionDto> dimensionDtoList;
         if (type == null) {
             logger.info("GET " + DIMENSIONS);
@@ -87,7 +89,7 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<Void> deleteDimension(@ApiParam("id") @PathVariable String id) {
+    public ResponseEntity<Void> deleteDimension(@ApiParam("id") @PathVariable UUID id) {
         logger.info("DELETE " + DIMENSIONS_ID);
         dimensionService.deleteDimensionById(id);
         return ResponseEntity.ok().build();

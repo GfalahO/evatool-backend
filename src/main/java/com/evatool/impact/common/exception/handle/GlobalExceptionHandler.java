@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -24,18 +27,32 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(PropertyViolationException.class)
-    public ResponseEntity<ErrorMessage> handlePropertyViolationException(PropertyViolationException exception, WebRequest webRequest) {
-        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
+//    @ExceptionHandler(PropertyViolationException.class)
+//    public ResponseEntity<ErrorMessage> handlePropertyViolationException(PropertyViolationException exception, WebRequest webRequest) {
+//        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
+//        var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
+//        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+//    }
+//
+//    @ExceptionHandler(InvalidUuidException.class)
+//    public ResponseEntity<ErrorMessage> handleInvalidUuidException(InvalidUuidException exception, WebRequest webRequest) {
+//        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
+//        var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
+//        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+//    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorMessage> handleConstraintViolationException(ConstraintViolationException exception, WebRequest webRequest) {
+        logger.error("{} handled. Returning HttpStatus NOT_FOUND (404)", exception.getClass().getSimpleName());
         var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(InvalidUuidException.class)
-    public ResponseEntity<ErrorMessage> handleInvalidUuidException(InvalidUuidException exception, WebRequest webRequest) {
-        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorMessage> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception, WebRequest webRequest) {
+        logger.error("{} handled. Returning HttpStatus NOT_FOUND (404)", exception.getClass().getSimpleName());
         var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
     private String getUri(WebRequest webRequest) {

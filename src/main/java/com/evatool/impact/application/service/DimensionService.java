@@ -1,14 +1,16 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.DimensionDto;
+import com.evatool.impact.domain.entity.Dimension;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface DimensionService {
 
-    DimensionDto findDimensionById(String id);
+    DimensionDto findDimensionById(UUID id);
 
-    List<DimensionDto> findDimensionsByType(String type);
+    List<DimensionDto> findDimensionsByType(Dimension.Type type);
 
     List<DimensionDto> getAllDimensions();
 
@@ -16,7 +18,7 @@ public interface DimensionService {
 
     DimensionDto updateDimension(DimensionDto dimensionDto);
 
-    void deleteDimensionById(String id);
+    void deleteDimensionById(UUID id);
 
     void deleteDimensions();
 }

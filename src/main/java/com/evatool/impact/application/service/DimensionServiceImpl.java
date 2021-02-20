@@ -38,19 +38,18 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public DimensionDto findDimensionById(String id) {
+    public DimensionDto findDimensionById(UUID id) {
         logger.info("Get Dimension");
-        SuperEntity.probeExistingId(id);
-        var dimension = dimensionRepository.findById(UUID.fromString(id));
+        var dimension = dimensionRepository.findById(id);
         if (dimension.isEmpty()) {
             logger.error("Entity not found");
-            throw new EntityNotFoundException(Dimension.class, id);
+            throw new EntityNotFoundException(Dimension.class, id.toString());
         }
         return DimensionDtoMapper.toDto(dimension.get());
     }
 
     @Override
-    public List<DimensionDto> findDimensionsByType(String type) {
+    public List<DimensionDto> findDimensionsByType(Dimension.Type type) {
         logger.info("Get Dimensions by type");
         var dimensions = dimensionRepository.findDimensionsByType(type);
         var dimensionDtoList = new ArrayList<DimensionDto>();
@@ -70,7 +69,6 @@ public class DimensionServiceImpl implements DimensionService {
     @Override
     public DimensionDto createDimension(DimensionDto dimensionDto) {
         logger.info("Create Dimension");
-        SuperEntity.probeNonExistingId(dimensionDto.getId());
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
         dimensionCreatedEventPublisher.onDimensionCreated(dimension);
         return DimensionDtoMapper.toDto(dimension);
@@ -86,7 +84,7 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public void deleteDimensionById(String id) {
+    public void deleteDimensionById(UUID id) {
         logger.info("Delete Dimension");
         var dimensionDto = this.findDimensionById(id);
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);

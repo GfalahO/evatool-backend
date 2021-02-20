@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
 @Entity(name = "IMP_DIMENSION")
@@ -20,15 +21,18 @@ public class Dimension extends SuperEntity {
     }
 
     @Getter
+    @NotNull
     @Column(name = "NAME", nullable = false)
     private String name;
 
     @Getter
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = false)
     private Type type;
 
     @Getter
+    @NotNull
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 

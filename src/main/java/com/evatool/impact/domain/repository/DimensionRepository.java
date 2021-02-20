@@ -14,7 +14,6 @@ public interface DimensionRepository extends CrudRepository<Dimension, UUID> {
 
     Optional<Dimension> findByName(String name);
 
-    @Query(value = "select * from imp_dimension where type = ?1", nativeQuery = true)
-    List<Dimension> findDimensionsByType(String type);
+    List<Dimension> findDimensionsByType(Dimension.Type type);
 
 }

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -20,6 +21,7 @@ public class SuperEntity {
     }
 
     @Getter
+    @NotNull
     @Id
     @GeneratedValue(generator = "SuperEntityUuidGenerator")
     @GenericGenerator(name = "SuperEntityUuidGenerator", strategy = "com.evatool.impact.domain.entity.SuperEntityUuidGenerator")
