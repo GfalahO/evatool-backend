@@ -90,6 +90,8 @@ public class ImpactRestController {
         logger.debug("Adding HATEOAS Rest Level 3 links");
         var entityModel = EntityModel.of(impactDto);
         entityModel.add(linkTo(methodOn(ImpactRestController.class).getImpact(impactDto.getId())).withSelfRel());
+        entityModel.add(linkTo(methodOn(ImpactRestController.class).updateImpact(impactDto)).withRel(UPDATE_IMPACT));
+        entityModel.add(linkTo(methodOn(ImpactRestController.class).deleteImpact(impactDto.getId())).withRel(DELETE_IMPACT));
         entityModel.add(linkTo(ImpactRestController.class).slash(STAKEHOLDERS).slash(impactDto.getStakeholder().getId()).withRel(GET_STAKEHOLDER));
         entityModel.add(linkTo(DimensionRestController.class).slash(DIMENSIONS).slash(impactDto.getDimension().getId()).withRel(GET_DIMENSION));
         return entityModel;

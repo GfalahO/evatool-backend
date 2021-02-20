@@ -63,14 +63,12 @@ class DimensionRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.links").isNotEmpty())
-                    .andExpect(jsonPath("$.links", hasSize(4)))
+                    .andExpect(jsonPath("$.links", hasSize(3)))
                     .andExpect(jsonPath("$.links[*].rel").value(containsInAnyOrder(
-                            GET_ALL_DIMENSIONS,
                             "self",
                             UPDATE_DIMENSION,
                             DELETE_DIMENSION)))
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
-                            "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS,
                             "http://localhost" + DIMENSIONS + "/" + id,
                             "http://localhost" + DIMENSIONS + "/" + id)));
