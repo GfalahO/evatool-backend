@@ -93,8 +93,7 @@ public class Impact extends SuperEntity {
     }
 }
 
-// TODO [tzaika] Implement Impact (Service + Controller)
-
+// TODO [tzaika] Implement Impact (Service + Controller + Tests)
 // TODO [tzaika] Implement Impact API Tests
 
 // TODO [tzaika] Use new wireframe in impact domain model wiki
