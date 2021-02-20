@@ -3,6 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.event.dimension.DimensionCreatedEventPublisher;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -39,11 +41,14 @@ public class DimensionServiceImpl implements DimensionService {
 
     @Override
     public DimensionDto findDimensionById(UUID id) {
+        if (id == null) {
+            throw new EntityNotFoundException(Dimension.class, "null");
+        }
         logger.info("Get Dimension");
         var dimension = dimensionRepository.findById(id);
         if (dimension.isEmpty()) {
             logger.error("Entity not found");
-            throw new EntityNotFoundException(Dimension.class, id.toString());
+            throw new EntityNotFoundException(Dimension.class, id);
         }
         return DimensionDtoMapper.toDto(dimension.get());
     }

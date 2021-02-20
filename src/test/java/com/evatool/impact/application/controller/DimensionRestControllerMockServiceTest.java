@@ -5,7 +5,6 @@ import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
 import com.evatool.global.config.SwaggerConfig;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.InvalidUuidException;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,11 +50,11 @@ class DimensionRestControllerMockServiceTest {
         void testGetDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
-            var id = UUID.randomUUID().toString();
+            var id = UUID.randomUUID();
             dimensionDto.setId(id);
 
             // when
-            given(dimensionService.findDimensionById(any(String.class))).willReturn(dimensionDto);
+            given(dimensionService.findDimensionById(any(UUID.class))).willReturn(dimensionDto);
 
             // then
             mvc.perform(get(DIMENSIONS + "/" + UUID.randomUUID().toString())
@@ -80,7 +79,7 @@ class DimensionRestControllerMockServiceTest {
             var dimensionDto = createDummyDimensionDto();
 
             // when
-            when(dimensionService.findDimensionById(anyString())).thenReturn(dimensionDto);
+            when(dimensionService.findDimensionById(any(UUID.class))).thenReturn(dimensionDto);
 
             // then
             mvc.perform(get(DIMENSIONS + "/" + UUID.randomUUID().toString())
@@ -96,32 +95,13 @@ class DimensionRestControllerMockServiceTest {
             var id = UUID.randomUUID().toString();
 
             // when
-            when(dimensionService.findDimensionById(anyString())).thenThrow(EntityNotFoundException.class);
+            when(dimensionService.findDimensionById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
 
             // then
             mvc.perform(get(DIMENSIONS + "/" + id)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.*", hasSize(3)))
-                    .andExpect(jsonPath("$.timestamp").isNotEmpty())
-                    .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
-                    .andExpect(jsonPath("$.uri").isNotEmpty());
-        }
-
-        @Test
-        void testGetDimensionById_InvalidId_ReturnHttpStatusBadRequestAndErrorMessage() throws Exception {
-            // given
-            var id = "invalid id";
-
-            // when
-            when(dimensionService.findDimensionById(anyString())).thenThrow(InvalidUuidException.class);
-
-            // then
-            mvc.perform(get(DIMENSIONS + "/" + id)
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.*", hasSize(3)))
                     .andExpect(jsonPath("$.timestamp").isNotEmpty())
                     .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
@@ -136,9 +116,9 @@ class DimensionRestControllerMockServiceTest {
         void testGetAllDimensions_ExistingDimensions_ReturnDimensions() throws Exception {
             // given
             var dimension1 = createDummyDimensionDto();
-            dimension1.setId(UUID.randomUUID().toString());
+            dimension1.setId(UUID.randomUUID());
             var dimension2 = createDummyDimensionDto();
-            dimension2.setId(UUID.randomUUID().toString());
+            dimension2.setId(UUID.randomUUID());
 
             // when
             var dimensionDtoList = Arrays.asList(dimension1, dimension2);
@@ -150,14 +130,14 @@ class DimensionRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[0].id").value(dimension1.getId()))
+                    .andExpect(jsonPath("$[0].id").value(dimension1.getId().toString()))
                     .andExpect(jsonPath("$[0].name").value(dimension1.getName()))
                     .andExpect(jsonPath("$[0].description").value(dimension1.getDescription()))
-                    .andExpect(jsonPath("$[0].type").value(dimension1.getType()))
-                    .andExpect(jsonPath("$[1].id").value(dimension2.getId()))
+                    .andExpect(jsonPath("$[0].type").value(dimension1.getType().toString()))
+                    .andExpect(jsonPath("$[1].id").value(dimension2.getId().toString()))
                     .andExpect(jsonPath("$[1].name").value(dimension2.getName()))
                     .andExpect(jsonPath("$[1].description").value(dimension2.getDescription()))
-                    .andExpect(jsonPath("$[1].type").value(dimension2.getType()));
+                    .andExpect(jsonPath("$[1].type").value(dimension2.getType().toString()));
         }
 
         @ParameterizedTest
@@ -189,20 +169,20 @@ class DimensionRestControllerMockServiceTest {
             var socialDimensions = new ArrayList<DimensionDto>();
             for (int i = 0; i < 3; i++) {
                 var socialDimension = createDummyDimensionDto();
-                socialDimension.setType(Dimension.Type.SOCIAL.toString());
+                socialDimension.setType(Dimension.Type.SOCIAL);
                 socialDimensions.add(socialDimension);
             }
 
             var economicDimensions = new ArrayList<DimensionDto>();
             for (int i = 0; i < 4; i++) {
                 var economicDimension = createDummyDimensionDto();
-                economicDimension.setType(Dimension.Type.ECONOMIC.toString());
+                economicDimension.setType(Dimension.Type.ECONOMIC);
                 economicDimensions.add(economicDimension);
             }
 
             // when
-            given(dimensionService.findDimensionsByType(Dimension.Type.SOCIAL.toString())).willReturn(socialDimensions);
-            given(dimensionService.findDimensionsByType(Dimension.Type.ECONOMIC.toString())).willReturn(economicDimensions);
+            given(dimensionService.findDimensionsByType(Dimension.Type.SOCIAL)).willReturn(socialDimensions);
+            given(dimensionService.findDimensionsByType(Dimension.Type.ECONOMIC)).willReturn(economicDimensions);
 
             // then
             mvc.perform(get(DIMENSIONS).param("type", Dimension.Type.SOCIAL.toString())
@@ -226,7 +206,7 @@ class DimensionRestControllerMockServiceTest {
         void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
-            var id = UUID.randomUUID().toString();
+            var id = UUID.randomUUID();
             dimensionDto.setId(id);
 
             // when
@@ -238,27 +218,6 @@ class DimensionRestControllerMockServiceTest {
                     .andDo(print())
                     .andExpect(status().isCreated());
         }
-
-        @Test
-        void testInsertDimension_NotNullId_ReturnHttpStatusBadRequestAndErrorMessage() throws Exception {
-            // given
-            var dimensionDto = createDummyDimensionDto();
-            var id = UUID.randomUUID().toString();
-            dimensionDto.setId(id);
-
-            // when
-            when(dimensionService.createDimension(any(DimensionDto.class))).thenThrow(PropertyViolationException.class);
-
-            // then
-            mvc.perform(post(DIMENSIONS).content(new ObjectMapper().writeValueAsString(dimensionDto))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.*", hasSize(3)))
-                    .andExpect(jsonPath("$.timestamp").isNotEmpty())
-                    .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
-                    .andExpect(jsonPath("$.uri").isNotEmpty());
-        }
     }
 
     @Nested
@@ -268,7 +227,7 @@ class DimensionRestControllerMockServiceTest {
         void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
-            dimensionDto.setId(UUID.randomUUID().toString());
+            dimensionDto.setId(UUID.randomUUID());
 
             // when
             when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
@@ -288,7 +247,7 @@ class DimensionRestControllerMockServiceTest {
         void testUpdateDimension_NonExistingDimension_ReturnHttpStatusNotFoundAndErrorMessage() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
-            dimensionDto.setId(UUID.randomUUID().toString());
+            dimensionDto.setId(UUID.randomUUID());
 
             // when
             when(dimensionService.updateDimension(any(DimensionDto.class))).thenThrow(EntityNotFoundException.class);
@@ -303,26 +262,6 @@ class DimensionRestControllerMockServiceTest {
                     .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
                     .andExpect(jsonPath("$.uri").isNotEmpty());
         }
-
-        @Test
-        void testUpdateDimension_InvalidId_ReturnHttpStatusBadRequestAndErrorMessage() throws Exception {
-            // given
-            var dimensionDto = createDummyDimensionDto();
-            dimensionDto.setId("invalid id");
-
-            // when
-            when(dimensionService.updateDimension(any(DimensionDto.class))).thenThrow(InvalidUuidException.class);
-
-            // then
-            mvc.perform(put(DIMENSIONS).content(new ObjectMapper().writeValueAsString(dimensionDto))
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.*", hasSize(3)))
-                    .andExpect(jsonPath("$.timestamp").isNotEmpty())
-                    .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
-                    .andExpect(jsonPath("$.uri").isNotEmpty());
-        }
     }
 
     @Nested
@@ -332,7 +271,7 @@ class DimensionRestControllerMockServiceTest {
             // given
 
             // when
-            doNothing().when(dimensionService).deleteDimensionById(any(String.class));
+            doNothing().when(dimensionService).deleteDimensionById(any(UUID.class));
 
             // then
             mvc.perform(delete(DIMENSIONS + "/" + UUID.randomUUID().toString())
@@ -346,31 +285,13 @@ class DimensionRestControllerMockServiceTest {
             // given
 
             // when
-            doThrow(EntityNotFoundException.class).when(dimensionService).deleteDimensionById(any(String.class));
+            doThrow(EntityNotFoundException.class).when(dimensionService).deleteDimensionById(any(UUID.class));
 
             // then
             mvc.perform(delete(DIMENSIONS + "/" + UUID.randomUUID().toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isNotFound())
-                    .andExpect(jsonPath("$.*", hasSize(3)))
-                    .andExpect(jsonPath("$.timestamp").isNotEmpty())
-                    .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.
-                    .andExpect(jsonPath("$.uri").isNotEmpty());
-        }
-
-        @Test
-        void testDeleteDimension_InvalidId_ReturnHttpStatusNotFoundAndErrorMessage() throws Exception {
-            // given
-
-            // when
-            doThrow(InvalidUuidException.class).when(dimensionService).deleteDimensionById(any(String.class));
-
-            // then
-            mvc.perform(delete(DIMENSIONS + "/" + UUID.randomUUID().toString())
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.*", hasSize(3)))
                     .andExpect(jsonPath("$.timestamp").isNotEmpty())
                     .andExpect(jsonPath("$.message").isEmpty()) // exists but contains null.

@@ -25,53 +25,14 @@ class DimensionTest {
     }
 
     @Test
-    void testSetTypeType_NullValue_ThrowException() {
+    void testSetTypeString_NullValue_ThrowPropertyViolationException() {
         // given
         var dimension = createDummyDimension();
 
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setType((Dimension.Type) null));
-    }
-
-    @Test
-    void testSetTypeString_NullValue_ThrowException() {
-        // given
-        var dimension = createDummyDimension();
-
-        // when
-
-        // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setType((String) null));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"ECONOMIC", "SOCIAL"})
-    void testFromDto_LegalTypeValues_DoNotThrowException(String value) {
-        // given
-        var dimension = createDummyDimension();
-        dimension.setId(UUID.randomUUID().toString());
-
-        // when
-        dimension.setType(value);
-
-        // then
-        assertThat(dimension.getType()).hasToString(value);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", "null", "economic", "social", "Social", "Economic", "ECONOMICd", "SOsCIAL", "economiac", "soscial", "Sodcial", "Econdomic"})
-    void testFromDto_IllegalTypeValues_ThrowPropertyViolationException(String value) {
-        // given
-        var dimension = createDummyDimension();
-        dimension.setId(UUID.randomUUID().toString());
-
-        // when
-
-
-        // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setType(value));
+        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setType(null));
     }
 
     @Test

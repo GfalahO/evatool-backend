@@ -40,20 +40,11 @@ public class Dimension extends SuperEntity {
         super();
     }
 
-    private Dimension(String name, String description) {
+    public Dimension(String name, Type type, String description) {
         this();
         this.setName(name);
+        this.setType(type);
         this.setDescription(description);
-    }
-
-    public Dimension(String name, String type, String description) {
-        this(name, description);
-        this.setType(type);
-    }
-
-    public Dimension(String name, Type type, String description) {
-        this(name, description);
-        this.setType(type);
     }
 
     @Override
@@ -81,15 +72,6 @@ public class Dimension extends SuperEntity {
             throw new PropertyViolationException("Type cannot be null.");
         }
         this.type = type;
-    }
-
-    public void setType(String type) {
-        if (!isValidType(type)) {
-            logger.error("Invalid Dimension Type");
-            throw new PropertyViolationException(String.format(
-                    "Dimension type must be in %s.", Arrays.asList(Type.values())));
-        }
-        this.setType(Type.valueOf(type));
     }
 
     public void setDescription(String description) {

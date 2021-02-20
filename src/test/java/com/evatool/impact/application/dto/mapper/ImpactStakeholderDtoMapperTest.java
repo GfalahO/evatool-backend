@@ -22,7 +22,7 @@ class ImpactStakeholderDtoMapperTest {
         var stakeholderDto = toDto(stakeholder);
 
         // then
-        assertThat(stakeholder.getId()).hasToString(stakeholderDto.getId());
+        assertThat(stakeholder.getId()).isEqualTo(stakeholderDto.getId());
         assertThat(stakeholder.getName()).isEqualTo(stakeholderDto.getName());
     }
 
@@ -30,13 +30,13 @@ class ImpactStakeholderDtoMapperTest {
     void testFromDto_NewStakeholderDto_EqualsStakeholder() {
         // given
         var stakeholderDto = createDummyStakeholderDto();
-        stakeholderDto.setId(UUID.randomUUID().toString());
+        stakeholderDto.setId(UUID.randomUUID());
 
         // when
         var stakeholder = fromDto(stakeholderDto);
 
         // then
-        assertThat(stakeholderDto.getId()).isEqualTo(stakeholder.getId().toString());
+        assertThat(stakeholderDto.getId()).isEqualTo(stakeholder.getId());
         assertThat(stakeholderDto.getName()).isEqualTo(stakeholder.getName());
     }
 }

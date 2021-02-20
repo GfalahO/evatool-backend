@@ -26,7 +26,7 @@ public class ImpactDtoMapper {
                 impactDto.getValue(),
                 impactDto.getDescription(),
                 dimensionRepository.findById(impactDto.getDimension().getId()).orElse(null),
-                stakeholderRepository.findById(UUID.fromString(impactDto.getStakeholder().getId())).orElse(null)
+                stakeholderRepository.findById(impactDto.getStakeholder().getId()).orElse(null)
         );
         if (impactDto.getId() != null) {
             impact.setId(impactDto.getId());

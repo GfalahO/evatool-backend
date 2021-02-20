@@ -24,7 +24,7 @@ public class TestDataGenerator {
     public static DimensionDto createDummyDimensionDto() {
         var dimensionDto = new DimensionDto();
         dimensionDto.setName("dummyDimension");
-        dimensionDto.setType(Dimension.Type.ECONOMIC.toString());
+        dimensionDto.setType(Dimension.Type.ECONOMIC);
         dimensionDto.setDescription("dummyDimensionDescription");
         return dimensionDto;
     }

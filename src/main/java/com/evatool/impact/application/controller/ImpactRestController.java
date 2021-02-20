@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -36,7 +37,7 @@ public class ImpactRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was found"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<EntityModel<ImpactDto>> getImpact(@ApiParam("id") @PathVariable String id) {
+    public ResponseEntity<EntityModel<ImpactDto>> getImpact(@ApiParam("id") @PathVariable UUID id) {
         logger.info("GET " + IMPACTS_ID);
         var impactDto = impactService.findImpactById(id);
         return new ResponseEntity<>(getImpactWithLinks(impactDto), HttpStatus.OK);
@@ -80,7 +81,7 @@ public class ImpactRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
             @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<Void> deleteImpact(@ApiParam("id") @PathVariable String id) {
+    public ResponseEntity<Void> deleteImpact(@ApiParam("id") @PathVariable UUID id) {
         logger.info("DELETE " + IMPACTS_ID);
         impactService.deleteImpactById(id);
         return ResponseEntity.ok().build();

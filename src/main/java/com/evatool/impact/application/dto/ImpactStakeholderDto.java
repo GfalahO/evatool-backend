@@ -3,10 +3,12 @@ package com.evatool.impact.application.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 public class ImpactStakeholderDto {
     @Getter
     @Setter
-    private String id;
+    private UUID id;
 
     @Getter
     @Setter

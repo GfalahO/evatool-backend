@@ -1,8 +1,6 @@
 package com.evatool.impact.common.exception.handle;
 
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.InvalidUuidException;
-import com.evatool.impact.common.exception.PropertyViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,32 +25,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
-//    @ExceptionHandler(PropertyViolationException.class)
-//    public ResponseEntity<ErrorMessage> handlePropertyViolationException(PropertyViolationException exception, WebRequest webRequest) {
-//        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
-//        var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-//        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-//    }
-//
-//    @ExceptionHandler(InvalidUuidException.class)
-//    public ResponseEntity<ErrorMessage> handleInvalidUuidException(InvalidUuidException exception, WebRequest webRequest) {
-//        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
-//        var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-//        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
-//    }
-
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorMessage> handleConstraintViolationException(ConstraintViolationException exception, WebRequest webRequest) {
-        logger.error("{} handled. Returning HttpStatus NOT_FOUND (404)", exception.getClass().getSimpleName());
+        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
         var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorMessage> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception, WebRequest webRequest) {
-        logger.error("{} handled. Returning HttpStatus NOT_FOUND (404)", exception.getClass().getSimpleName());
+        logger.error("{} handled. Returning HttpStatus BAD_REQUEST (400)", exception.getClass().getSimpleName());
         var errorMessage = new ErrorMessage(exception.getMessage(), getUri(webRequest));
-        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     private String getUri(WebRequest webRequest) {

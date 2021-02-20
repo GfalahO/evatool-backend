@@ -1,7 +1,6 @@
 package com.evatool.impact.application.json.mapper;
 
 import com.evatool.impact.common.exception.InvalidEventJsonPayloadException;
-import com.evatool.impact.common.exception.InvalidUuidException;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -24,19 +23,6 @@ class ImpactStakeholderJsonMapperTest {
         // then
         assertThat(impactStakeholderJson.getId()).hasToString(id);
         assertThat(impactStakeholderJson.getName()).isEqualTo(name);
-    }
-
-    @Test
-    void testFromJsonString_JsonStringInvalidId_ThrowInvalidUuidException() {
-        // given
-        var id = "invalid id";
-        var name = "name";
-
-        // when
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id, name);
-
-        // then
-        assertThatExceptionOfType(InvalidUuidException.class).isThrownBy(() -> fromJson(json));
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
@@ -26,10 +27,12 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public ImpactStakeholderDto findStakeholderById(String id) {
+    public ImpactStakeholderDto findStakeholderById(UUID id) {
+        if (id == null) {
+            throw new EntityNotFoundException(ImpactStakeholder.class, "null");
+        }
         logger.info("Get Stakeholder");
-        SuperEntity.probeExistingId(id);
-        var stakeholder = stakeholderRepository.findById(UUID.fromString(id));
+        var stakeholder = stakeholderRepository.findById(id);
         if (stakeholder.isEmpty()) {
             logger.error("Entity not found");
             throw new EntityNotFoundException(ImpactStakeholder.class, id);
@@ -49,7 +52,6 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     @Override
     public ImpactStakeholderDto createStakeholder(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Create Stakeholder");
-        SuperEntity.probeNonExistingId(impactStakeholderDto.getId());
         var stakeholder = stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactStakeholderDto));
         return ImpactStakeholderDtoMapper.toDto(stakeholder);
     }
@@ -63,7 +65,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public void deleteStakeholderById(String id) {
+    public void deleteStakeholderById(UUID id) {
         logger.info("Delete Stakeholder");
         var stakeholderDto = this.findStakeholderById(id);
         var stakeholder = ImpactStakeholderDtoMapper.fromDto(stakeholderDto);

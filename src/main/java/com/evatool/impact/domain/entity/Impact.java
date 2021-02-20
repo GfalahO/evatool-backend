@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 // TODO [future feature] assign data sources; use real DB
 // @Table(name = "IMP_IMPACT")
@@ -17,18 +20,23 @@ public class Impact extends SuperEntity {
 
     // @Column(name = "VALUE", nullable = false)
     @Getter
+    @DecimalMin("-1.0")
+    @DecimalMax("1.0")
     private double value;
 
     // @Column(name = "DESCRIPTION", nullable = false)
     @Getter
+    @NotNull
     private String description;
 
     @Getter
+    @NotNull
     @ManyToOne
     private Dimension dimension;
 
     // @ManyToOne(optional = false, fetch = FetchType.EAGER) // Do this? Change tests if yes...
     @Getter
+    @NotNull
     @ManyToOne
     private ImpactStakeholder stakeholder;
 

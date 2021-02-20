@@ -3,6 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.SuperEntity;
 import com.evatool.impact.domain.event.impact.ImpactCreatedEventPublisher;
@@ -46,10 +47,12 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public ImpactDto findImpactById(String id) {
+    public ImpactDto findImpactById(UUID id) {
+        if (id == null) {
+            throw new EntityNotFoundException(Impact.class, "null");
+        }
         logger.info("Get Impact");
-        SuperEntity.probeExistingId(id);
-        var impact = impactRepository.findById(UUID.fromString(id));
+        var impact = impactRepository.findById(id);
         if (impact.isEmpty()) {
             logger.error("Entity not found");
             throw new EntityNotFoundException(Impact.class, id);
@@ -69,7 +72,6 @@ public class ImpactServiceImpl implements ImpactService {
     @Override
     public ImpactDto createImpact(ImpactDto impactDto) {
         logger.info("Create Impact");
-        SuperEntity.probeNonExistingId(impactDto.getId());
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository));
         impactCreatedEventPublisher.onImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -85,7 +87,7 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public void deleteImpactById(String id) {
+    public void deleteImpactById(UUID id) {
         logger.info("Delete Impact");
         var impactDto = this.findImpactById(id);
         var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
