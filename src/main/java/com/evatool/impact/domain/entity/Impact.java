@@ -109,6 +109,6 @@ public class Impact extends SuperEntity {
 
 // TODO Relation constraints - How to deal with deleted stakeholder event in Impact?
 
-// TODO [tzaika] Implement Impact Tests (Mock + Controller)
+// TODO [tzaika] Implement Impact Tests (Integration) [constraints in Integration Tests]
 // TODO [tzaika] Use new wireframe in impact domain model wiki
 // TODO [tzaika] Finish impact domain model decision

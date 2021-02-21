@@ -2,6 +2,7 @@ package com.evatool.impact.domain.event.stakeholder;
 
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper;
+import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,9 @@ public class ImpactStakeholderUpdatedEventListener implements ApplicationListene
         logger.info("Event received");
         var jsonPayload = event.getJsonPayload();
         var stakeholder = ImpactStakeholderJsonMapper.fromJson(jsonPayload);
+        if (!stakeholderRepository.existsById(stakeholder.getId())) {
+            throw new EventEntityDoesNotExistException();
+        }
         stakeholderRepository.save(stakeholder);
         logger.info("Event successfully processed");
     }

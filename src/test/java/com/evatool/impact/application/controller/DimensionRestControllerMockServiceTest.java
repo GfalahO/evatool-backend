@@ -5,7 +5,6 @@ import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
 import com.evatool.global.config.SwaggerConfig;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.PropertyViolationException;
 import com.evatool.impact.domain.entity.Dimension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
@@ -26,7 +25,6 @@ import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDt
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -67,8 +65,7 @@ class DimensionRestControllerMockServiceTest {
         void testGetDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
-            var id = UUID.randomUUID();
-            dimensionDto.setId(id);
+            dimensionDto.setId(UUID.randomUUID());
 
             // when
             given(dimensionService.findDimensionById(any(UUID.class))).willReturn(dimensionDto);
@@ -86,8 +83,8 @@ class DimensionRestControllerMockServiceTest {
                             DELETE_DIMENSION)))
                     .andExpect(jsonPath("$.links[*].href").value(containsInAnyOrder(
                             "http://localhost" + DIMENSIONS,
-                            "http://localhost" + DIMENSIONS + "/" + id,
-                            "http://localhost" + DIMENSIONS + "/" + id)));
+                            "http://localhost" + DIMENSIONS + "/" + dimensionDto.getId(),
+                            "http://localhost" + DIMENSIONS + "/" + dimensionDto.getId())));
         }
 
         @Test
