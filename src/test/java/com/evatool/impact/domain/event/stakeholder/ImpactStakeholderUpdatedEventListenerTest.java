@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.event.stakeholder;
 
-import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;

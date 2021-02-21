@@ -9,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -29,10 +28,9 @@ class ImpactStakeholderDeletedEventListenerMockTest {
     void testOnApplicationEvent_PublishEvents_ReceivePublishedEvents(int value) {
         for (int i = 0; i < value; i++) {
             // given
-            var stakeholder = createDummyStakeholder();
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(applicationEventPublisher, "");
 
             // when
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(applicationEventPublisher, "");
             applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
         }
 
