@@ -2,8 +2,6 @@ package com.evatool.impact.application.dto.mapper;
 
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.repository.DimensionRepository;
-import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +16,7 @@ public class ImpactDtoMapper {
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    public static Impact fromDto(ImpactDto impactDto, DimensionRepository dimensionRepository, ImpactStakeholderRepository stakeholderRepository) {
+    public static Impact fromDto(ImpactDto impactDto) {
         logger.info("Mapping Dto to Entity");
         return modelMapper.map(impactDto, Impact.class);
 
