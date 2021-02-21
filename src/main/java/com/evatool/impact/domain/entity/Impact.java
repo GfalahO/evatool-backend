@@ -105,6 +105,8 @@ public class Impact extends SuperEntity {
 	}
 }
 
+// TODO [hbuhl] Better test structure (BeforeEach etc.)
+
 // TODO Relation constraints - How to deal with deleted stakeholder event in Impact?
 
 // TODO [tzaika] Implement Impact Tests (Integration) [constraints in Integration Tests]

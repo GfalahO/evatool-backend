@@ -47,18 +47,15 @@ class DimensionRestControllerTest {
             // given
             var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var postResponse = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
+            dimensionDto = dimensionService.createDimension(dimensionDto);
 
             // when
-            assertThat(postResponse.getBody()).isNotNull();
-            var getResponse = testRestTemplate.getForEntity(
-                    DIMENSIONS + "/" + postResponse.getBody().getId(), DimensionDto.class);
+            var response = testRestTemplate.getForEntity(
+                    DIMENSIONS + "/" + dimensionDto.getId().toString(), DimensionDto.class);
 
             // then
-            assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(getResponse.getBody()).isEqualTo(postResponse.getBody());
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isEqualTo(dimensionDto);
         }
 
         @Test
@@ -248,23 +245,16 @@ class DimensionRestControllerTest {
         void testUpdateDimension_InsertedDimension_ReturnUpdatedDimension() {
             // given
             var dimension = createDummyDimension();
-            var dimensionDto = toDto(dimension);
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var postResponse = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
+            var dimensionDto = dimensionService.createDimension(toDto(dimension));
 
             // when
-            assertThat(postResponse.getBody()).isNotNull();
-            var updatedDimension = fromDto(postResponse.getBody());
-            updatedDimension.setName("new_name");
-            var updatedDimensionDto = toDto(updatedDimension);
-            var putEntity = new HttpEntity<>(updatedDimensionDto);
-            testRestTemplate.exchange(DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
-            var getResponse = testRestTemplate.getForEntity(
-                    DIMENSIONS + "/" + postResponse.getBody().getId(), DimensionDto.class);
+            dimensionDto.setName("new_name");
+            var putEntity = new HttpEntity<>(dimensionDto);
+            var response = testRestTemplate.exchange(DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
 
             // then
-            assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(dimensionService.findDimensionById(dimensionDto.getId())).isEqualTo(dimensionDto);
         }
 
         @Test
@@ -287,17 +277,11 @@ class DimensionRestControllerTest {
         void testUpdateDimension_UpdateNullName_ReturnHttpStatusBadRequest() {
             // given
             var dimension = createDummyDimension();
-            var dimensionDto = toDto(dimension);
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var postResponse = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
+            var dimensionDto = dimensionService.createDimension(toDto(dimension));
 
             // when
-            assertThat(postResponse.getBody()).isNotNull();
-            var updatedDimension = fromDto(postResponse.getBody());
-            var updatedDimensionDto = toDto(updatedDimension);
-            updatedDimensionDto.setName(null);
-            var putEntity = new HttpEntity<>(updatedDimensionDto);
+            dimensionDto.setName(null);
+            var putEntity = new HttpEntity<>(dimensionDto);
             var putResponse = testRestTemplate.exchange(
                     DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
 
@@ -309,44 +293,32 @@ class DimensionRestControllerTest {
         void testUpdateDimension_UpdateNullDescription_ReturnHttpStatusBadRequest() {
             // given
             var dimension = createDummyDimension();
-            var dimensionDto = toDto(dimension);
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var postResponse = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
+            var dimensionDto = dimensionService.createDimension(toDto(dimension));
 
             // when
-            assertThat(postResponse.getBody()).isNotNull();
-            var updatedDimension = fromDto(postResponse.getBody());
-            var updatedDimensionDto = toDto(updatedDimension);
-            updatedDimensionDto.setDescription(null);
-            var putEntity = new HttpEntity<>(updatedDimensionDto);
-            var putResponse = testRestTemplate.exchange(
+            dimensionDto.setDescription(null);
+            var putEntity = new HttpEntity<>(dimensionDto);
+            var response = testRestTemplate.exchange(
                     DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
         @Test
         void testUpdateDimension_UpdateNullType_ReturnHttpStatusBadRequest() {
             // given
             var dimension = createDummyDimension();
-            var dimensionDto = toDto(dimension);
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var postResponse = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
+            var dimensionDto = dimensionService.createDimension(toDto(dimension));
 
             // when
-            assertThat(postResponse.getBody()).isNotNull();
-            var updatedDimension = fromDto(postResponse.getBody());
-            var updatedDimensionDto = toDto(updatedDimension);
-            updatedDimensionDto.setType(null);
-            var putEntity = new HttpEntity<>(updatedDimensionDto);
-            var putResponse = testRestTemplate.exchange(
+            dimensionDto.setType(null);
+            var putEntity = new HttpEntity<>(dimensionDto);
+            var response = testRestTemplate.exchange(
                     DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
         @Test
@@ -354,9 +326,9 @@ class DimensionRestControllerTest {
             // given
             var dimension = createDummyDimension();
             var dimensionDto = toDto(dimension);
-            var httpEntity = new HttpEntity<>(dimensionDto);
 
             // when
+            var httpEntity = new HttpEntity<>(dimensionDto);
             var putResponse = testRestTemplate.exchange(
                     DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
 
@@ -372,24 +344,17 @@ class DimensionRestControllerTest {
         void testDeleteDimension_ExistingDimension_DeleteDimensionAndReturnHttpStatusOK() {
             // given
             var dimension = createDummyDimension();
-            var dimensionDto = toDto(dimension);
-            var insertEntity = new HttpEntity<>(dimensionDto);
-            var insertEntityResponse = testRestTemplate.postForEntity(
-                    DIMENSIONS, insertEntity, DimensionDto.class);
+            var dimensionDto = dimensionService.createDimension(toDto(dimension));
 
             // when
-            var insertedDimensionDto = insertEntityResponse.getBody();
-            assertThat(insertedDimensionDto).isNotNull();
-            var deleteEntity = new HttpEntity<>(insertedDimensionDto);
-            var deleteEntityResponse = testRestTemplate.exchange(
-                    DIMENSIONS + "/" + insertedDimensionDto.getId(), HttpMethod.DELETE, deleteEntity, Void.class);
+            var response = testRestTemplate.exchange(
+                    DIMENSIONS + "/" + dimensionDto.getId(), HttpMethod.DELETE, null, Void.class);
 
             // then
-            assertThat(deleteEntityResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-            var getResponse = testRestTemplate.getForEntity(
-                    DIMENSIONS, DimensionDto[].class);
-            assertThat(getResponse.getBody()).isEmpty();
+            var dimensions = dimensionService.getAllDimensions();
+            assertThat(dimensions).isEmpty();
         }
 
         @Test
@@ -399,12 +364,11 @@ class DimensionRestControllerTest {
             dimensionDto.setId(UUID.randomUUID());
 
             // when
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var responseEntity = testRestTemplate.exchange(
-                    DIMENSIONS + "/" + dimensionDto.getId(), HttpMethod.DELETE, httpEntity, Void.class);
+            var response = testRestTemplate.exchange(
+                    DIMENSIONS + "/" + dimensionDto.getId(), HttpMethod.DELETE, null, Void.class);
 
             //then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
     }
 }

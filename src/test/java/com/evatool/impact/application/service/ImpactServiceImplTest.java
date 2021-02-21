@@ -210,28 +210,32 @@ class ImpactServiceImplTest {
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.deleteImpactById(id));
         }
 
-        @Test
-        void testDeleteChildDimension_DeleteChildEntity_ThrowDataIntegrityViolationException() {
-            // given
-            var impact = saveFullDummyImpact();
+        @Nested
+        class WhenChildEntityDeleted {
 
-            // when
-            var dimension = impact.getDimension();
+            @Test
+            void testDeleteChildDimension_DeleteChildEntity_ThrowDataIntegrityViolationException() {
+                // given
+                var impact = saveFullDummyImpact();
 
-            // then
-            assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> dimensionRepository.delete(dimension));
-        }
+                // when
+                var dimension = impact.getDimension();
 
-        @Test
-        void testDeleteChildStakeholder_DeleteChildEntity_ThrowDataIntegrityViolationException() {
-            // given
-            var impact = saveFullDummyImpact();
+                // then
+                assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> dimensionRepository.delete(dimension));
+            }
 
-            // when
-            var stakeholder = impact.getStakeholder();
+            @Test
+            void testDeleteChildStakeholder_DeleteChildEntity_ThrowDataIntegrityViolationException() {
+                // given
+                var impact = saveFullDummyImpact();
 
-            // then
-            assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> stakeholderRepository.delete(stakeholder));
+                // when
+                var stakeholder = impact.getStakeholder();
+
+                // then
+                assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> stakeholderRepository.delete(stakeholder));
+            }
         }
     }
 
