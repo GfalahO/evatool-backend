@@ -15,16 +15,6 @@ public class ImpactDto {
 
     @Getter
     @Setter
-    @NotNull
-    private ImpactStakeholderDto stakeholder;
-
-    @Getter
-    @Setter
-    @NotNull
-    private DimensionDto dimension;
-
-    @Getter
-    @Setter
     @DecimalMin("-1.0")
     @DecimalMax("1.0")
     private double value;
@@ -33,6 +23,16 @@ public class ImpactDto {
     @Setter
     @NotNull
     private String description;
+
+    @Getter
+    @Setter
+    @NotNull
+    private ImpactStakeholderDto stakeholder;
+
+    @Getter
+    @Setter
+    @NotNull
+    private DimensionDto dimension;
 
     @Override
     public String toString() {
