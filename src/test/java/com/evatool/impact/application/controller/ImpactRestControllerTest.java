@@ -268,6 +268,11 @@ public class ImpactRestControllerTest {
             // then
             assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
+
+        @Nested
+        class ChildEntity {
+
+        }
     }
 
     @Nested
@@ -303,7 +308,7 @@ public class ImpactRestControllerTest {
         }
 
         @Nested
-        class WhenChildEntityDeleted {
+        class ChildEntity {
 
             @Test
             void testChildDeleted_DimensionChildDeleted_ReturnHttpStatusConflict() {

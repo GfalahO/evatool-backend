@@ -179,6 +179,11 @@ class ImpactServiceImplTest {
             // then
             assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> impactService.updateImpact(impactDto));
         }
+
+        @Nested
+        class ChildEntity {
+
+        }
     }
 
     @Nested
@@ -211,7 +216,7 @@ class ImpactServiceImplTest {
         }
 
         @Nested
-        class WhenChildEntityDeleted {
+        class ChildEntity {
 
             @Test
             void testDeleteChildDimension_DeleteChildEntity_ThrowDataIntegrityViolationException() {

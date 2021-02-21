@@ -109,6 +109,7 @@ public class Impact extends SuperEntity {
 //  Throw error or allow setting relation to null?
 //  How to deal with deleted stakeholder event in Impact?
 
+// TODO Test update impact child entity (Dimension + Stakeholder) [Service + Controller]
 // TODO [tzaika] Use new wireframe in impact domain model wiki
 // TODO [tzaika] Finish impact domain model decision
 // TODO [tzaika] h2 console on remote server
