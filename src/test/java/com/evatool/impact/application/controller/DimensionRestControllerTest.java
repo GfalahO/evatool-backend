@@ -15,7 +15,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.DIMENSIONS;
@@ -25,10 +24,6 @@ import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class DimensionRestControllerTest {
@@ -63,10 +58,7 @@ class DimensionRestControllerTest {
 
             // then
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(getResponse.getBody()).isNotNull();
-            assertThat(getResponse.getBody().getId()).isNotNull();
-            assertThat(getResponse.getBody().getId()).isEqualTo(postResponse.getBody().getId());
-            assertThat(getResponse.getBody().getName()).isEqualTo(postResponse.getBody().getName());
+            assertThat(getResponse.getBody()).isEqualTo(postResponse.getBody());
         }
 
         @Test
@@ -109,7 +101,7 @@ class DimensionRestControllerTest {
     class GetByType {
 
         @Test
-        void testGetByType_ExistingDimensions_ReturnDimensions() throws Exception {
+        void testGetByType_ExistingDimensions_ReturnDimensions() {
             // given
             int n_socialDimensions = 3;
             for (int i = 0; i < n_socialDimensions; i++) {
@@ -174,8 +166,8 @@ class DimensionRestControllerTest {
             // then
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
             assertThat(responseEntity.getBody()).isNotNull();
-            assertThat(responseEntity.getBody().getId()).isNotNull();
-            assertThat(responseEntity.getBody().getName()).isEqualTo(dimension.getName());
+            dimensionDto.setId(responseEntity.getBody().getId());
+            assertThat(responseEntity.getBody()).isEqualTo(dimensionDto);
         }
 
         @Test
@@ -268,23 +260,15 @@ class DimensionRestControllerTest {
             assertThat(postResponse.getBody()).isNotNull();
             var updatedDimension = fromDto(postResponse.getBody());
             updatedDimension.setName("new_name");
-            var putEntity = new HttpEntity<>(toDto(updatedDimension));
-            var putResponse = testRestTemplate.exchange(
-                    DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
+            var updatedDimensionDto = toDto(updatedDimension);
+            var putEntity = new HttpEntity<>(updatedDimensionDto);
+            testRestTemplate.exchange(DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
             var getResponse = testRestTemplate.getForEntity(
                     DIMENSIONS + "/" + postResponse.getBody().getId(), DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(putResponse.getBody()).isNotNull();
-            assertThat(putResponse.getBody().getId()).isEqualTo(updatedDimension.getId());
-            assertThat(putResponse.getBody().getName()).isEqualTo(updatedDimension.getName());
-
             assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(getResponse.getBody()).isNotNull();
-            assertThat(getResponse.getBody().getId()).isNotNull();
-            assertThat(getResponse.getBody().getId()).isEqualTo(updatedDimension.getId());
-            assertThat(getResponse.getBody().getName()).isEqualTo(updatedDimension.getName());
+            assertThat(getResponse.getBody()).isEqualTo(updatedDimensionDto);
         }
 
         @Test

@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import static com.evatool.impact.application.json.mapper.DimensionJsonMapper.toJson;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DimensionJsonMapperTest {
 
@@ -20,9 +20,6 @@ class DimensionJsonMapperTest {
         var dimensionJson = toJson(dimension);
 
         // then
-        assertThat(dimensionJson.getId()).isEqualTo(dimension.getId().toString());
-        assertThat(dimensionJson.getName()).isEqualTo(dimension.getName());
-        assertThat(dimensionJson.getType()).isEqualTo(dimension.getType().toString());
-        assertThat(dimensionJson.getDescription()).isEqualTo(dimension.getDescription());
+        assertTrue(dimensionJson.equals(dimension));
     }
 }

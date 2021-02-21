@@ -1,9 +1,10 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,12 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 class ImpactStakeholderServiceImplTest {
+
     @Autowired
     ImpactStakeholderService stakeholderService;
+
+    @Autowired
+    ImpactStakeholderRepository stakeholderRepository;
 
     @BeforeEach
     void clearDatabase() {
@@ -30,6 +35,19 @@ class ImpactStakeholderServiceImplTest {
 
     @Nested
     class GetById {
+
+        @Test
+        void testFindDimensionById_ExistingDimension_ReturnDimension() {
+            // given
+            var stakeholder = createDummyStakeholder();
+            stakeholder = stakeholderRepository.save(stakeholder);
+
+            // when
+            var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
+
+            // then
+            assertThat(stakeholderDto).isEqualTo(ImpactStakeholderDtoMapper.toDto(stakeholder));
+        }
 
         @Test
         void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
@@ -78,9 +96,7 @@ class ImpactStakeholderServiceImplTest {
             var retrievedStakeholder = stakeholderService.findStakeholderById(insertedStakeholder.getId());
 
             // then
-            assertThat(retrievedStakeholder).isNotNull();
-            assertThat(insertedStakeholder.getId()).isEqualTo(retrievedStakeholder.getId());
-            assertThat(insertedStakeholder.getName()).isEqualTo(retrievedStakeholder.getName());
+            assertThat(insertedStakeholder).isEqualTo(retrievedStakeholder);
         }
 
         @Test
@@ -109,10 +125,10 @@ class ImpactStakeholderServiceImplTest {
             var newName = "new_name";
             insertedStakeholder.setName(newName);
 
-            // then
-            stakeholderService.updateStakeholder(insertedStakeholder);
+            insertedStakeholder = stakeholderService.updateStakeholder(insertedStakeholder);
             var updatedStakeholder = stakeholderService.findStakeholderById(insertedStakeholder.getId());
-            assertThat(insertedStakeholder.getId()).isEqualTo(updatedStakeholder.getId());
+
+            // then
             assertThat(updatedStakeholder.getName()).isEqualTo(newName);
         }
 

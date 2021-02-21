@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity(name = "IMP_STAKEHOLDER")
 @Table(name = "IMP_STAKEHOLDER")
@@ -35,6 +36,19 @@ public class ImpactStakeholder extends SuperEntity {
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ImpactStakeholder that = (ImpactStakeholder) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     public void setName(String name) {

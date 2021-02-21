@@ -18,11 +18,8 @@ public class ImpactStakeholderDtoMapper {
 
     public static ImpactStakeholder fromDto(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Mapping Dto to Entity");
-        var stakeholder = new ImpactStakeholder(
-                impactStakeholderDto.getName()
-        );
-        stakeholder.setId(impactStakeholderDto.getId());
-        return stakeholder;
+        return modelMapper.map(impactStakeholderDto, ImpactStakeholder.class);
+
     }
 
     public static ImpactStakeholderDto toDto(ImpactStakeholder impactStakeholder) {

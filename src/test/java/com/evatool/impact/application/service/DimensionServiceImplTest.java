@@ -1,9 +1,11 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.domain.repository.DimensionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,9 @@ class DimensionServiceImplTest {
     @Autowired
     DimensionService dimensionService;
 
+    @Autowired
+    DimensionRepository dimensionRepository;
+
     @BeforeEach
     void clearDatabase() {
         dimensionService.deleteDimensions();
@@ -32,6 +37,19 @@ class DimensionServiceImplTest {
 
     @Nested
     class GetById {
+
+        @Test
+        void testFindDimensionById_ExistingDimension_ReturnDimension() {
+            // given
+            var dimension = createDummyDimension();
+            dimensionRepository.save(dimension);
+
+            // when
+            var dimensionDto = dimensionService.findDimensionById(dimension.getId());
+
+            // then
+            assertThat(dimensionDto).isEqualTo(DimensionDtoMapper.toDto(dimension));
+        }
 
         @Test
         void testGetDimensionById_NonExistingId_ThrowEntityNotFoundException() {
@@ -126,9 +144,7 @@ class DimensionServiceImplTest {
             var retrievedDimension = dimensionService.findDimensionById(insertedDimension.getId());
 
             // then
-            assertThat(retrievedDimension).isNotNull();
-            assertThat(insertedDimension.getId()).isEqualTo(retrievedDimension.getId());
-            assertThat(insertedDimension.getName()).isEqualTo(retrievedDimension.getName());
+            assertThat(insertedDimension).isEqualTo(retrievedDimension);
         }
 
         @Test
@@ -158,9 +174,8 @@ class DimensionServiceImplTest {
             insertedDimension.setName(newName);
 
             // then
-            dimensionService.updateDimension(insertedDimension);
+            insertedDimension = dimensionService.updateDimension(insertedDimension);
             var updatedDimension = dimensionService.findDimensionById(insertedDimension.getId());
-            assertThat(insertedDimension.getId()).isEqualTo(updatedDimension.getId());
             assertThat(updatedDimension.getName()).isEqualTo(newName);
         }
 

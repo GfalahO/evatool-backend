@@ -18,13 +18,7 @@ public class DimensionDtoMapper {
 
     public static Dimension fromDto(DimensionDto dimensionDto) {
         logger.info("Mapping Dto to Entity");
-        var dimension = new Dimension(
-                dimensionDto.getName(),
-                dimensionDto.getType(),
-                dimensionDto.getDescription()
-        );
-        dimension.setId(dimensionDto.getId());
-        return dimension;
+        return modelMapper.map(dimensionDto, Dimension.class);
     }
 
     public static DimensionDto toDto(Dimension dimension) {

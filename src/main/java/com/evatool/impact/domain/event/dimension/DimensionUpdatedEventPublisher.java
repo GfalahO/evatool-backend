@@ -13,7 +13,7 @@ public class DimensionUpdatedEventPublisher {
 
     private static final Logger logger = LoggerFactory.getLogger(DimensionUpdatedEventPublisher.class);
 
-    private ApplicationEventPublisher applicationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public DimensionUpdatedEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;

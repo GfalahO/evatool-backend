@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import static com.evatool.impact.application.json.mapper.ImpactJsonMapper.toJson;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ImpactJsonMapperTest {
 
@@ -22,10 +22,6 @@ class ImpactJsonMapperTest {
         var impactJson = toJson(impact);
 
         // then
-        assertThat(impactJson.getId()).isEqualTo(impact.getId().toString());
-        assertThat(impactJson.getValue()).isEqualTo(impact.getValue());
-        assertThat(impactJson.getDescription()).isEqualTo(impact.getDescription());
-        assertThat(impactJson.getDimensionId()).isEqualTo(impact.getDimension().getId().toString());
-        assertThat(impactJson.getStakeholderId()).isEqualTo(impact.getStakeholder().getId().toString());
+        assertTrue(impactJson.equals(impact));
     }
 }

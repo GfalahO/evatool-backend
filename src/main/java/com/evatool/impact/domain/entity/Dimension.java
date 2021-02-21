@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "IMP_DIMENSION")
 @Table(name = "IMP_DIMENSION")
@@ -50,6 +51,19 @@ public class Dimension extends SuperEntity {
                 ", description='" + description + '\'' +
                 ", id='" + id + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dimension dimension = (Dimension) o;
+        return Objects.equals(name, dimension.name) && type == dimension.type && Objects.equals(description, dimension.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type, description);
     }
 
     public void setName(String name) {

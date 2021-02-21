@@ -24,10 +24,10 @@ class DimensionRepositoryTest {
         dimensionRepository.save(dimension);
 
         // when
-        var found = dimensionRepository.findById(dimension.getId()).orElse(null);
+        var found = dimensionRepository.findById(dimension.getId());
 
         // then
-        assertThat(found.getId()).isEqualTo(dimension.getId());
+        assertThat(found).isPresent();
     }
 
     @Test
@@ -37,10 +37,10 @@ class DimensionRepositoryTest {
         dimensionRepository.save(dimension);
 
         // when
-        var found = dimensionRepository.findByName(dimension.getName()).orElse(null);
+        var found = dimensionRepository.findByName(dimension.getName());
 
         // then
-        assertThat(dimension.getName()).isEqualTo(found.getName());
+        assertThat(found).isPresent();
     }
 
     @Test
@@ -68,6 +68,7 @@ class DimensionRepositoryTest {
         var changedDimension = dimensionRepository.findById(dimension.getId()).orElse(null);
 
         // then
+        assertThat(changedDimension).isNotNull();
         assertThat(changedDimension.getName()).isEqualTo(newName);
     }
 

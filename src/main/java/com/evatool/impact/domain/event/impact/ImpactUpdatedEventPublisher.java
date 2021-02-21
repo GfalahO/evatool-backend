@@ -13,7 +13,7 @@ public class ImpactUpdatedEventPublisher {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactUpdatedEventPublisher.class);
 
-    private ApplicationEventPublisher applicationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public ImpactUpdatedEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;

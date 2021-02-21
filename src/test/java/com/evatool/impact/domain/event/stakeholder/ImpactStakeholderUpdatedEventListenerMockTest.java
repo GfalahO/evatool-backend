@@ -1,7 +1,8 @@
 package com.evatool.impact.domain.event.stakeholder;
 
-import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
+import com.evatool.impact.domain.event.DummyEvent;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -30,14 +30,25 @@ class ImpactStakeholderUpdatedEventListenerMockTest {
     void testOnApplicationEvent_PublishEvents_ReceivePublishedEvents(int value) {
         for (int i = 0; i < value; i++) {
             // given
-            var stakeholder = createDummyStakeholder();
+            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(applicationEventPublisher, "");
 
             // when
-            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(applicationEventPublisher, "");
             applicationEventPublisher.publishEvent(stakeholderUpdatedEvent);
         }
 
         // then
         verify(impactStakeholderUpdatedEventListener, times(value)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
+    }
+
+    @Test
+    void testOnApplicationEvent_PublishWrongEvent_DoNotReceive() {
+        // given
+        var dummyEvent = new DummyEvent(applicationEventPublisher);
+
+        // when
+        applicationEventPublisher.publishEvent(dummyEvent);
+
+        // then
+        verify(impactStakeholderUpdatedEventListener, times(0)).onApplicationEvent(any(StakeholderUpdatedEvent.class));
     }
 }

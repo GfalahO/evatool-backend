@@ -45,7 +45,7 @@ class ImpactStakeholderJsonMapperTest {
         var name = "name";
 
         // when
-        var json = String.format("{\"name\":\"%s\"}", id, name);
+        var json = String.format("{\"name\":\"%s\"}", name);
 
         // then
         assertThatExceptionOfType(InvalidEventPayloadException.class).isThrownBy(() -> fromJson(json));
@@ -61,7 +61,6 @@ class ImpactStakeholderJsonMapperTest {
         var impactStakeholder = fromJson(json);
 
         // then
-        assertThat(impactStakeholder.getId()).hasToString(id);
         assertThat(impactStakeholder.getName()).isEqualTo("null");
     }
 }
