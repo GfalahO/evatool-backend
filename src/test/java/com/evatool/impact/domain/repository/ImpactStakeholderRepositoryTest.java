@@ -20,10 +20,10 @@ class ImpactStakeholderRepositoryTest {
         stakeholderRepository.save(stakeholder);
 
         // when
-        var found = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
+        var found = stakeholderRepository.findById(stakeholder.getId());
 
         // then
-        assertThat(found.getId()).isEqualTo(stakeholder.getId());
+        assertThat(found).isPresent();
     }
 
     @Test
@@ -33,10 +33,10 @@ class ImpactStakeholderRepositoryTest {
         stakeholderRepository.save(stakeholder);
 
         // when
-        var found = stakeholderRepository.findByName(stakeholder.getName()).orElse(null);
+        var found = stakeholderRepository.findByName(stakeholder.getName());
 
         // then
-        assertThat(found.getName()).isEqualTo(stakeholder.getName());
+        assertThat(found).isPresent();
     }
 
     @Test
@@ -64,6 +64,7 @@ class ImpactStakeholderRepositoryTest {
         var changedDimension = stakeholderRepository.findById(stakeholder.getId()).orElse(null);
 
         // then
+        assertThat(changedDimension).isNotNull();
         assertThat(changedDimension.getName()).isEqualTo(newName);
     }
 
