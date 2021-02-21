@@ -21,10 +21,10 @@ public class ImpactStakeholderDeletedEventListener implements ApplicationListene
 
     @Override
     public void onApplicationEvent(final StakeholderDeletedEvent event) {
-        logger.warn("Event received");
+        logger.info("Event received");
         var jsonPayload = event.getJsonPayload();
         var stakeholder = ImpactStakeholderJsonMapper.fromJson(jsonPayload);
         stakeholderRepository.delete(stakeholder);
-        logger.warn("Event successfully processed");
+        logger.info("Event successfully processed");
     }
 }
