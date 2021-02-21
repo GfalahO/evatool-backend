@@ -38,6 +38,7 @@ public class DimensionRestController {
     @ApiOperation(value = "Read dimension by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was found"),
+            @ApiResponse(code = 400, message = "Invalid parameter"),
             @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<EntityModel<DimensionDto>> getDimension(@ApiParam("id") @Valid @PathVariable UUID id) {
         logger.info("GET " + DIMENSIONS_ID);
@@ -48,7 +49,8 @@ public class DimensionRestController {
     @GetMapping(DIMENSIONS)
     @ApiOperation(value = "Read all dimensions")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "All entities returned")})
+            @ApiResponse(code = 200, message = "All entities returned"),
+            @ApiResponse(code = 400, message = "Invalid parameter")})
     public ResponseEntity<List<EntityModel<DimensionDto>>> getAllDimensions(@ApiParam(value = "type", required = false) @Valid @RequestParam(value = "type", required = false) Dimension.Type type) {
         List<DimensionDto> dimensionDtoList;
         if (type == null) {
@@ -66,7 +68,8 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "The entity was inserted"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
+            @ApiResponse(code = 404, message = "The entity was not found"),
+            @ApiResponse(code = 422, message = "The entity was not processable")})
     public ResponseEntity<EntityModel<DimensionDto>> createDimension(@ApiParam("entity") @Valid @RequestBody DimensionDto dimensionDto) {
         logger.info("POST " + DIMENSIONS);
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
@@ -78,7 +81,8 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was updated"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
+            @ApiResponse(code = 404, message = "The entity was not found"),
+            @ApiResponse(code = 422, message = "The entity was not processable")})
     public ResponseEntity<EntityModel<DimensionDto>> updateDimension(@ApiParam("entity") @Valid @RequestBody DimensionDto dimensionDto) {
         logger.info("PUT " + DIMENSIONS);
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
@@ -89,6 +93,7 @@ public class DimensionRestController {
     @ApiOperation(value = "Delete dimension by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
+            @ApiResponse(code = 200, message = "Invalid parameter"),
             @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<Void> deleteDimension(@ApiParam("id") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + DIMENSIONS_ID);
