@@ -17,6 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.UUID;
 
@@ -207,6 +208,30 @@ class ImpactServiceImplTest {
             // then
             var id = impact.getId();
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.deleteImpactById(id));
+        }
+
+        @Test
+        void testDeleteChildDimension_DeleteChildEntity_ThrowDataIntegrityViolationException() {
+            // given
+            var impact = saveFullDummyImpact();
+
+            // when
+            var dimension = impact.getDimension();
+
+            // then
+            assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> dimensionRepository.delete(dimension));
+        }
+
+        @Test
+        void testDeleteChildStakeholder_DeleteChildEntity_ThrowDataIntegrityViolationException() {
+            // given
+            var impact = saveFullDummyImpact();
+
+            // when
+            var stakeholder = impact.getStakeholder();
+
+            // then
+            assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> stakeholderRepository.delete(stakeholder));
         }
     }
 
