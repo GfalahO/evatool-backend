@@ -1,8 +1,9 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
+import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
@@ -46,11 +47,20 @@ public class ImpactRestControllerTest {
         impactService.deleteImpacts();
     }
 
-    private ImpactDto saveFullDummyImpact() {
+    private ImpactDto saveFullDummyImpactDto() {
         var impact = createDummyImpact();
-        dimensionRepository.save(impact.getDimension());
-        stakeholderRepository.save(impact.getStakeholder());
+        impact.setDimension(dimensionRepository.save(impact.getDimension()));
+        impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
         return impactService.createImpact(toDto(impact));
+    }
+
+    private ImpactDto saveDummyImpactDtoChildren() {
+        var impactDto = createDummyImpactDto();
+        impactDto.getDimension().setId(UUID.randomUUID());
+        dimensionRepository.save(DimensionDtoMapper.fromDto(impactDto.getDimension()));
+        impactDto.getStakeholder().setId(UUID.randomUUID());
+        stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder()));
+        return impactDto;
     }
 
     @Nested
@@ -59,7 +69,7 @@ public class ImpactRestControllerTest {
         @Test
         void testGetImpactById_InsertedImpact_ReturnImpact() {
             // given
-            var impactDto = saveFullDummyImpact();
+            var impactDto = saveFullDummyImpactDto();
 
             // when
             var response = testRestTemplate.getForEntity(
@@ -71,7 +81,7 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testGetDimensionById_NonExistingDimension_ReturnHttpStatusNotFound() {
+        void testGetImpactById_NonExistingImpact_ReturnHttpStatusNotFound() {
             // given
             var response = testRestTemplate.getForEntity(
                     IMPACTS + "/" + UUID.randomUUID().toString(), ImpactDto.class);
@@ -88,10 +98,10 @@ public class ImpactRestControllerTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testGetDimensions_ExistingDimensions_ReturnDimensions(int value) {
+        void testGetImpacts_ExistingImpacts_ReturnImpacts(int value) {
             for (int i = 0; i < value; i++) {
                 // given
-                saveFullDummyImpact();
+                saveFullDummyImpactDto();
             }
 
             // when
@@ -108,30 +118,205 @@ public class ImpactRestControllerTest {
     @Nested
     class Insert {
 
+        @Test
+        void testInsertImpact_InsertImpact_ReturnInsertedImpact() {
+            // given
+            var impactDto = saveDummyImpactDtoChildren();
 
-        @Nested
-        class WhenChildEntityDeleted {
+            // when
+            var httpEntity = new HttpEntity<>(impactDto);
+            var responseEntity = testRestTemplate.postForEntity(
+                    IMPACTS, httpEntity, ImpactDto.class);
 
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        }
+
+        @Test
+        void testInsertImpact_InsertEmptyImpactDto_ReturnHttpStatusBadRequest() {
+            // given
+            var httpEntity = new HttpEntity<>(new ImpactDto());
+
+            // when
+            var responseEntity = testRestTemplate.postForEntity(
+                    IMPACTS, httpEntity, ImpactDto.class);
+
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void testInsertImpact_InsertImpactWithIllegalValue_ReturnHttpStatusBadRequest() {
+            // given
+            var impactDto = saveDummyImpactDtoChildren();
+            impactDto.setValue(2);
+
+            // when
+            var httpEntity = new HttpEntity<>(impactDto);
+            var responseEntity = testRestTemplate.postForEntity(
+                    IMPACTS, httpEntity, ImpactDto.class);
+
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void testInsertImpact_InsertImpactWithNullDescription_ReturnHttpStatusBadRequest() {
+            // given
+            var impactDto = saveDummyImpactDtoChildren();
+            impactDto.setDescription(null);
+
+            // when
+            var httpEntity = new HttpEntity<>(impactDto);
+            var responseEntity = testRestTemplate.postForEntity(
+                    IMPACTS, httpEntity, ImpactDto.class);
+
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void testInsertImpact_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
+            // given
+            var impactDto = saveDummyImpactDtoChildren();
+            impactDto.setId(UUID.randomUUID());
+
+            // when
+            var httpEntity = new HttpEntity<>(impactDto);
+            var responseEntity = testRestTemplate.postForEntity(
+                    IMPACTS, httpEntity, ImpactDto.class);
+
+            // then
+            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
     @Nested
     class Update {
 
+        @Test
+        void testUpdateImpact_InsertedImpact_ReturnUpdatedImpact() {
+            // given
+            var impactDto = saveFullDummyImpactDto();
 
-        @Nested
-        class WhenChildEntityDeleted {
+            // when
+            impactDto.setDescription("new_desc");
+            var putEntity = new HttpEntity<>(impactDto);
+            var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
 
+            // then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(impactService.findImpactById(impactDto.getId())).isEqualTo(impactDto);
+        }
+
+        @Test
+        void testUpdateImpact_UpdateNonExistingId_ReturnHttpStatusNotFound() {
+            // given
+            var impact = createDummyImpact();
+            impact.setId(UUID.randomUUID());
+            var impactDto = ImpactDtoMapper.toDto(impact);
+            var httpEntity = new HttpEntity<>(impactDto);
+
+            // when
+            var putResponse = testRestTemplate.exchange(
+                    IMPACTS, HttpMethod.PUT, httpEntity, ImpactDto.class);
+
+            // then
+            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
+
+        @Test
+        void testUpdateImpact_UpdateIllegalValue_ReturnHttpStatusBadRequest() {
+            // given
+            var impactDto = saveFullDummyImpactDto();
+
+            // when
+            impactDto.setValue(2);
+            var putEntity = new HttpEntity<>(impactDto);
+            var putResponse = testRestTemplate.exchange(
+                    IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+            // then
+            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void testUpdateImpact_UpdateNullDescription_ReturnHttpStatusBadRequest() {
+            // given
+            var impactDto = saveFullDummyImpactDto();
+
+            // when
+            impactDto.setDescription(null);
+            var putEntity = new HttpEntity<>(impactDto);
+            var response = testRestTemplate.exchange(
+                    IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+            // then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        }
+
+        @Test
+        void testUpdateImpact_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
+            // given
+            var impactDto = createDummyImpactDto();
+
+            // when
+            var httpEntity = new HttpEntity<>(impactDto);
+            var putResponse = testRestTemplate.exchange(
+                    IMPACTS, HttpMethod.PUT, httpEntity, ImpactDto.class);
+
+            // then
+            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
     @Nested
     class Delete {
 
+        @Test
+        void testDeleteImpact_ExistingImpact_DeleteImpactAndReturnHttpStatusOK() {
+            // given
+            var impactDto = saveFullDummyImpactDto();
+
+            // when
+            var response = testRestTemplate.exchange(
+                    IMPACTS + "/" + impactDto.getId(), HttpMethod.DELETE, null, Void.class);
+            var impacts = impactService.getAllImpacts();
+
+            // then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(impacts).isEmpty();
+        }
+
+        @Test
+        void testDeleteImpact_DeleteNonExistingId_ReturnHttpStatusNotFound() {
+            // given
+            var impactDto = saveFullDummyImpactDto();
+            impactDto.setId(UUID.randomUUID());
+
+            // when
+            var response = testRestTemplate.exchange(
+                    IMPACTS + "/" + impactDto.getId(), HttpMethod.DELETE, null, Void.class);
+
+            //then
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        }
 
         @Nested
         class WhenChildEntityDeleted {
 
+            @Test
+            void testChildDeleted_DimensionChildDeleted_ReturnHttpStatusConflict() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
+
+                // when
+                var response = testRestTemplate.exchange(
+                        DIMENSIONS + "/" + impactDto.getDimension().getId(), HttpMethod.DELETE, null, Void.class);
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+            }
         }
     }
 }

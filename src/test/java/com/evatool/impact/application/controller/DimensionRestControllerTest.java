@@ -19,7 +19,6 @@ import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.DIMENSIONS;
 import static com.evatool.impact.application.controller.UriUtil.DIMENSION_TYPES;
-import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.fromDto;
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
@@ -39,15 +38,20 @@ class DimensionRestControllerTest {
         dimensionService.deleteDimensions();
     }
 
+    private DimensionDto saveFullDummyDimensionDto() {
+        var dimension = createDummyDimension();
+        var dimensionDto = toDto(dimension);
+        return dimensionService.createDimension(dimensionDto);
+
+    }
+
     @Nested
     class GetById {
 
         @Test
         void testGetDimensionById_InsertedDimension_ReturnDimension() {
             // given
-            var dimension = createDummyDimension();
-            var dimensionDto = toDto(dimension);
-            dimensionDto = dimensionService.createDimension(dimensionDto);
+            var dimensionDto = saveFullDummyDimensionDto();
 
             // when
             var response = testRestTemplate.getForEntity(
@@ -79,8 +83,7 @@ class DimensionRestControllerTest {
         void testGetDimensions_ExistingDimensions_ReturnDimensions(int value) {
             for (int i = 0; i < value; i++) {
                 // given
-                var dimensionDto = createDummyDimensionDto();
-                dimensionService.createDimension(dimensionDto);
+                saveFullDummyDimensionDto();
             }
 
             // when
@@ -152,8 +155,7 @@ class DimensionRestControllerTest {
         @Test
         void testInsertDimension_InsertDimension_ReturnInsertedDimension() {
             // given
-            var dimension = createDummyDimension();
-            var dimensionDto = toDto(dimension);
+            var dimensionDto = createDummyDimensionDto();
 
             // when
             var httpEntity = new HttpEntity<>(dimensionDto);
@@ -180,7 +182,7 @@ class DimensionRestControllerTest {
         @Test
         void testInsertDimension_InsertDimensionWithNullName_ReturnHttpStatusBadRequest() {
             // given
-            DimensionDto dimensionDto = createDummyDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             dimensionDto.setName(null);
 
             // when
@@ -195,7 +197,7 @@ class DimensionRestControllerTest {
         @Test
         void testInsertDimension_InsertDimensionWithNullDescription_ReturnHttpStatusBadRequest() {
             // given
-            DimensionDto dimensionDto = createDummyDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             dimensionDto.setDescription(null);
 
             // when
@@ -210,7 +212,7 @@ class DimensionRestControllerTest {
         @Test
         void testInsertDimension_InsertDimensionWithNullType_ReturnHttpStatusBadRequest() {
             // given
-            DimensionDto dimensionDto = createDummyDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             dimensionDto.setType(null);
 
             // when
@@ -225,7 +227,7 @@ class DimensionRestControllerTest {
         @Test
         void testInsertDimension_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
-            DimensionDto dimensionDto = createDummyDimensionDto();
+            var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
 
             // when
@@ -244,8 +246,7 @@ class DimensionRestControllerTest {
         @Test
         void testUpdateDimension_InsertedDimension_ReturnUpdatedDimension() {
             // given
-            var dimension = createDummyDimension();
-            var dimensionDto = dimensionService.createDimension(toDto(dimension));
+            var dimensionDto = saveFullDummyDimensionDto();
 
             // when
             dimensionDto.setName("new_name");
@@ -276,8 +277,7 @@ class DimensionRestControllerTest {
         @Test
         void testUpdateDimension_UpdateNullName_ReturnHttpStatusBadRequest() {
             // given
-            var dimension = createDummyDimension();
-            var dimensionDto = dimensionService.createDimension(toDto(dimension));
+            var dimensionDto = saveFullDummyDimensionDto();
 
             // when
             dimensionDto.setName(null);
@@ -292,8 +292,7 @@ class DimensionRestControllerTest {
         @Test
         void testUpdateDimension_UpdateNullDescription_ReturnHttpStatusBadRequest() {
             // given
-            var dimension = createDummyDimension();
-            var dimensionDto = dimensionService.createDimension(toDto(dimension));
+            var dimensionDto = saveFullDummyDimensionDto();
 
             // when
             dimensionDto.setDescription(null);
@@ -308,8 +307,7 @@ class DimensionRestControllerTest {
         @Test
         void testUpdateDimension_UpdateNullType_ReturnHttpStatusBadRequest() {
             // given
-            var dimension = createDummyDimension();
-            var dimensionDto = dimensionService.createDimension(toDto(dimension));
+            var dimensionDto = saveFullDummyDimensionDto();
 
             // when
             dimensionDto.setType(null);
@@ -324,8 +322,7 @@ class DimensionRestControllerTest {
         @Test
         void testUpdateDimension_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
-            var dimension = createDummyDimension();
-            var dimensionDto = toDto(dimension);
+            var dimensionDto = createDummyDimensionDto();
 
             // when
             var httpEntity = new HttpEntity<>(dimensionDto);
@@ -343,17 +340,15 @@ class DimensionRestControllerTest {
         @Test
         void testDeleteDimension_ExistingDimension_DeleteDimensionAndReturnHttpStatusOK() {
             // given
-            var dimension = createDummyDimension();
-            var dimensionDto = dimensionService.createDimension(toDto(dimension));
+            var dimensionDto = saveFullDummyDimensionDto();
 
             // when
             var response = testRestTemplate.exchange(
                     DIMENSIONS + "/" + dimensionDto.getId(), HttpMethod.DELETE, null, Void.class);
+            var dimensions = dimensionService.getAllDimensions();
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-            var dimensions = dimensionService.getAllDimensions();
             assertThat(dimensions).isEmpty();
         }
 

@@ -1,6 +1,5 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -17,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 import java.util.UUID;
 
+import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -35,20 +35,24 @@ class DimensionServiceImplTest {
         dimensionService.deleteDimensions();
     }
 
+    private Dimension saveFullDummyDimension() {
+        var dimension = createDummyDimension();
+        return dimensionRepository.save(dimension);
+    }
+
     @Nested
     class GetById {
 
         @Test
         void testFindDimensionById_ExistingDimension_ReturnDimension() {
             // given
-            var dimension = createDummyDimension();
-            dimensionRepository.save(dimension);
+            var dimension = saveFullDummyDimension();
 
             // when
             var dimensionDto = dimensionService.findDimensionById(dimension.getId());
 
             // then
-            assertThat(dimensionDto).isEqualTo(DimensionDtoMapper.toDto(dimension));
+            assertThat(dimensionDto).isEqualTo(toDto(dimension));
         }
 
         @Test
@@ -166,17 +170,16 @@ class DimensionServiceImplTest {
         @Test
         void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() {
             // given
-            var dimensionDto = createDummyDimensionDto();
-            var insertedDimension = dimensionService.createDimension(dimensionDto);
+            var dimension = saveFullDummyDimension();
 
             // when
             var newName = "new_name";
-            insertedDimension.setName(newName);
+            dimension.setName(newName);
+            dimensionService.updateDimension(toDto(dimension));
+            var dimensionDto = dimensionService.findDimensionById(dimension.getId());
 
             // then
-            insertedDimension = dimensionService.updateDimension(insertedDimension);
-            var updatedDimension = dimensionService.findDimensionById(insertedDimension.getId());
-            assertThat(updatedDimension.getName()).isEqualTo(newName);
+            assertThat(dimensionDto.getName()).isEqualTo(newName);
         }
 
         @Test
@@ -209,11 +212,10 @@ class DimensionServiceImplTest {
         @Test
         void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions() {
             // given
-            var dimensionDto = createDummyDimensionDto();
+            var dimension = saveFullDummyDimension();
 
             // when
-            var insertedDimension = dimensionService.createDimension(dimensionDto);
-            dimensionService.deleteDimensionById(insertedDimension.getId());
+            dimensionService.deleteDimensionById(dimension.getId());
 
             // then
             var dimensions = dimensionService.getAllDimensions();
@@ -242,8 +244,7 @@ class DimensionServiceImplTest {
         void testDeleteAll_InsertDimensions_ReturnNoDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                var dimensionDto = createDummyDimensionDto();
-                dimensionService.createDimension(dimensionDto);
+                saveFullDummyDimension();
             }
 
             // when
