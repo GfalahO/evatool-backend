@@ -27,9 +27,9 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactRepository impactRepository;
 
-    private final ImpactStakeholderRepository impactStakeholderRepository;
+    private final ImpactStakeholderServiceImpl impactStakeholderService;
 
-    private final DimensionRepository dimensionRepository;
+    private final DimensionServiceImpl dimensionService;
 
     private final ImpactCreatedEventPublisher impactCreatedEventPublisher;
 
@@ -37,10 +37,10 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactDeletedEventPublisher impactDeletedEventPublisher;
 
-    public ImpactServiceImpl(ImpactRepository impactRepository, ImpactStakeholderRepository impactStakeholderRepository, DimensionRepository dimensionRepository, ImpactCreatedEventPublisher impactCreatedEventPublisher, ImpactUpdatedEventPublisher impactUpdatedEventPublisher, ImpactDeletedEventPublisher impactDeletedEventPublisher) {
+    public ImpactServiceImpl(ImpactRepository impactRepository, ImpactStakeholderServiceImpl impactStakeholderService, DimensionServiceImpl dimensionService, ImpactCreatedEventPublisher impactCreatedEventPublisher, ImpactUpdatedEventPublisher impactUpdatedEventPublisher, ImpactDeletedEventPublisher impactDeletedEventPublisher) {
         this.impactRepository = impactRepository;
-        this.impactStakeholderRepository = impactStakeholderRepository;
-        this.dimensionRepository = dimensionRepository;
+        this.impactStakeholderService = impactStakeholderService;
+        this.dimensionService = dimensionService;
         this.impactCreatedEventPublisher = impactCreatedEventPublisher;
         this.impactUpdatedEventPublisher = impactUpdatedEventPublisher;
         this.impactDeletedEventPublisher = impactDeletedEventPublisher;
@@ -74,7 +74,8 @@ public class ImpactServiceImpl implements ImpactService {
         if (impactDto.getId() != null) {
             throw new EntityIdMustBeNullException();
         }
-        var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository));
+        this.validateImpactRelations(impactDto);
+        var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactCreatedEventPublisher.onImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);
     }
@@ -83,7 +84,8 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto updateImpact(ImpactDto impactDto) {
         logger.info("Update Impact");
         this.findImpactById(impactDto.getId());
-        var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository));
+        this.validateImpactRelations(impactDto);
+        var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactUpdatedEventPublisher.onImpactUpdated(impact);
         return ImpactDtoMapper.toDto(impact);
     }
@@ -92,7 +94,7 @@ public class ImpactServiceImpl implements ImpactService {
     public void deleteImpactById(UUID id) {
         logger.info("Delete Impact");
         var impactDto = this.findImpactById(id);
-        var impact = ImpactDtoMapper.fromDto(impactDto, dimensionRepository, impactStakeholderRepository);
+        var impact = ImpactDtoMapper.fromDto(impactDto);
         impactRepository.delete(impact);
         impactDeletedEventPublisher.onImpactDeleted(impact);
     }
@@ -101,5 +103,12 @@ public class ImpactServiceImpl implements ImpactService {
     public void deleteImpacts() {
         logger.info("Delete Impacts");
         impactRepository.deleteAll();
+    }
+
+    // TODO Set to retrieved value? What if front end changes DimensionDto or ImpactStakeholderDto values?
+    //  Only the id of the child entities should matter at this point
+    private void validateImpactRelations(ImpactDto impactDto) {
+        this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
+        this.dimensionService.findDimensionById(impactDto.getDimension().getId());
     }
 }
