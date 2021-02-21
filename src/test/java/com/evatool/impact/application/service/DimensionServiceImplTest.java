@@ -1,5 +1,6 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -47,10 +48,7 @@ class DimensionServiceImplTest {
             var dimensionDto = dimensionService.findDimensionById(dimension.getId());
 
             // then
-            assertThat(dimensionDto.getId()).isEqualTo(dimension.getId());
-            assertThat(dimensionDto.getName()).isEqualTo(dimension.getName());
-            assertThat(dimensionDto.getType()).isEqualTo(dimension.getType());
-            assertThat(dimensionDto.getDescription()).isEqualTo(dimension.getDescription());
+            assertThat(dimensionDto).isEqualTo(DimensionDtoMapper.toDto(dimension));
         }
 
         @Test
@@ -146,9 +144,7 @@ class DimensionServiceImplTest {
             var retrievedDimension = dimensionService.findDimensionById(insertedDimension.getId());
 
             // then
-            assertThat(retrievedDimension).isNotNull();
-            assertThat(insertedDimension.getId()).isEqualTo(retrievedDimension.getId());
-            assertThat(insertedDimension.getName()).isEqualTo(retrievedDimension.getName());
+            assertThat(insertedDimension).isEqualTo(retrievedDimension);
         }
 
         @Test
@@ -178,9 +174,8 @@ class DimensionServiceImplTest {
             insertedDimension.setName(newName);
 
             // then
-            dimensionService.updateDimension(insertedDimension);
+            insertedDimension = dimensionService.updateDimension(insertedDimension);
             var updatedDimension = dimensionService.findDimensionById(insertedDimension.getId());
-            assertThat(insertedDimension.getId()).isEqualTo(updatedDimension.getId());
             assertThat(updatedDimension.getName()).isEqualTo(newName);
         }
 

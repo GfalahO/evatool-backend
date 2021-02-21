@@ -1,5 +1,6 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -39,14 +40,13 @@ class ImpactStakeholderServiceImplTest {
         void testFindDimensionById_ExistingDimension_ReturnDimension() {
             // given
             var stakeholder = createDummyStakeholder();
-            stakeholderRepository.save(stakeholder);
+            stakeholder = stakeholderRepository.save(stakeholder);
 
             // when
             var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
 
             // then
-            assertThat(stakeholderDto.getId()).isEqualTo(stakeholder.getId());
-            assertThat(stakeholderDto.getName()).isEqualTo(stakeholder.getName());
+            assertThat(stakeholderDto).isEqualTo(ImpactStakeholderDtoMapper.toDto(stakeholder));
         }
 
         @Test
@@ -96,9 +96,7 @@ class ImpactStakeholderServiceImplTest {
             var retrievedStakeholder = stakeholderService.findStakeholderById(insertedStakeholder.getId());
 
             // then
-            assertThat(retrievedStakeholder).isNotNull();
-            assertThat(insertedStakeholder.getId()).isEqualTo(retrievedStakeholder.getId());
-            assertThat(insertedStakeholder.getName()).isEqualTo(retrievedStakeholder.getName());
+            assertThat(insertedStakeholder).isEqualTo(retrievedStakeholder);
         }
 
         @Test
@@ -127,10 +125,10 @@ class ImpactStakeholderServiceImplTest {
             var newName = "new_name";
             insertedStakeholder.setName(newName);
 
-            // then
-            stakeholderService.updateStakeholder(insertedStakeholder);
+            insertedStakeholder = stakeholderService.updateStakeholder(insertedStakeholder);
             var updatedStakeholder = stakeholderService.findStakeholderById(insertedStakeholder.getId());
-            assertThat(insertedStakeholder.getId()).isEqualTo(updatedStakeholder.getId());
+
+            // then
             assertThat(updatedStakeholder.getName()).isEqualTo(newName);
         }
 

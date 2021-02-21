@@ -12,7 +12,6 @@ import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -78,15 +77,7 @@ class ImpactServiceImplTest {
             var impactDto = impactService.findImpactById(impact.getId());
 
             // then
-            assertThat(impactDto.getId()).isEqualTo(impact.getId());
-            assertThat(impactDto.getValue()).isEqualTo(impact.getValue());
-            assertThat(impactDto.getDescription()).isEqualTo(impact.getDescription());
-            assertThat(impactDto.getDimension().getId()).isEqualTo(impact.getDimension().getId());
-            assertThat(impactDto.getDimension().getType()).isEqualTo(impact.getDimension().getType());
-            assertThat(impactDto.getDimension().getName()).isEqualTo(impact.getDimension().getName());
-            assertThat(impactDto.getDimension().getDescription()).isEqualTo(impact.getDimension().getDescription());
-            assertThat(impactDto.getStakeholder().getId()).isEqualTo(impact.getStakeholder().getId());
-            assertThat(impactDto.getStakeholder().getName()).isEqualTo(impact.getStakeholder().getName());
+            assertThat(impactDto).isEqualTo(ImpactDtoMapper.toDto(impact));
         }
 
         @Test
@@ -130,7 +121,6 @@ class ImpactServiceImplTest {
             var retrievedImpact = impactService.findImpactById(insertedImpact.getId());
 
             // then
-            assertThat(retrievedImpact).isNotNull();
             assertThat(insertedImpact).isEqualTo(retrievedImpact);
         }
 
@@ -163,7 +153,6 @@ class ImpactServiceImplTest {
             // then
             var insertImpact = impactService.updateImpact(impactDto);
             var updatedImpact = impactService.findImpactById(insertImpact.getId());
-            assertThat(insertImpact.getId()).isEqualTo(updatedImpact.getId());
             assertThat(updatedImpact.getDescription()).isEqualTo(newDescription);
         }
 
