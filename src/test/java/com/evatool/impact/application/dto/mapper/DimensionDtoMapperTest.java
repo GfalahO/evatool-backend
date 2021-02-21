@@ -13,34 +13,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DimensionDtoMapperTest {
 
     @Test
-    void testToDot_Dimension_EqualsDimensionDto() {
+    void testToDot_Dimension_EqualsRecreatedDimension() {
         // given
         var dimension = createDummyDimension();
         dimension.setId(UUID.randomUUID());
 
         // when
         var dimensionDto = toDto(dimension);
+        var recreatedDimension = fromDto(dimensionDto);
 
         // then
-        assertThat(dimension.getId()).isEqualTo(dimensionDto.getId());
-        assertThat(dimension.getName()).isEqualTo(dimensionDto.getName());
-        assertThat(dimension.getType()).isEqualTo(dimensionDto.getType());
-        assertThat(dimension.getDescription()).isEqualTo(dimensionDto.getDescription());
+        assertThat(dimension).isEqualTo(recreatedDimension);
     }
 
     @Test
-    void testFromDto_NewDimensionDto_EqualsDimension() {
+    void testFromDto_NewDimensionDto_EqualsRecreatedDimensionDto() {
         // given
         var dimensionDto = createDummyDimensionDto();
         dimensionDto.setId(UUID.randomUUID());
 
         // when
         var dimension = fromDto(dimensionDto);
+        var recreatedDimensionDto = toDto(dimension);
 
         // then
-        assertThat(dimensionDto.getId()).isEqualTo(dimension.getId());
-        assertThat(dimensionDto.getName()).isEqualTo(dimension.getName());
-        assertThat(dimensionDto.getType()).isEqualTo(dimension.getType());
-        assertThat(dimensionDto.getDescription()).isEqualTo(dimension.getDescription());
+        assertThat(dimensionDto).isEqualTo(recreatedDimensionDto);
     }
 }
