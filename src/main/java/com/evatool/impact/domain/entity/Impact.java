@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Table(name = "IMP_IMPACT")
 @Entity(name = "IMP_IMPACT")
@@ -54,6 +55,19 @@ public class Impact extends SuperEntity {
                 ", stakeholder=" + stakeholder +
                 ", id='" + id + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Impact impact = (Impact) o;
+        return Double.compare(impact.value, value) == 0 && Objects.equals(description, impact.description) && Objects.equals(dimension, impact.dimension) && Objects.equals(stakeholder, impact.stakeholder);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, description, dimension, stakeholder);
     }
 
     public void setValue(double value) {
