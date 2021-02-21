@@ -50,7 +50,7 @@ class ImpactStakeholderDeletedEventListenerTest {
         applicationEventPublisher.publishEvent(stakeholderDeletedEvent);
 
         // then
-        var deletedByEventStakeholder = stakeholderRepository.findById(id).orElse(null);
-        assertThat(deletedByEventStakeholder).isNull();
+        var deletedByEventStakeholder = stakeholderRepository.findById(id);
+        assertThat(deletedByEventStakeholder).isNotPresent();
     }
 }

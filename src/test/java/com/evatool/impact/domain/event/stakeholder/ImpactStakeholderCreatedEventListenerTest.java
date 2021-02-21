@@ -43,10 +43,9 @@ class ImpactStakeholderCreatedEventListenerTest {
         applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
 
         // then
-        var stakeholder = stakeholderRepository.findById(id).orElse(null);
-        assertThat(stakeholder).isNotNull();
-        assertThat(stakeholder.getId()).isNotNull();
-        assertThat(stakeholder.getId()).isEqualTo(id);
-        assertThat(stakeholder.getName()).isEqualTo(name);
+        var createdByEvent = stakeholderRepository.findById(id);
+        assertThat(createdByEvent).isPresent();
+        assertThat(createdByEvent.get().getId()).isEqualTo(id);
+        assertThat(createdByEvent.get().getName()).isEqualTo(name);
     }
 }

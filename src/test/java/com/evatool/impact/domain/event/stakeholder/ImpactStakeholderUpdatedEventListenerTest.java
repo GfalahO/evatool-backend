@@ -49,10 +49,9 @@ class ImpactStakeholderUpdatedEventListenerTest {
         applicationEventPublisher.publishEvent(stakeholderUpdatedEvent);
 
         // then
-        var updatedByEventStakeholder = stakeholderRepository.findById(id).orElse(null);
-        assertThat(updatedByEventStakeholder).isNotNull();
-        assertThat(updatedByEventStakeholder.getId()).isNotNull();
-        assertThat(updatedByEventStakeholder.getId()).isEqualTo(id);
-        assertThat(updatedByEventStakeholder.getName()).isEqualTo(name);
+        var updatedByEventStakeholder = stakeholderRepository.findById(id);
+        assertThat(updatedByEventStakeholder).isPresent();
+        assertThat(updatedByEventStakeholder.get().getId()).isEqualTo(id);
+        assertThat(updatedByEventStakeholder.get().getName()).isEqualTo(name);
     }
 }
