@@ -165,6 +165,9 @@ class DimensionRestControllerTest {
 
             // then
             assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+            assertThat(responseEntity.getBody()).isNotNull();
+            dimensionDto.setId(responseEntity.getBody().getId());
+            assertThat(responseEntity.getBody()).isEqualTo(dimensionDto);
         }
 
         @Test
