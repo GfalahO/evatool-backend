@@ -5,31 +5,31 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-// TODO [future feature] assign data sources; use real DB
-// @Table(name = "IMP_IMPACT")
+@Table(name = "IMP_IMPACT")
 @Entity(name = "IMP_IMPACT")
 public class Impact extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Impact.class);
 
-    // @Column(name = "VALUE", nullable = false)
+    @Column(name = "VALUE", nullable = false)
     @Getter
     private double value;
 
-    // @Column(name = "DESCRIPTION", nullable = false)
+    @Column(name = "DESCRIPTION", nullable = false)
     @Getter
     private String description;
 
     @Getter
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Dimension dimension;
 
-    // @ManyToOne(optional = false, fetch = FetchType.EAGER) // Do this? Change tests if yes...
     @Getter
-    @ManyToOne
+    @ManyToOne(optional = false)
     private ImpactStakeholder stakeholder;
 
     public Impact() {
