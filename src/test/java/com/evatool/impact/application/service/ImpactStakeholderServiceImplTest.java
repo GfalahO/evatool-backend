@@ -3,7 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.PropertyViolationException;
+import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,8 +20,12 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 class ImpactStakeholderServiceImplTest {
+
     @Autowired
     ImpactStakeholderService stakeholderService;
+
+    @Autowired
+    ImpactStakeholderRepository stakeholderRepository;
 
     @BeforeEach
     void clearDatabase() {
@@ -30,6 +34,20 @@ class ImpactStakeholderServiceImplTest {
 
     @Nested
     class GetById {
+
+        @Test
+        void testFindDimensionById_ExistingDimension_ReturnDimension() {
+            // given
+            var stakeholder = createDummyStakeholder();
+            stakeholderRepository.save(stakeholder);
+
+            // when
+            var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
+
+            // then
+            assertThat(stakeholderDto.getId()).isEqualTo(stakeholder.getId());
+            assertThat(stakeholderDto.getName()).isEqualTo(stakeholder.getName());
+        }
 
         @Test
         void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {

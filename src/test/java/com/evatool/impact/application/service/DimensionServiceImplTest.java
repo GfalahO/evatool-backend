@@ -4,6 +4,7 @@ import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.domain.repository.DimensionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,9 @@ class DimensionServiceImplTest {
     @Autowired
     DimensionService dimensionService;
 
+    @Autowired
+    DimensionRepository dimensionRepository;
+
     @BeforeEach
     void clearDatabase() {
         dimensionService.deleteDimensions();
@@ -32,6 +36,22 @@ class DimensionServiceImplTest {
 
     @Nested
     class GetById {
+
+        @Test
+        void testFindDimensionById_ExistingDimension_ReturnDimension() {
+            // given
+            var dimension = createDummyDimension();
+            dimensionRepository.save(dimension);
+
+            // when
+            var dimensionDto = dimensionService.findDimensionById(dimension.getId());
+
+            // then
+            assertThat(dimensionDto.getId()).isEqualTo(dimension.getId());
+            assertThat(dimensionDto.getName()).isEqualTo(dimension.getName());
+            assertThat(dimensionDto.getType()).isEqualTo(dimension.getType());
+            assertThat(dimensionDto.getDescription()).isEqualTo(dimension.getDescription());
+        }
 
         @Test
         void testGetDimensionById_NonExistingId_ThrowEntityNotFoundException() {

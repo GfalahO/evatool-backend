@@ -93,8 +93,10 @@ public class Impact extends SuperEntity {
     }
 }
 
-// TODO [tzaika] Implement Impact (Service + Controller + Tests)
-// TODO [tzaika] Implement Impact API Tests
+// TODO Use .equals
 
+// TODO Relation constraints - How to deal with deleted stakeholder in Impact?
+
+// TODO [tzaika] Implement Impact Tests (Service + Mock + Controller)
 // TODO [tzaika] Use new wireframe in impact domain model wiki
 // TODO [tzaika] Finish impact domain model decision
