@@ -61,7 +61,6 @@ class ImpactStakeholderJsonMapperTest {
         var impactStakeholder = fromJson(json);
 
         // then
-        assertThat(impactStakeholder.getId()).hasToString(id);
         assertThat(impactStakeholder.getName()).isEqualTo("null");
     }
 }

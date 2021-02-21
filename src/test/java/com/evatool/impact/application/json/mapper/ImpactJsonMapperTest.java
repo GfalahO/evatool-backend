@@ -22,10 +22,6 @@ class ImpactJsonMapperTest {
         var impactJson = toJson(impact);
 
         // then
-        assertThat(impactJson.getId()).isEqualTo(impact.getId().toString());
-        assertThat(impactJson.getValue()).isEqualTo(impact.getValue());
-        assertThat(impactJson.getDescription()).isEqualTo(impact.getDescription());
-        assertThat(impactJson.getDimensionId()).isEqualTo(impact.getDimension().getId().toString());
-        assertThat(impactJson.getStakeholderId()).isEqualTo(impact.getStakeholder().getId().toString());
+        assertThat(impactJson.equals(impact)).isTrue();
     }
 }

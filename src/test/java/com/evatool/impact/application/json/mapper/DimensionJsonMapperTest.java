@@ -20,9 +20,6 @@ class DimensionJsonMapperTest {
         var dimensionJson = toJson(dimension);
 
         // then
-        assertThat(dimensionJson.getId()).isEqualTo(dimension.getId().toString());
-        assertThat(dimensionJson.getName()).isEqualTo(dimension.getName());
-        assertThat(dimensionJson.getType()).isEqualTo(dimension.getType().toString());
-        assertThat(dimensionJson.getDescription()).isEqualTo(dimension.getDescription());
+        assertThat(dimensionJson.equals(dimension)).isTrue();
     }
 }
