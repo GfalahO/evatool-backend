@@ -1,6 +1,9 @@
 package com.evatool.impact.domain.event.stakeholder;
 
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
+import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
+import com.evatool.impact.domain.event.DummyEvent;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +39,17 @@ class ImpactStakeholderDeletedEventListenerMockTest {
 
         // then
         verify(impactStakeholderCreatedEventListener, times(value)).onApplicationEvent(any(StakeholderCreatedEvent.class));
+    }
+
+    @Test
+    void testOnApplicationEvent_PublishWrongEvent_DoNotReceive() {
+        // given
+        var dummyEvent = new DummyEvent(applicationEventPublisher);
+
+        // when
+        applicationEventPublisher.publishEvent(dummyEvent);
+
+        // then
+        verify(impactStakeholderCreatedEventListener, times(0)).onApplicationEvent(any(StakeholderCreatedEvent.class));
     }
 }
