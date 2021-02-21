@@ -3,7 +3,6 @@ package com.evatool.impact.application.controller;
 import com.evatool.EvaToolApp;
 import com.evatool.global.config.SwaggerConfig;
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.service.ImpactService;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,8 +21,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.*;
-import static com.evatool.impact.application.controller.UriUtil.DELETE_DIMENSION;
-import static com.evatool.impact.common.TestDataGenerator.*;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpactDto;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;

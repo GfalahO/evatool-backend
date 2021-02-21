@@ -8,8 +8,4 @@ public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(Class<?> c, UUID id) {
         super(String.format(MESSAGE_FORMAT, c.getSimpleName(), id.toString()));
     }
-
-    public EntityNotFoundException(Class<?> c, String id) {
-        super(String.format(MESSAGE_FORMAT, c.getSimpleName(), id));
-    }
 }

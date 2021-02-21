@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class ErrorMessage {
+
     @Getter
     private final Date timestamp;
 

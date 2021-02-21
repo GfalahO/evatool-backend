@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface ImpactStakeholderRepository extends CrudRepository<ImpactStakeholder, UUID> {
 
-    public Optional<ImpactStakeholder> findByName(String name);
+    Optional<ImpactStakeholder> findByName(String name);
 
 }

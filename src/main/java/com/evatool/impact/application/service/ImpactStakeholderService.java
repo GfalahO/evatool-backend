@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ImpactStakeholderService {
+
     ImpactStakeholderDto findStakeholderById(UUID id);
 
     List<ImpactStakeholderDto> getAllStakeholders();

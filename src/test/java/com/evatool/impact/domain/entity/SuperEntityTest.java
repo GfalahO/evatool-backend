@@ -3,7 +3,6 @@ package com.evatool.impact.domain.entity;
 import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.Entity;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,12 +44,5 @@ class SuperEntityTest {
         // then
         var id = UUID.randomUUID();
         assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> superEntity.setId(id));
-    }
-
-    @Entity
-    public class SuperEntityImpl extends SuperEntity {
-        public SuperEntityImpl() {
-            super();
-        }
     }
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.util.Objects;
 
 public class ImpactJson {
+
     @Getter
     @Setter
     private String id;

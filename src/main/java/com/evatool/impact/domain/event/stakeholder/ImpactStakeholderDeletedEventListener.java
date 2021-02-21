@@ -3,7 +3,6 @@ package com.evatool.impact.domain.event.stakeholder;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
-import com.evatool.impact.common.exception.InvalidEventPayloadException;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.event.stakeholder;
 
-import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.impact.domain.event.DummyEvent;
 import org.junit.jupiter.api.Test;

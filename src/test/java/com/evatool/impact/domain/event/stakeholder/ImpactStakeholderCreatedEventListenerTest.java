@@ -60,7 +60,7 @@ class ImpactStakeholderCreatedEventListenerTest {
         var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
         var stakeholder = ImpactStakeholderJsonMapper.fromJson(json);
-        stakeholder = stakeholderRepository.save(stakeholder);
+        stakeholderRepository.save(stakeholder);
 
         // when
         var stakeholderCreatedEvent = new StakeholderCreatedEvent(applicationEventPublisher, json);

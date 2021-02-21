@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.util.Objects;
 
 public class DimensionJson {
+
     @Getter
     @Setter
     private String id;
