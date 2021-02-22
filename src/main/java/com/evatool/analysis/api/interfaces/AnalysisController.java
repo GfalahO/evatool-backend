@@ -15,7 +15,7 @@ public interface AnalysisController {
 
     @GetMapping("/analysis")
     @ApiOperation(value = "This method returns a list of all analysis")
-    public List<Analysis> getAnalysisList();
+    public List<AnalysisDTO> getAnalysisList();
 
     @GetMapping("/analysis/{id}")
     @ApiOperation(value = "This method returns a value of an analysis by ID")

@@ -1,13 +1,21 @@
 package com.evatool.analysis.api.controller;
 
+import antlr.ASTNULLType;
 import com.evatool.analysis.api.interfaces.AnalysisController;
 import com.evatool.analysis.dto.AnalysisDTO;
+import com.evatool.analysis.events.AnalysisCreatedEvent;
+import com.evatool.analysis.events.AnalysisEventPublisher;
 import com.evatool.analysis.model.Analysis;
 import com.evatool.analysis.repository.AnalysisRepository;
+import com.evatool.analysis.services.AnalysisDTOService;
+import com.evatool.global.event.RequirementCreated;
+import com.evatool.requirements.entity.Requirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,12 +25,26 @@ public class AnalysisControllerImpl implements AnalysisController {
 
     @Autowired
     private AnalysisRepository analysisRepository;
+
+    @Autowired
+    private AnalysisEventPublisher analysisEventPublisher;
+
+    @Autowired
+    private AnalysisDTOService analysisDTOService;
+
     Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
 
 
     @Override
-    public List<Analysis> getAnalysisList() {
-        return (List<Analysis>) analysisRepository.findAll();
+    public List<AnalysisDTO> getAnalysisList() {
+        logger.info("/analysis");
+        List<Analysis> analysisList = analysisRepository.findAll();
+        analysisEventPublisher.publishEvent(new AnalysisCreatedEvent("EVENT PUBLISHED"));
+        if (analysisList.size() == 0){
+            return Arrays.asList();
+        }
+
+        return analysisDTOService.findAll(analysisList);
     }
 
     @Override
