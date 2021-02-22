@@ -4,6 +4,7 @@ import com.evatool.analysis.api.controller.UserControllerImpl;
 import com.evatool.analysis.api.interfaces.AnalysisController;
 import com.evatool.analysis.api.interfaces.StakeholderController;
 import com.evatool.analysis.api.interfaces.UserController;
+import com.evatool.analysis.dto.AnalysisDTO;
 import com.evatool.analysis.model.Analysis;
 import com.evatool.analysis.model.Stakeholder;
 import com.evatool.analysis.model.User;

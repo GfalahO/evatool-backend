@@ -1,4 +1,4 @@
-package com.evatool.analysis.dto.json;
+package com.evatool.analysis.json;
 
 public class AnalysisImpactsJsonMapper {
 }

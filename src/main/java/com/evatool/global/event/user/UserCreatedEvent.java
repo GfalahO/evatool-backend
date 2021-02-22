@@ -1,4 +1,4 @@
-package com.evatool.analysis.events;
+package com.evatool.global.event.user;
 
 import com.evatool.analysis.dto.StakeholderDTO;
 import com.evatool.analysis.dto.UserDTO;
