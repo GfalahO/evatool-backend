@@ -20,30 +20,28 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest webRequest) {
-        logger.info("{} handled. Returning HttpStatus NOT_FOUND (404)", exception.getClass().getSimpleName());
-        var errorMessage = new ErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        return createResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(EntityIdRequiredException.class)
     public ResponseEntity<ErrorMessage> handleEntityIdRequiredException(EntityIdRequiredException exception, WebRequest webRequest) {
-        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
-        var errorMessage = new ErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
-        return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+        return createResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(EntityIdMustBeNullException.class)
     public ResponseEntity<ErrorMessage> handleEntityIdMustBeNullException(EntityIdMustBeNullException exception, WebRequest webRequest) {
-        logger.info("{} handled. Returning HttpStatus UNPROCESSABLE_ENTITY (422)", exception.getClass().getSimpleName());
-        var errorMessage = new ErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.UNPROCESSABLE_ENTITY);
-        return new ResponseEntity<>(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+        return createResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ExceptionHandler(DataIntegrityViolationException.class) // TODO This has to be removed
     public ResponseEntity<ErrorMessage> handleDataIntegrityViolationException(DataIntegrityViolationException exception, WebRequest webRequest) {
-        logger.info("{} handled. Returning HttpStatus CONFLICT (409)", exception.getClass().getSimpleName());
-        var errorMessage = new ErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.CONFLICT);
-        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+        return createResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
+    }
+
+    private ResponseEntity<ErrorMessage> createResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
+        logger.info("{} handled. Returning HttpStatus {}", exception.getClass().getSimpleName(), httpStatus);
+        var errorMessage = new ErrorMessage(exception, getUri(webRequest), httpStatus);
+        return new ResponseEntity<>(errorMessage, httpStatus);
     }
 
     private String getUri(WebRequest webRequest) {
