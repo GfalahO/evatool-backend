@@ -1,7 +1,7 @@
 package com.evatool.requirements.error;
 
-import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.common.exception.handle.ErrorMessage;
+
+import com.evatool.requirements.error.exceptions.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,9 +17,9 @@ public class RequirementExceptionHandler {
 
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest webRequest) {
+    public ResponseEntity<RequirementsErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest webRequest) {
         logger.info("{} handled. Returning HttpStatus NOT_FOUND (404)", exception.getClass().getSimpleName());
-        var errorMessage = new ErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.NOT_FOUND);
+        var errorMessage = new RequirementsErrorMessage(exception, exception.getMessage(), getUri(webRequest), HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 
