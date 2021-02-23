@@ -8,17 +8,12 @@ import com.evatool.global.event.impact.ImpactDeletedEvent;
 import com.evatool.global.event.impact.ImpactUpdatedEvent;
 import com.evatool.requirements.entity.RequirementDimension;
 import com.evatool.requirements.entity.RequirementsImpact;
-import com.evatool.requirements.entity.RequirementsVariant;
-import com.evatool.requirements.events.RequirementEventPublisher;
 import com.evatool.requirements.repository.RequirementDimensionRepository;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -26,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequirementEventListener {
 
-    Logger logger = LoggerFactory.getLogger(RequirementEventListener.class);
+    final Logger logger = LoggerFactory.getLogger(RequirementEventListener.class);
 
     @Autowired
     RequirementsImpactsRepository requirementsImpactsRepository;

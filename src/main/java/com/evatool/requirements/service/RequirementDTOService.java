@@ -6,7 +6,6 @@ import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.evatool.requirements.entity.RequirementsVariant;
 import com.evatool.requirements.repository.RequirementAnalysisRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
-import com.evatool.variants.entities.VariantsRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import java.util.*;
 @Service
 public class RequirementDTOService {
 
-    Logger logger = LoggerFactory.getLogger(RequirementDTOService.class);
+    final Logger logger = LoggerFactory.getLogger(RequirementDTOService.class);
 
     @Autowired
     RequirementMapper requirementMapper;
@@ -44,7 +43,7 @@ public class RequirementDTOService {
         requirement.setTitle(requirementDTO.getRequirementTitle());
         requirement.setDescription(requirementDTO.getRequirementDescription());
         Optional<RequirementsAnalysis> requirementsAnalysis = requirementAnalysisRepository.findById(requirementDTO.getProjectID());
-        if(!requirementsAnalysis.isEmpty())
+        if(requirementsAnalysis.isPresent())
         {
             requirement.setRequirementsAnalysis(requirementsAnalysis.get());
         }

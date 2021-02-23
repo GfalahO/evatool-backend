@@ -10,7 +10,7 @@ import java.util.UUID;
 public class RequirementPoint {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
     @ManyToOne
     private RequirementsImpact requirementsImpact;
     @ManyToOne

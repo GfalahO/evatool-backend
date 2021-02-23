@@ -34,7 +34,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Api(description = "API-endpoint RequirementsController!")
 public class RequirementsController {
 
-	Logger logger = LoggerFactory.getLogger(RequirementsController.class);
+	final Logger logger = LoggerFactory.getLogger(RequirementsController.class);
 
 	@Autowired
 	private RequirementRepository requirementRepository;
@@ -87,7 +87,7 @@ public class RequirementsController {
 	public EntityModel<RequirementDTO> getRequirementById(@PathVariable UUID id) {
 		logger.info("[GET] /requirements/{id}");
 		Optional<Requirement> requirement = requirementRepository.findById(id);
-		if(requirement.isEmpty()) throw new EntityNotFoundException(Requirement.class, id);;
+		if(requirement.isEmpty()) throw new EntityNotFoundException(Requirement.class, id);
 		return generateLinks(dtoService.findId(requirement.get()));
 	}
 

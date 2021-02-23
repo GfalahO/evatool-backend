@@ -2,7 +2,6 @@ package com.evatool.requirements.error;
 
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.handle.ErrorMessage;
-import com.evatool.impact.common.exception.handle.GlobalExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

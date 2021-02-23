@@ -4,7 +4,6 @@ import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementPoint;
-import com.evatool.requirements.entity.RequirementsVariant;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.repository.RequirementPointRepository;
@@ -18,7 +17,7 @@ import java.util.*;
 @RestController
 public class RequirementPointController {
 
-	Logger logger = LoggerFactory.getLogger(RequirementPointController.class);
+	final Logger logger = LoggerFactory.getLogger(RequirementPointController.class);
 
 	@Autowired
 	private RequirementPointRepository requirementPointRepository;
@@ -29,21 +28,14 @@ public class RequirementPointController {
 	@Autowired
 	private RequirementsImpactsRepository requirementsImpactsRepository;
 
-/*
-	public Optional<RequirementPoint> getRequirement_grById(@PathVariable UUID id) {
-		logger.debug("/requirement_gr/[{}]",id);
-		return requirementPointRepository.findById(id);
-	}
-*/
-
 	public void newRequirementPoint(Collection<RequirementPoint> requirementPointList) {
 		logger.debug("newRequirementPoint [{}]",requirementPointList);
 		requirementPointRepository.saveAll(requirementPointList);
 	}
 
-	public RequirementPoint updateRequirementPoint(RequirementPoint requirementPoint) {
+	public void updateRequirementPoint(RequirementPoint requirementPoint) {
 		logger.debug("updateRequirementPoint [{}]",requirementPoint);
-		return requirementPointRepository.save(requirementPoint);
+		requirementPointRepository.save(requirementPoint);
 	}
 
 	public void deleteRequirementPoint(RequirementPoint requirementPoint) {
@@ -51,7 +43,7 @@ public class RequirementPointController {
 		requirementPointRepository.delete(requirementPoint);
 	}
 
-	public Collection<RequirementsImpact> getRequirementImpactByRequirement(@PathVariable UUID id) {
+	public Collection<RequirementsImpact> getRequirementImpactByRequirement(UUID id) {
 		logger.debug("getRequirementImpactByRequirement [{}]",id);
 		Optional<Requirement> requirement = requirementRepository.findById(id);
 		if(requirement.isEmpty()) return null;
@@ -62,7 +54,7 @@ public class RequirementPointController {
 
 	public RequirementPoint getRequirementPointByRequirementAndRequirementsImpact(Requirement requirement, RequirementsImpact requirementsImpact)
 	{
-		logger.debug("getRequirementPointByRequirementAndRequirementsImpact [{}]",requirement, requirementsImpact);
+		logger.debug("getRequirementPointByRequirementAndRequirementsImpact [{}] [{}]",requirement, requirementsImpact);
 		return requirementPointRepository.findByRequirementAndRequirementsImpact(requirement, requirementsImpact);
 	}
 
@@ -80,7 +72,7 @@ public class RequirementPointController {
 	}
 
 	public void updatePoints(Requirement requirement, RequirementDTO requirementDTO) {
-		logger.debug("updatePoints [{}]",requirement,requirementDTO);
+		logger.debug("updatePoints [{}] [{}]",requirement,requirementDTO);
 		Collection<RequirementPoint> requirementPointCollectionFromEntity = requirementPointRepository.findByRequirement(requirement);
 		Map<UUID, Integer> requirementImpactPointsMap=requirementDTO.getRequirementImpactPoints();
 		for (RequirementPoint requirementPoint:requirementPointCollectionFromEntity){

@@ -1,7 +1,6 @@
 
 package com.evatool.requirements.entity;
 
-import com.evatool.requirements.error.exceptions.IllegalDtoValueExcpetion;
 import com.google.gson.Gson;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ import java.util.UUID;
 public class Requirement {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
     private String title;
     private String description;
     @ManyToMany(fetch = FetchType.EAGER)
