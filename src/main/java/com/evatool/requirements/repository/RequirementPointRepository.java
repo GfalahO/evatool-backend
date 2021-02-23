@@ -18,6 +18,5 @@ public interface RequirementPointRepository extends JpaRepository<RequirementPoi
     public Collection<RequirementPoint> findByRequirement(Requirement requirement);
     public RequirementPoint findByRequirementAndRequirementsImpact(Requirement requirement, RequirementsImpact requirementsImpact);
 
-    public void deleteAllByRequirement(Requirement requirement);
 }
 

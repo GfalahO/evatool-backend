@@ -107,6 +107,7 @@ public class RequirementPointController {
 	}
 
 	public void deletePointsForRequirement(Requirement requirement) {
-		requirementPointRepository.deleteAllByRequirement(requirement);
+		Collection<RequirementPoint> collection = requirementPointRepository.findByRequirement(requirement);
+		requirementPointRepository.deleteAll(collection);
 	}
 }
