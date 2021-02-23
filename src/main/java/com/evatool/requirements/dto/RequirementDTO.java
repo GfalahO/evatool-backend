@@ -3,6 +3,7 @@ package com.evatool.requirements.dto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.gson.Gson;
 
 import java.util.*;
 
@@ -87,11 +88,7 @@ public class RequirementDTO {
 
     @Override
     public String toString()  {
-        try{
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        return ow.writeValueAsString(this);
-        }catch (Exception e){
-            return "error: " + e.getMessage();
-        }
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
