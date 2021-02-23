@@ -69,7 +69,7 @@ public class RequirementsControllerTest {
         RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId(),variantsTitle);
 
         //create requirement
-        RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO);
+        RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO).getContent();
 
         //check is requirement created
         assertThat(requirementsController.getRequirementById(requirementDTOObj.getRootEntityId())).isNotNull();
@@ -80,7 +80,7 @@ public class RequirementsControllerTest {
         requirementsController.updateRequirement(requirementDTOObj);
 
         //check is requirement title changed
-        RequirementDTO requirementAfterUpdate = requirementsController.getRequirementById(requirementDTOObj.getRootEntityId());
+        RequirementDTO requirementAfterUpdate = requirementsController.getRequirementById(requirementDTOObj.getRootEntityId()).getContent();
 
         assertThat(requirementAfterUpdate.getRequirementTitle()).isEqualTo(testTitle);
 
@@ -89,7 +89,7 @@ public class RequirementsControllerTest {
         requirementsController.deleteRequirement(idRequirement);
 
         //check is requirement deleted
-        RequirementDTO deletedRequirement = requirementsController.getRequirementById(requirementDTOObj.getRootEntityId());
+        RequirementDTO deletedRequirement = requirementsController.getRequirementById(requirementDTOObj.getRootEntityId()).getContent();
         assertThat(deletedRequirement).isNull();
 
     }
