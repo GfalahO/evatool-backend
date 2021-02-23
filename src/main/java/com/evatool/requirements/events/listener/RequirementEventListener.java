@@ -6,9 +6,11 @@ import com.evatool.global.event.dimension.DimensionUpdatedEvent;
 import com.evatool.global.event.impact.ImpactCreatedEvent;
 import com.evatool.global.event.impact.ImpactDeletedEvent;
 import com.evatool.global.event.impact.ImpactUpdatedEvent;
+import com.evatool.requirements.entity.RequirementDimension;
 import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.entity.RequirementsVariant;
 import com.evatool.requirements.events.RequirementEventPublisher;
+import com.evatool.requirements.repository.RequirementDimensionRepository;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
 import org.json.JSONException;
@@ -30,6 +32,8 @@ public class RequirementEventListener {
     RequirementsImpactsRepository requirementsImpactsRepository;
     @Autowired
     RequirementsVariantsRepository requirementsVariantsRepository;
+    @Autowired
+    RequirementDimensionRepository requirementDimensionRepository;
 
 
     @EventListener
@@ -62,6 +66,7 @@ public class RequirementEventListener {
     public void dimensionCreated(DimensionCreatedEvent event) {
         logger.info("dimension created event");
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        requirementDimensionRepository.save(RequirementDimension.fromJson(event.getJsonPayload()));
     }
 
     @EventListener
@@ -69,6 +74,7 @@ public class RequirementEventListener {
     public void dimensionUpdated(DimensionUpdatedEvent event) {
         logger.info("dimension updated event");
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        requirementDimensionRepository.save(RequirementDimension.fromJson(event.getJsonPayload()));
     }
 
     @EventListener
@@ -76,9 +82,8 @@ public class RequirementEventListener {
     public void dimensionDeleted(DimensionDeletedEvent event) {
         logger.info("dimension deleted event");
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
-
+        requirementDimensionRepository.delete(RequirementDimension.fromJson(event.getJsonPayload()));
     }
-
     //events do not exist at the moment
 
 /**

@@ -1,5 +1,7 @@
 package com.evatool.requirements.entity;
 
+import com.google.gson.Gson;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -20,6 +22,10 @@ public class RequirementDimension {
 
     public RequirementDimension() {
 
+    }
+
+    public static  RequirementDimension fromJson(String json){
+        return  new Gson().fromJson(json, RequirementDimension.class);
     }
 
     public String getTitle() {
