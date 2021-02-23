@@ -1,5 +1,9 @@
 package com.evatool.requirements.dto;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 import java.util.*;
 
 public class RequirementDTO {
@@ -79,5 +83,15 @@ public class RequirementDTO {
 
     public void setRequirementImpactPoints(Map<UUID, Integer> requirementImpactPoints) {
         this.requirementImpactPoints = requirementImpactPoints;
+    }
+
+    @Override
+    public String toString()  {
+        try{
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        return ow.writeValueAsString(this);
+        }catch (Exception e){
+            return "error: " + e.getMessage();
+        }
     }
 }

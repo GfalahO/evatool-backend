@@ -2,10 +2,12 @@ package com.evatool.requirements.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-public class RequirementsVariants {
+@Table(name = "REQ_RequirementVariant")
+public class RequirementsVariant {
 
     @Id
     private UUID id = UUID.randomUUID();
@@ -13,10 +15,10 @@ public class RequirementsVariants {
     private String description;
 
 
-    public RequirementsVariants() {
+    public RequirementsVariant() {
     }
 
-    public RequirementsVariants(String title, String description) {
+    public RequirementsVariant(String title, String description) {
         this.title = title;
         this.description = description;
     }
@@ -25,11 +27,11 @@ public class RequirementsVariants {
         return title;
     }
 
-    public void setTitle(String titel) {
-        if (titel == null) {
+    public void setTitle(String title) {
+        if (title == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
-        this.title = titel;
+        this.title = title;
     }
 
     public String getDescription() {

@@ -7,21 +7,22 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class RequirementsImpacts {
+@Table(name = "REQ_RequirementImpact")
+public class RequirementsImpact {
 
     @Id
     private UUID id = UUID.randomUUID();
-    private String titel;
+    private String title;
     private String description;
     private int value;
 
     private Dimension dimension;
 
-    public RequirementsImpacts() {
+    public RequirementsImpact() {
     }
 
-    public RequirementsImpacts(String title, String description, int value, Dimension dimension) {
-        this.titel = title;
+    public RequirementsImpact(String title, String description, int value, Dimension dimension) {
+        this.title = title;
         this.description = description;
         this.value = value;
         this.dimension=dimension;
@@ -32,14 +33,14 @@ public class RequirementsImpacts {
     }
 
     public String getTitle() {
-        return titel;
+        return title;
     }
 
     public void setTitle(String title) {
         if (title == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
-        this.titel = title;
+        this.title = title;
     }
 
     public String getDescription() {

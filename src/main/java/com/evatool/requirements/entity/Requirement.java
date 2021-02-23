@@ -7,15 +7,16 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Entity
+@Table(name = "REQ_Requirement")
 public class Requirement {
 
-    //TODO Proejktid hinterlegen
     @Id
     private UUID id = UUID.randomUUID();
+    private UUID projectId;
     private String title;
     private String description;
     @ManyToMany
-    private Collection<RequirementsVariants> variants = new ArrayList<>();
+    private Collection<RequirementsVariant> variants = new ArrayList<>();
 
     public Requirement() {
     }
@@ -29,7 +30,7 @@ public class Requirement {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(String title) throws IllegalArgumentException {
         if (title == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
@@ -48,11 +49,11 @@ public class Requirement {
         this.description = description;
     }
 
-    public Collection<RequirementsVariants> getVariants() {
+    public Collection<RequirementsVariant> getVariants() {
         return variants;
     }
 
-    public void setVariants(Collection<RequirementsVariants> variants) {
+    public void setVariants(Collection<RequirementsVariant> variants) throws IllegalArgumentException {
         if (variants == null) {
             throw new IllegalArgumentException("Variants cannot be null.");
         }
@@ -63,9 +64,15 @@ public class Requirement {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public UUID getProjectId() {
+        return projectId;
     }
 
+    public void setProjectId(UUID projectId) throws IllegalArgumentException {
+        if (projectId == null) {
+            throw new IllegalArgumentException("ProjectId cannot be null.");
+        }
+        this.projectId = projectId;
+    }
 }
 
