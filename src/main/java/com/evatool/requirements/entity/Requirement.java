@@ -39,7 +39,7 @@ public class Requirement {
 
     public void setTitle(String title) throws IllegalArgumentException {
         if (title == null) {
-            throw new IllegalDtoValueExcpetion(title,"Title cannot be null.");
+            throw new IllegalArgumentException("Title cannot be null.");
         }
         this.title = title;
     }
@@ -50,7 +50,7 @@ public class Requirement {
 
     public void setDescription(String description) throws IllegalArgumentException {
         if (description == null) {
-            throw new IllegalDtoValueExcpetion(description ,"Description cannot be null.");
+            throw new IllegalArgumentException("Description cannot be null.");
         }
 
         this.description = description;
@@ -62,7 +62,7 @@ public class Requirement {
 
     public void setVariants(Collection<RequirementsVariant> variants) throws IllegalArgumentException {
         if (variants == null) {
-            throw new IllegalDtoValueExcpetion(variants,"Variants cannot be null.");
+            throw new IllegalArgumentException("Variants cannot be null.");
         }
         this.variants = variants;
     }
