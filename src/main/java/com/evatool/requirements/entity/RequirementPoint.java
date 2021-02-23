@@ -6,42 +6,43 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class RequirementGR {
+@Table(name = "REQ_RequirementPoint")
+public class RequirementPoint {
 
     @Id
     private UUID id = UUID.randomUUID();
     @ManyToOne
-    private RequirementsImpacts requirementsImpacts;
+    private RequirementsImpact requirementsImpact;
     @ManyToOne
     private Requirement requirement;
     private int points;
 
-    public RequirementGR() {
+    public RequirementPoint() {
     }
 
-    public RequirementGR(RequirementsImpacts requirementsImpacts, Requirement requirement, int points) {
-        this.requirementsImpacts = requirementsImpacts;
+    public RequirementPoint(RequirementsImpact requirementsImpact, Requirement requirement, int points) {
+        this.requirementsImpact = requirementsImpact;
         this.requirement = requirement;
         this.points = points;
     }
 
-    public RequirementsImpacts getRequirementsImpacts() {
-        return requirementsImpacts;
+    public RequirementsImpact getRequirementsImpact() {
+        return requirementsImpact;
     }
 
-    public void setRequirementsImpacts(RequirementsImpacts requirementsImpacts) {
-        if (requirementsImpacts == null) {
+    public void setRequirementsImpact(RequirementsImpact requirementsImpact) {
+        if (requirementsImpact == null) {
             throw new IllegalArgumentException("RequirementsImpacts cannot be null.");
         }
 
-        this.requirementsImpacts = requirementsImpacts;
+        this.requirementsImpact = requirementsImpact;
     }
 
     public Requirement getRequirement() {
         return requirement;
     }
 
-    public void setRequirement(Requirement requirement) {
+    public void setRequirement(Requirement requirement) throws IllegalArgumentException {
         if (requirement == null) {
             throw new IllegalArgumentException("Requirement cannot be null.");
         }
@@ -52,7 +53,7 @@ public class RequirementGR {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(int points) throws IllegalArgumentException {
         if (points < -1 || points > 1) {
             throw new IllegalArgumentException("Value must be in range [-1, 1]");
         }
@@ -64,7 +65,4 @@ public class RequirementGR {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
 }

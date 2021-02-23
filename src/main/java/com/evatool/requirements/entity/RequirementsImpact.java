@@ -3,43 +3,48 @@ package com.evatool.requirements.entity;
 
 
 
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class RequirementsImpacts {
+@Table(name = "REQ_RequirementImpact")
+public class RequirementsImpact {
 
     @Id
     private UUID id = UUID.randomUUID();
-    private String titel;
+    private String title;
     private String description;
     private int value;
 
-    private Dimension dimension;
+    @ManyToOne
+    private RequirementDimension requirementDimension;
 
-    public RequirementsImpacts() {
+    public RequirementsImpact() {
     }
 
-    public RequirementsImpacts(String title, String description, int value, Dimension dimension) {
-        this.titel = title;
+   public static RequirementsImpact fromJson(String json){
+        return  new Gson().fromJson(json, RequirementsImpact.class);
+
+    }
+
+    public RequirementsImpact(String title, String description, int value, RequirementDimension requirementDimension) {
+        this.title = title;
         this.description = description;
         this.value = value;
-        this.dimension=dimension;
-    }
-
-    public enum Dimension{
-        SAFETY,PRIVAT
+        this.requirementDimension = requirementDimension;
     }
 
     public String getTitle() {
-        return titel;
+        return title;
     }
 
     public void setTitle(String title) {
         if (title == null) {
             throw new IllegalArgumentException("Title cannot be null.");
         }
-        this.titel = title;
+        this.title = title;
     }
 
     public String getDescription() {
@@ -64,12 +69,15 @@ public class RequirementsImpacts {
         this.value = value;
     }
 
-    public Dimension getDimension() {
-        return dimension;
+    public RequirementDimension getRequirementDimension() {
+        return requirementDimension;
     }
 
-    public void setDimension(Dimension dimension) {
-        this.dimension = dimension;
+    public void setRequirementDimension(RequirementDimension requirementDimension) {
+        if (requirementDimension == null) {
+            throw new IllegalArgumentException("RequirementDimension cannot be null.");
+        }
+        this.requirementDimension = requirementDimension;
     }
 
     public UUID getId() {
