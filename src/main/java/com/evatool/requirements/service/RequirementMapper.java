@@ -18,7 +18,7 @@ public class RequirementMapper {
     @Autowired
     RequirementPointController requirement_grController;
 
-    public List<RequirementDTO> mapList(List<Requirement> resultList) {
+    public List<RequirementDTO> mapList(Collection<Requirement> resultList) {
         List<RequirementDTO> requirementDTOList = new ArrayList<>();
         for(Requirement requirement : resultList){
             requirementDTOList.add(map(requirement));
@@ -35,11 +35,11 @@ public class RequirementMapper {
         requirement.getVariants().forEach(variants->{
             requirementDTO.getVariantsTitle().put(variants.getId(),variants.getTitle());
         });
-        Collection<RequirementsImpact> requirementsImpactList = requirement_grController.getRequirement_grByRequirement(requirement.getId());
+        Collection<RequirementsImpact> requirementsImpactList = requirement_grController.getRequirementImpactByRequirement(requirement.getId());
         requirementsImpactList.forEach(inpacts -> {
             requirementDTO.getImpactTitles().put(inpacts.getId(),inpacts.getTitle());
             requirementDTO.getDimensions().add(inpacts.getRequirementDimension().getTitle());
-            RequirementPoint requirementPoint = requirement_grController.getRequirement_grByRequirementList(requirement,inpacts);
+            RequirementPoint requirementPoint = requirement_grController.getRequirementPointByRequirementAndRequirementsImpact(requirement,inpacts);
             requirementDTO.getRequirementImpactPoints().put(inpacts.getId(),requirementPoint.getPoints());
         });
 
