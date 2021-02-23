@@ -18,7 +18,7 @@ public class RequirementsControllerTest {
 
     @Autowired
     private RequirementsController requirementsController;
-
+/*
     @Test
     public void testRequirementController_ThrowException() {
 
@@ -46,5 +46,5 @@ public class RequirementsControllerTest {
         Optional<Requirement> deletedRequirement = requirementsController.getRequirementById(idRequirement);
         assertThat(deletedRequirement.isEmpty()).isEqualTo(true);
 
-    }
+    }*/
 }

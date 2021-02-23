@@ -10,12 +10,12 @@ public class RequirementDTO {
 
     private Map<UUID,String> impactTitles = new HashMap<>();
     private UUID rootEntityId;
+    private UUID projectID;
     private String requirementTitle;
     private String requirementDescription;
     private Set dimensions = new HashSet();
-    private String variantsTitle;
-    private UUID variantsUUID;
     private Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
+    private Map<UUID,String> variantsTitle = new HashMap<>();
 
     public RequirementDTO() {
 
@@ -27,14 +27,6 @@ public class RequirementDTO {
 
     public void setRootEntityId(UUID rootEntityId) {
         this.rootEntityId = rootEntityId;
-    }
-
-    public UUID getVariantsUUID() {
-        return variantsUUID;
-    }
-
-    public void setVariantsUUID(UUID variantsUUID) {
-        this.variantsUUID = variantsUUID;
     }
 
     public String getRequirementTitle() {
@@ -69,11 +61,11 @@ public class RequirementDTO {
         this.dimensions = dimensions;
     }
 
-    public String getVariantsTitle() {
+    public Map<UUID, String> getVariantsTitle() {
         return variantsTitle;
     }
 
-    public void setVariantsTitle(String variantsTitle) {
+    public void setVariantsTitle(Map<UUID, String> variantsTitle) {
         this.variantsTitle = variantsTitle;
     }
 
@@ -83,6 +75,14 @@ public class RequirementDTO {
 
     public void setRequirementImpactPoints(Map<UUID, Integer> requirementImpactPoints) {
         this.requirementImpactPoints = requirementImpactPoints;
+    }
+
+    public UUID getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(UUID projectID) {
+        this.projectID = projectID;
     }
 
     @Override
