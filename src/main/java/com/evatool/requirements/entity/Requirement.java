@@ -1,6 +1,9 @@
 
 package com.evatool.requirements.entity;
 
+import com.evatool.requirements.error.exceptions.IllegalDtoValueExcpetion;
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -77,6 +80,12 @@ public class Requirement {
             throw new IllegalArgumentException("RequirementsAnalysis cannot be null.");
         }
         this.requirementsAnalysis = requirementsAnalysis;
+    }
+
+    @Override
+    public String toString(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
 

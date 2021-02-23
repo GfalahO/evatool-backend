@@ -60,7 +60,6 @@ public class RequirementEventListener {
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
         requirementsImpactsRepository.delete(RequirementsImpact.fromJson(event.getJsonPayload()));
     }
-    //todo implement
     @EventListener
     @Async
     public void dimensionCreated(DimensionCreatedEvent event) {

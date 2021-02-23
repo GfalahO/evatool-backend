@@ -1,11 +1,14 @@
 package com.evatool.requirements.application.controller;
 
+
 import com.evatool.requirements.common.TestDataGenerator;
 import com.evatool.requirements.controller.RequirementsController;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.*;
+import com.evatool.requirements.error.exceptions.EntityNotFoundException;
 import com.evatool.requirements.repository.*;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -89,8 +92,12 @@ public class RequirementsControllerTest {
         requirementsController.deleteRequirement(idRequirement);
 
         //check is requirement deleted
-        RequirementDTO deletedRequirement = requirementsController.getRequirementById(requirementDTOObj.getRootEntityId()).getContent();
-        assertThat(deletedRequirement).isNull();
+
+
+
+        Exception exception = assertThrows(EntityNotFoundException.class, ()->requirementsController.getRequirementById(requirementDTOObj.getRootEntityId()).getContent());
+
+
 
     }
 
