@@ -30,7 +30,7 @@ public class RequirementMapper {
         RequirementDTO requirementDTO = new RequirementDTO();
         requirementDTO.setRequirementTitle(requirement.getTitle());
         requirementDTO.setRootEntityId(requirement.getId());
-        requirementDTO.setProjectID(requirement.getProjectId());
+        requirementDTO.setProjectID(requirement.getRequirementsAnalysis().getId());
         requirementDTO.setRequirementDescription(requirement.getDescription());
         requirement.getVariants().forEach(variants->{
             requirementDTO.getVariantsTitle().put(variants.getId(),variants.getTitle());
@@ -38,11 +38,7 @@ public class RequirementMapper {
         Collection<RequirementsImpact> requirementsImpactList = requirement_grController.getRequirement_grByRequirement(requirement.getId());
         requirementsImpactList.forEach(inpacts -> {
             requirementDTO.getImpactTitles().put(inpacts.getId(),inpacts.getTitle());
-
-
-            requirementDTO.getDimensions().add(inpacts.getRequirementDimension());
-            Collection<RequirementPoint> requirement_grCollection = requirement_grController.getRequirement_grByRequirementList(requirement,inpacts);
-            //TODO keine Berechnung sondern nur den Wert
+            requirementDTO.getDimensions().add(inpacts.getRequirementDimension().getTitle());
             RequirementPoint requirementPoint = requirement_grController.getRequirement_grByRequirementList(requirement,inpacts);
             requirementDTO.getRequirementImpactPoints().put(inpacts.getId(),requirementPoint.getPoints());
         });

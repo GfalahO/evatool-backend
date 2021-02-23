@@ -12,7 +12,6 @@ public class Requirement {
 
     @Id
     private UUID id = UUID.randomUUID();
-    private UUID projectId;
     private String title;
     private String description;
     @ManyToMany
@@ -67,17 +66,6 @@ public class Requirement {
 
     public UUID getId() {
         return id;
-    }
-
-    public UUID getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(UUID projectId) throws IllegalArgumentException {
-        if (projectId == null) {
-            throw new IllegalArgumentException("ProjectId cannot be null.");
-        }
-        this.projectId = projectId;
     }
 
     public RequirementsAnalysis getRequirementsAnalysis() {

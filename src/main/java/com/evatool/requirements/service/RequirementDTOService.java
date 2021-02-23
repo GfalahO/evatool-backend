@@ -2,7 +2,9 @@ package com.evatool.requirements.service;
 
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
+import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.evatool.requirements.entity.RequirementsVariant;
+import com.evatool.requirements.repository.RequirementAnalysisRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
 import com.evatool.variants.entities.VariantsRequirement;
 import org.slf4j.Logger;
@@ -23,6 +25,9 @@ public class RequirementDTOService {
     @Autowired
     RequirementsVariantsRepository requirementsVariantsRepository;
 
+    @Autowired
+    RequirementAnalysisRepository requirementAnalysisRepository;
+
     public List<RequirementDTO> findAll(List<Requirement> resultList) {
         logger.info("findAll");
         return requirementMapper.mapList(resultList);
@@ -37,7 +42,8 @@ public class RequirementDTOService {
         Requirement requirement = new Requirement();
         requirement.setTitle(requirementDTO.getRequirementTitle());
         requirement.setDescription(requirementDTO.getRequirementDescription());
-        requirement.setProjectId(requirementDTO.getProjectID());
+        Optional<RequirementsAnalysis> requirementsAnalysis = requirementAnalysisRepository.findById(requirementDTO.getProjectID());
+        requirement.setRequirementsAnalysis(requirementsAnalysis.get());
         Collection<RequirementsVariant> requirementsVariantCollection = new ArrayList<>();
         for( Map.Entry<UUID, String> entry:requirementDTO.getVariantsTitle().entrySet()) {
             requirementsVariantCollection.add(requirementsVariantsRepository.getOne(entry.getKey()));
