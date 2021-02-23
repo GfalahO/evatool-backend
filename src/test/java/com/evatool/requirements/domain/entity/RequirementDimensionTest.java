@@ -1,0 +1,22 @@
+package com.evatool.requirements.domain.entity;
+
+import com.evatool.requirements.entity.Requirement;
+import com.evatool.requirements.entity.RequirementDimension;
+import org.junit.jupiter.api.Test;
+
+import static com.evatool.requirements.common.TestDataGenerator.getRequirementDimension;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
+public class RequirementDimensionTest {
+
+    @Test
+    public void testSetTitle_NullValue_ThrowException() {
+        // given
+        RequirementDimension requirementDimension = getRequirementDimension();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDimension.setTitle(null));
+    }
+}
