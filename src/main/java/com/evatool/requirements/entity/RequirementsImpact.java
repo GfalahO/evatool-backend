@@ -21,6 +21,10 @@ public class RequirementsImpact {
     public RequirementsImpact() {
     }
 
+    public RequirementsImpact(String json){
+
+    }
+
     public RequirementsImpact(String title, String description, int value, Dimension dimension) {
         this.title = title;
         this.description = description;
