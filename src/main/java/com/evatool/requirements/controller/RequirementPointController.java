@@ -31,39 +31,28 @@ public class RequirementPointController {
 
 /*
 	public Optional<RequirementPoint> getRequirement_grById(@PathVariable UUID id) {
-		logger.info("/requirement_gr/[{}]",id);
+		logger.debug("/requirement_gr/[{}]",id);
 		return requirementPointRepository.findById(id);
 	}
 */
 
 	public void newRequirementPoint(Collection<RequirementPoint> requirementPointList) {
-		logger.info("/requirement_gr/[{}]",requirementPointList);
+		logger.debug("newRequirementPoint [{}]",requirementPointList);
 		requirementPointRepository.saveAll(requirementPointList);
 	}
 
 	public RequirementPoint updateRequirementPoint(RequirementPoint requirementPoint) {
-		logger.info("/requirement_gr/[{}]",requirementPoint);
+		logger.debug("updateRequirementPoint [{}]",requirementPoint);
 		return requirementPointRepository.save(requirementPoint);
 	}
 
 	public void deleteRequirementPoint(RequirementPoint requirementPoint) {
-		logger.info("/requirement_gr/[{}]",requirementPoint);
+		logger.debug("deleteRequirementPoint [{}]",requirementPoint);
 		requirementPointRepository.delete(requirementPoint);
 	}
 
-/*
-	public Collection<Requirement> getRequirement_grByImpact(@PathVariable UUID id) {
-		logger.info("/requirement_gr/[{}]/inpacts/requirement",id);
-		Optional<RequirementsImpact> inpacts = requirementsImpactsRepository.findById(id);
-		if(inpacts.isEmpty()) return null;
-		List<Requirement> requirementList = new ArrayList<>();
-		requirement_grRepository.findByRequirementsImpact(inpacts.get()).forEach(e->requirementList.add(e.getRequirement()));
-		return requirementList;
-	}
-*/
-
-	public Collection<RequirementsImpact> getRequirement_grByRequirement(@PathVariable UUID id) {
-		logger.info("/requirement_gr/[{}]/requirement/impacts",id);
+	public Collection<RequirementsImpact> getRequirementImpactByRequirement(@PathVariable UUID id) {
+		logger.debug("getRequirementImpactByRequirement [{}]",id);
 		Optional<Requirement> requirement = requirementRepository.findById(id);
 		if(requirement.isEmpty()) return null;
 		List<RequirementsImpact> requirementsImpactList = new ArrayList<>();
@@ -71,9 +60,9 @@ public class RequirementPointController {
 		return requirementsImpactList;
 	}
 
-	public RequirementPoint getRequirement_grByRequirementList(Requirement requirement, RequirementsImpact requirementsImpact)
+	public RequirementPoint getRequirementPointByRequirementAndRequirementsImpact(Requirement requirement, RequirementsImpact requirementsImpact)
 	{
-		logger.info("getRequirement_grByRequirementList [{}]",requirement, requirementsImpact);
+		logger.debug("getRequirementPointByRequirementAndRequirementsImpact [{}]",requirement, requirementsImpact);
 		return requirementPointRepository.findByRequirementAndRequirementsImpact(requirement, requirementsImpact);
 	}
 
@@ -91,6 +80,7 @@ public class RequirementPointController {
 	}
 
 	public void updatePoints(Requirement requirement, RequirementDTO requirementDTO) {
+		logger.debug("updatePoints [{}]",requirement,requirementDTO);
 		Collection<RequirementPoint> requirementPointCollectionFromEntity = requirementPointRepository.findByRequirement(requirement);
 		Map<UUID, Integer> requirementImpactPointsMap=requirementDTO.getRequirementImpactPoints();
 		for (RequirementPoint requirementPoint:requirementPointCollectionFromEntity){
@@ -107,6 +97,7 @@ public class RequirementPointController {
 	}
 
 	public void deletePointsForRequirement(Requirement requirement) {
+		logger.debug("deletePointsForRequirement [{}]",requirement);
 		Collection<RequirementPoint> collection = requirementPointRepository.findByRequirement(requirement);
 		requirementPointRepository.deleteAll(collection);
 	}

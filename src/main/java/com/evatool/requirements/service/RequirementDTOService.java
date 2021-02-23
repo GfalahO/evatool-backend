@@ -28,17 +28,18 @@ public class RequirementDTOService {
     @Autowired
     RequirementAnalysisRepository requirementAnalysisRepository;
 
-    public List<RequirementDTO> findAll(List<Requirement> resultList) {
-        logger.info("findAll");
+    public List<RequirementDTO> findAll(Collection<Requirement> resultList) {
+        logger.debug("findAll [{}]",resultList);
         return requirementMapper.mapList(resultList);
     }
 
     public RequirementDTO findId(Requirement requirement) {
-        logger.info("findAll");
+        logger.debug("findId [{}]",requirement);
         return requirementMapper.map(requirement);
     }
 
     public Requirement create(RequirementDTO requirementDTO) {
+        logger.debug("create [{}]",requirementDTO);
         Requirement requirement = new Requirement();
         requirement.setTitle(requirementDTO.getRequirementTitle());
         requirement.setDescription(requirementDTO.getRequirementDescription());
@@ -55,8 +56,4 @@ public class RequirementDTOService {
         return requirement;
     }
 
-    public void update(RequirementDTO requirementDTO) {
-
-
-    }
 }
