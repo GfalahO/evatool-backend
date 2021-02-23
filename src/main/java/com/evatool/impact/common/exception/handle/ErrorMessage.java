@@ -28,7 +28,7 @@ public class ErrorMessage {
     @Getter
     private final String path;
 
-    public ErrorMessage(Exception exception, String message, String path, HttpStatus httpStatus) {
+    public ErrorMessage(Exception exception, String path, HttpStatus httpStatus) {
         this.timestamp = new Timestamp(System.currentTimeMillis());
         this.status = httpStatus.value();
         this.error = httpStatus.toString();
@@ -36,7 +36,7 @@ public class ErrorMessage {
         var pw = new PrintWriter(sw);
         exception.printStackTrace(pw);
         this.trace = sw.toString();
-        this.message = message;
+        this.message = exception.getMessage();
         this.path = path;
     }
 
