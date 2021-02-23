@@ -2,20 +2,15 @@ package com.evatool.requirements.application.controller;
 
 import com.evatool.requirements.common.TestDataGenerator;
 import com.evatool.requirements.controller.RequirementsController;
-import com.evatool.requirements.entity.Requirement;
-import com.evatool.requirements.entity.RequirementsAnalysis;
-import com.evatool.requirements.entity.RequirementsVariant;
-import com.evatool.requirements.repository.RequirementAnalysisRepository;
-import com.evatool.requirements.repository.RequirementsVariantsRepository;
+import com.evatool.requirements.dto.RequirementDTO;
+import com.evatool.requirements.entity.*;
+import com.evatool.requirements.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.evatool.requirements.common.TestDataGenerator.*;
 import static com.evatool.requirements.common.TestDataGenerator.getRequirementsVariant;
@@ -32,30 +27,50 @@ public class RequirementsControllerTest {
 
     @Autowired
     private RequirementsVariantsRepository requirementsVariantsRepository;
-/*
+
+    @Autowired
+    RequirementsImpactsRepository requirementsImpactsRepository;
+
+    @Autowired
+    RequirementDimensionRepository requirementDimensionRepository;
+
+    @Autowired
+    RequirementPointRepository requirementPointRepository;
+
+    @Autowired
+    RequirementRepository requirementRepository;
+
     @Test
     public void testRequirementController_ThrowException() {
+
+        RequirementDimension requirementDimension = getRequirementDimension();
+        requirementDimensionRepository.save(requirementDimension);
+
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
+        requirementsImpactsRepository.save(requirementsImpact);
+
+        Map<UUID,String> impactTitles = new HashMap<>();
+        impactTitles.put(requirementsImpact.getId(),requirementsImpact.getTitle());
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
 
         RequirementsVariant requirementsVariant = getRequirementsVariant();
-        RequirementsVariant requirementsVariant1 = getRequirementsVariant();
-
         requirementsVariantsRepository.save(requirementsVariant);
-        requirementsVariantsRepository.save(requirementsVariant1);
-
         Collection<RequirementsVariant> requirementsVariants = new ArrayList<>();
         requirementsVariants.add(requirementsVariant);
-        requirementsVariants.add(requirementsVariant1);
 
+        Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
+        requirementImpactPoints.put(requirementsImpact.getId(),1);
+
+        RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId());
 
         //create requirement
-        Requirement requirement = requirementsController.newRequirement(getRequirement(requirementsAnalysis,requirementsVariants));
+        RequirementDTO requirementobj = requirementsController.newRequirement(requirementDTO);
 
         //check is requirement created
-        assertThat(requirementsController.getRequirementById(requirement.getId()).get()).isNotNull();
-
+        //assertThat(requirementsController.getRequirementById(requirement.getRootEntityId())).isNotNull();
+/*
         //change requirement title
         String testTitle = "TestTitle";
         requirement.setTitle(testTitle);
@@ -73,7 +88,7 @@ public class RequirementsControllerTest {
         //check is requirement deleted
         Optional<Requirement> deletedRequirement = requirementsController.getRequirementById(idRequirement);
         assertThat(deletedRequirement.isEmpty()).isEqualTo(true);
-
+*/
     }
- */
+
 }

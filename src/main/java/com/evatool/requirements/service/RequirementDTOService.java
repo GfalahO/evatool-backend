@@ -44,7 +44,10 @@ public class RequirementDTOService {
         requirement.setTitle(requirementDTO.getRequirementTitle());
         requirement.setDescription(requirementDTO.getRequirementDescription());
         Optional<RequirementsAnalysis> requirementsAnalysis = requirementAnalysisRepository.findById(requirementDTO.getProjectID());
-        requirement.setRequirementsAnalysis(requirementsAnalysis.get());
+        if(!requirementsAnalysis.isEmpty())
+        {
+            requirement.setRequirementsAnalysis(requirementsAnalysis.get());
+        }
         Collection<RequirementsVariant> requirementsVariantCollection = new ArrayList<>();
         for( Map.Entry<UUID, String> entry:requirementDTO.getVariantsTitle().entrySet()) {
             requirementsVariantCollection.add(requirementsVariantsRepository.getOne(entry.getKey()));

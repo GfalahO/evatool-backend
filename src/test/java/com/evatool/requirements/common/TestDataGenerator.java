@@ -1,10 +1,13 @@
 package com.evatool.requirements.common;
 
+import com.evatool.impact.domain.entity.Impact;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+import java.util.UUID;
 
 public class TestDataGenerator {
 
@@ -48,8 +51,11 @@ public class TestDataGenerator {
         return new RequirementPoint(getRequirementsImpacts(requirementDimension), getRequirement(requirementsAnalysis,variants), 3);
     }
 
-    public static RequirementDTO getRequirementDTO() {
+    public static RequirementDTO getRequirementDTO(Map<UUID,String> impactTitles,UUID projectID) {
         var requirementDTO = new RequirementDTO();
+
+        requirementDTO.setImpactTitles(impactTitles);
+        requirementDTO.setProjectID(projectID);
 
         requirementDTO.setRequirementTitle("Title");
         requirementDTO.setRequirementDescription("Description");

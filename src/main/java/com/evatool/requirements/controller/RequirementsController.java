@@ -83,7 +83,7 @@ public class RequirementsController {
 	}
 
 	@PostMapping("/requirements")
-	@ApiOperation(value = "Create requirement by ID")
+	@ApiOperation(value = "Create requirement")
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "The entity was inserted"),
 			@ApiResponse(code = 400, message = "The entity was invalid"),
@@ -110,14 +110,14 @@ public class RequirementsController {
 		requirement.setTitle(requirementDTO.getRequirementTitle());
 		Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(requirementDTO.getVariantsTitle().keySet());
 		//Remove the Variants which are removed
-		Collection<RequirementsVariant> newCollectin = requirement.getVariants().stream().filter(e-> requirementsVariantCollectionDTO.contains(e)).collect(Collectors.toList());
+		Collection<RequirementsVariant> newCollection = requirement.getVariants().stream().filter(e-> requirementsVariantCollectionDTO.contains(e)).collect(Collectors.toList());
 		//Add the new Variants
 		requirementsVariantCollectionDTO.stream().forEach(e->{
-			if(!newCollectin.contains(e)){
-				newCollectin.add(e);
+			if(!newCollection.contains(e)){
+				newCollection.add(e);
 			}
 		});
-		requirement.setVariants(newCollectin);
+		requirement.setVariants(newCollection);
 		requirementRepository.save(requirement);
 
 		requirementPointController.updatePoints(requirement,requirementDTO);
