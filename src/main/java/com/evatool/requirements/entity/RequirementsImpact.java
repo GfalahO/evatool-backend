@@ -3,6 +3,8 @@ package com.evatool.requirements.entity;
 
 
 
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -21,7 +23,8 @@ public class RequirementsImpact {
     public RequirementsImpact() {
     }
 
-    public RequirementsImpact(String json){
+   public static RequirementsImpact fromJson(String json){
+        return  new Gson().fromJson(json, RequirementsImpact.class);
 
     }
 
