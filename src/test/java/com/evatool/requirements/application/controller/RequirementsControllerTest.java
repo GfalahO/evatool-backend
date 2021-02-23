@@ -63,32 +63,35 @@ public class RequirementsControllerTest {
         Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
         requirementImpactPoints.put(requirementsImpact.getId(),1);
 
-        RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId());
+        Map<UUID,String> variantsTitle = new HashMap<>();
+        variantsTitle.put(requirementsVariant.getId(),requirementsVariant.getTitle());
+
+        RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId(),variantsTitle);
 
         //create requirement
-        RequirementDTO requirementobj = requirementsController.newRequirement(requirementDTO);
+        RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO);
 
         //check is requirement created
-        //assertThat(requirementsController.getRequirementById(requirement.getRootEntityId())).isNotNull();
-/*
+        assertThat(requirementsController.getRequirementById(requirementDTOObj.getRootEntityId())).isNotNull();
+
         //change requirement title
         String testTitle = "TestTitle";
-        requirement.setTitle(testTitle);
-        requirementsController.updateRequirement(requirement);
+        requirementDTOObj.setRequirementTitle(testTitle);
+        requirementsController.updateRequirement(requirementDTOObj);
 
         //check is requirement title changed
-        Optional<Requirement> requirementAfterUpdate = requirementsController.getRequirementById(requirement.getId());
+        RequirementDTO requirementAfterUpdate = requirementsController.getRequirementById(requirementDTOObj.getRootEntityId());
 
-        assertThat(requirementAfterUpdate.get().getTitle()).isEqualTo(testTitle);
+        assertThat(requirementAfterUpdate.getRequirementTitle()).isEqualTo(testTitle);
 
         //delete requirement
-        UUID idRequirement = requirement.getId();
+        UUID idRequirement = requirementDTOObj.getRootEntityId();
         requirementsController.deleteRequirement(idRequirement);
 
         //check is requirement deleted
-        Optional<Requirement> deletedRequirement = requirementsController.getRequirementById(idRequirement);
-        assertThat(deletedRequirement.isEmpty()).isEqualTo(true);
-*/
+        RequirementDTO deletedRequirement = requirementsController.getRequirementById(requirementDTOObj.getRootEntityId());
+        assertThat(deletedRequirement).isNull();
+
     }
 
 }
