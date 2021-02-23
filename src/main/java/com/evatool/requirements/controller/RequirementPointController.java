@@ -27,29 +27,35 @@ public class RequirementPointController {
 	@Autowired
 	private RequirementsImpactsRepository requirementsImpactsRepository;
 
-	@GetMapping("/requirement_gr")
-	public List<RequirementPoint> getRequirement_grList() {
-		logger.info("/requirement_gr");
-		return requirement_grRepository.findAll();
-	}
-
-	@GetMapping("/requirement_gr/{id}")
 	public Optional<RequirementPoint> getRequirement_grById(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]",id);
 		return requirement_grRepository.findById(id);
 	}
 
-	@GetMapping("/requirement_gr/{id}/impacts/requirement")
-	public Collection<Requirement> getRequirement_grByImpact(@PathVariable UUID id) {
+	public RequirementPoint newRequirementPoint(RequirementPoint requirementPoint) {
+		logger.info("/requirement_gr/[{}]",requirementPoint);
+		return requirement_grRepository.save(requirementPoint);
+	}
+
+	public RequirementPoint updateRequirementPoint(RequirementPoint requirementPoint) {
+		logger.info("/requirement_gr/[{}]",requirementPoint);
+		return requirement_grRepository.save(requirementPoint);
+	}
+
+	public void deleteRequirementPoint(RequirementPoint requirementPoint) {
+		logger.info("/requirement_gr/[{}]",requirementPoint);
+		requirement_grRepository.delete(requirementPoint);
+	}
+
+/*	public Collection<Requirement> getRequirement_grByImpact(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]/inpacts/requirement",id);
 		Optional<RequirementsImpact> inpacts = requirementsImpactsRepository.findById(id);
 		if(inpacts.isEmpty()) return null;
 		List<Requirement> requirementList = new ArrayList<>();
 		requirement_grRepository.findByRequirementsImpact(inpacts.get()).forEach(e->requirementList.add(e.getRequirement()));
 		return requirementList;
-	}
+	}*/
 
-	@GetMapping("/requirement_gr/{id}/requirement/impacts")
 	public Collection<RequirementsImpact> getRequirement_grByRequirement(@PathVariable UUID id) {
 		logger.info("/requirement_gr/[{}]/requirement/impacts",id);
 		Optional<Requirement> requirement = requirementRepository.findById(id);
