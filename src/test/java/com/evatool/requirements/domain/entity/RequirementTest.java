@@ -51,18 +51,6 @@ public class RequirementTest {
     }
 
 
-    @Test
-    public void testSetProjectId_NullValue_ThrowException() {
-        // given
-        RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
-        Collection<RequirementsVariant> requirementsVariant = getRequirementsVariants();
-        Requirement requirement = getRequirement(requirementsAnalysis,requirementsVariant);
-
-        // when
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirement.setProjectId(null));
-    }
 
     @Test
     public void testSetRequirementsAnalysis_NullValue_ThrowException() {
