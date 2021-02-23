@@ -1,8 +1,12 @@
 package com.evatool.requirements.controller;
 
+import com.evatool.global.event.requirements.RequirementCreatedEvent;
+import com.evatool.global.event.requirements.RequirementDeletedEvent;
+import com.evatool.global.event.requirements.RequirementUpdatedEvent;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementsVariant;
+import com.evatool.requirements.error.exceptions.EntityNotFoundException;
 import com.evatool.requirements.events.RequirementEventPublisher;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
@@ -61,7 +65,7 @@ public class RequirementsController {
 	public RequirementDTO getRequirementById(@PathVariable UUID id) {
 		logger.info("/requirements/[{}]",id);
 		Optional<Requirement> requirement = requirementRepository.findById(id);
-		if(requirement.isEmpty()) return null;
+		if(requirement.isEmpty()) throw new EntityNotFoundException(Requirement.class, id);
 		return dtoService.findId(requirement.get());
 	}
 
@@ -75,6 +79,7 @@ public class RequirementsController {
 		logger.info("/requirements");
 		//eventPublisher.publishEvent(new RequirementCreatedEvent(null));
 		Requirement requirement = requirementRepository.save(dtoService.create(requirementDTO));
+		eventPublisher.publishEvent(new RequirementCreatedEvent(requirement.toString()));
 		requirementPointController.createPoints(requirement,requirementDTO);
 		return getRequirementById(requirement.getId());
 	}
@@ -101,8 +106,8 @@ public class RequirementsController {
 			}
 		});
 		requirement.setVariants(newCollection);
-		requirementRepository.save(requirement);
-
+		requirement = requirementRepository.save(requirement);
+		eventPublisher.publishEvent(new RequirementUpdatedEvent(requirement.toString()));
 		requirementPointController.updatePoints(requirement,requirementDTO);
 		return getRequirementById(requirementDTO.getRootEntityId());
 	}
@@ -116,10 +121,12 @@ public class RequirementsController {
 	public void deleteRequirement(@PathVariable UUID id) {
 		logger.info("/requirements");
 		Optional<Requirement> requirementOptional = requirementRepository.findById(id);
+		if(requirementOptional.isEmpty()) throw new EntityNotFoundException(Requirement.class, id);
 		Requirement requirement = requirementOptional.get();
 		requirementPointController.deletePointsForRequirement(requirement);
 		requirementRepository.deleteById(id);
-		//eventPublisher.publishEvent(new RequirementDeletedEvent(null));
+		eventPublisher.publishEvent(new RequirementDeletedEvent(requirement.toString()));
+
 
 	}
 }

@@ -1,6 +1,9 @@
 
 package com.evatool.requirements.entity;
 
+import com.evatool.requirements.error.exceptions.IllegalDtoValueExcpetion;
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +39,7 @@ public class Requirement {
 
     public void setTitle(String title) throws IllegalArgumentException {
         if (title == null) {
-            throw new IllegalArgumentException("Title cannot be null.");
+            throw new IllegalDtoValueExcpetion(title,"Title cannot be null.");
         }
         this.title = title;
     }
@@ -47,7 +50,7 @@ public class Requirement {
 
     public void setDescription(String description) throws IllegalArgumentException {
         if (description == null) {
-            throw new IllegalArgumentException("Description cannot be null.");
+            throw new IllegalDtoValueExcpetion(description ,"Description cannot be null.");
         }
 
         this.description = description;
@@ -59,7 +62,7 @@ public class Requirement {
 
     public void setVariants(Collection<RequirementsVariant> variants) throws IllegalArgumentException {
         if (variants == null) {
-            throw new IllegalArgumentException("Variants cannot be null.");
+            throw new IllegalDtoValueExcpetion(variants,"Variants cannot be null.");
         }
         this.variants = variants;
     }
@@ -77,6 +80,12 @@ public class Requirement {
             throw new IllegalArgumentException("RequirementsAnalysis cannot be null.");
         }
         this.requirementsAnalysis = requirementsAnalysis;
+    }
+
+    @Override
+    public String toString(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
 
