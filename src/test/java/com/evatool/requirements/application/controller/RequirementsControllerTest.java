@@ -32,7 +32,7 @@ public class RequirementsControllerTest {
 
     @Autowired
     private RequirementsVariantsRepository requirementsVariantsRepository;
-
+/*
     @Test
     public void testRequirementController_ThrowException() {
 
@@ -75,4 +75,5 @@ public class RequirementsControllerTest {
         assertThat(deletedRequirement.isEmpty()).isEqualTo(true);
 
     }
+ */
 }

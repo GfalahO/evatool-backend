@@ -18,7 +18,7 @@ public class RequirementMapper {
     @Autowired
     RequirementPointController requirement_grController;
 
-    public List<RequirementDTO> map(List<Requirement> resultList) {
+    public List<RequirementDTO> mapList(List<Requirement> resultList) {
         List<RequirementDTO> requirementDTOList = new ArrayList<>();
         for(Requirement requirement : resultList){
             requirementDTOList.add(map(requirement));
@@ -26,15 +26,14 @@ public class RequirementMapper {
         return requirementDTOList;
     }
 
-    private RequirementDTO map(Requirement requirement) {
+    public RequirementDTO map(Requirement requirement) {
         RequirementDTO requirementDTO = new RequirementDTO();
         requirementDTO.setRequirementTitle(requirement.getTitle());
         requirementDTO.setRootEntityId(requirement.getId());
+        requirementDTO.setProjectID(requirement.getProjectId());
         requirementDTO.setRequirementDescription(requirement.getDescription());
         requirement.getVariants().forEach(variants->{
-            requirementDTO.setVariantsTitle(variants.getTitle());
-            requirementDTO.setVariantsUUID(variants.getId());
-
+            requirementDTO.getVariantsTitle().put(variants.getId(),variants.getTitle());
         });
         Collection<RequirementsImpact> requirementsImpactList = requirement_grController.getRequirement_grByRequirement(requirement.getId());
         requirementsImpactList.forEach(inpacts -> {
@@ -44,26 +43,10 @@ public class RequirementMapper {
             requirementDTO.getDimensions().add(inpacts.getRequirementDimension());
             Collection<RequirementPoint> requirement_grCollection = requirement_grController.getRequirement_grByRequirementList(requirement,inpacts);
             //TODO keine Berechnung sondern nur den Wert
-            requirementDTO.getRequirementImpactPoints().put(inpacts.getId(),calculatePoints(inpacts,requirement_grCollection));
+            RequirementPoint requirementPoint = requirement_grController.getRequirement_grByRequirementList(requirement,inpacts);
+            requirementDTO.getRequirementImpactPoints().put(inpacts.getId(),requirementPoint.getPoints());
         });
 
-
-
         return requirementDTO;
-    }
-
-    private Integer calculatePoints(RequirementsImpact requirementsImpact, Collection<RequirementPoint> requirement_grCollection) {
-        int basicValue = requirementsImpact.getValue();
-        int returnValue = requirementsImpact.getValue();
-
-        for(RequirementPoint requirement_gr :requirement_grCollection){
-            returnValue+=requirement_gr.getPoints();
-        }
-
-        if(basicValue<0 && returnValue>0){
-            return new Integer(0);
-        }
-
-        return new Integer(returnValue);
     }
 }

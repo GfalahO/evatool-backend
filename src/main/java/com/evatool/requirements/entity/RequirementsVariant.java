@@ -1,8 +1,13 @@
 package com.evatool.requirements.entity;
 
+import com.google.gson.Gson;
+import org.springframework.boot.json.GsonJsonParser;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.lang.reflect.Type;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -17,6 +22,13 @@ public class RequirementsVariant {
 
     public RequirementsVariant() {
     }
+
+    public static RequirementsVariant fromJson(String json) {
+
+        return new Gson().fromJson(json, RequirementsVariant.class);
+
+    }
+
 
     public RequirementsVariant(String title, String description) {
         this.title = title;

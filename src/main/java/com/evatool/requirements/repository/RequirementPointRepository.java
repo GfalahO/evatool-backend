@@ -11,11 +11,12 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Repository
-public interface RequirementGRRepository extends JpaRepository<RequirementPoint, UUID> {
+public interface RequirementPointRepository extends JpaRepository<RequirementPoint, UUID> {
 
     public Collection<RequirementPoint> findByRequirementsImpact(RequirementsImpact requirementsImpact);
 
     public Collection<RequirementPoint> findByRequirement(Requirement requirement);
-    public Collection<RequirementPoint> findByRequirementAndRequirementsImpact(Requirement requirement, RequirementsImpact requirementsImpact);
+    public RequirementPoint findByRequirementAndRequirementsImpact(Requirement requirement, RequirementsImpact requirementsImpact);
+
 }
 

@@ -2,8 +2,10 @@ package com.evatool.requirements.controller;
 
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
+import com.evatool.requirements.entity.RequirementsVariant;
 import com.evatool.requirements.events.RequirementEventPublisher;
 import com.evatool.requirements.repository.RequirementRepository;
+import com.evatool.requirements.repository.RequirementsVariantsRepository;
 import com.evatool.requirements.service.RequirementDTOService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @Api(description = "API-endpoint RequirementsController!")
@@ -26,7 +29,10 @@ public class RequirementsController {
 	private RequirementRepository requirementRepository;
 
 	@Autowired
-	private RequirementPointController requirement_grController;
+	private RequirementsVariantsRepository requirementsVariantsRepository;
+
+	@Autowired
+	private RequirementPointController requirementPointController;
 
 	@Autowired
 	private RequirementDTOService dtoService;
@@ -52,9 +58,11 @@ public class RequirementsController {
 			@ApiResponse(code = 200, message = "The entity was found"),
 			@ApiResponse(code = 400, message = "The id was invalid"),
 			@ApiResponse(code = 404, message = "The entity was not found")})
-	public Optional<Requirement> getRequirementById(@PathVariable UUID id) {
+	public RequirementDTO getRequirementById(@PathVariable UUID id) {
 		logger.info("/requirements/[{}]",id);
-		return requirementRepository.findById(id);
+		Optional<Requirement> requirement = requirementRepository.findById(id);
+		if(requirement.isEmpty()) return null;
+		return dtoService.findId(requirement.get());
 	}
 
 	@PostMapping("/requirements")
@@ -63,10 +71,12 @@ public class RequirementsController {
 			@ApiResponse(code = 201, message = "The entity was inserted"),
 			@ApiResponse(code = 400, message = "The entity was invalid"),
 			@ApiResponse(code = 404, message = "The entity was not found")})
-	public Requirement newRequirement(@RequestBody Requirement requirement) {
+	public RequirementDTO newRequirement(@RequestBody RequirementDTO requirementDTO) {
 		logger.info("/requirements");
 		//eventPublisher.publishEvent(new RequirementCreatedEvent(null));
-		return requirementRepository.save(requirement);
+		Requirement requirement = requirementRepository.save(dtoService.create(requirementDTO));
+		requirementPointController.createPoints(requirement,requirementDTO);
+		return getRequirementById(requirement.getId());
 	}
 
 	@PutMapping("/requirements/{id}")
@@ -74,10 +84,27 @@ public class RequirementsController {
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "The entity was deleted"),
 			@ApiResponse(code = 404, message = "The entity was not found")})
-	public Requirement updateRequirement(@RequestBody Requirement requirement) {
+	public RequirementDTO updateRequirement(@RequestBody RequirementDTO requirementDTO) {
 		logger.info("/requirements");
 		//eventPublisher.publishEvent(new RequirementUpdatedEvent(null));
-		return requirementRepository.save(requirement);
+		Optional<Requirement> requirementOptional = requirementRepository.findById(requirementDTO.getRootEntityId());
+		Requirement requirement = requirementOptional.get();
+		requirement.setDescription(requirementDTO.getRequirementDescription());
+		requirement.setTitle(requirementDTO.getRequirementTitle());
+		Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(requirementDTO.getVariantsTitle().keySet());
+		//Remove the Variants which are removed
+		Collection<RequirementsVariant> newCollectin = requirement.getVariants().stream().filter(e-> requirementsVariantCollectionDTO.contains(e)).collect(Collectors.toList());
+		//Add the new Variants
+		requirementsVariantCollectionDTO.stream().forEach(e->{
+			if(!newCollectin.contains(e)){
+				newCollectin.add(e);
+			}
+		});
+		requirement.setVariants(newCollectin);
+		requirementRepository.save(requirement);
+
+		requirementPointController.updatePoints(requirement,requirementDTO);
+		return getRequirementById(requirementDTO.getRootEntityId());
 	}
 
 	@DeleteMapping("/requirements/{id}")
@@ -88,6 +115,9 @@ public class RequirementsController {
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public void deleteRequirement(@PathVariable UUID id) {
 		logger.info("/requirements");
+		Optional<Requirement> requirementOptional = requirementRepository.findById(id);
+		Requirement requirement = requirementOptional.get();
+		requirementPointController.deletePointsForRequirement(requirement);
 		requirementRepository.deleteById(id);
 		//eventPublisher.publishEvent(new RequirementDeletedEvent(null));
 

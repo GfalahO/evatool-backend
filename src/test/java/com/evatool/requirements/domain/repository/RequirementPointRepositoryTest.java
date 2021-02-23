@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RequirementPointRepositoryTest {
 
     @Autowired
-    private RequirementGRRepository requirementGRRepository;
+    private RequirementPointRepository requirementPointRepository;
 
     @Autowired
     private RequirementRepository requirementRepository;
@@ -60,10 +60,10 @@ public class RequirementPointRepositoryTest {
         requirementsImpactsRepository.save(requirementsImpact);
 
         RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpact);
-        requirementGRRepository.save(requirementPoint);
+        requirementPointRepository.save(requirementPoint);
 
         // when
-        RequirementPoint requirementPointFound = requirementGRRepository.findById(requirementPoint.getId()).orElse(null);
+        RequirementPoint requirementPointFound = requirementPointRepository.findById(requirementPoint.getId()).orElse(null);
 
         // then
         assertThat(requirementPointFound.getId()).isEqualTo(requirementPoint.getId());
@@ -97,7 +97,7 @@ public class RequirementPointRepositoryTest {
         RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpact);
 
         // when
-        requirementGRRepository.save(requirementPoint);
+        requirementPointRepository.save(requirementPoint);
 
         // then
         assertThat(requirementPoint.getId()).isNotNull();
@@ -130,7 +130,7 @@ public class RequirementPointRepositoryTest {
         RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpact);
 
         // when
-        requirementGRRepository.save(requirementPoint);
+        requirementPointRepository.save(requirementPoint);
 
         // then
         UUID.fromString(requirementPoint.getId().toString());
@@ -161,11 +161,11 @@ public class RequirementPointRepositoryTest {
         requirementsImpactsRepository.save(requirementsImpact);
         // given
         RequirementPoint requirementPoint = getRequirementGR(requirement, requirementsImpact);
-        requirementGRRepository.save(requirementPoint);
+        requirementPointRepository.save(requirementPoint);
 
         // when
-        requirementGRRepository.delete(requirementPoint);
-        RequirementPoint requirementPointFound = requirementGRRepository.findById(requirementPoint.getId()).orElse(null);
+        requirementPointRepository.delete(requirementPoint);
+        RequirementPoint requirementPointFound = requirementPointRepository.findById(requirementPoint.getId()).orElse(null);
 
         // then
         assertThat(requirementPointFound).isNull();
