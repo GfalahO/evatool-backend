@@ -14,7 +14,7 @@ public class Requirement {
     private UUID id = UUID.randomUUID();
     private String title;
     private String description;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<RequirementsVariant> variants = new ArrayList<>();
 
     @ManyToOne
