@@ -16,20 +16,17 @@ public class RequirementsImpact {
     private String description;
     private int value;
 
-    private Dimension dimension;
+    @ManyToOne
+    private RequirementDimension requirementDimension;
 
     public RequirementsImpact() {
     }
 
-    public RequirementsImpact(String title, String description, int value, Dimension dimension) {
+    public RequirementsImpact(String title, String description, int value, RequirementDimension requirementDimension) {
         this.title = title;
         this.description = description;
         this.value = value;
-        this.dimension=dimension;
-    }
-
-    public enum Dimension{
-        SAFETY,PRIVAT
+        this.requirementDimension = requirementDimension;
     }
 
     public String getTitle() {
@@ -65,12 +62,15 @@ public class RequirementsImpact {
         this.value = value;
     }
 
-    public Dimension getDimension() {
-        return dimension;
+    public RequirementDimension getRequirementDimension() {
+        return requirementDimension;
     }
 
-    public void setDimension(Dimension dimension) {
-        this.dimension = dimension;
+    public void setRequirementDimension(RequirementDimension requirementDimension) {
+        if (requirementDimension == null) {
+            throw new IllegalArgumentException("RequirementDimension cannot be null.");
+        }
+        this.requirementDimension = requirementDimension;
     }
 
     public UUID getId() {

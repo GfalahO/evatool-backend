@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
-import static com.evatool.requirements.common.TestDataGenerator.getRequirementsVariants;
+import static com.evatool.requirements.common.TestDataGenerator.getRequirementsVariant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -21,7 +21,7 @@ public class VariantsRepositoryTest {
     @Test
     public void testFindById_InsertedVariants_ReturnImpact() {
         // given
-        RequirementsVariant requirementsVariant = getRequirementsVariants();
+        RequirementsVariant requirementsVariant = getRequirementsVariant();
         requirementsVariantsRepository.save(requirementsVariant);
 
         // when
@@ -34,7 +34,7 @@ public class VariantsRepositoryTest {
     @Test
     public void testSave_InsertedVariants_IdIsNotNull() {
         // given
-        RequirementsVariant requirementsVariant = getRequirementsVariants();
+        RequirementsVariant requirementsVariant = getRequirementsVariant();
 
         // when
         requirementsVariantsRepository.save(requirementsVariant);
@@ -46,7 +46,7 @@ public class VariantsRepositoryTest {
     @Test
     public void testSave_InsertedVariants_IdIsUuid() {
         // given
-        RequirementsVariant requirementsVariant = getRequirementsVariants();
+        RequirementsVariant requirementsVariant = getRequirementsVariant();
 
         // when
         requirementsVariantsRepository.save(requirementsVariant);
@@ -58,7 +58,7 @@ public class VariantsRepositoryTest {
     @Test
     public void testDelete_DeletedVariants_ReturnNull() {
         // given
-        RequirementsVariant requirementsVariant = getRequirementsVariants();
+        RequirementsVariant requirementsVariant = getRequirementsVariant();
         requirementsVariantsRepository.save(requirementsVariant);
 
         // when

@@ -18,12 +18,17 @@ public class Requirement {
     @ManyToMany
     private Collection<RequirementsVariant> variants = new ArrayList<>();
 
+    @ManyToOne
+    private RequirementsAnalysis requirementsAnalysis;
+
     public Requirement() {
     }
 
-    public Requirement(String title, String description) {
+    public Requirement(String title, String description, RequirementsAnalysis requirementsAnalysis,Collection<RequirementsVariant> variants) {
         this.title = title;
         this.description = description;
+        this.requirementsAnalysis = requirementsAnalysis;
+        this.variants = variants;
     }
 
     public String getTitle() {
@@ -73,6 +78,17 @@ public class Requirement {
             throw new IllegalArgumentException("ProjectId cannot be null.");
         }
         this.projectId = projectId;
+    }
+
+    public RequirementsAnalysis getRequirementsAnalysis() {
+        return requirementsAnalysis;
+    }
+
+    public void setRequirementsAnalysis(RequirementsAnalysis requirementsAnalysis) {
+        if (requirementsAnalysis == null) {
+            throw new IllegalArgumentException("RequirementsAnalysis cannot be null.");
+        }
+        this.requirementsAnalysis = requirementsAnalysis;
     }
 }
 

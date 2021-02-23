@@ -1,6 +1,8 @@
 package com.evatool.requirements.domain.repository;
 
+import com.evatool.requirements.entity.RequirementDimension;
 import com.evatool.requirements.entity.RequirementsImpact;
+import com.evatool.requirements.repository.RequirementDimensionRepository;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.UUID;
 
+import static com.evatool.requirements.common.TestDataGenerator.getRequirementDimension;
 import static com.evatool.requirements.common.TestDataGenerator.getRequirementsImpacts;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,11 +20,17 @@ public class RequirementsImpactRepositoryTest {
     @Autowired
     private RequirementsImpactsRepository requirementsImpactsRepository;
 
+    @Autowired
+    private RequirementDimensionRepository requirementDimensionRepository;
 
     @Test
     public void testFindById_InsertedImpact_ReturnImpact() {
+
         // given
-        RequirementsImpact impact = getRequirementsImpacts();
+        RequirementDimension requirementDimension = getRequirementDimension();
+        requirementDimensionRepository.save(requirementDimension);
+
+        RequirementsImpact impact = getRequirementsImpacts(requirementDimension);
         requirementsImpactsRepository.save(impact);
 
         // when
@@ -33,8 +42,11 @@ public class RequirementsImpactRepositoryTest {
 
     @Test
     public void testSave_InsertedImpact_IdIsNotNull() {
+
         // given
-        RequirementsImpact requirementsImpact = getRequirementsImpacts();
+        RequirementDimension requirementDimension = getRequirementDimension();
+        requirementDimensionRepository.save(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
 
         // when
         requirementsImpactsRepository.save(requirementsImpact);
@@ -45,8 +57,11 @@ public class RequirementsImpactRepositoryTest {
 
     @Test
     public void testSave_InsertedImpact_IdIsUuid() {
+
         // given
-        RequirementsImpact requirementsImpact = getRequirementsImpacts();
+        RequirementDimension requirementDimension = getRequirementDimension();
+        requirementDimensionRepository.save(requirementDimension);
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
 
         // when
         requirementsImpactsRepository.save(requirementsImpact);
@@ -57,8 +72,12 @@ public class RequirementsImpactRepositoryTest {
 
     @Test
     public void testDelete_DeletedImpact_ReturnNull() {
+
         // given
-        RequirementsImpact requirementsImpact = getRequirementsImpacts();
+        RequirementDimension requirementDimension = getRequirementDimension();
+        requirementDimensionRepository.save(requirementDimension);
+
+        RequirementsImpact requirementsImpact = getRequirementsImpacts(requirementDimension);
         requirementsImpactsRepository.save(requirementsImpact);
 
         // when
