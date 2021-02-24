@@ -43,7 +43,7 @@ public class SwaggerConfig {
     private ApiInfo getAPIMetaData() {
         ApiInfo apiMetadataInfo = new ApiInfo("EVA-tool", "The backend of the Eva-tool","1.0",
                 "",
-                new Contact("Stefan bente", "https://archi-lab.io/","stefan.bente@th-koeln.de"),
+                new Contact("Falah Obaidi,...", "https://archi-lab.io/","stefan.bente@th-koeln.de"),
                 "https://archi-lab.io/", "https://archi-lab.io/");
         return apiMetadataInfo;
     }
