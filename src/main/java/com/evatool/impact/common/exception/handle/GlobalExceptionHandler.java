@@ -1,5 +1,6 @@
 package com.evatool.impact.common.exception.handle;
 
+import com.evatool.impact.common.exception.DataConcurrencyException;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -37,6 +38,11 @@ public class GlobalExceptionHandler {
     // This Exception should not be handled here.
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorMessage> handleDataIntegrityViolationException(DataIntegrityViolationException exception, WebRequest webRequest) {
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DataConcurrencyException.class)
+    public ResponseEntity<ErrorMessage> handleDataConcurrencyException(DataConcurrencyException exception, WebRequest webRequest) {
         return createErrorResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
     }
 
