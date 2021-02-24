@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<ErrorMessage> createErrorResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
-        logger.info("{} handled. Returning HttpStatus {}", exception.getClass().getSimpleName(), httpStatus);
+        logger.warn("{} handled. Returning HttpStatus {}. Message: {}", exception.getClass().getSimpleName(), httpStatus, exception.getMessage());
         var errorMessage = new ErrorMessage(exception, getUri(webRequest), httpStatus);
         return new ResponseEntity<>(errorMessage, httpStatus);
     }
