@@ -1,6 +1,6 @@
 package com.evatool.impact.common.exception.handle;
 
-import com.evatool.impact.common.exception.DataConcurrencyException;
+import com.evatool.impact.common.exception.IllegalTransitiveUpdateException;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -41,8 +41,8 @@ public class GlobalExceptionHandler {
         return createErrorResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(DataConcurrencyException.class)
-    public ResponseEntity<ErrorMessage> handleDataConcurrencyException(DataConcurrencyException exception, WebRequest webRequest) {
+    @ExceptionHandler(IllegalTransitiveUpdateException.class)
+    public ResponseEntity<ErrorMessage> handleDataConcurrencyException(IllegalTransitiveUpdateException exception, WebRequest webRequest) {
         return createErrorResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
     }
 

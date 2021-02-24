@@ -136,6 +136,11 @@ class ImpactServiceImplTest {
             // then
             assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> impactService.createImpact(impactDto));
         }
+
+        @Nested
+        class ChildEntity {
+
+        }
     }
 
     @Nested
@@ -183,8 +188,6 @@ class ImpactServiceImplTest {
         @Nested
         class ChildEntity {
 
-            // TODO
-
         }
     }
 
@@ -221,7 +224,7 @@ class ImpactServiceImplTest {
         class ChildEntity {
 
             @Test
-            void testDeleteChildDimension_DeleteChildEntity_ThrowDataIntegrityViolationException() {
+            void testDeleteChildEntity_DeleteChildDimension_ThrowDataIntegrityViolationException() {
                 // given
                 var impact = saveFullDummyImpact();
 
@@ -233,7 +236,7 @@ class ImpactServiceImplTest {
             }
 
             @Test
-            void testDeleteChildStakeholder_DeleteChildEntity_ThrowDataIntegrityViolationException() {
+            void testDeleteChildEntity_DeleteChildStakeholder_ThrowDataIntegrityViolationException() {
                 // given
                 var impact = saveFullDummyImpact();
 

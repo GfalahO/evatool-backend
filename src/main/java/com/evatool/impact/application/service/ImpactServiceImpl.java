@@ -3,7 +3,7 @@ package com.evatool.impact.application.service;
 import com.evatool.analysis.model.Stakeholder;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
-import com.evatool.impact.common.exception.DataConcurrencyException;
+import com.evatool.impact.common.exception.IllegalTransitiveUpdateException;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
@@ -107,15 +107,15 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     private void findImpactChildren(ImpactDto impactDto) {
-        var concurrencyMessage = "The child entity '%s' of '%s' was changed by another user or transitively changed in this call, which is not allowed.";
+        var concurrencyMessage = "The child entity '%s' of '%s' cannot be changed transitively.";
         var childStakeholder = this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
         if (!childStakeholder.equals(impactDto.getStakeholder())) {
-            throw new DataConcurrencyException(String.format(concurrencyMessage, Stakeholder.class.getSimpleName(), Impact.class.getSimpleName()));
+            throw new IllegalTransitiveUpdateException(String.format(concurrencyMessage, Stakeholder.class.getSimpleName(), Impact.class.getSimpleName()));
         }
 
         var childDimension = this.dimensionService.findDimensionById(impactDto.getDimension().getId());
         if (!childDimension.equals(impactDto.getDimension())) {
-            throw new DataConcurrencyException(String.format(concurrencyMessage, Dimension.class.getSimpleName(), Impact.class.getSimpleName()));
+            throw new IllegalTransitiveUpdateException(String.format(concurrencyMessage, Dimension.class.getSimpleName(), Impact.class.getSimpleName()));
         }
     }
 }
