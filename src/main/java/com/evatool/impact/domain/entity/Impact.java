@@ -105,13 +105,6 @@ public class Impact extends SuperEntity {
     }
 }
 
-// TODO [hbuhl & ztaika] Relation constraints (2 child entities)
-//  Throw error or allow setting relation to null? (if allow -> change and add tests [repo + service + controller])
-//  How to deal with deleted stakeholder event in Impact?
-//  Cascade delete when deleting child entity (stakeholder [delete event!] and dimension)
-//  Remove Conflict HttpStatus return and just cascade delete
-//  Test update/delete impact child entity (Dimension + Stakeholder) [Service + Controller]
-
 // TODO [tzaika] Use new wireframe in impact domain model wiki
 // TODO [tzaika] Finish impact domain model decision
 // TODO [tzaika] h2 console on remote server

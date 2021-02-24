@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
         return createResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class) // TODO This has to be removed
+    @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorMessage> handleDataIntegrityViolationException(DataIntegrityViolationException exception, WebRequest webRequest) {
         return createResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
     }

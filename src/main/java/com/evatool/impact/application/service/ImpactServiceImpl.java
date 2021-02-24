@@ -72,7 +72,7 @@ public class ImpactServiceImpl implements ImpactService {
         if (impactDto.getId() != null) {
             throw new EntityIdMustBeNullException();
         }
-        this.validateImpactRelations(impactDto);
+        this.checkIfChildEntitiesExist(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactCreatedEventPublisher.onImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -82,7 +82,7 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto updateImpact(ImpactDto impactDto) {
         logger.info("Update Impact");
         this.findImpactById(impactDto.getId());
-        this.validateImpactRelations(impactDto);
+        this.checkIfChildEntitiesExist(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactUpdatedEventPublisher.onImpactUpdated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -105,7 +105,7 @@ public class ImpactServiceImpl implements ImpactService {
 
     // TODO Set to retrieved value? What if front end changes DimensionDto or ImpactStakeholderDto values?
     //  Only the id of the child entities should matter at this point
-    private void validateImpactRelations(ImpactDto impactDto) {
+    private void checkIfChildEntitiesExist(ImpactDto impactDto) {
         this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
         this.dimensionService.findDimensionById(impactDto.getDimension().getId());
     }

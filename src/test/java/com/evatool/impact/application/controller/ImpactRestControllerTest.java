@@ -274,6 +274,26 @@ public class ImpactRestControllerTest {
         @Nested
         class ChildEntity {
 
+            @Test
+            void testUpdateChildEntity_UpdateExistingDimension_() {
+
+            }
+
+            @Test
+            void testUpdateChildEntity_UpdateNonExistingDimension_() {
+
+            }
+
+            @Test
+            void testUpdateChildEntity_UpdateExistingStakeholder_() {
+
+            }
+
+            @Test
+            void testUpdateChildEntity_UpdateNonExistingStakeholder_() {
+
+            }
+
         }
     }
 
