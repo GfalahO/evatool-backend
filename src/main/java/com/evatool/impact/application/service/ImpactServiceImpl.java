@@ -1,13 +1,10 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.analysis.model.Stakeholder;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
-import com.evatool.impact.common.exception.IllegalTransitiveUpdateException;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
-import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.event.impact.ImpactCreatedEventPublisher;
 import com.evatool.impact.domain.event.impact.ImpactDeletedEventPublisher;
@@ -51,7 +48,7 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto findImpactById(UUID id) {
         logger.info("Get Impact");
         if (id == null) {
-            throw new EntityIdRequiredException();
+            throw new EntityIdRequiredException(Impact.class.getSimpleName());
         }
         var impact = impactRepository.findById(id);
         if (impact.isEmpty()) {
@@ -73,7 +70,7 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto createImpact(ImpactDto impactDto) {
         logger.info("Create Impact");
         if (impactDto.getId() != null) {
-            throw new EntityIdMustBeNullException();
+            throw new EntityIdMustBeNullException(Impact.class.getSimpleName());
         }
         this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
@@ -107,15 +104,7 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     private void findImpactChildren(ImpactDto impactDto) {
-        var concurrencyMessage = "The child entity '%s' of '%s' cannot be changed transitively.";
-        var childStakeholder = this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
-        if (!childStakeholder.equals(impactDto.getStakeholder())) {
-            throw new IllegalTransitiveUpdateException(String.format(concurrencyMessage, Stakeholder.class.getSimpleName(), Impact.class.getSimpleName()));
-        }
-
-        var childDimension = this.dimensionService.findDimensionById(impactDto.getDimension().getId());
-        if (!childDimension.equals(impactDto.getDimension())) {
-            throw new IllegalTransitiveUpdateException(String.format(concurrencyMessage, Dimension.class.getSimpleName(), Impact.class.getSimpleName()));
-        }
+        this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
+        this.dimensionService.findDimensionById(impactDto.getDimension().getId());
     }
 }

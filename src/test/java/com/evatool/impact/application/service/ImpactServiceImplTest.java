@@ -139,6 +139,7 @@ class ImpactServiceImplTest {
 
         @Nested
         class ChildEntity {
+            // TODO [Service] Transitive (insert) (copy test cases from Controller)
 
         }
     }
@@ -187,6 +188,7 @@ class ImpactServiceImplTest {
 
         @Nested
         class ChildEntity {
+            // TODO [Service] Transitive (update) (copy test cases from Controller)
 
         }
     }

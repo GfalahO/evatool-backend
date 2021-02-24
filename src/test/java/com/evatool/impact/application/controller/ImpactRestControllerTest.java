@@ -1,6 +1,5 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.analysis.dto.StakeholderDTO;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.ImpactStakeholderDto;
@@ -8,8 +7,6 @@ import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
-import com.evatool.impact.domain.entity.Dimension;
-import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.*;
@@ -22,6 +19,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.*;
@@ -198,9 +196,79 @@ public class ImpactRestControllerTest {
 
         @Nested
         class ChildEntity {
-            // TODO [Controller] Transitive (insert)
-            // TODO [Service] Transitive (insert/update)
 
+            private ImpactDto savePartialImpactDto_UnsavedDimension() {
+                var impactDto = createDummyImpactDto();
+                impactDto.setStakeholder(ImpactStakeholderDtoMapper.toDto(stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder()))));
+                return impactDto;
+            }
+
+            private ImpactDto savePartialImpactDto_UnsavedStakeholder() {
+                var impactDto = createDummyImpactDto();
+                impactDto.setDimension(DimensionDtoMapper.toDto(dimensionRepository.save(DimensionDtoMapper.fromDto(impactDto.getDimension()))));
+                return impactDto;
+            }
+
+            @Test
+            void testInsertImpact_InsertChildDimensionWithNullId_ReturnHttpStatusUnprocessableEntity() {
+                // given
+                var impactDto = savePartialImpactDto_UnsavedDimension();
+
+                // when
+                var httpEntity = new HttpEntity<>(impactDto);
+                var responseEntity = testRestTemplate.postForEntity(
+                        IMPACTS, httpEntity, ImpactDto.class);
+
+                // then
+                assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+            }
+
+            @Test
+            void testInsertImpact_InsertChildDimensionWithNonExistingId_ReturnHttpStatusNotFound() {
+                // given
+                var impactDto = savePartialImpactDto_UnsavedDimension();
+                impactDto.getDimension().setId(UUID.randomUUID());
+
+                // when
+                var httpEntity = new HttpEntity<>(impactDto);
+                var responseEntity = testRestTemplate.postForEntity(
+                        IMPACTS, httpEntity, ImpactDto.class);
+
+                // then
+                assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            }
+
+// TODO TransitiveUpdate when inserting
+            //saveDummyImpactDtoChildren
+
+            @Test
+            void testInsertImpact_InsertChildStakeholderWithNullId_ReturnHttpStatusUnprocessableEntity() {
+                // given
+                var impactDto = savePartialImpactDto_UnsavedStakeholder();
+
+                // when
+                var httpEntity = new HttpEntity<>(impactDto);
+                var responseEntity = testRestTemplate.postForEntity(
+                        IMPACTS, httpEntity, ImpactDto.class);
+
+                // then
+                assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+            }
+
+            @Test
+            void testInsertImpact_InsertChildStakeholderWithNonExistingId_ReturnHttpStatusNotFound() {
+                // given
+                var impactDto = savePartialImpactDto_UnsavedStakeholder();
+                impactDto.getStakeholder().setId(UUID.randomUUID());
+
+                // when
+                var httpEntity = new HttpEntity<>(impactDto);
+                var responseEntity = testRestTemplate.postForEntity(
+                        IMPACTS, httpEntity, ImpactDto.class);
+
+                // then
+                assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            }
         }
     }
 
@@ -365,12 +433,14 @@ public class ImpactRestControllerTest {
                     var impactDto = saveFullDummyImpactDto();
 
                     // when
-                    impactDto.getDimension().setName("Illegal Transitive update.");
+                    var newDimensionName = "Illegal Transitive update.";
+                    impactDto.getDimension().setName(newDimensionName);
                     var putEntity = new HttpEntity<>(impactDto);
                     var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
 
                     // then
-                    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+                    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+                    assertThat(Objects.requireNonNull(response.getBody()).getDimension().getName()).isNotEqualTo(newDimensionName);
                 }
 
                 @Test
@@ -380,13 +450,15 @@ public class ImpactRestControllerTest {
 
                     // when
                     var dimension = DimensionDtoMapper.fromDto(impactDto.getDimension());
-                    dimension.setName("Other user changed this.");
+                    var newDimensionName = "Other user changed this.";
+                    dimension.setName(newDimensionName);
                     dimensionRepository.save(dimension);
                     var putEntity = new HttpEntity<>(impactDto);
                     var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
 
                     // then
-                    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+                    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+                    assertThat(Objects.requireNonNull(response.getBody()).getDimension().getName()).isEqualTo(newDimensionName);
                 }
             }
 
@@ -457,17 +529,19 @@ public class ImpactRestControllerTest {
                 }
 
                 @Test
-                void testUpdateChildEntity_UpdateExistingStakeholderValues_ReturnHttpStatusConflict() {
+                void testUpdateChildEntity_UpdateExistingStakeholderValues_NotTransitivelyUpdated() {
                     // given
                     var impactDto = saveFullDummyImpactDto();
 
                     // when
-                    impactDto.getStakeholder().setName("Illegal Transitive update.");
+                    var newStakeholderName = "Transitive update.";
+                    impactDto.getStakeholder().setName(newStakeholderName);
                     var putEntity = new HttpEntity<>(impactDto);
                     var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
 
                     // then
-                    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+                    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+                    assertThat(Objects.requireNonNull(response.getBody()).getStakeholder().getName()).isNotEqualTo(newStakeholderName);
                 }
 
                 @Test
@@ -477,13 +551,15 @@ public class ImpactRestControllerTest {
 
                     // when
                     var stakeholder = ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder());
-                    stakeholder.setName("Other user changed this.");
+                    var newStakeholderName = "Other user changed this.";
+                    stakeholder.setName(newStakeholderName);
                     stakeholderRepository.save(stakeholder);
                     var putEntity = new HttpEntity<>(impactDto);
                     var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
 
                     // then
-                    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+                    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+                    assertThat(Objects.requireNonNull(response.getBody()).getStakeholder().getName()).isEqualTo(newStakeholderName);
                 }
             }
         }
@@ -535,6 +611,25 @@ public class ImpactRestControllerTest {
 
                 // then
                 assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+            }
+
+            @Test
+            void testChildEntity_ImpactDeleted_ChildrenNotDeleted() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
+                var dimension = DimensionDtoMapper.fromDto(impactDto.getDimension());
+                var stakeholder = ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder());
+
+                // when
+                var response = testRestTemplate.exchange(
+                        IMPACTS + "/" + impactDto.getId(), HttpMethod.DELETE, null, Void.class);
+                var impacts = impactService.getAllImpacts();
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+                assertThat(impacts).isEmpty();
+                assertThat(dimensionRepository.findById(dimension.getId())).isPresent();
+                assertThat(stakeholderRepository.findById(stakeholder.getId())).isPresent();
             }
         }
     }
