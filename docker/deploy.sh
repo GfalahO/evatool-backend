@@ -15,3 +15,13 @@ echo ------------------------------
 echo RUNNING CONTAINERS
 docker ps
 echo ------------------------------
+echo ALL DOCKER IMAGES
+docker images
+echo ------------------------------
+echo REMOVE DANGLING IMAGES
+docker images --no-trunc -q -f dangling=true | xargs -r docker rmi
+echo ------------------------------
+echo ALL DOCKER IMAGES
+docker images
+echo ------------------------------
+
