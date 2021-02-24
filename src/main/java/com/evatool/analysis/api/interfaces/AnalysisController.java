@@ -13,6 +13,7 @@ import java.util.UUID;
 @Api(description = "API-endpoint for a analysis")
 public interface AnalysisController {
 
+    // das ist ein kommentar
     @GetMapping("/analysis")
     @ApiOperation(value = "This method returns a list of all analysis")
     public List<AnalysisDTO> getAnalysisList();
