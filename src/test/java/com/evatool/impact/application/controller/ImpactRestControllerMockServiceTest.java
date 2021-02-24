@@ -122,7 +122,7 @@ public class ImpactRestControllerMockServiceTest {
     class GetAll {
 
         @ParameterizedTest
-        @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+        @ValueSource(ints = {0, 1, 2, 3})
         void testGetAllImpacts_ExistingImpacts_ReturnImpacts(int value) throws Exception {
             var impactDtoList = new ArrayList<ImpactDto>();
             for (int i = 0; i < value; i++) {

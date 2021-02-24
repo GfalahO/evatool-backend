@@ -33,13 +33,6 @@ public class GlobalExceptionHandler {
         return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    // This is just a temporary solution.
-    // This Exception should not be handled here.
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErrorMessage> handleDataIntegrityViolationException(DataIntegrityViolationException exception, WebRequest webRequest) {
-        return createErrorResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
-    }
-
     private ResponseEntity<ErrorMessage> createErrorResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
         logger.warn("{} handled. Returning HttpStatus {}. Message: {}", exception.getClass().getSimpleName(), httpStatus, exception.getMessage());
         var errorMessage = new ErrorMessage(exception, getUri(webRequest), httpStatus);

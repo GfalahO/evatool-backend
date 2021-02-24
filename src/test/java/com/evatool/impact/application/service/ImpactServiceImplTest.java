@@ -1,5 +1,6 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
@@ -140,12 +141,6 @@ class ImpactServiceImplTest {
             // then
             assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> impactService.createImpact(impactDto));
         }
-
-        @Nested
-        class ChildEntity {
-            // TODO [Service] Transitive (insert) (copy test cases from Controller)
-
-        }
     }
 
     @Nested
@@ -189,12 +184,6 @@ class ImpactServiceImplTest {
             // then
             assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> impactService.updateImpact(impactDto));
         }
-
-        @Nested
-        class ChildEntity {
-            // TODO [Service] Transitive (update) (copy test cases from Controller)
-
-        }
     }
 
     @Nested
@@ -224,50 +213,6 @@ class ImpactServiceImplTest {
             // then
             var id = impact.getId();
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.deleteImpactById(id));
-        }
-
-        @Nested
-        class ChildEntity {
-
-            @Test
-            void testDeleteChildEntity_DeleteChildDimension_ThrowDataIntegrityViolationException() {
-                // given
-                var impact = saveFullDummyImpact();
-
-                // when
-                var dimension = impact.getDimension();
-
-                // then
-                assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> dimensionRepository.delete(dimension));
-            }
-
-            @Test
-            void testDeleteChildEntity_DeleteChildStakeholder_ThrowDataIntegrityViolationException() {
-                // given
-                var impact = saveFullDummyImpact();
-
-                // when
-                var stakeholder = impact.getStakeholder();
-
-                // then
-                assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> stakeholderRepository.delete(stakeholder));
-            }
-
-            @Test
-            void testChildEntity_ImpactDeleted_ChildrenNotDeleted() {
-                // given
-                var impact = saveFullDummyImpact();
-                var dimension = impact.getDimension();
-                var stakeholder = impact.getStakeholder();
-
-                // when
-                impactService.deleteImpactById(impact.getId());
-
-                // then
-                assertThat(impactRepository.findById(impact.getId())).isNotPresent();
-                assertThat(dimensionRepository.findById(dimension.getId())).isPresent();
-                assertThat(stakeholderRepository.findById(stakeholder.getId())).isPresent();
-            }
         }
     }
 

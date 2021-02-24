@@ -10,8 +10,4 @@ import java.util.UUID;
 @Repository
 public interface ImpactRepository extends CrudRepository<Impact, UUID> {
 
-    List<Impact> findImpactByDimensionId(UUID dimensionId);
-
-    List<Impact> findImpactByStakeholderId(UUID impactStakeholderId);
-
 }
