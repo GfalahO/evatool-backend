@@ -7,9 +7,7 @@ import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,7 @@ import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ImpactRestControllerTest {
 
     @Autowired
@@ -43,8 +42,11 @@ public class ImpactRestControllerTest {
     private ImpactStakeholderRepository stakeholderRepository;
 
     @BeforeEach
-    public void clearDatabase() {
+    @AfterAll
+    private void clearDatabase() {
         impactService.deleteImpacts();
+        stakeholderRepository.deleteAll();
+        dimensionRepository.deleteAll();
     }
 
     private ImpactDto saveFullDummyImpactDto() {
