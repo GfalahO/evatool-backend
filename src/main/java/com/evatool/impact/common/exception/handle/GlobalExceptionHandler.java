@@ -20,25 +20,27 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleEntityNotFoundException(EntityNotFoundException exception, WebRequest webRequest) {
-        return createResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(EntityIdRequiredException.class)
     public ResponseEntity<ErrorMessage> handleEntityIdRequiredException(EntityIdRequiredException exception, WebRequest webRequest) {
-        return createResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(EntityIdMustBeNullException.class)
     public ResponseEntity<ErrorMessage> handleEntityIdMustBeNullException(EntityIdMustBeNullException exception, WebRequest webRequest) {
-        return createResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
+    // This is just a temporary solution.
+    // This Exception should not be handled here.
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorMessage> handleDataIntegrityViolationException(DataIntegrityViolationException exception, WebRequest webRequest) {
-        return createResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
+        return createErrorResponseEntity(exception, webRequest, HttpStatus.CONFLICT);
     }
 
-    private ResponseEntity<ErrorMessage> createResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
+    private ResponseEntity<ErrorMessage> createErrorResponseEntity(Exception exception, WebRequest webRequest, HttpStatus httpStatus) {
         logger.info("{} handled. Returning HttpStatus {}", exception.getClass().getSimpleName(), httpStatus);
         var errorMessage = new ErrorMessage(exception, getUri(webRequest), httpStatus);
         return new ResponseEntity<>(errorMessage, httpStatus);
