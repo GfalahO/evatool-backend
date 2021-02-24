@@ -8,9 +8,11 @@ import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.InvalidEventPayloadException;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.evatool.impact.domain.event.stakeholder.ImpactStakeholderCreatedEventListener;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementsImpact;
+import com.evatool.requirements.events.listener.RequirementEventListener;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +34,9 @@ public class RequirementImpactCreateEventListener {
 
     @Autowired
     private RequirementsImpactsRepository requirementsImpactsRepository;
+
+    @Autowired
+    private RequirementEventListener requirementEventListener;
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
