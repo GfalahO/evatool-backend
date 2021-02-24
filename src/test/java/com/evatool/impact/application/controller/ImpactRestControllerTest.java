@@ -1,10 +1,15 @@
 package com.evatool.impact.application.controller;
 
+import com.evatool.analysis.dto.StakeholderDTO;
+import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactDto;
+import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.application.service.ImpactService;
+import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.*;
@@ -274,26 +279,137 @@ public class ImpactRestControllerTest {
         @Nested
         class ChildEntity {
 
-            @Test
-            void testUpdateChildEntity_UpdateExistingDimension_() {
+            private DimensionDto saveNewDimension() {
+                return DimensionDtoMapper.toDto(dimensionRepository.save(createDummyDimension()));
+            }
 
+            private ImpactStakeholderDto saveNewStakeholder() {
+                return ImpactStakeholderDtoMapper.toDto(stakeholderRepository.save(createDummyStakeholder()));
             }
 
             @Test
-            void testUpdateChildEntity_UpdateNonExistingDimension_() {
+            void testUpdateChildEntity_UpdateExistingDimension_ReturnHttpStatusOK() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
 
+                // when
+                var newDimension = saveNewDimension();
+                impactDto.setDimension(newDimension);
+                var putEntity = new HttpEntity<>(impactDto);
+                var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+                assertThat(response.getBody()).isEqualTo(impactDto);
             }
 
             @Test
-            void testUpdateChildEntity_UpdateExistingStakeholder_() {
+            void testUpdateChildEntity_UpdateNonExistingDimension_ReturnHttpStatusNotFound() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
 
+                // when
+                var newDimension = createDummyDimensionDto();
+                newDimension.setId(UUID.randomUUID());
+                impactDto.setDimension(newDimension);
+                var putEntity = new HttpEntity<>(impactDto);
+                var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
             }
 
             @Test
-            void testUpdateChildEntity_UpdateNonExistingStakeholder_() {
+            void testUpdateChildEntity_UpdateExistingDimensionValues_ReturnHttpStatusConflict() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
 
+                // when
+                impactDto.getDimension().setName("Illegal Transitive update.");
+                var putEntity = new HttpEntity<>(impactDto);
+                var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
             }
 
+            @Test
+            void testUpdateChildEntity_UpdateChangedDimension_ReturnHttpStatusConflict() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
+
+                // when
+                var dimension = DimensionDtoMapper.fromDto(impactDto.getDimension());
+                dimension.setName("Other user changed this.");
+                dimensionRepository.save(dimension);
+                var putEntity = new HttpEntity<>(impactDto);
+                var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+            }
+
+            @Test
+            void testUpdateChildEntity_UpdateExistingStakeholder_ReturnHttpStatusOK() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
+
+                // when
+                var newStakeholder = saveNewStakeholder();
+                impactDto.setStakeholder(newStakeholder);
+                var putEntity = new HttpEntity<>(impactDto);
+                var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+                assertThat(response.getBody()).isEqualTo(impactDto);
+            }
+
+            @Test
+            void testUpdateChildEntity_UpdateNonExistingStakeholder_ReturnHttpStatusNotFound() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
+
+                // when
+                var newStakeholder = createDummyStakeholderDto();
+                newStakeholder.setId(UUID.randomUUID());
+                impactDto.setStakeholder(newStakeholder);
+                var putEntity = new HttpEntity<>(impactDto);
+                var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            }
+
+            @Test
+            void testUpdateChildEntity_UpdateExistingStakeholderValues_ReturnHttpStatusConflict() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
+
+                // when
+                impactDto.getStakeholder().setName("Illegal Transitive update.");
+                var putEntity = new HttpEntity<>(impactDto);
+                var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+            }
+
+            @Test
+            void testUpdateChildEntity_UpdateChangedStakeholder_ReturnHttpStatusConflict() {
+                // given
+                var impactDto = saveFullDummyImpactDto();
+
+                // when
+                var stakeholder = ImpactStakeholderDtoMapper.fromDto(impactDto.getStakeholder());
+                stakeholder.setName("Other user changed this.");
+                stakeholderRepository.save(stakeholder);
+                var putEntity = new HttpEntity<>(impactDto);
+                var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+
+                // then
+                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+            }
         }
     }
 

@@ -1,10 +1,13 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.analysis.model.Stakeholder;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
+import com.evatool.impact.common.exception.DataConcurrencyException;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
+import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.event.impact.ImpactCreatedEventPublisher;
 import com.evatool.impact.domain.event.impact.ImpactDeletedEventPublisher;
@@ -72,7 +75,7 @@ public class ImpactServiceImpl implements ImpactService {
         if (impactDto.getId() != null) {
             throw new EntityIdMustBeNullException();
         }
-        this.checkIfChildEntitiesExist(impactDto);
+        this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactCreatedEventPublisher.onImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -82,7 +85,7 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto updateImpact(ImpactDto impactDto) {
         logger.info("Update Impact");
         this.findImpactById(impactDto.getId());
-        this.checkIfChildEntitiesExist(impactDto);
+        this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactUpdatedEventPublisher.onImpactUpdated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -103,10 +106,16 @@ public class ImpactServiceImpl implements ImpactService {
         impactRepository.deleteAll();
     }
 
-    // TODO Set to retrieved value? What if front end changes DimensionDto or ImpactStakeholderDto values?
-    //  Only the id of the child entities should matter at this point
-    private void checkIfChildEntitiesExist(ImpactDto impactDto) {
-        this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
-        this.dimensionService.findDimensionById(impactDto.getDimension().getId());
+    private void findImpactChildren(ImpactDto impactDto) {
+        var concurrencyMessage = "The child entity '%s' of '%s' was changed by another user or transitively changed in this call, which is not allowed.";
+        var childStakeholder = this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
+        if (!childStakeholder.equals(impactDto.getStakeholder())) {
+            throw new DataConcurrencyException(String.format(concurrencyMessage, Stakeholder.class.getSimpleName(), Impact.class.getSimpleName()));
+        }
+
+        var childDimension = this.dimensionService.findDimensionById(impactDto.getDimension().getId());
+        if (!childDimension.equals(impactDto.getDimension())) {
+            throw new DataConcurrencyException(String.format(concurrencyMessage, Dimension.class.getSimpleName(), Impact.class.getSimpleName()));
+        }
     }
 }
