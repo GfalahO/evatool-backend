@@ -18,9 +18,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
+import static com.evatool.impact.application.controller.UriUtil.DIMENSIONS;
+import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -247,6 +251,22 @@ class ImpactServiceImplTest {
 
                 // then
                 assertThatExceptionOfType(DataIntegrityViolationException.class).isThrownBy(() -> stakeholderRepository.delete(stakeholder));
+            }
+
+            @Test
+            void testChildEntity_ImpactDeleted_ChildrenNotDeleted() {
+                // given
+                var impact = saveFullDummyImpact();
+                var dimension = impact.getDimension();
+                var stakeholder = impact.getStakeholder();
+
+                // when
+                impactService.deleteImpactById(impact.getId());
+
+                // then
+                assertThat(impactRepository.findById(impact.getId())).isNotPresent();
+                assertThat(dimensionRepository.findById(dimension.getId())).isPresent();
+                assertThat(stakeholderRepository.findById(stakeholder.getId())).isPresent();
             }
         }
     }

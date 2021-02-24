@@ -238,9 +238,6 @@ public class ImpactRestControllerTest {
                 assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
             }
 
-// TODO TransitiveUpdate when inserting
-            //saveDummyImpactDtoChildren
-
             @Test
             void testInsertImpact_InsertChildStakeholderWithNullId_ReturnHttpStatusUnprocessableEntity() {
                 // given
@@ -428,7 +425,7 @@ public class ImpactRestControllerTest {
                 }
 
                 @Test
-                void testUpdateChildEntity_UpdateExistingDimensionValues_ReturnHttpStatusConflict() {
+                void testUpdateChildEntity_UpdateExistingDimensionValues_ChildDidNotChange() {
                     // given
                     var impactDto = saveFullDummyImpactDto();
 
@@ -444,7 +441,7 @@ public class ImpactRestControllerTest {
                 }
 
                 @Test
-                void testUpdateChildEntity_UpdateChangedDimension_ReturnHttpStatusConflict() {
+                void testUpdateChildEntity_UpdateChangedDimension_ChildDidNotChange() {
                     // given
                     var impactDto = saveFullDummyImpactDto();
 
@@ -529,7 +526,7 @@ public class ImpactRestControllerTest {
                 }
 
                 @Test
-                void testUpdateChildEntity_UpdateExistingStakeholderValues_NotTransitivelyUpdated() {
+                void testUpdateChildEntity_UpdateExistingStakeholderValues_ChildDidNotChange() {
                     // given
                     var impactDto = saveFullDummyImpactDto();
 
@@ -545,7 +542,7 @@ public class ImpactRestControllerTest {
                 }
 
                 @Test
-                void testUpdateChildEntity_UpdateChangedStakeholder_ReturnHttpStatusConflict() {
+                void testUpdateChildEntity_UpdateChangedStakeholder_ChildDidNotChange() {
                     // given
                     var impactDto = saveFullDummyImpactDto();
 
