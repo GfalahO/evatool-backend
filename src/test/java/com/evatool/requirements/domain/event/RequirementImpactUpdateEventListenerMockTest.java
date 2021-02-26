@@ -1,10 +1,7 @@
 package com.evatool.requirements.domain.event;
 
-import com.evatool.global.event.impact.ImpactCreatedEvent;
+import com.evatool.global.event.impact.ImpactUpdatedEvent;
 import com.evatool.global.event.requirements.RequirementCreatedEvent;
-import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
-import com.evatool.impact.domain.event.DummyEvent;
-import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.events.listener.RequirementEventListener;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +9,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -22,7 +18,7 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-class RequirementImpactCreatedEventListenerMockTest {
+class RequirementImpactUpdateEventListenerMockTest {
 
     @MockBean
     private RequirementEventListener requirementEventListener;
@@ -35,26 +31,26 @@ class RequirementImpactCreatedEventListenerMockTest {
     void testOnApplicationEvent_PublishEvents_ReceivePublishedEvents(int value) {
         for (int i = 0; i < value; i++) {
             // given
-            ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent("","");
+            ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(applicationEventPublisher,"");
 
             // when
-            applicationEventPublisher.publishEvent(impactCreatedEvent);
+            applicationEventPublisher.publishEvent(impactUpdatedEvent);
         }
 
         // then
-        verify(requirementEventListener, times(value)).impactCreated(any(ImpactCreatedEvent.class));
+        verify(requirementEventListener, times(value)).impactUpdated(any(ImpactUpdatedEvent.class));
     }
 
     @Test
     void testOnApplicationEvent_PublishWrongEvent_DoNotReceive() {
         // given
-        var dummyEvent = new RequirementCreatedEvent("TEST");
+        RequirementCreatedEvent dummy = new RequirementCreatedEvent("TEST");
 
         // when
-        applicationEventPublisher.publishEvent(dummyEvent);
+        applicationEventPublisher.publishEvent(dummy);
 
         // then
-        verify(requirementEventListener, times(0)).impactCreated(any(ImpactCreatedEvent.class));
+        verify(requirementEventListener, times(0)).impactUpdated(any(ImpactUpdatedEvent.class));
     }
 
 

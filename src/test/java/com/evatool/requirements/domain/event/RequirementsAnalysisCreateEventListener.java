@@ -1,11 +1,11 @@
 package com.evatool.requirements.domain.event;
 
-import com.evatool.global.event.impact.ImpactCreatedEvent;
-import com.evatool.requirements.entity.RequirementsImpact;
+import com.evatool.global.event.analysis.AnalysisCreatedEvent;
+import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.evatool.requirements.error.exceptions.EventEntityAlreadyExistsException;
 import com.evatool.requirements.error.exceptions.InvalidEventPayloadException;
 import com.evatool.requirements.events.listener.RequirementEventListener;
-import com.evatool.requirements.repository.RequirementsImpactsRepository;
+import com.evatool.requirements.repository.RequirementAnalysisRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -22,10 +22,10 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementImpactCreateEventListener {
+public class RequirementsAnalysisCreateEventListener {
 
     @Autowired
-    private RequirementsImpactsRepository requirementsImpactsRepository;
+    private RequirementAnalysisRepository requirementAnalysisRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
@@ -34,49 +34,48 @@ public class RequirementImpactCreateEventListener {
     private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
-    void testOnApplicationEvent_PublishEvent_ImpactCreated() {
+    void testOnApplicationEvent_PublishEvent_DimensionCreated() {
         // given
         UUID id = UUID.randomUUID();
         String  title = "name";
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
         // when
-        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(impactCreatedEvent);
+        AnalysisCreatedEvent analysisCreatedEvent = new AnalysisCreatedEvent(json);
+        applicationEventPublisher.publishEvent(analysisCreatedEvent);
 
         // then
-        Optional<RequirementsImpact> createdByEvent = requirementsImpactsRepository.findById(id);
+        Optional<RequirementsAnalysis> createdByEvent = requirementAnalysisRepository.findById(id);
         assertThat(createdByEvent).isPresent();
         assertThat(createdByEvent.get().getId()).isEqualTo(id);
     }
 
 
     @Test
-    void testOnApplicationEvent_ImpactAlreadyExists_ThrowEventEntityAlreadyExistsException() {
+    void testOnApplicationEvent_DimensionAlreadyExists_ThrowEventEntityAlreadyExistsException() {
+
         // given
         UUID id = UUID.randomUUID();
-        String  name = "name";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), name);
+        String title = "title";
+        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
-        RequirementsImpact requirementsImpact;
+        RequirementsAnalysis requirementsAnalysis;
 
         try {
             var jsonObject = new JSONObject(json);
-            requirementsImpact = new RequirementsImpact();
-            requirementsImpact.setTitle(jsonObject.getString("title"));
-            requirementsImpact.setId(UUID.fromString(jsonObject.getString("id")));
+            requirementsAnalysis = new RequirementsAnalysis();
+            requirementsAnalysis.setId(UUID.fromString(jsonObject.getString("id")));
         } catch (JSONException jex) {
             throw new InvalidEventPayloadException(json, jex);
         }
 
-        requirementsImpactsRepository.save(requirementsImpact);
+        requirementAnalysisRepository.save(requirementsAnalysis);
 
         // when
-        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(applicationEventPublisher, json);
+        AnalysisCreatedEvent analysisCreatedEvent = new AnalysisCreatedEvent(json);
 
         // then
-        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(impactCreatedEvent));
+        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(analysisCreatedEvent));
+
     }
-
-
 }

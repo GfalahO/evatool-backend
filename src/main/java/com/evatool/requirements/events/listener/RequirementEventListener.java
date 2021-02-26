@@ -1,22 +1,17 @@
 package com.evatool.requirements.events.listener;
 
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
-import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.dimension.DimensionCreatedEvent;
 import com.evatool.global.event.dimension.DimensionDeletedEvent;
 import com.evatool.global.event.dimension.DimensionUpdatedEvent;
 import com.evatool.global.event.impact.ImpactCreatedEvent;
 import com.evatool.global.event.impact.ImpactDeletedEvent;
 import com.evatool.global.event.impact.ImpactUpdatedEvent;
-import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
-import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
-import com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper;
-import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
-import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.requirements.entity.RequirementDimension;
 import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.evatool.requirements.entity.RequirementsImpact;
-import com.evatool.requirements.entity.RequirementsVariant;
+import com.evatool.requirements.error.exceptions.EventEntityAlreadyExistsException;
+import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.repository.RequirementAnalysisRepository;
 import com.evatool.requirements.repository.RequirementDimensionRepository;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
@@ -24,8 +19,6 @@ import com.evatool.requirements.repository.RequirementsVariantsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -136,14 +129,19 @@ public class RequirementEventListener {
     requirementsVariantsRepository.delete(RequirementsVariant.fromJson(event.getJsonPayload()));
     }
 */
+    /*
     @EventListener
     @Async
-    public void analyseCreated(AnalysisCreatedEvent analysisCreatedEvent){
+    public void analyseCreated(AnalysisCreatedEvent event){
         logger.info("analyse created event");
-        logger.debug("Event " + analysisCreatedEvent.getClass() + " With Payload: " + analysisCreatedEvent.getMessage() );
-        requirementAnalysisRepository.save(RequirementsAnalysis.fromJson(analysisCreatedEvent.getMessage()));
+        logger.debug("Event " + event.getClass() + " With Payload: " + event.getMessage() );
+        if (requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
+            throw new EventEntityAlreadyExistsException();
+        }
+        requirementAnalysisRepository.save(RequirementsAnalysis.fromJson(event.getMessage()));
 
     }
+    */
 /*
     @EventListener
     @Async

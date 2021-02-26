@@ -1,11 +1,8 @@
 package com.evatool.requirements.domain.event;
 
-import com.evatool.analysis.enums.Dimension;
 import com.evatool.global.event.dimension.DimensionUpdatedEvent;
-import com.evatool.global.event.impact.ImpactUpdatedEvent;
-import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.requirements.entity.RequirementDimension;
-import com.evatool.requirements.entity.RequirementsImpact;
+import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.events.listener.RequirementEventListener;
 import com.evatool.requirements.repository.RequirementDimensionRepository;
 import org.junit.jupiter.api.Test;

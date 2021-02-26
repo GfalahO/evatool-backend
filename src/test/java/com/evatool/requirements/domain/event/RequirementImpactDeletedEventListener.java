@@ -1,8 +1,8 @@
 package com.evatool.requirements.domain.event;
 
 import com.evatool.global.event.impact.ImpactDeletedEvent;
-import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.requirements.entity.RequirementsImpact;
+import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.events.listener.RequirementEventListener;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import org.junit.jupiter.api.Test;
