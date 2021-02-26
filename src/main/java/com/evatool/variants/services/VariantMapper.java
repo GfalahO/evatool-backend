@@ -35,6 +35,7 @@ public class VariantMapper {
     public VariantDto toDto(Variant variant) {
 
         VariantDto variantDto = new VariantDto();
+        variantDto.setUuid(variant.getId());
         variantDto.setTitle(variant.getTitle());
         variantDto.setCriterion(variant.getCriterion());
 
