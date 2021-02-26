@@ -104,7 +104,3 @@ public class Impact extends SuperEntity {
         this.stakeholder = stakeholder;
     }
 }
-
-// TODO [tzaika] Use new wireframe in impact domain model wiki
-// TODO [tzaika] Finish impact domain model decision
-// TODO [tzaika] h2 console on remote server
