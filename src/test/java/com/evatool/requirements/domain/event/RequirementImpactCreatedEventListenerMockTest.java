@@ -1,5 +1,6 @@
 package com.evatool.requirements.domain.event;
 
+import com.evatool.global.event.impact.ImpactCreatedEvent;
 import com.evatool.global.event.requirements.RequirementCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.impact.domain.event.DummyEvent;
@@ -11,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -33,27 +35,27 @@ class RequirementImpactCreatedEventListenerMockTest {
     void testOnApplicationEvent_PublishEvents_ReceivePublishedEvents(int value) {
         for (int i = 0; i < value; i++) {
             // given
-            RequirementCreatedEvent stakeholderCreatedEvent = new RequirementCreatedEvent("");
+            ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent("","");
 
             // when
-            applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
+            applicationEventPublisher.publishEvent(impactCreatedEvent);
         }
 
         // then
-        verify(requirementEventListener, times(value)).onApplicationEvent(any(RequirementCreatedEvent.class));
+        verify(requirementEventListener, times(value)).impactCreated(any(ImpactCreatedEvent.class));
     }
-/*
+
     @Test
     void testOnApplicationEvent_PublishWrongEvent_DoNotReceive() {
         // given
-        var dummyEvent = new DummyEvent(applicationEventPublisher);
+        var dummyEvent = new RequirementCreatedEvent("TEST");
 
         // when
         applicationEventPublisher.publishEvent(dummyEvent);
 
         // then
-        verify(impactStakeholderCreatedEventListener, times(0)).onApplicationEvent(any(StakeholderCreatedEvent.class));
+        verify(requirementEventListener, times(0)).impactCreated(any(ImpactCreatedEvent.class));
     }
-    */
+
 
 }
