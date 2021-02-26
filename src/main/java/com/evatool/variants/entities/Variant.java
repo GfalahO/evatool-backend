@@ -44,7 +44,7 @@ public class Variant extends RepresentationModel<Variant> {
 
     @ApiModelProperty(notes = "Analysis of a Variant", name = "analysis", required = true)
     @OneToMany(fetch = FetchType.EAGER)
-    private List<VariantAnalysis> variantsAnalyses;
+    private List<VariantsAnalysis> variantsAnalyses;
 
     @ApiModelProperty(notes = "Requirement of a Variant", name = "requirement", required = true)
     @OneToMany(fetch = FetchType.EAGER)
