@@ -1,7 +1,6 @@
 package com.evatool.variants.entities;
 
 import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Entity;
