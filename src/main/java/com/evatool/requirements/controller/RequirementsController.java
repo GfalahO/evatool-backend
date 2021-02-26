@@ -132,7 +132,7 @@ public class RequirementsController {
 		});
 		requirement.setVariants(newCollection);
 		requirement = requirementRepository.save(requirement);
-		eventPublisher.publishEvent(new RequirementUpdatedEvent(requirement.toString()));
+		eventPublisher.publishEvent(new RequirementUpdatedEvent(requirement.toJson()));
 		requirementPointController.updatePoints(requirement,requirementDTO);
 		return getRequirementById(requirementDTO.getRootEntityId());
 	}
@@ -150,8 +150,7 @@ public class RequirementsController {
 		Requirement requirement = requirementOptional.get();
 		requirementPointController.deletePointsForRequirement(requirement);
 		requirementRepository.deleteById(id);
-		//eventPublisher.publishEvent(new RequirementDeletedEvent(null));
-		eventPublisher.publishEvent(new RequirementDeletedEvent(requirement.toString()));
+		eventPublisher.publishEvent(new RequirementDeletedEvent(requirement.toJson()));
 		return ResponseEntity.ok().build();
 
 	}
