@@ -1,5 +1,7 @@
 package com.evatool.requirements.events.listener;
 
+import com.evatool.global.event.analysis.AnalysisCreatedEvent;
+import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.dimension.DimensionCreatedEvent;
 import com.evatool.global.event.dimension.DimensionDeletedEvent;
 import com.evatool.global.event.dimension.DimensionUpdatedEvent;
@@ -12,7 +14,10 @@ import com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.requirements.entity.RequirementDimension;
+import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.evatool.requirements.entity.RequirementsImpact;
+import com.evatool.requirements.entity.RequirementsVariant;
+import com.evatool.requirements.repository.RequirementAnalysisRepository;
 import com.evatool.requirements.repository.RequirementDimensionRepository;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
@@ -26,7 +31,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RequirementEventListener implements ApplicationListener<ApplicationEvent> {
+public class RequirementEventListener {
 
     final Logger logger = LoggerFactory.getLogger(RequirementEventListener.class);
 
@@ -36,13 +41,14 @@ public class RequirementEventListener implements ApplicationListener<Application
     RequirementsVariantsRepository requirementsVariantsRepository;
     @Autowired
     RequirementDimensionRepository requirementDimensionRepository;
-
+    @Autowired
+    RequirementAnalysisRepository requirementAnalysisRepository;
 
     @EventListener
     @Async
     public void impactCreated(ImpactCreatedEvent event) {
         logger.info("impact created event ");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
 
         if (requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityAlreadyExistsException();
@@ -54,7 +60,7 @@ public class RequirementEventListener implements ApplicationListener<Application
     @Async
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("Impact updated event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
         if (!requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -65,7 +71,7 @@ public class RequirementEventListener implements ApplicationListener<Application
     @Async
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("Impact deleted event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
         if (!requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -75,7 +81,7 @@ public class RequirementEventListener implements ApplicationListener<Application
     @Async
     public void dimensionCreated(DimensionCreatedEvent event) {
         logger.info("dimension created event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
         if (requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityAlreadyExistsException();
         }
@@ -86,7 +92,7 @@ public class RequirementEventListener implements ApplicationListener<Application
     @Async
     public void dimensionUpdated(DimensionUpdatedEvent event) {
         logger.info("dimension updated event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
         if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -97,31 +103,17 @@ public class RequirementEventListener implements ApplicationListener<Application
     @Async
     public void dimensionDeleted(DimensionDeletedEvent event) {
         logger.info("dimension deleted event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        logger.debug("Event " + event.getClass() + " With Payload: " + event.getSource().toString() );
         if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
         requirementDimensionRepository.delete(RequirementDimension.fromJson(event.getJsonPayload()));
     }
 
-    @Override
-    public void onApplicationEvent(ApplicationEvent event) {
 
-/*
-        logger.info("Event received");
-        var jsonPayload = event.getJsonPayload();
-        var stakeholder = ImpactStakeholderJsonMapper.fromJson(jsonPayload);
-        if (stakeholderRepository.existsById(stakeholder.getId())) {
-            throw new EventEntityAlreadyExistsException();
-        }
-        stakeholderRepository.save(stakeholder);
-        logger.info("Event successfully processed");
-        */
-
-    }
     //events do not exist at the moment
 
-/**
+/*
  @EventListener
  @Async
     public void variantsCreated(ApplicationEvent event){
@@ -143,20 +135,23 @@ public class RequirementEventListener implements ApplicationListener<Application
     logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
     requirementsVariantsRepository.delete(RequirementsVariant.fromJson(event.getJsonPayload()));
     }
-
+*/
     @EventListener
     @Async
-    public void analyseCreated(ApplicationEvent event){
+    public void analyseCreated(AnalysisCreatedEvent analysisCreatedEvent){
         logger.info("analyse created event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource() );
-    }
+        logger.debug("Event " + analysisCreatedEvent.getClass() + " With Payload: " + analysisCreatedEvent.getMessage() );
+        requirementAnalysisRepository.save(RequirementsAnalysis.fromJson(analysisCreatedEvent.getMessage()));
 
+    }
+/*
     @EventListener
     @Async
-    public void analyseDeleted(ApplicationEvent event){
+    public void analyseDeleted(AnalysisDeletedEvent analysisDeletedEvent){
         logger.info("analyse deleted event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource() );
+        logger.debug("Event " + analysisDeletedEvent.getClass() + " With Payload: " + analysisDeletedEvent.getMessage() );
+
 
     }
-**/
+*/
 }
