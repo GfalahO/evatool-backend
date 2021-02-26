@@ -114,7 +114,7 @@ public class RequirementsController {
 			@ApiResponse(code = 200, message = "The entity was deleted"),
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public EntityModel<RequirementDTO> updateRequirement(@RequestBody RequirementDTO requirementDTO) {
-		logger.info("[PUT] /requirements/{id}");
+		logger.info("[PUT] /requirements");
 		//eventPublisher.publishEvent(new RequirementUpdatedEvent(null));
 		Optional<Requirement> requirementOptional = requirementRepository.findById(requirementDTO.getRootEntityId());
 		if(requirementOptional.isEmpty()) throw new EntityNotFoundException(Requirement.class, requirementDTO.getRootEntityId());

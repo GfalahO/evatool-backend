@@ -74,7 +74,7 @@ public class RequirementPointController {
 		}
 		Requirement requirement1=requirementRepository.save(requirement);
 		this.newRequirementPoint(requirementPointCollection);
-		return requirement;
+		return requirement1;
 	}
 
 	public void updatePoints(Requirement requirement, RequirementDTO requirementDTO) {
