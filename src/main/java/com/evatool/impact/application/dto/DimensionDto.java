@@ -1,6 +1,8 @@
 package com.evatool.impact.application.dto;
 
 import com.evatool.impact.domain.entity.Dimension;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,22 +10,27 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.UUID;
 
+@ApiModel(value = "Dimension", description = "Dimension of an impact")
 public class DimensionDto {
 
+    @ApiModelProperty
     @Getter
     @Setter
     private UUID id;
 
+    @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
     private String name;
 
+    @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
     private Dimension.Type type;
 
+    @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull

@@ -4,10 +4,7 @@ import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
 import com.evatool.impact.domain.entity.Dimension;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
@@ -36,23 +33,23 @@ public class DimensionRestController {
     }
 
     @GetMapping(DIMENSIONS_ID)
-    @ApiOperation(value = "Read dimension by ID")
+    @ApiOperation(value = "Get Dimension by ID")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "The entity was found"),
-            @ApiResponse(code = 400, message = "Invalid parameter"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<EntityModel<DimensionDto>> getDimension(@ApiParam("id") @Valid @PathVariable UUID id) {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found")})
+    public ResponseEntity<EntityModel<DimensionDto>> getDimension(@ApiParam("Dimension ID") @Valid @PathVariable UUID id) {
         logger.info("GET " + DIMENSIONS_ID);
         var dimensionDto = dimensionService.findDimensionById(id);
         return new ResponseEntity<>(getDimensionWithLinks(dimensionDto), HttpStatus.OK);
     }
 
     @GetMapping(DIMENSIONS)
-    @ApiOperation(value = "Read all dimensions")
+    @ApiOperation(value = "Get all Dimensions")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "All entities returned"),
-            @ApiResponse(code = 400, message = "Invalid parameter")})
-    public ResponseEntity<List<EntityModel<DimensionDto>>> getAllDimensions(@ApiParam(value = "type") @Valid @RequestParam(value = "type", required = false) Dimension.Type type) {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Bad Request")})
+    public ResponseEntity<List<EntityModel<DimensionDto>>> getAllDimensions(@ApiParam(value = "Dimension Type") @Valid @RequestParam(value = "type", required = false) Dimension.Type type) {
         List<DimensionDto> dimensionDtoList;
         if (type == null) {
             logger.info("GET " + DIMENSIONS);
@@ -65,47 +62,47 @@ public class DimensionRestController {
     }
 
     @PostMapping(DIMENSIONS)
-    @ApiOperation(value = "Create a new dimension")
+    @ApiOperation(value = "Create a new Dimension")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "The entity was inserted"),
-            @ApiResponse(code = 400, message = "The entity was invalid"),
-            @ApiResponse(code = 404, message = "The entity was not found"),
-            @ApiResponse(code = 422, message = "The entity was not processable")})
-    public ResponseEntity<EntityModel<DimensionDto>> createDimension(@ApiParam("entity") @Valid @RequestBody DimensionDto dimensionDto) {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 422, message = "Unprocessable")})
+    public ResponseEntity<EntityModel<DimensionDto>> createDimension(@ApiParam("Dimension") @Valid @RequestBody DimensionDto dimensionDto) {
         logger.info("POST " + DIMENSIONS);
         var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
         return new ResponseEntity<>(getDimensionWithLinks(insertedDimensionDto), HttpStatus.CREATED);
     }
 
     @PutMapping(DIMENSIONS)
-    @ApiOperation(value = "Update a dimension")
+    @ApiOperation(value = "Update a Dimension")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "The entity was updated"),
-            @ApiResponse(code = 400, message = "The entity was invalid"),
-            @ApiResponse(code = 404, message = "The entity was not found"),
-            @ApiResponse(code = 422, message = "The entity was not processable")})
-    public ResponseEntity<EntityModel<DimensionDto>> updateDimension(@ApiParam("entity") @Valid @RequestBody DimensionDto dimensionDto) {
+            @ApiResponse(code = 200, message = "Updated"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 422, message = "Unprocessable")})
+    public ResponseEntity<EntityModel<DimensionDto>> updateDimension(@ApiParam("Dimension") @Valid @RequestBody DimensionDto dimensionDto) {
         logger.info("PUT " + DIMENSIONS);
         var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
         return new ResponseEntity<>(getDimensionWithLinks(updatedDimensionDto), HttpStatus.OK);
     }
 
     @DeleteMapping(DIMENSIONS_ID)
-    @ApiOperation(value = "Delete dimension by ID")
+    @ApiOperation(value = "Delete Dimension by ID")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "The entity was deleted"),
-            @ApiResponse(code = 400, message = "Invalid parameter"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<Void> deleteDimension(@ApiParam("id") @Valid @PathVariable UUID id) {
+            @ApiResponse(code = 200, message = "Deleted"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found")})
+    public ResponseEntity<Void> deleteDimension(@ApiParam("Dimension ID") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + DIMENSIONS_ID);
         dimensionService.deleteDimensionById(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(DIMENSION_TYPES)
-    @ApiOperation(value = "Get all dimension types")
+    @ApiOperation(value = "Get all Dimension Types")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "All dimension types returned")})
+            @ApiResponse(code = 200, message = "OK")})
     public ResponseEntity<List<Dimension.Type>> getDimensionTypes() {
         logger.info("GET " + DIMENSION_TYPES);
         return new ResponseEntity<>(dimensionService.getAllDimensionTypes(), HttpStatus.OK);
