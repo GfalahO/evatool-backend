@@ -39,9 +39,8 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
-    void testFromJsonString_JsonStringMissingField_ThrowInvalidEventPayloadException() {
+    void testFromJsonString_JsonStringMissingIdField_ThrowInvalidEventPayloadException() {
         // given
-        var id = UUID.randomUUID().toString();
         var name = "name";
 
         // when
@@ -52,15 +51,38 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
-    void testFromJsonString_JsonStringNullField_NullIsConvertedToStringByMapper() {
+    void testFromJsonString_JsonStringMissingNameField_ThrowInvalidEventPayloadException() {
         // given
         var id = UUID.randomUUID().toString();
 
         // when
-        var json = String.format("{\"id\":\"%s\",\"name\":%s}", id, null);
-        var impactStakeholder = fromJson(json);
+        var json = String.format("{\"id\":\"%s\"}", id);
 
         // then
-        assertThat(impactStakeholder.getName()).isEqualTo("null");
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+    @Test
+    void testFromJsonString_JsonStringNullIdField_ThrowInvalidEventPayloadException() {
+        // given
+        var name = "name";
+
+        // when
+        var json = String.format("{\"id\":null,\"name\":\"%s\"}", name);
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+    @Test
+    void testFromJsonString_JsonStringNullNameField_ThrowInvalidEventPayloadException() {
+        // given
+        var id = UUID.randomUUID().toString();
+
+        // when
+        var json = String.format("{\"id\":\"%s\",\"name\":null}", id);
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
     }
 }

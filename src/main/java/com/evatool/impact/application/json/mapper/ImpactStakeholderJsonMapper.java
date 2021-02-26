@@ -19,16 +19,18 @@ public class ImpactStakeholderJsonMapper {
 
     public static ImpactStakeholder fromJson(String json) {
         logger.info("Mapping Json to Entity");
-        ImpactStakeholder impactStakeholder;
         try {
+            // JSONException could occur.
             var jsonObject = new JSONObject(json);
-            impactStakeholder = new ImpactStakeholder(
-                    jsonObject.getString("name")
-            );
-            impactStakeholder.setId(UUID.fromString(jsonObject.getString("id")));
-        } catch (JSONException jex) {
-            throw new EventPayloadInvalidException(json, jex);
+            var stakeholderName = jsonObject.isNull("name") ? null : jsonObject.getString("name");
+            var stakeholderId = jsonObject.getString("id");
+
+            // IllegalArgumentException could occur.
+            var impactStakeholder = new ImpactStakeholder(stakeholderName);
+            impactStakeholder.setId(UUID.fromString(stakeholderId));
+            return impactStakeholder;
+        } catch (JSONException | IllegalArgumentException ex) {
+            throw new EventPayloadInvalidException(json, ex);
         }
-        return impactStakeholder;
     }
 }
