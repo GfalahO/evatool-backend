@@ -111,7 +111,6 @@ public class DimensionRestController {
         return new ResponseEntity<>(dimensionService.getAllDimensionTypes(), HttpStatus.OK);
     }
 
-
     private EntityModel<DimensionDto> getDimensionWithLinks(DimensionDto dimensionDto) {
         logger.debug("Adding HATEOAS Rest Level 3 links");
         var entityModel = EntityModel.of(dimensionDto);
