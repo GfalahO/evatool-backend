@@ -44,6 +44,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/de.andrena.tools.macker/macker-maven-plugin -->
+        <dependency>
+            <groupId>de.andrena.tools.macker</groupId>
+            <artifactId>macker-maven-plugin</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
