@@ -1,6 +1,6 @@
 package com.evatool.impact.application.json.mapper;
 
-import com.evatool.impact.common.exception.InvalidEventPayloadException;
+import com.evatool.impact.common.exception.EventPayloadInvalidException;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -35,7 +35,7 @@ class ImpactStakeholderJsonMapperTest {
         var json = String.format("{\"id\"\"%s\",\"name\":\"%s\"}", id, name);
 
         // then
-        assertThatExceptionOfType(InvalidEventPayloadException.class).isThrownBy(() -> fromJson(json));
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
     }
 
     @Test
@@ -48,7 +48,7 @@ class ImpactStakeholderJsonMapperTest {
         var json = String.format("{\"name\":\"%s\"}", name);
 
         // then
-        assertThatExceptionOfType(InvalidEventPayloadException.class).isThrownBy(() -> fromJson(json));
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
     }
 
     @Test

@@ -1,6 +1,6 @@
 package com.evatool.impact.application.json.mapper;
 
-import com.evatool.impact.common.exception.InvalidEventPayloadException;
+import com.evatool.impact.common.exception.EventPayloadInvalidException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +27,7 @@ public class ImpactStakeholderJsonMapper {
             );
             impactStakeholder.setId(UUID.fromString(jsonObject.getString("id")));
         } catch (JSONException jex) {
-            throw new InvalidEventPayloadException(json, jex);
+            throw new EventPayloadInvalidException(json, jex);
         }
         return impactStakeholder;
     }
