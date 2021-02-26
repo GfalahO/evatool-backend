@@ -43,7 +43,7 @@ public class DimensionServiceImpl implements DimensionService {
     public DimensionDto findDimensionById(UUID id) {
         logger.info("Get Dimension");
         if (id == null) {
-            throw new EntityIdRequiredException();
+            throw new EntityIdRequiredException(Dimension.class.getSimpleName());
         }
         var dimension = dimensionRepository.findById(id);
         if (dimension.isEmpty()) {
@@ -80,7 +80,7 @@ public class DimensionServiceImpl implements DimensionService {
     public DimensionDto createDimension(DimensionDto dimensionDto) {
         logger.info("Create Dimension");
         if (dimensionDto.getId() != null) {
-            throw new EntityIdMustBeNullException();
+            throw new EntityIdMustBeNullException(Dimension.class.getSimpleName());
         }
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
         dimensionCreatedEventPublisher.onDimensionCreated(dimension);

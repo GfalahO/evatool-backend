@@ -1,6 +1,8 @@
 package com.evatool.impact.application.controller;
 
+import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactDto;
+import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
@@ -17,10 +19,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
+import java.util.Objects;
 import java.util.UUID;
 
-import static com.evatool.impact.application.controller.UriUtil.DIMENSIONS;
-import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
+import static com.evatool.impact.application.controller.UriUtil.*;
 import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -135,49 +137,6 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testInsertImpact_InsertEmptyImpactDto_ReturnHttpStatusBadRequest() {
-            // given
-            var httpEntity = new HttpEntity<>(new ImpactDto());
-
-            // when
-            var responseEntity = testRestTemplate.postForEntity(
-                    IMPACTS, httpEntity, ImpactDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
-        void testInsertImpact_InsertImpactWithIllegalValue_ReturnHttpStatusBadRequest() {
-            // given
-            var impactDto = saveDummyImpactDtoChildren();
-            impactDto.setValue(2);
-
-            // when
-            var httpEntity = new HttpEntity<>(impactDto);
-            var responseEntity = testRestTemplate.postForEntity(
-                    IMPACTS, httpEntity, ImpactDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
-        void testInsertImpact_InsertImpactWithNullDescription_ReturnHttpStatusBadRequest() {
-            // given
-            var impactDto = saveDummyImpactDtoChildren();
-            impactDto.setDescription(null);
-
-            // when
-            var httpEntity = new HttpEntity<>(impactDto);
-            var responseEntity = testRestTemplate.postForEntity(
-                    IMPACTS, httpEntity, ImpactDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
         void testInsertImpact_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var impactDto = saveDummyImpactDtoChildren();
@@ -228,36 +187,6 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testUpdateImpact_UpdateIllegalValue_ReturnHttpStatusBadRequest() {
-            // given
-            var impactDto = saveFullDummyImpactDto();
-
-            // when
-            impactDto.setValue(2);
-            var putEntity = new HttpEntity<>(impactDto);
-            var putResponse = testRestTemplate.exchange(
-                    IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
-
-            // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
-        void testUpdateImpact_UpdateNullDescription_ReturnHttpStatusBadRequest() {
-            // given
-            var impactDto = saveFullDummyImpactDto();
-
-            // when
-            impactDto.setDescription(null);
-            var putEntity = new HttpEntity<>(impactDto);
-            var response = testRestTemplate.exchange(
-                    IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
-
-            // then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
         void testUpdateImpact_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var impactDto = createDummyImpactDto();
@@ -269,11 +198,6 @@ public class ImpactRestControllerTest {
 
             // then
             assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-
-        @Nested
-        class ChildEntity {
-
         }
     }
 
@@ -307,23 +231,6 @@ public class ImpactRestControllerTest {
 
             //then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        }
-
-        @Nested
-        class ChildEntity {
-
-            @Test
-            void testChildDeleted_DimensionChildDeleted_ReturnHttpStatusConflict() {
-                // given
-                var impactDto = saveFullDummyImpactDto();
-
-                // when
-                var response = testRestTemplate.exchange(
-                        DIMENSIONS + "/" + impactDto.getDimension().getId(), HttpMethod.DELETE, null, Void.class);
-
-                // then
-                assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
-            }
         }
     }
 }
