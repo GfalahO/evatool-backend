@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -26,22 +27,22 @@ public class VariantMapper {
     public List<VariantDto> mapAll(List<Variant> variantList) {
         List<VariantDto> variantDtoList = new ArrayList<>();
         for (Variant variant : variantList) {
-            variantDtoList.add(map(variant));
+            variantDtoList.add(toDto(variant));
         }
         return variantDtoList;
     }
 
-    private VariantDto map(Variant variant) {
+    public VariantDto toDto(Variant variant) {
 
         VariantDto variantDto = new VariantDto();
         variantDto.setTitle(variant.getTitle());
         variantDto.setCriterion(variant.getCriterion());
 
-        Link stakeholderLink = linkTo(methodOn(StakeholderController.class).getStakeholderById(variant.getVariantsStakeholder().getId())).withSelfRel();
+        Link stakeholderLink = linkTo(methodOn(StakeholderController.class).getStakeholderList()).withSelfRel();
         EntityModel<VariantsStakeholder> variantsStakeholders = EntityModel.of(variant.getVariantsStakeholder());
         variantsStakeholders.add(stakeholderLink);
 
-        variantDto.setVariantsStakeholder(variant.getVariantsStakeholder());
+        variantDto.setVariantsStakeholder(EntityModel.of(variant.getVariantsStakeholder()));
 
         variantDto.setDescription(variant.getDescription());
 
@@ -49,7 +50,7 @@ public class VariantMapper {
         variantDto.setStFlagsReal(variant.isStFlagsReal());
 
         Link subVariantLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
-        CollectionModel<Variant> subVariantCollectionModel = CollectionModel.of(variant.getSubVariant());
+        CollectionModel<Variant> subVariantCollectionModel = CollectionModel.of(new ArrayList<>(variant.getSubVariant()));
         subVariantCollectionModel.add(subVariantLink);
 
         Link variantAnalysisLink = linkTo(methodOn(AnalysisController.class).getAnalysisList()).withSelfRel();
@@ -61,6 +62,22 @@ public class VariantMapper {
         variantsRequirementCollectionModel.add(variantRequirementLink);
 
         return variantDto;
+    }
+
+    public Variant fromDto(VariantDto variantDto) {
+        Variant variant = new Variant();
+        variant.setId(variantDto.getUuid());
+        variant.setTitle(variantDto.getTitle());
+        variant.setCriterion(variantDto.getCriterion());
+        variant.setSubVariant(variantDto.getSubVariant().getContent().stream().collect(Collectors.toList()));
+        variant.setDescription(variantDto.getDescription());
+        variant.setStFlagsPot(variantDto.isStFlagsPot());
+        variant.setStFlagsReal(variantDto.isStFlagsReal());
+        variant.setVariantsStakeholder(variantDto.getVariantsStakeholder().getContent());
+        variant.setVariantsAnalyses(variantDto.getVariantsAnalyses().getContent().stream().collect(Collectors.toList()));
+        variant.setVariantsRequirements(variantDto.getVariantsRequirements().getContent().stream().collect(Collectors.toList()));
+
+        return variant;
     }
 
 }

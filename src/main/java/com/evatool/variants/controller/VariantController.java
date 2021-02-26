@@ -1,6 +1,7 @@
 package com.evatool.variants.controller;
 
 import com.evatool.variants.entities.Variant;
+import com.evatool.variants.entities.VariantDto;
 import com.evatool.variants.services.VariantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,42 +23,42 @@ public class VariantController {
     VariantService variantService;
 
     @ApiOperation(value = "postVariant", notes = "post a new variant", nickname = "postVariant")
-    @ApiResponse(code = 201, message = "Created successfully", response = Variant.class, responseContainer = "Variant")
+    @ApiResponse(code = 201, message = "Created successfully", response = VariantDto.class, responseContainer = "Variant")
     @PostMapping
-    public ResponseEntity<Variant> createVariant(@RequestBody Variant newVariant) {
-        return variantService.createVariant(newVariant);
+    public ResponseEntity<VariantDto> createVariant(@RequestBody VariantDto newVariantDto) {
+        return variantService.createVariant(newVariantDto);
     }
 
     @ApiOperation(value = "getVariant", notes = "get a variant", nickname = "getVariant")
-    @ApiResponse(code = 201, message = "Created successfully", response = Variant.class, responseContainer = "Variant")
+    @ApiResponse(code = 201, message = "Created successfully", response = VariantDto.class, responseContainer = "Variant")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Variant> getVariant(
+    public ResponseEntity<VariantDto> getVariant(
             @ApiParam (name = "variantId", value = "identification of a Variant", required = true)
             @PathVariable UUID id) {
         return variantService.getVariant(id);
     }
 
     @ApiOperation(value = "getAllVariants", notes = "get list of all variants", nickname = "getAllVariants")
-    @ApiResponse(code = 200, message = "Successful retrieval", response = Variant.class, responseContainer = "List")
+    @ApiResponse(code = 200, message = "Successful retrieval", response = VariantDto.class, responseContainer = "List")
     @GetMapping
-    public ResponseEntity<CollectionModel<Variant>> getAllVariants() {
+    public ResponseEntity<CollectionModel<VariantDto>> getAllVariants() {
         return variantService.getAllVariants();
     }
 
     @ApiOperation(value = "putVariants", notes = "put a variants", nickname = "putVariant")
-    @ApiResponse(code = 200, message = "Successful changed", response = Variant.class, responseContainer = "List")
+    @ApiResponse(code = 200, message = "Successful changed", response = VariantDto.class, responseContainer = "List")
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Variant> updateVariant(
+    public ResponseEntity<VariantDto> updateVariant(
             @ApiParam (name = "variantId", value = "identification of a Variant", required = true)
             @PathVariable UUID id,
-            @RequestBody Variant updatedVariant) {
-        return variantService.updateVariant(id, updatedVariant);
+            @RequestBody VariantDto updatedVariantDto) {
+        return variantService.updateVariant(id, updatedVariantDto);
     }
 
     @ApiOperation(value = "deleteVariants", notes = "delete a variants", nickname = "deleteVariant")
-    @ApiResponse(code = 200, message = "Successful deleted", response = Variant.class, responseContainer = "List")
+    @ApiResponse(code = 200, message = "Successful deleted", response = VariantDto.class, responseContainer = "List")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deleteVariant(
+    public ResponseEntity<VariantDto> deleteVariant(
             @ApiParam (name = "variantId", value = "identification of a Variant", required = true)
             @PathVariable UUID id) {
         return variantService.deleteVariant(id);
