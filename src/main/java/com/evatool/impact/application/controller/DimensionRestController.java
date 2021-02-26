@@ -94,7 +94,7 @@ public class DimensionRestController {
     @ApiOperation(value = "Delete dimension by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
-            @ApiResponse(code = 200, message = "Invalid parameter"),
+            @ApiResponse(code = 400, message = "Invalid parameter"),
             @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<Void> deleteDimension(@ApiParam("id") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + DIMENSIONS_ID);

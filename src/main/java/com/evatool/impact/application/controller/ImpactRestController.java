@@ -59,7 +59,8 @@ public class ImpactRestController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "The entity was inserted"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
+            @ApiResponse(code = 404, message = "The entity was not found"),
+            @ApiResponse(code = 422, message = "The entity was not processable")})
     public ResponseEntity<EntityModel<ImpactDto>> createImpact(@ApiParam("entity") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("POST " + IMPACTS);
         var insertedImpactDto = impactService.createImpact(impactDto);
@@ -71,7 +72,8 @@ public class ImpactRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was updated"),
             @ApiResponse(code = 400, message = "The entity was invalid"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
+            @ApiResponse(code = 404, message = "The entity was not found"),
+            @ApiResponse(code = 422, message = "The entity was not processable")})
     public ResponseEntity<EntityModel<ImpactDto>> updateImpact(@ApiParam("entity") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("PUT " + IMPACTS);
         var updatedImpactDto = impactService.updateImpact(impactDto);
@@ -82,6 +84,7 @@ public class ImpactRestController {
     @ApiOperation(value = "Delete impact by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "The entity was deleted"),
+            @ApiResponse(code = 400, message = "Invalid parameter"),
             @ApiResponse(code = 404, message = "The entity was not found")})
     public ResponseEntity<Void> deleteImpact(@ApiParam("id") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + IMPACTS_ID);
