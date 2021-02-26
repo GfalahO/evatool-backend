@@ -1,7 +1,5 @@
 package com.evatool.requirements.error.exceptions;
 
-import com.evatool.requirements.entity.Requirement;
-
 import java.util.UUID;
 
 public class EntityNotFoundException extends RuntimeException {

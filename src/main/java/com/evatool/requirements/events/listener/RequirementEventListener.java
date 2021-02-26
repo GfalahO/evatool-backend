@@ -1,6 +1,5 @@
 package com.evatool.requirements.events.listener;
 
-import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.global.event.dimension.DimensionCreatedEvent;
 import com.evatool.global.event.dimension.DimensionDeletedEvent;
 import com.evatool.global.event.dimension.DimensionUpdatedEvent;
@@ -8,7 +7,6 @@ import com.evatool.global.event.impact.ImpactCreatedEvent;
 import com.evatool.global.event.impact.ImpactDeletedEvent;
 import com.evatool.global.event.impact.ImpactUpdatedEvent;
 import com.evatool.requirements.entity.RequirementDimension;
-import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.error.exceptions.EventEntityAlreadyExistsException;
 import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;

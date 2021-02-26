@@ -3,7 +3,6 @@ package com.evatool.requirements.controller;
 import com.evatool.global.event.requirements.RequirementCreatedEvent;
 import com.evatool.global.event.requirements.RequirementDeletedEvent;
 import com.evatool.global.event.requirements.RequirementUpdatedEvent;
-import com.evatool.impact.domain.entity.Impact;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementsAnalysis;
@@ -26,7 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -65,7 +63,7 @@ public class RequirementsController {
 	public List<EntityModel<RequirementDTO>> getRequirementList() {
 		logger.info("[GET] /requirements");
 		List<Requirement> resultList = requirementRepository.findAll();
-		if(resultList.size()==0){return Arrays.asList();}
+		if(resultList.size()==0){return Collections.emptyList();}
 		return generateLinks(dtoService.findAll(resultList));
 	}
 
@@ -80,7 +78,7 @@ public class RequirementsController {
 		Optional<RequirementsAnalysis> optionalRequirementsAnalysis = requirementAnalysisRepository.findById(analysisId);
 		if(optionalRequirementsAnalysis.isEmpty()) throw new EntityNotFoundException(RequirementsAnalysis.class, analysisId);
 		Collection<Requirement> resultList = requirementRepository.findByRequirementsAnalysis(optionalRequirementsAnalysis.get());
-		if(resultList.size()==0){return Arrays.asList();}
+		if(resultList.size()==0){return Collections.emptyList();}
 		return generateLinks(dtoService.findAll(resultList));
 	}
 

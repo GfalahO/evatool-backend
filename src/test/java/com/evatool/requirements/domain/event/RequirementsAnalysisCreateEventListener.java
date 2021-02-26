@@ -1,24 +1,12 @@
 package com.evatool.requirements.domain.event;
 
-import com.evatool.global.event.analysis.AnalysisCreatedEvent;
-import com.evatool.requirements.entity.RequirementsAnalysis;
-import com.evatool.requirements.error.exceptions.EventEntityAlreadyExistsException;
-import com.evatool.requirements.error.exceptions.InvalidEventPayloadException;
 import com.evatool.requirements.events.listener.RequirementEventListener;
 import com.evatool.requirements.repository.RequirementAnalysisRepository;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")

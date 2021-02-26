@@ -2,7 +2,6 @@
 package com.evatool.requirements.entity;
 
 import com.google.gson.Gson;
-import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -3,10 +3,8 @@ package com.evatool.requirements.error;
 
 import com.evatool.requirements.error.exceptions.EntityNotFoundException;
 import com.evatool.requirements.error.exceptions.IllegalDtoValueExcpetion;
-import com.evatool.requirements.repository.RequirementRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
