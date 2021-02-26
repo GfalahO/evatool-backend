@@ -4,6 +4,7 @@ import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.evatool.requirements.entity.RequirementsVariant;
+import com.evatool.requirements.error.exceptions.EntityNotFoundException;
 import com.evatool.requirements.repository.RequirementAnalysisRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
 import org.slf4j.Logger;
@@ -49,7 +50,9 @@ public class RequirementDTOService {
         }
         Collection<RequirementsVariant> requirementsVariantCollection = new ArrayList<>();
         for( Map.Entry<UUID, String> entry:requirementDTO.getVariantsTitle().entrySet()) {
-            requirementsVariantCollection.add(requirementsVariantsRepository.getOne(entry.getKey()));
+            Optional<RequirementsVariant> requirementsVariant = requirementsVariantsRepository.findById(entry.getKey());
+            if(requirementsVariant.isEmpty()) throw new EntityNotFoundException(RequirementsVariant.class,entry.getKey());
+            requirementsVariantCollection.add(requirementsVariant.get());
         }
         requirement.setVariants(requirementsVariantCollection);
         return requirement;

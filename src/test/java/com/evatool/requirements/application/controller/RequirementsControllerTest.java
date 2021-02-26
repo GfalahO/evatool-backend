@@ -69,7 +69,7 @@ public class RequirementsControllerTest {
         RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId(),variantsTitle);
 
         //create requirement
-        RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO).getContent();
+        RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO).getBody().getContent();
 
         //check is requirement created
         assertThat(requirementsController.getRequirementById(requirementDTOObj.getRootEntityId())).isNotNull();

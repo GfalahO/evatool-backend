@@ -4,6 +4,7 @@ import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementPoint;
+import com.evatool.requirements.error.exceptions.EntityNotFoundException;
 import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import com.evatool.requirements.repository.RequirementRepository;
 import com.evatool.requirements.repository.RequirementPointRepository;
@@ -65,6 +66,7 @@ public class RequirementPointController {
 			requirementPoint.setRequirement(requirement);
 			requirementPoint.setPoints(entry.getValue());
 			Optional<RequirementsImpact> requirementsImpact = requirementsImpactsRepository.findById(entry.getKey());
+			if(requirementsImpact.isEmpty()) throw new EntityNotFoundException(RequirementsImpact.class,entry.getKey(),true,requirement);
 			requirementPoint.setRequirementsImpact(requirementsImpact.get());
 			requirementPointCollection.add(requirementPoint);
 		}

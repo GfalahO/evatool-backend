@@ -21,9 +21,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpResponse;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,10 +71,13 @@ public class RequirementsController {
 	@GetMapping(value = "/requirements",params = "analysisId")
 	@ApiOperation(value = "This method returns a list of all Requirements for an Analysis Id.")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "All entities returned")})
+			@ApiResponse(code = 200, message = "All entities returned"),
+			@ApiResponse(code = 400, message = "The id was invalid"),
+			@ApiResponse(code = 404, message = "The entity was not found")})
 	public List<EntityModel<RequirementDTO>> getRequirementListForAnalysis(@RequestParam("analysisId") UUID analysisId) {
 		logger.info("[GET] /requirements?analysisId");
 		Optional<RequirementsAnalysis> optionalRequirementsAnalysis = requirementAnalysisRepository.findById(analysisId);
+		if(optionalRequirementsAnalysis.isEmpty()) throw new EntityNotFoundException(RequirementsAnalysis.class, analysisId);
 		Collection<Requirement> resultList = requirementRepository.findByRequirementsAnalysis(optionalRequirementsAnalysis.get());
 		if(resultList.size()==0){return Arrays.asList();}
 		return generateLinks(dtoService.findAll(resultList));
@@ -97,13 +102,13 @@ public class RequirementsController {
 			@ApiResponse(code = 201, message = "The entity was inserted"),
 			@ApiResponse(code = 400, message = "The entity was invalid"),
 			@ApiResponse(code = 404, message = "The entity was not found")})
-	public EntityModel<RequirementDTO> newRequirement(@RequestBody RequirementDTO requirementDTO) {
+	public ResponseEntity<EntityModel<RequirementDTO>> newRequirement(@RequestBody RequirementDTO requirementDTO) {
 		logger.info("[POST] /requirements");
 		//eventPublisher.publishEvent(new RequirementCreatedEvent(null));
 		Requirement requirement = requirementRepository.save(dtoService.create(requirementDTO));
-		eventPublisher.publishEvent(new RequirementCreatedEvent(requirement.toString()));
 		requirementPointController.createPoints(requirement,requirementDTO);
-		return getRequirementById(requirement.getId());
+		eventPublisher.publishEvent(new RequirementCreatedEvent(requirement.toJson()));
+		return new ResponseEntity<>(getRequirementById(requirement.getId()), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/requirements")

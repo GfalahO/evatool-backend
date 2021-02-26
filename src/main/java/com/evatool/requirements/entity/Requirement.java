@@ -2,6 +2,7 @@
 package com.evatool.requirements.entity;
 
 import com.google.gson.Gson;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -82,9 +83,19 @@ public class Requirement {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
+        return "Requirement{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", variants=" + variants +
+                ", requirementsAnalysis=" + requirementsAnalysis +
+                '}';
+    }
+
+    public String toJson(){
         Gson gson = new Gson();
-        return gson.toJson(this);
+        return gson.toJson(this.toString());
     }
 }
 

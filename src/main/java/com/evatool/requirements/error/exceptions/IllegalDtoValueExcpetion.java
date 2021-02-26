@@ -1,8 +1,17 @@
 package com.evatool.requirements.error.exceptions;
 
+import com.evatool.requirements.entity.Requirement;
+
 public class IllegalDtoValueExcpetion extends IllegalArgumentException{
 
-    public IllegalDtoValueExcpetion(Object value, String reason) {
+    private Requirement requirement;
+
+    public IllegalDtoValueExcpetion(Requirement requirement, String reason) {
         super(reason);
+        this.requirement=requirement;
+    }
+
+    public Requirement getRequirement() {
+        return requirement;
     }
 }
