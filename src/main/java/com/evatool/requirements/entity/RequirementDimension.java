@@ -12,7 +12,7 @@ import java.util.UUID;
 public class RequirementDimension {
 
     @Id
-    private final UUID id = UUID.randomUUID();
+    private UUID id = UUID.randomUUID();
 
     private String title;
 
@@ -38,4 +38,15 @@ public class RequirementDimension {
         }
         this.title = title;
     }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+
+
 }

@@ -45,8 +45,8 @@ public class RequirementImpactCreateEventListener {
     void testOnApplicationEvent_PublishEvent_ImpactCreated() {
         // given
         UUID id = UUID.randomUUID();
-        String  name = "name";
-        String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
+        String  title = "name";
+        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
         // when
         ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(applicationEventPublisher, json);
