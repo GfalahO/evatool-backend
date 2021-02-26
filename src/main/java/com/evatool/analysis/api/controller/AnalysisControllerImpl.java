@@ -35,6 +35,7 @@ public class AnalysisControllerImpl implements AnalysisController {
     @Autowired
     private AnalysisDTOService analysisDTOService;
 
+
     Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
 
 

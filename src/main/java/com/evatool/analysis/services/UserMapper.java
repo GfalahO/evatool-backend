@@ -15,7 +15,7 @@ public class UserMapper {
         return userDTOList;
     }
 
-    private UserDTO map(User user) {
+    public UserDTO map(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserName(user.getUserName());
         userDTO.setRootEntityID(user.getUserId());

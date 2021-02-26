@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
+import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
@@ -33,16 +35,33 @@ public class AnalysisImpactDeletedEventListener {
     void testOnApplicationEvent_PublishEvent_ImpactDeleted() {
         // given
         UUID id = UUID.randomUUID();
-        String name = "name";
-        String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
+        String title = "title";
+        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
+
+        AnalysisImpacts analysisImpacts = new AnalysisImpacts("Title","Description",10,null);
+        analysisImpacts.setId(id);
+        analysisImpactRepository.save(analysisImpacts);
 
         // when
         ImpactDeletedEvent impactDeletedEvent = new ImpactDeletedEvent(applicationEventPublisher, json);
         applicationEventPublisher.publishEvent(impactDeletedEvent);
 
         // then
-        Optional<AnalysisImpacts> createdByEvent = analysisImpactRepository.findById(id);
-        assertThat(createdByEvent).isPresent();
-        assertThat(createdByEvent.get().getId()).isEqualTo(id);
+        Optional<AnalysisImpacts> optionalAnalysisImpacts = analysisImpactRepository.findById(id);
+        assertThat(optionalAnalysisImpacts).isNotPresent();
+    }
+
+    @Test
+    void testOnApplicationEvent_ImpactDoesNotExist_ThrowEventEntityDoesNotExistException() {
+        // given
+        UUID id = UUID.randomUUID();
+        String title = "title";
+        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
+
+        // when
+        ImpactDeletedEvent impactDeletedEvent = new ImpactDeletedEvent(applicationEventPublisher, json);
+
+        // then
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(impactDeletedEvent));
     }
 }

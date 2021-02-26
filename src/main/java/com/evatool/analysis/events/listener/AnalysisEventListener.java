@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
+import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
+
 
 @Component
 public class AnalysisEventListener {
@@ -20,13 +23,15 @@ public class AnalysisEventListener {
     @Autowired
     AnalysisImpactRepository analysisImpactRepository;
 
-
     @EventListener
     @Async
     public void impactCreated(ImpactCreatedEvent event) {
         logger.info("impact created event ");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
 
+        if (analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
+            throw new EventEntityAlreadyExistsException();
+        }
         analysisImpactRepository.save(AnalysisImpacts.fromJson(event.getJsonPayload()));
     }
 
@@ -34,7 +39,11 @@ public class AnalysisEventListener {
     @Async
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("Impact updated event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
+
+        if (!analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
+            throw new EventEntityDoesNotExistException();
+        }
         analysisImpactRepository.save(AnalysisImpacts.fromJson(event.getJsonPayload()));
     }
 
@@ -42,7 +51,11 @@ public class AnalysisEventListener {
     @Async
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("Impact deleted event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString() );
+        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
+
+        if (!analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
+            throw new EventEntityDoesNotExistException();
+        }
         analysisImpactRepository.delete(AnalysisImpacts.fromJson(event.getJsonPayload()));
     }
 

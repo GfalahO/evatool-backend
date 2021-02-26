@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Service
 public class AnalysisDTOService {
-
     Logger logger = LoggerFactory.getLogger(AnalysisDTOService.class);
 
     @Autowired
@@ -22,5 +21,18 @@ public class AnalysisDTOService {
     public List<AnalysisDTO> findAll(List<Analysis> analysisDTOList) {
         logger.info("findAll");
         return analysisMapper.map(analysisDTOList);
+    }
+
+    public AnalysisDTO findById(Analysis analysis) {
+        logger.debug("findId [{}]",analysis);
+        return analysisMapper.map(analysis);
+    }
+
+    public Analysis create(AnalysisDTO analysisDTO) {
+        logger.debug("create [{}]",analysisDTO);
+        Analysis analysis = new Analysis();
+        analysis.setAnalysisName(analysisDTO.getAnalysisName());
+        analysis.setDescription(analysisDTO.getAnalysisDescription());
+        return analysis;
     }
 }
