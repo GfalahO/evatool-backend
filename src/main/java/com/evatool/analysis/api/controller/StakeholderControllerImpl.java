@@ -82,8 +82,8 @@ public class StakeholderControllerImpl implements StakeholderController {
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
         stakeholder.setPriority(stakeholderDTO.getPriority());
-        Set<AnalysisImpacts> analysisImpactsSet = analysisImpactRepository.findById(stakeholderDTO.getValue());
-                stakeholderRepository.findById(stakeholderDTO.getValue());
+        Set<AnalysisImpacts> analysisImpactsSet = analysisImpactRepository.findById(stakeholderDTO.getImpactsTitles().keySet());
+
         Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(requirementDTO.getVariantsTitle().keySet());
         analysis.setAnalysisName(analysisDTO.getAnalysisName());
         analysis.setDescription(analysisDTO.getAnalysisDescription());
