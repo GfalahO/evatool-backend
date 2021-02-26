@@ -16,6 +16,7 @@ public class AnalysisEventPublisher {
 
     public void publishEvent(ApplicationEvent applicationEvent) {
         logger.info("Publishing Event: " + applicationEvent.getClass());
+        logger.debug(applicationEvent.getClass() + "  Eventpayload: " + applicationEvent.getSource().toString());
         applicationEventPublisher.publishEvent(applicationEvent);
     }
 }
