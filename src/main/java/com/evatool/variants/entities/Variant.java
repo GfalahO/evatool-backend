@@ -26,7 +26,7 @@ public class Variant extends RepresentationModel<Variant> {
     private String criterion;
 
     @ApiModelProperty(notes = "SubVariant of a Variant", name = "subVariant", required = true)
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<Variant> subVariant;
 
     @ApiModelProperty(notes = "Description of a Variant", name = "description", required = true)
@@ -39,14 +39,14 @@ public class Variant extends RepresentationModel<Variant> {
     private boolean stFlagsReal;
 
     @ApiModelProperty(notes = "Stakeholder of a Variant", name = "stakeholder", required = true)
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private VariantsStakeholder variantsStakeholder;
 
     @ApiModelProperty(notes = "Analysis of a Variant", name = "analysis", required = true)
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<VariantsAnalysis> variantsAnalyses;
 
     @ApiModelProperty(notes = "Requirement of a Variant", name = "requirement", required = true)
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<VariantsRequirement> variantsRequirements;
 }
