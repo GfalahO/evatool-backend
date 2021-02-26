@@ -7,15 +7,21 @@ import com.evatool.analysis.events.AnalysisEventPublisher;
 import com.evatool.analysis.model.Analysis;
 import com.evatool.analysis.repository.AnalysisRepository;
 import com.evatool.analysis.services.AnalysisDTOService;
+import com.evatool.global.event.analysis.AnalysisDeletedEvent;
+import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
+import com.evatool.impact.common.exception.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.util.*;
 
 @RestController
 public class AnalysisControllerImpl implements AnalysisController {
@@ -33,50 +39,70 @@ public class AnalysisControllerImpl implements AnalysisController {
 
 
     @Override
-    public List<AnalysisDTO> getAnalysisList() {
-        logger.info("/analysis");
+    public List<EntityModel<AnalysisDTO>> getAnalysisList() {
+        logger.info("[GET] /analysis");
         List<Analysis> analysisList = analysisRepository.findAll();
-        analysisEventPublisher.publishEvent(new AnalysisCreatedEvent("ANALYSIS EVENT PUBLISHED"));
         if (analysisList.size() == 0){
             return Arrays.asList();
         }
-        return analysisDTOService.findAll(analysisList);
+        return generateLinks(analysisDTOService.findAll(analysisList));
     }
 
     @Override
-    public Optional<Analysis> getAnalysisById(UUID id) {
-        logger.info("/analysis/{}");
-        return analysisRepository.findById(id);
-
+    public EntityModel<AnalysisDTO> getAnalysisById(UUID id) {
+        logger.info("[GET] /analysis/{id}");
+        Optional<Analysis> analysis = analysisRepository.findById(id);
+        if (analysis.isEmpty()){
+            throw new EntityNotFoundException(Analysis.class, id);
+        }
+        return generateLinks(analysisDTOService.findById(analysis.get()));
     }
 
     @Override
-    public Analysis addAnalysis(Analysis analysis) {
-        logger.info("/addStakeholder");
-        return analysisRepository.save(analysis);
+    public EntityModel<AnalysisDTO> addAnalysis(@RequestBody AnalysisDTO analysisDTO) {
+        logger.info("[POST] /addAnalysis");
+        Analysis analysis = analysisRepository.save(analysisDTOService.create(analysisDTO));
+        analysisEventPublisher.publishEvent(new AnalysisCreatedEvent(analysis.toString()));
+        return getAnalysisById(analysis.getAnalysisId());
     }
 
     @Override
-    public Analysis updateAnalysis(Analysis analysis) {
-        logger.info("/stakeholder");
-        return analysisRepository.save(analysis);
+    public EntityModel<AnalysisDTO> updateAnalysis(@RequestBody AnalysisDTO analysisDTO) {
+        logger.info("[PUT] /analysis");
+        Optional<Analysis> analysisOptional = analysisRepository.findById(analysisDTO.getRootEntityID());
+        Analysis analysis  = analysisOptional.get();
+        analysis.setAnalysisName(analysisDTO.getAnalysisName());
+        analysis.setDescription(analysisDTO.getAnalysisDescription());
+        analysisEventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toString()));
+        return getAnalysisById(analysisDTO.getRootEntityID());
     }
 
     @Override
-    public void deleteAnalysis(UUID id) {
-        logger.info("/stakeholder");
+    public ResponseEntity<Void> deleteAnalysis(UUID id) {
+        logger.info("[DELETE] /analysis/{id}");
+        Optional<Analysis> analysisOptional = analysisRepository.findById(id);
+        if (analysisOptional.isEmpty()){
+            throw new EntityNotFoundException(Analysis.class, id);
+        }
+        Analysis analysis = analysisOptional.get();
         analysisRepository.deleteById(id);
+        analysisEventPublisher.publishEvent(new AnalysisDeletedEvent(analysis.toString()));
+        return ResponseEntity.ok().build();
 
     }
 
-    /**
-    @Autowired
-    private StakeholderCreatedEventPublisher applicationEventPublisher;
+    private EntityModel<AnalysisDTO> generateLinks(AnalysisDTO analysisDTO){
+        EntityModel<AnalysisDTO> analysisDTOEntityModel = EntityModel.of(analysisDTO);
+        analysisDTOEntityModel.add(linkTo(methodOn(AnalysisController.class).getAnalysisById(analysisDTO.getRootEntityID())).withSelfRel());
+        analysisDTOEntityModel.add(linkTo(methodOn(AnalysisController.class).deleteAnalysis(analysisDTO.getRootEntityID())).withRel("Deleted"));
+        analysisDTOEntityModel.add(linkTo(methodOn(AnalysisController.class).updateAnalysis(analysisDTO)).withRel("update"));
+        return analysisDTOEntityModel;
+    }
 
-    // Hallo analysis Gruppe das hier ist nur ein test
-    @GetMapping("/event")
-    public ResponseEntity<Void> eventTest() throws InterruptedException {
-        applicationEventPublisher.onStakeholderCreated();
-        return ResponseEntity.ok().build();
-    }**/
+    private List<EntityModel<AnalysisDTO>> generateLinks(List<AnalysisDTO> analysisDTOList){
+        List<EntityModel<AnalysisDTO>> returnList = new ArrayList<>();
+        analysisDTOList.stream().forEach(e -> returnList.add(generateLinks(e)));
+        return returnList;
+
+    }
 }

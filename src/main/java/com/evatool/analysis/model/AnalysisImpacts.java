@@ -17,13 +17,13 @@ public class AnalysisImpacts {
     @Id
     private UUID id = UUID.randomUUID();
     private String title;
-    private int value;
+    private double value;
     private String description;
     private Dimension dimension;
 
     public AnalysisImpacts(){}
 
-    public AnalysisImpacts(String title, String description, int value, Dimension dimension) {
+    public AnalysisImpacts(String title, String description, double value, Dimension dimension) {
         this.title = title;
         this.description = description;
         this.value = value;
@@ -57,7 +57,7 @@ public class AnalysisImpacts {
         this.description = description;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
