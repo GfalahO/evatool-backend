@@ -167,64 +167,6 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testInsertDimension_InsertEmptyDimensionDto_ReturnHttpStatusBadRequest() {
-            // given
-            var httpEntity = new HttpEntity<>(new DimensionDto());
-
-            // when
-            var responseEntity = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
-        void testInsertDimension_InsertDimensionWithNullName_ReturnHttpStatusBadRequest() {
-            // given
-            var dimensionDto = createDummyDimensionDto();
-            dimensionDto.setName(null);
-
-            // when
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var responseEntity = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
-        void testInsertDimension_InsertDimensionWithNullDescription_ReturnHttpStatusBadRequest() {
-            // given
-            var dimensionDto = createDummyDimensionDto();
-            dimensionDto.setDescription(null);
-
-            // when
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var responseEntity = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
-        void testInsertDimension_InsertDimensionWithNullType_ReturnHttpStatusBadRequest() {
-            // given
-            var dimensionDto = createDummyDimensionDto();
-            dimensionDto.setType(null);
-
-            // when
-            var httpEntity = new HttpEntity<>(dimensionDto);
-            var responseEntity = testRestTemplate.postForEntity(
-                    DIMENSIONS, httpEntity, DimensionDto.class);
-
-            // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
         void testInsertDimension_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var dimensionDto = createDummyDimensionDto();
@@ -272,51 +214,6 @@ class DimensionRestControllerTest {
 
             // then
             assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        }
-
-        @Test
-        void testUpdateDimension_UpdateNullName_ReturnHttpStatusBadRequest() {
-            // given
-            var dimensionDto = saveFullDummyDimensionDto();
-
-            // when
-            dimensionDto.setName(null);
-            var putEntity = new HttpEntity<>(dimensionDto);
-            var putResponse = testRestTemplate.exchange(
-                    DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
-
-            // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
-        void testUpdateDimension_UpdateNullDescription_ReturnHttpStatusBadRequest() {
-            // given
-            var dimensionDto = saveFullDummyDimensionDto();
-
-            // when
-            dimensionDto.setDescription(null);
-            var putEntity = new HttpEntity<>(dimensionDto);
-            var response = testRestTemplate.exchange(
-                    DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
-
-            // then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        }
-
-        @Test
-        void testUpdateDimension_UpdateNullType_ReturnHttpStatusBadRequest() {
-            // given
-            var dimensionDto = saveFullDummyDimensionDto();
-
-            // when
-            dimensionDto.setType(null);
-            var putEntity = new HttpEntity<>(dimensionDto);
-            var response = testRestTemplate.exchange(
-                    DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
-
-            // then
-            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         }
 
         @Test

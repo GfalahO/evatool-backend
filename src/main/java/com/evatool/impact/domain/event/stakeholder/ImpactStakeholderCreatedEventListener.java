@@ -3,6 +3,7 @@ package com.evatool.impact.domain.event.stakeholder;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
+import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class ImpactStakeholderCreatedEventListener implements ApplicationListene
         var jsonPayload = event.getJsonPayload();
         var stakeholder = ImpactStakeholderJsonMapper.fromJson(jsonPayload);
         if (stakeholderRepository.existsById(stakeholder.getId())) {
-            throw new EventEntityAlreadyExistsException();
+            throw new EventEntityAlreadyExistsException(ImpactStakeholder.class.getSimpleName());
         }
         stakeholderRepository.save(stakeholder);
         logger.info("Event successfully processed");

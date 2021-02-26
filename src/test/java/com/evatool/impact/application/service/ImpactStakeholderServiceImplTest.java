@@ -1,10 +1,8 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +34,7 @@ class ImpactStakeholderServiceImplTest {
         stakeholderService.deleteStakeholders();
     }
 
-    private ImpactStakeholder saveFullDummyImapctStakeholder() {
+    private ImpactStakeholder saveFullDummyImpactStakeholder() {
         var stakeholder = createDummyStakeholder();
         return stakeholderRepository.save(stakeholder);
     }
@@ -47,7 +45,7 @@ class ImpactStakeholderServiceImplTest {
         @Test
         void testFindDimensionById_ExistingDimension_ReturnDimension() {
             // given
-            var stakeholder = saveFullDummyImapctStakeholder();
+            var stakeholder = saveFullDummyImpactStakeholder();
 
             // when
             var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
@@ -78,7 +76,7 @@ class ImpactStakeholderServiceImplTest {
         void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                saveFullDummyImapctStakeholder();
+                saveFullDummyImpactStakeholder();
             }
 
             // when
@@ -95,7 +93,7 @@ class ImpactStakeholderServiceImplTest {
         @Test
         void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() {
             // given
-            var stakeholder = saveFullDummyImapctStakeholder();
+            var stakeholder = saveFullDummyImpactStakeholder();
 
             // when
             var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
@@ -123,7 +121,7 @@ class ImpactStakeholderServiceImplTest {
         @Test
         void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() {
             // given
-            var stakeholder = saveFullDummyImapctStakeholder();
+            var stakeholder = saveFullDummyImpactStakeholder();
 
             // when
             var newName = "new_name";
@@ -198,7 +196,7 @@ class ImpactStakeholderServiceImplTest {
         void testDeleteAll_InsertStakeholders_ReturnNoStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                saveFullDummyImapctStakeholder();
+                saveFullDummyImpactStakeholder();
             }
 
             // when
