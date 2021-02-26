@@ -1,6 +1,5 @@
 package com.evatool.variants.events.listener;
 
-import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.requirements.RequirementUpdatedEvent;
 import com.evatool.variants.entities.VariantsRequirement;
 import com.evatool.variants.repositories.VariantsRequirementRepository;
