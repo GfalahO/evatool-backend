@@ -1,13 +1,21 @@
 package com.evatool.variants.services;
 
+import com.evatool.analysis.api.interfaces.AnalysisController;
+import com.evatool.analysis.api.interfaces.StakeholderController;
+import com.evatool.requirements.controller.RequirementsController;
 import com.evatool.variants.controller.VariantController;
-import com.evatool.variants.entities.Variant;
-import com.evatool.variants.entities.VariantDto;
+import com.evatool.variants.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class VariantMapper {
@@ -17,16 +25,21 @@ public class VariantMapper {
 
     public List<VariantDto> mapAll(List<Variant> variantList) {
         List<VariantDto> variantDtoList = new ArrayList<>();
-        for(Variant variant : variantList) {
+        for (Variant variant : variantList) {
             variantDtoList.add(map(variant));
         }
         return variantDtoList;
     }
 
     private VariantDto map(Variant variant) {
+
         VariantDto variantDto = new VariantDto();
         variantDto.setTitle(variant.getTitle());
         variantDto.setCriterion(variant.getCriterion());
+
+        Link stakeholderLink = linkTo(methodOn(StakeholderController.class).getStakeholderById(variant.getVariantsStakeholder().getId())).withSelfRel();
+        EntityModel<VariantsStakeholder> variantsStakeholders = EntityModel.of(variant.getVariantsStakeholder());
+        variantsStakeholders.add(stakeholderLink);
 
         variantDto.setVariantsStakeholder(variant.getVariantsStakeholder());
 
@@ -35,16 +48,17 @@ public class VariantMapper {
         variantDto.setStFlagsPot(variant.isStFlagsPot());
         variantDto.setStFlagsReal(variant.isStFlagsReal());
 
-        variant.getSubVariant().forEach(subVariant -> {
-            variantDto.setSubVariant(subVariant.getSubVariant());
-        });
+        Link subVariantLink = linkTo(methodOn(VariantController.class).getAllVariants()).withSelfRel();
+        CollectionModel<Variant> subVariantCollectionModel = CollectionModel.of(variant.getSubVariant());
+        subVariantCollectionModel.add(subVariantLink);
 
-        variant.getVariantsAnalyses().forEach(analysis -> {
-            variantDto.setVariantsAnalysisId(analysis.getId());
-        });
-        variant.getVariantsRequirements().forEach(requirement -> {
-            variantDto.setVariantsRequirementId(requirement.getId());
-        });
+        Link variantAnalysisLink = linkTo(methodOn(AnalysisController.class).getAnalysisList()).withSelfRel();
+        CollectionModel<VariantsAnalysis> analysisCollectionModel = CollectionModel.of(variant.getVariantsAnalyses());
+        analysisCollectionModel.add(variantAnalysisLink);
+
+        Link variantRequirementLink = linkTo(methodOn(RequirementsController.class).getRequirementList()).withSelfRel();
+        CollectionModel<VariantsRequirement> variantsRequirementCollectionModel = CollectionModel.of(variant.getVariantsRequirements());
+        variantsRequirementCollectionModel.add(variantRequirementLink);
 
         return variantDto;
     }
