@@ -1,9 +1,5 @@
 package com.evatool.variants.entities;
 
-import com.evatool.variants.entities.Variant;
-import com.evatool.variants.entities.VariantAnalysis;
-import com.evatool.variants.entities.VariantsRequirement;
-import com.evatool.variants.entities.VariantsStakeholder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +24,7 @@ public class VariantDto {
     private VariantsStakeholder variantsStakeholder;
     private UUID variantsStakeholderId;
 
-    private List<VariantAnalysis> variantsAnalyses;
+    private List<VariantsAnalysis> variantsAnalyses;
     private UUID variantsAnalysisId;
 
     private List<VariantsRequirement> variantsRequirements;
