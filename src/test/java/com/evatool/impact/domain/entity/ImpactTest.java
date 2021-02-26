@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -33,7 +32,7 @@ class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> impact.setValue(value));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setValue(value));
     }
 
     @Test
@@ -44,7 +43,7 @@ class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> impact.setDescription(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setDescription(null));
     }
 
     @Test
@@ -55,7 +54,7 @@ class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> impact.setDimension(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setDimension(null));
     }
 
     @Test
@@ -66,6 +65,6 @@ class ImpactTest {
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> impact.setStakeholder(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setStakeholder(null));
     }
 }

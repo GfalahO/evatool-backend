@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +71,7 @@ public class Impact extends SuperEntity {
         logger.debug("Set Value");
         if (value < -1.0 || value > 1.0) {
             logger.error("Attempted to set value outside its valid range");
-            throw new PropertyViolationException("Value must be in range [-1, 1]");
+            throw new IllegalArgumentException("Value must be in range [-1, 1]");
         }
         this.value = value;
     }
@@ -81,7 +80,7 @@ public class Impact extends SuperEntity {
         logger.debug("Set Description");
         if (description == null) {
             logger.error("Attempted to set description to null");
-            throw new PropertyViolationException("Description cannot be null.");
+            throw new IllegalArgumentException("Description cannot be null.");
         }
         this.description = description;
     }
@@ -90,7 +89,7 @@ public class Impact extends SuperEntity {
         logger.debug("Set Dimension");
         if (dimension == null) {
             logger.error("Attempted to set dimension description to null");
-            throw new PropertyViolationException("Dimension cannot be null.");
+            throw new IllegalArgumentException("Dimension cannot be null.");
         }
         this.dimension = dimension;
     }
@@ -99,7 +98,7 @@ public class Impact extends SuperEntity {
         logger.debug("Set Stakeholder");
         if (stakeholder == null) {
             logger.error("Attempted to set stakeholder to null");
-            throw new PropertyViolationException("Stakeholder cannot be null.");
+            throw new IllegalArgumentException("Stakeholder cannot be null.");
         }
         this.stakeholder = stakeholder;
     }

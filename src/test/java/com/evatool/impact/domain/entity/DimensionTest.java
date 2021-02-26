@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.Test;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
@@ -16,7 +15,7 @@ class DimensionTest {
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setName(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> dimension.setName(null));
     }
 
     @Test
@@ -27,7 +26,7 @@ class DimensionTest {
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setType(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> dimension.setType(null));
     }
 
     @Test
@@ -38,6 +37,6 @@ class DimensionTest {
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> dimension.setDescription(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> dimension.setDescription(null));
     }
 }

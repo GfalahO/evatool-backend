@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.Test;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
@@ -16,6 +15,6 @@ class ImpactStakeholderTest {
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> stakeholder.setName(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setName(null));
     }
 }

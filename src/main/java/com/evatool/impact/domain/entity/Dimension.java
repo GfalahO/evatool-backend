@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +69,7 @@ public class Dimension extends SuperEntity {
         logger.debug("Set Name");
         if (name == null) {
             logger.error("Attempted to set name to null");
-            throw new PropertyViolationException("Name cannot be null.");
+            throw new IllegalArgumentException("Name cannot be null.");
         }
         this.name = name;
     }
@@ -78,7 +77,7 @@ public class Dimension extends SuperEntity {
     public void setType(Type type) {
         if (type == null) {
             logger.error("Attempted to set type to null");
-            throw new PropertyViolationException("Type cannot be null.");
+            throw new IllegalArgumentException("Type cannot be null.");
         }
         this.type = type;
     }
@@ -87,7 +86,7 @@ public class Dimension extends SuperEntity {
         logger.debug("Set Description");
         if (description == null) {
             logger.error("Attempted to set description to null");
-            throw new PropertyViolationException("Description cannot be null.");
+            throw new IllegalArgumentException("Description cannot be null.");
         }
         this.description = description;
     }

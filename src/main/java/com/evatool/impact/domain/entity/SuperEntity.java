@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ public class SuperEntity {
         logger.debug("Set id");
         if (this.idAlreadySet()) {
             logger.error("Attempted to set existing id");
-            throw new PropertyViolationException("Existing id cannot be set.");
+            throw new IllegalArgumentException("Existing id cannot be set.");
         }
         this.id = id;
     }

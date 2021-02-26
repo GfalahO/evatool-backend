@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +54,7 @@ public class ImpactStakeholder extends SuperEntity {
         logger.debug("Set Name");
         if (name == null) {
             logger.error("Attempted to set name to null");
-            throw new PropertyViolationException("Name cannot be null.");
+            throw new IllegalArgumentException("Name cannot be null.");
         }
         this.name = name;
     }
