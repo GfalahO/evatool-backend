@@ -14,7 +14,7 @@ public class EvaToolApp {
     public static void main(String[] args) {
         SpringApplication.run(EvaToolApp.class, args);
     }
-    @Bean
+    /*@Bean
     public CommandLineRunner initData(RequirementsVariantsRepository requirementsVariantsRepository,
                                       RequirementRepository requirementRepository,
                                       RequirementsImpactsRepository requirementsImpactsRepository,
@@ -48,5 +48,5 @@ public class EvaToolApp {
             requirementPointRepository.save(requirement_gr1);
             requirementPointRepository.save(requirement_gr2);
         };
-    }
+    }*/
 }
