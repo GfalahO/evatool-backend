@@ -9,9 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.UUID;
 
-@Entity(name = "VARIANTS_STAKEHOLDER")
+@Entity(name = "VARIANT_ANALYSIS")
 @Getter
-public class VariantsStakeholder extends RepresentationModel<VariantsStakeholder> {
+public class VariantAnalysis extends RepresentationModel<VariantAnalysis> {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
