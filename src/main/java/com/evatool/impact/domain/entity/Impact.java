@@ -47,8 +47,13 @@ public class Impact extends SuperEntity {
 
     @Override
     public String toString() {
-        return "Impact{" + "value=" + value + ", description='" + description + '\'' + ", dimension=" + dimension
-                + ", stakeholder=" + stakeholder + ", id='" + id + '\'' + '}';
+        return "Impact{" +
+                "value=" + value +
+                ", description='" + description + '\'' +
+                ", dimension=" + dimension +
+                ", stakeholder=" + stakeholder +
+                ", id=" + id +
+                '}';
     }
 
     @Override
