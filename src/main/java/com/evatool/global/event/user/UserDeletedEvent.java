@@ -8,8 +8,8 @@ public class UserDeletedEvent extends ApplicationEvent {
     @Getter
     private String jsonPayload;
 
-    public UserDeletedEvent(Object source, String jsonPayload) {
-        super(source);
+    public UserDeletedEvent(String jsonPayload) {
+        super(jsonPayload);
         this.jsonPayload = jsonPayload;
     }
 }

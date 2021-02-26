@@ -11,8 +11,8 @@ public class UserCreatedEvent extends ApplicationEvent {
     @Getter
     private String jsonPayload;
 
-    public UserCreatedEvent(Object source, String jsonPayload) {
-        super(source);
+    public UserCreatedEvent(String jsonPayload) {
+        super(jsonPayload);
         this.jsonPayload = jsonPayload;
     }
 }

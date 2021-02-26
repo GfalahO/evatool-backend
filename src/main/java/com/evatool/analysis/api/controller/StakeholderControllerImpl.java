@@ -14,13 +14,16 @@ import com.evatool.analysis.repository.AnalysisImpactRepository;
 import com.evatool.analysis.repository.StakeholderRepository;
 import com.evatool.analysis.services.StakeholderDTOService;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
+import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
+import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -82,19 +85,22 @@ public class StakeholderControllerImpl implements StakeholderController {
         stakeholder.setStakeholderName(stakeholderDTO.getStakeholderName());
         stakeholder.setStakeholderLevel(stakeholderDTO.getStakeholderLevel());
         stakeholder.setPriority(stakeholderDTO.getPriority());
-        Set<AnalysisImpacts> analysisImpactsSet = analysisImpactRepository.findById(stakeholderDTO.getImpactsTitles().keySet());
-
-        Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(requirementDTO.getVariantsTitle().keySet());
-        analysis.setAnalysisName(analysisDTO.getAnalysisName());
-        analysis.setDescription(analysisDTO.getAnalysisDescription());
-        analysisEventPublisher.publishEvent(new AnalysisUpdatedEvent(analysis.toString()));
-        return getAnalysisById(analysisDTO.getRootEntityID());
+        List<AnalysisImpacts> analysisImpactsSet = analysisImpactRepository.findAllById(stakeholderDTO.getImpactsTitles().keySet());
+        stakeholderEventPublisher.publishEvent(new AnalysisUpdatedEvent(stakeholder.toString()));
+        return getStakeholderById(stakeholderDTO.getRootEntityID());
     }
 
     @Override
-    public void deleteStakeholder(UUID id) {
-        logger.info("/stakeholder");
+    public ResponseEntity<Void> deleteStakeholder(UUID id) {
+        logger.info("[DELETE] /stakeholder/{id}");
+        Optional<Stakeholder> stakeholderOptional = stakeholderRepository.findById(id);
+        if (stakeholderOptional.isEmpty()){
+            throw new EntityNotFoundException(Analysis.class, id);
+        }
+        Stakeholder stakeholder = stakeholderOptional.get();
         stakeholderRepository.deleteById(id);
+        stakeholderEventPublisher.publishEvent(new StakeholderDeletedEvent(stakeholder.toString()));
+        return ResponseEntity.ok().build();
     }
 
     private EntityModel<StakeholderDTO> generateLinks(StakeholderDTO stakeholderDTO){

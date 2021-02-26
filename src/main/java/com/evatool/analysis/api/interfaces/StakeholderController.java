@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -52,6 +53,10 @@ public interface StakeholderController {
 
     @DeleteMapping("/stakeholder/{id}")
     @ApiOperation(value = "This method delete an stakeholder by his id ")
-    public void deleteStakeholder(@PathVariable UUID id);
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "The entity is updated"),
+            @ApiResponse(code = 400, message = "The entity is invalid"),
+            @ApiResponse(code = 404, message = "The entity is not found")})
+    public ResponseEntity<Void> deleteStakeholder(@PathVariable UUID id);
 
 }
