@@ -3,6 +3,7 @@ package com.evatool.requirements.controller;
 import com.evatool.global.event.requirements.RequirementCreatedEvent;
 import com.evatool.global.event.requirements.RequirementDeletedEvent;
 import com.evatool.global.event.requirements.RequirementUpdatedEvent;
+import com.evatool.impact.domain.entity.Impact;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementsAnalysis;
@@ -104,9 +105,7 @@ public class RequirementsController {
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public ResponseEntity<EntityModel<RequirementDTO>> newRequirement(@RequestBody RequirementDTO requirementDTO) {
 		logger.info("[POST] /requirements");
-		//eventPublisher.publishEvent(new RequirementCreatedEvent(null));
-		Requirement requirement = requirementRepository.save(dtoService.create(requirementDTO));
-		requirementPointController.createPoints(requirement,requirementDTO);
+		Requirement requirement = requirementPointController.createPoints(dtoService.create(requirementDTO),requirementDTO);
 		eventPublisher.publishEvent(new RequirementCreatedEvent(requirement.toJson()));
 		return new ResponseEntity<>(getRequirementById(requirement.getId()), HttpStatus.CREATED);
 	}
@@ -120,6 +119,7 @@ public class RequirementsController {
 		logger.info("[PUT] /requirements/{id}");
 		//eventPublisher.publishEvent(new RequirementUpdatedEvent(null));
 		Optional<Requirement> requirementOptional = requirementRepository.findById(requirementDTO.getRootEntityId());
+		if(requirementOptional.isEmpty()) throw new EntityNotFoundException(Requirement.class, requirementDTO.getRootEntityId());
 		Requirement requirement = requirementOptional.get();
 		requirement.setDescription(requirementDTO.getRequirementDescription());
 		requirement.setTitle(requirementDTO.getRequirementTitle());

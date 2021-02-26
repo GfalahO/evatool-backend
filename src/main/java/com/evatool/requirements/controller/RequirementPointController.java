@@ -59,18 +59,22 @@ public class RequirementPointController {
 		return requirementPointRepository.findByRequirementAndRequirementsImpact(requirement, requirementsImpact);
 	}
 
-	public void createPoints(Requirement requirement, RequirementDTO requirementDTO) {
+	public Requirement createPoints(Requirement requirement, RequirementDTO requirementDTO) {
 		Collection<RequirementPoint> requirementPointCollection = new ArrayList<>();
 		for( Map.Entry<UUID, Integer> entry:requirementDTO.getRequirementImpactPoints().entrySet()) {
 			RequirementPoint requirementPoint = new RequirementPoint();
 			requirementPoint.setRequirement(requirement);
 			requirementPoint.setPoints(entry.getValue());
 			Optional<RequirementsImpact> requirementsImpact = requirementsImpactsRepository.findById(entry.getKey());
-			if(requirementsImpact.isEmpty()) throw new EntityNotFoundException(RequirementsImpact.class,entry.getKey(),true,requirement);
+			if(requirementsImpact.isEmpty()){
+				throw new EntityNotFoundException(RequirementsImpact.class,entry.getKey());
+			}
 			requirementPoint.setRequirementsImpact(requirementsImpact.get());
 			requirementPointCollection.add(requirementPoint);
 		}
+		Requirement requirement1=requirementRepository.save(requirement);
 		this.newRequirementPoint(requirementPointCollection);
+		return requirement;
 	}
 
 	public void updatePoints(Requirement requirement, RequirementDTO requirementDTO) {
