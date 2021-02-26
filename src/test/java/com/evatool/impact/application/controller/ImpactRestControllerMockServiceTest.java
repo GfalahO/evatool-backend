@@ -142,7 +142,6 @@ public class ImpactRestControllerMockServiceTest {
         }
     }
 
-
     @Nested
     class Insert {
 

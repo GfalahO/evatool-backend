@@ -4,6 +4,8 @@ import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.impact.domain.entity.Impact;
+import com.evatool.impact.domain.entity.ImpactStakeholder;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -15,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
+import static com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -33,20 +36,24 @@ class ImpactStakeholderServiceImplTest {
         stakeholderService.deleteStakeholders();
     }
 
+    private ImpactStakeholder saveFullDummyImapctStakeholder() {
+        var stakeholder = createDummyStakeholder();
+        return stakeholderRepository.save(stakeholder);
+    }
+
     @Nested
     class GetById {
 
         @Test
         void testFindDimensionById_ExistingDimension_ReturnDimension() {
             // given
-            var stakeholder = createDummyStakeholder();
-            stakeholder = stakeholderRepository.save(stakeholder);
+            var stakeholder = saveFullDummyImapctStakeholder();
 
             // when
             var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
 
             // then
-            assertThat(stakeholderDto).isEqualTo(ImpactStakeholderDtoMapper.toDto(stakeholder));
+            assertThat(stakeholderDto).isEqualTo(toDto(stakeholder));
         }
 
         @Test
@@ -71,8 +78,7 @@ class ImpactStakeholderServiceImplTest {
         void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                var stakeholderDto = createDummyStakeholderDto();
-                stakeholderService.createStakeholder(stakeholderDto);
+                saveFullDummyImapctStakeholder();
             }
 
             // when
@@ -89,14 +95,13 @@ class ImpactStakeholderServiceImplTest {
         @Test
         void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() {
             // given
-            var stakeholderDto = createDummyStakeholderDto();
+            var stakeholder = saveFullDummyImapctStakeholder();
 
             // when
-            var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
-            var retrievedStakeholder = stakeholderService.findStakeholderById(insertedStakeholder.getId());
+            var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
 
             // then
-            assertThat(insertedStakeholder).isEqualTo(retrievedStakeholder);
+            assertThat(stakeholderDto).isEqualTo(toDto(stakeholder));
         }
 
         @Test
@@ -118,18 +123,16 @@ class ImpactStakeholderServiceImplTest {
         @Test
         void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() {
             // given
-            var stakeholderDto = createDummyStakeholderDto();
-            var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
+            var stakeholder = saveFullDummyImapctStakeholder();
 
             // when
             var newName = "new_name";
-            insertedStakeholder.setName(newName);
-
-            insertedStakeholder = stakeholderService.updateStakeholder(insertedStakeholder);
-            var updatedStakeholder = stakeholderService.findStakeholderById(insertedStakeholder.getId());
+            stakeholder.setName(newName);
+            stakeholderService.updateStakeholder(toDto(stakeholder));
+            var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
 
             // then
-            assertThat(updatedStakeholder.getName()).isEqualTo(newName);
+            assertThat(stakeholderDto.getName()).isEqualTo(newName);
         }
 
         @Test
@@ -195,8 +198,7 @@ class ImpactStakeholderServiceImplTest {
         void testDeleteAll_InsertStakeholders_ReturnNoStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
-                var stakeholderDto = createDummyStakeholderDto();
-                stakeholderService.createStakeholder(stakeholderDto);
+                saveFullDummyImapctStakeholder();
             }
 
             // when

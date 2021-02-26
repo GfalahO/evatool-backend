@@ -1,12 +1,9 @@
 package com.evatool.impact.domain.repository;
 
 import com.evatool.impact.domain.entity.Dimension;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.util.UUID;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -110,36 +107,5 @@ class DimensionRepositoryTest {
         // then
         assertThat(socialDimensions.size()).isEqualTo(n_socialDimensions);
         assertThat(economicDimension.size()).isEqualTo(n_economicDimensions);
-    }
-
-    @Nested
-    class SuperEntityUuidGeneratorTest {
-
-        @Test
-        void testPersist_NullId_Allow() {
-            // given
-            var superEntity = createDummyDimension();
-
-            // when
-            var savedSuperEntity = dimensionRepository.save(superEntity);
-
-            // then
-            assertThat(savedSuperEntity.getId()).isNotNull();
-        }
-
-        @Test
-        void testPersist_NotNullId_Allow() {
-            // given
-            var superEntity = createDummyDimension();
-            var id = UUID.randomUUID();
-            superEntity.setId(id);
-
-            // when
-            var savedSuperEntity = dimensionRepository.save(superEntity);
-
-            // then
-            assertThat(savedSuperEntity.getId()).isNotNull();
-            assertThat(savedSuperEntity.getId()).isEqualTo(id);
-        }
     }
 }
