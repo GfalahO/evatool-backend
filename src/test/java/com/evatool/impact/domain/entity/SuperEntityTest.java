@@ -21,19 +21,7 @@ class SuperEntityTest {
     }
 
     @Test
-    void testSetId_ValidToNullValue_ThrowIllegalArgumentException() {
-        // given
-        var superEntity = new SuperEntity();
-
-        // when
-        superEntity.setId(UUID.randomUUID());
-
-        // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> superEntity.setId(null));
-    }
-
-    @Test
-    void testSetId_IllegalValueSequence_ThrowIllegalArgumentException() {
+    void testSetId_IdAlreadySet_ThrowIllegalArgumentException() {
         // given
         var superEntity = new SuperEntity();
 
