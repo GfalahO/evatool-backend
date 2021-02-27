@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DimensionDtoMapperTest {
 
     @Test
-    void testToDot_Dimension_EqualsRecreatedDimension() {
+    void testToDto_RecreatedEntity_EqualsEntity() {
         // given
         var dimension = createDummyDimension();
         dimension.setId(UUID.randomUUID());
@@ -27,7 +27,7 @@ class DimensionDtoMapperTest {
     }
 
     @Test
-    void testFromDto_NewDimensionDto_EqualsRecreatedDimensionDto() {
+    void testFromDto_RecreatedDto_EqualsDto() {
         // given
         var dimensionDto = createDummyDimensionDto();
         dimensionDto.setId(UUID.randomUUID());

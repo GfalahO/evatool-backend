@@ -52,7 +52,7 @@ public class ImpactRestControllerTest {
         var impact = createDummyImpact();
         impact.setDimension(dimensionRepository.save(impact.getDimension()));
         impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
-        return impactService.insert(toDto(impact));
+        return impactService.create(toDto(impact));
     }
 
     private ImpactDto saveDummyImpactDtoChildren() {
@@ -65,10 +65,10 @@ public class ImpactRestControllerTest {
     }
 
     @Nested
-    class GetById {
+    class FindById {
 
         @Test
-        void testGetImpactById_InsertedImpact_ReturnImpact() {
+        void testFindById_InsertedEntity_ReturnEntity() {
             // given
             var impactDto = saveFullDummyImpactDto();
 
@@ -82,7 +82,7 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testGetImpactById_NonExistingImpact_ReturnHttpStatusNotFound() {
+        void testFindById_NonExistingEntity_ReturnHttpStatusNotFound() {
             // given
             var response = testRestTemplate.getForEntity(
                     IMPACTS + "/" + UUID.randomUUID().toString(), ImpactDto.class);
@@ -95,32 +95,32 @@ public class ImpactRestControllerTest {
     }
 
     @Nested
-    class GetAll {
+    class FindAll {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testGetImpacts_ExistingImpacts_ReturnImpacts(int value) {
+        void testFindAll_ExistingEntities_ReturnEntities(int value) {
             for (int i = 0; i < value; i++) {
                 // given
                 saveFullDummyImpactDto();
             }
 
             // when
-            var getResponse = testRestTemplate.getForEntity(
+            var response = testRestTemplate.getForEntity(
                     IMPACTS, ImpactDto[].class);
-            var impactDtoList = getResponse.getBody();
+            var impactDtoList = response.getBody();
 
             // then
-            assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(impactDtoList).isNotNull().hasSize(value);
         }
     }
 
     @Nested
-    class Insert {
+    class Create {
 
         @Test
-        void testInsertImpact_InsertImpact_ReturnInsertedImpact() {
+        void testCreate_InsertEntity_ReturnInsertedEntity() {
             // given
             var impactDto = saveDummyImpactDtoChildren();
 
@@ -134,7 +134,7 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testInsertImpact_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
+        void testCreate_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var impactDto = saveDummyImpactDtoChildren();
             impactDto.setId(UUID.randomUUID());
@@ -153,7 +153,7 @@ public class ImpactRestControllerTest {
     class Update {
 
         @Test
-        void testUpdateImpact_InsertedImpact_ReturnUpdatedImpact() {
+        void testUpdate_InsertedEntity_ReturnUpdatedEntity() {
             // given
             var impactDto = saveFullDummyImpactDto();
 
@@ -168,7 +168,7 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testUpdateImpact_UpdateNonExistingId_ReturnHttpStatusNotFound() {
+        void testUpdate_UpdateNonExistingId_ReturnHttpStatusNotFound() {
             // given
             var impact = createDummyImpact();
             impact.setId(UUID.randomUUID());
@@ -184,7 +184,7 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testUpdateImpact_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
+        void testUpdate_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var impactDto = createDummyImpactDto();
 
@@ -199,10 +199,10 @@ public class ImpactRestControllerTest {
     }
 
     @Nested
-    class Delete {
+    class DeleteById {
 
         @Test
-        void testDeleteImpact_ExistingImpact_DeleteImpactAndReturnHttpStatusOK() {
+        void testDeleteById_ExistingEntity_ReturnHttpStatusOK() {
             // given
             var impactDto = saveFullDummyImpactDto();
 
@@ -217,7 +217,7 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testDeleteImpact_DeleteNonExistingId_ReturnHttpStatusNotFound() {
+        void testDeleteById_DeleteNonExistingId_ReturnHttpStatusNotFound() {
             // given
             var impactDto = saveFullDummyImpactDto();
             impactDto.setId(UUID.randomUUID());

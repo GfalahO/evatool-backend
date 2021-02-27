@@ -66,10 +66,10 @@ class ImpactServiceImplTest {
     }
 
     @Nested
-    class GetById {
+    class FindById {
 
         @Test
-        void testFindImpactById_ExistingImpact_ReturnImpact() {
+        void testFindById_ExistingEntity_ReturnEntity() {
             // given
             var impact = saveFullDummyImpact();
 
@@ -81,43 +81,48 @@ class ImpactServiceImplTest {
         }
 
         @Test
-        void testFindImpactById_UnknownId() {
+        void testFindById_NonExistingId_ThrowEntityNotFoundException() {
+            // given
             var id = UUID.randomUUID();
+
+            // when
+
+            // then
             assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findById(id));
         }
     }
 
     @Nested
-    class GetAll {
+    class FindAll {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
+        void testFindAll_InsertedEntities_ReturnEntities(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyImpact();
             }
 
             // when
-            var stakeholders = impactService.findAll();
+            var impacts = impactService.findAll();
 
             // then
-            assertThat(stakeholders.size()).isEqualTo(value);
+            assertThat(impacts.size()).isEqualTo(value);
         }
     }
 
     @Nested
-    class Insert {
+    class Create {
 
         @Test
-        void testInsertDimension_InsertedDimension_ReturnInsertedDimension() {
+        void testCreate_InsertedEntity_ReturnInsertedEntity() {
             // given
             var impactDto = createDummyImpactDto();
             impactDto.setDimension(DimensionDtoMapper.toDto(saveDummyDimension()));
             impactDto.setStakeholder(ImpactStakeholderDtoMapper.toDto(saveDummyStakeholder()));
 
             // when
-            var insertedImpact = impactService.insert(impactDto);
+            var insertedImpact = impactService.create(impactDto);
             var retrievedImpact = impactService.findById(insertedImpact.getId());
 
             // then
@@ -125,7 +130,7 @@ class ImpactServiceImplTest {
         }
 
         @Test
-        void testInsertDimension_ExistingId_ThrowEntityIdMustBeNullException() {
+        void testCreate_ExistingId_ThrowEntityIdMustBeNullException() {
             // given
             var impactDto = createDummyImpactDto();
 
@@ -133,7 +138,7 @@ class ImpactServiceImplTest {
             impactDto.setId(UUID.randomUUID());
 
             // then
-            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> impactService.insert(impactDto));
+            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> impactService.create(impactDto));
         }
     }
 
@@ -141,7 +146,7 @@ class ImpactServiceImplTest {
     class Update {
 
         @Test
-        void testUpdateImpact_UpdatedImpact_ReturnUpdatedImpact() {
+        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() {
             // given
             var impact = saveFullDummyImpact();
 
@@ -157,7 +162,7 @@ class ImpactServiceImplTest {
         }
 
         @Test
-        void testUpdateImpact_NonExistingId_ThrowEntityNotFoundException() {
+        void testUpdate_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var impactDto = createDummyImpactDto();
             impactDto.setId(UUID.randomUUID());
@@ -169,7 +174,7 @@ class ImpactServiceImplTest {
         }
 
         @Test
-        void testUpdateImpact_NullId_ThrowEntityIdRequiredException() {
+        void testUpdate_NullId_ThrowEntityIdRequiredException() {
             // given
             var impactDto = createDummyImpactDto();
 
@@ -184,7 +189,7 @@ class ImpactServiceImplTest {
     class Delete {
 
         @Test
-        void testDeleteImpactById_DeleteImpact_ReturnNoImpacts() {
+        void testDeleteById_DeleteEntity_ReturnNoEntities() {
             // given
             var impact = saveFullDummyImpact();
 
@@ -197,7 +202,7 @@ class ImpactServiceImplTest {
         }
 
         @Test
-        void testDeleteImpactById_NonExistingId_ThrowEntityNotFoundException() {
+        void testDeleteById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var impact = createDummyImpact();
             impact.setId(UUID.randomUUID());
@@ -215,7 +220,7 @@ class ImpactServiceImplTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testDeleteAll_InsertImpacts_ReturnNoImpacts(int value) {
+        void testDeleteAll_InsertedEntities_ReturnNoEntities(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyImpact();

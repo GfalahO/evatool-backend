@@ -41,15 +41,15 @@ class DimensionRestControllerTest {
     private DimensionDto saveFullDummyDimensionDto() {
         var dimension = createDummyDimension();
         var dimensionDto = toDto(dimension);
-        return dimensionService.insert(dimensionDto);
+        return dimensionService.create(dimensionDto);
 
     }
 
     @Nested
-    class GetById {
+    class FindById {
 
         @Test
-        void testGetDimensionById_InsertedDimension_ReturnDimension() {
+        void testFindById_InsertedEntity_ReturnEntity() {
             // given
             var dimensionDto = saveFullDummyDimensionDto();
 
@@ -63,7 +63,7 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testGetDimensionById_NonExistingDimension_ReturnHttpStatusNotFound() {
+        void testFindById_NonExistingEntity_ReturnHttpStatusNotFound() {
             // given
             var responseEntity = testRestTemplate.getForEntity(
                     DIMENSIONS + "/" + UUID.randomUUID().toString(), DimensionDto.class);
@@ -76,11 +76,11 @@ class DimensionRestControllerTest {
     }
 
     @Nested
-    class GetAll {
+    class FindAll {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testGetDimensions_ExistingDimensions_ReturnDimensions(int value) {
+        void testFindAll_ExistingEntities_ReturnEntities(int value) {
             for (int i = 0; i < value; i++) {
                 // given
                 saveFullDummyDimensionDto();
@@ -98,23 +98,23 @@ class DimensionRestControllerTest {
     }
 
     @Nested
-    class GetByType {
+    class FindAllByType {
 
         @Test
-        void testGetByType_ExistingDimensions_ReturnDimensions() {
+        void testFindAllByType_ExistingEntities_ReturnEntities() {
             // given
             int n_socialDimensions = 3;
             for (int i = 0; i < n_socialDimensions; i++) {
                 var socialDimension = createDummyDimensionDto();
                 socialDimension.setType(Dimension.Type.SOCIAL);
-                dimensionService.insert(socialDimension);
+                dimensionService.create(socialDimension);
             }
 
             int n_economicDimensions = 4;
             for (int i = 0; i < n_economicDimensions; i++) {
                 var economicDimension = createDummyDimensionDto();
                 economicDimension.setType(Dimension.Type.ECONOMIC);
-                dimensionService.insert(economicDimension);
+                dimensionService.create(economicDimension);
             }
 
             // when
@@ -133,10 +133,10 @@ class DimensionRestControllerTest {
     }
 
     @Nested
-    class GetDimensionTypes {
+    class findAllTypes {
 
         @Test
-        void testGetDimensionTypes_ReturnDimensionTypes() {
+        void testFindAllTypes_ReturnAllPossibleTypes() {
             // given
 
             // when
@@ -150,10 +150,10 @@ class DimensionRestControllerTest {
     }
 
     @Nested
-    class Insert {
+    class Create {
 
         @Test
-        void testInsertDimension_InsertDimension_ReturnInsertedDimension() {
+        void testCreate_InsertEntity_ReturnInsertedEntity() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -167,7 +167,7 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testInsertDimension_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
+        void testCreate_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
@@ -186,7 +186,7 @@ class DimensionRestControllerTest {
     class Update {
 
         @Test
-        void testUpdateDimension_InsertedDimension_ReturnUpdatedDimension() {
+        void testUpdate_InsertedEntity_ReturnUpdatedEntity() {
             // given
             var dimensionDto = saveFullDummyDimensionDto();
 
@@ -201,7 +201,7 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testUpdateDimension_UpdateNonExistingId_ReturnHttpStatusNotFound() {
+        void testUpdate_UpdateNonExistingId_ReturnHttpStatusNotFound() {
             // given
             var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID());
@@ -217,7 +217,7 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testUpdateDimension_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
+        void testUpdate_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -232,10 +232,10 @@ class DimensionRestControllerTest {
     }
 
     @Nested
-    class Delete {
+    class DeleteById {
 
         @Test
-        void testDeleteDimension_ExistingDimension_DeleteDimensionAndReturnHttpStatusOK() {
+        void testDeleteById_ExistingEntity_ReturnHttpStatusOK() {
             // given
             var dimensionDto = saveFullDummyDimensionDto();
 
@@ -250,7 +250,7 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testDeleteDimension_DeleteNonExistingId_ReturnHttpStatusNotFound() {
+        void testDeleteById_DeleteNonExistingId_ReturnHttpStatusNotFound() {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());

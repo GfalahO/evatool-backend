@@ -77,7 +77,7 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public DimensionDto insert(DimensionDto dimensionDto) {
+    public DimensionDto create(DimensionDto dimensionDto) {
         logger.info("Create Dimension");
         if (dimensionDto.getId() != null) {
             throw new EntityIdMustBeNullException(Dimension.class.getSimpleName());

@@ -43,10 +43,10 @@ class DimensionRestControllerMockServiceTest {
     private DimensionService dimensionService;
 
     @Nested
-    class GetById {
+    class FindById {
 
         @Test
-        void testGetDimensionById_ExistingDimension_ReturnDimension() throws Exception {
+        void testFindById_ExistingEntity_ReturnEntity() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -62,7 +62,7 @@ class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        void testGetDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
+        void testFindById_ExistingEntity_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
@@ -88,7 +88,7 @@ class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        void testGetDimensionById_NonExistingDimension_ReturnErrorMessage() throws Exception {
+        void testFindById_NonExistingEntity_ReturnErrorMessage() throws Exception {
             // given
             var id = UUID.randomUUID().toString();
 
@@ -111,11 +111,11 @@ class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    class GetAll {
+    class FindAll {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testGetAllDimensions_ExistingDimensions_ReturnDimensions(int value) throws Exception {
+        void testFindAll_ExistingEntities_ReturnEntities(int value) throws Exception {
             var dimensionDtoList = new ArrayList<DimensionDto>();
             for (int i = 0; i < value; i++) {
                 // given
@@ -135,10 +135,10 @@ class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    class GetByType {
+    class FindAllByType {
 
         @Test
-        void testGetByType_ExistingDimensions_ReturnDimensions() throws Exception {
+        void testFindAllByType_ExistingEntities_ReturnEntities() throws Exception {
             // given
             var socialDimensions = new ArrayList<DimensionDto>();
             for (int i = 0; i < 3; i++) {
@@ -174,17 +174,17 @@ class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    class Insert {
+    class Create {
 
         @Test
-        void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws Exception {
+        void testCreate_InsertedEntity_ReturnInsertedEntity() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID();
             dimensionDto.setId(id);
 
             // when
-            when(dimensionService.insert(any(DimensionDto.class))).thenReturn(dimensionDto);
+            when(dimensionService.create(any(DimensionDto.class))).thenReturn(dimensionDto);
 
             // then
             mvc.perform(post(DIMENSIONS).content(new ObjectMapper().writeValueAsString(dimensionDto))
@@ -198,13 +198,13 @@ class DimensionRestControllerMockServiceTest {
     class Update {
 
         @Test
-        void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
+        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
 
             // when
-            when(dimensionService.insert(any(DimensionDto.class))).thenReturn(dimensionDto);
+            when(dimensionService.create(any(DimensionDto.class))).thenReturn(dimensionDto);
             dimensionDto.setName("new_name");
             when(dimensionService.update(any(DimensionDto.class))).thenReturn(dimensionDto);
 
@@ -219,10 +219,10 @@ class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    class Delete {
+    class DeleteById {
 
         @Test
-        void testDeleteDimension_DeletedDimension_ReturnNoDimensions() throws Exception {
+        void testDeleteById_DeletedEntity_ReturnNoEntities() throws Exception {
             // given
 
             // when

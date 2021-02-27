@@ -61,9 +61,9 @@ public class ImpactRestController {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 422, message = "Unprocessable")})
-    public ResponseEntity<EntityModel<ImpactDto>> insert(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
+    public ResponseEntity<EntityModel<ImpactDto>> create(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("POST " + IMPACTS);
-        var insertedImpactDto = impactService.insert(impactDto);
+        var insertedImpactDto = impactService.create(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(insertedImpactDto), HttpStatus.CREATED);
     }
 

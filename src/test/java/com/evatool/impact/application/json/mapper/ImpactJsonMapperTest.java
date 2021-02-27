@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ImpactJsonMapperTest {
 
     @Test
-    void testToJson_NewImpact_EqualsImpactJson() {
+    void testToJson_EntityJson_EqualsEntity() {
         // given
         var impact = createDummyImpact();
         impact.setId(UUID.randomUUID());

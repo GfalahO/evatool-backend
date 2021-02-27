@@ -11,7 +11,7 @@ public interface ImpactStakeholderService {
 
     List<ImpactStakeholderDto> findAll();
 
-    ImpactStakeholderDto insert(ImpactStakeholderDto impactStakeholderDto);
+    ImpactStakeholderDto create(ImpactStakeholderDto impactStakeholderDto);
 
     ImpactStakeholderDto update(ImpactStakeholderDto impactStakeholderDto);
 

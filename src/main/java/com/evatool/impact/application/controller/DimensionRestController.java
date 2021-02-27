@@ -68,9 +68,9 @@ public class DimensionRestController {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 422, message = "Unprocessable")})
-    public ResponseEntity<EntityModel<DimensionDto>> insert(@ApiParam("Dimension") @Valid @RequestBody DimensionDto dimensionDto) {
+    public ResponseEntity<EntityModel<DimensionDto>> create(@ApiParam("Dimension") @Valid @RequestBody DimensionDto dimensionDto) {
         logger.info("POST " + DIMENSIONS);
-        var insertedDimensionDto = dimensionService.insert(dimensionDto);
+        var insertedDimensionDto = dimensionService.create(dimensionDto);
         return new ResponseEntity<>(getDimensionWithLinks(insertedDimensionDto), HttpStatus.CREATED);
     }
 

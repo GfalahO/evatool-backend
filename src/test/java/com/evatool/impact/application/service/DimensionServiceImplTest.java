@@ -41,10 +41,10 @@ class DimensionServiceImplTest {
     }
 
     @Nested
-    class GetById {
+    class FindById {
 
         @Test
-        void testFindDimensionById_ExistingDimension_ReturnDimension() {
+        void testFindById_ExistingEntity_ReturnEntity() {
             // given
             var dimension = saveFullDummyDimension();
 
@@ -56,7 +56,7 @@ class DimensionServiceImplTest {
         }
 
         @Test
-        void testGetDimensionById_NonExistingId_ThrowEntityNotFoundException() {
+        void testFindById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID());
@@ -70,23 +70,23 @@ class DimensionServiceImplTest {
     }
 
     @Nested
-    class GetByType {
+    class FindByType {
 
         @Test
-        void testGetByType_ExistingDimensions_ReturnDimensions() {
+        void testFindByType_ExistingEntities_ReturnEntities() {
             // given
             int n_socialDimensions = 3;
             for (int i = 0; i < n_socialDimensions; i++) {
                 var socialDimension = createDummyDimensionDto();
                 socialDimension.setType(Dimension.Type.SOCIAL);
-                dimensionService.insert(socialDimension);
+                dimensionService.create(socialDimension);
             }
 
             int n_economicDimensions = 4;
             for (int i = 0; i < n_economicDimensions; i++) {
                 var economicDimension = createDummyDimensionDto();
                 economicDimension.setType(Dimension.Type.ECONOMIC);
-                dimensionService.insert(economicDimension);
+                dimensionService.create(economicDimension);
             }
 
             // when
@@ -100,15 +100,15 @@ class DimensionServiceImplTest {
     }
 
     @Nested
-    class GetAll {
+    class FindAll {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testGetAllDimensions_InsertedDimensions_ReturnDimensions(int value) {
+        void testFindAll_InsertedEntities_ReturnEntities(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 var dimensionDto = createDummyDimensionDto();
-                dimensionService.insert(dimensionDto);
+                dimensionService.create(dimensionDto);
             }
 
             // when
@@ -120,10 +120,10 @@ class DimensionServiceImplTest {
     }
 
     @Nested
-    class GetDimensionTypes {
+    class FindAllByTypes {
 
         @Test
-        void testGetAllDimensionTypes_ReturnAllDimensionTypes() {
+        void testFindAllTypes_ReturnAllTypes() {
             // given
 
             // when
@@ -136,15 +136,15 @@ class DimensionServiceImplTest {
     }
 
     @Nested
-    class Insert {
+    class Create {
 
         @Test
-        void testInsertDimension_InsertedDimension_ReturnInsertedDimension() {
+        void testCreate_InsertedEntity_ReturnInsertedEntity() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
             // when
-            var insertedDimension = dimensionService.insert(dimensionDto);
+            var insertedDimension = dimensionService.create(dimensionDto);
             var retrievedDimension = dimensionService.findById(insertedDimension.getId());
 
             // then
@@ -152,7 +152,7 @@ class DimensionServiceImplTest {
         }
 
         @Test
-        void testInsertDimension_ExistingId_ThrowEntityIdMustBeNullException() {
+        void testInsert_ExistingId_ThrowEntityIdMustBeNullException() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -160,7 +160,7 @@ class DimensionServiceImplTest {
             dimensionDto.setId(UUID.randomUUID());
 
             // then
-            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> dimensionService.insert(dimensionDto));
+            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> dimensionService.create(dimensionDto));
         }
     }
 
@@ -168,7 +168,7 @@ class DimensionServiceImplTest {
     class Update {
 
         @Test
-        void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() {
+        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() {
             // given
             var dimension = saveFullDummyDimension();
 
@@ -183,7 +183,7 @@ class DimensionServiceImplTest {
         }
 
         @Test
-        void testUpdateDimension_NonExistingId_ThrowEntityNotFoundException() {
+        void testUpdate_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
@@ -195,7 +195,7 @@ class DimensionServiceImplTest {
         }
 
         @Test
-        void testUpdateDimension_NullId_ThrowEntityIdRequiredException() {
+        void testUpdate_NullId_ThrowEntityIdRequiredException() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -210,7 +210,7 @@ class DimensionServiceImplTest {
     class Delete {
 
         @Test
-        void testDeleteDimensionById_DeleteDimension_ReturnNoDimensions() {
+        void testDeleteById_DeleteEntity_ReturnNoEntities() {
             // given
             var dimension = saveFullDummyDimension();
 
@@ -223,7 +223,7 @@ class DimensionServiceImplTest {
         }
 
         @Test
-        void testDeleteDimensionById_NonExistingId_ThrowEntityNotFoundException() {
+        void testDeleteById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID());
@@ -241,7 +241,7 @@ class DimensionServiceImplTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testDeleteAll_InsertDimensions_ReturnNoDimensions(int value) {
+        void testDeleteAll_InsertEntities_ReturnNoEntities(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyDimension();

@@ -67,7 +67,7 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public ImpactDto insert(ImpactDto impactDto) {
+    public ImpactDto create(ImpactDto impactDto) {
         logger.info("Create Impact");
         if (impactDto.getId() != null) {
             throw new EntityIdMustBeNullException(Impact.class.getSimpleName());

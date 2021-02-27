@@ -11,7 +11,7 @@ public interface ImpactService {
 
     List<ImpactDto> findAll();
 
-    ImpactDto insert(ImpactDto impactDto);
+    ImpactDto create(ImpactDto impactDto);
 
     ImpactDto update(ImpactDto impactDto);
 

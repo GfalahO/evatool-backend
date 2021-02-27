@@ -40,10 +40,10 @@ class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    class GetById {
+    class FindById {
 
         @Test
-        void testFindDimensionById_ExistingDimension_ReturnDimension() {
+        void testFindById_ExistingEntity_ReturnEntity() {
             // given
             var stakeholder = saveFullDummyImpactStakeholder();
 
@@ -55,7 +55,7 @@ class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        void testGetStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
+        void testFindById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholder = createDummyStakeholder();
             stakeholder.setId(UUID.randomUUID());
@@ -69,11 +69,11 @@ class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    class GetAll {
+    class FindAll {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testGetAllStakeholders_InsertedStakeholders_ReturnStakeholders(int value) {
+        void testFindAll_ExistingEntities_ReturnEntities(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyImpactStakeholder();
@@ -88,10 +88,10 @@ class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    class Insert {
+    class Created {
 
         @Test
-        void testInsertStakeholder_InsertedStakeholder_ReturnInsertedStakeholder() {
+        void testCreate_CreatedEntity_ReturnCreatedEntity() {
             // given
             var stakeholder = saveFullDummyImpactStakeholder();
 
@@ -103,7 +103,7 @@ class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        void testInsertStakeholder_ExistingId_ThrowEntityIdMustBeNullException() {
+        void testInsert_ExistingId_ThrowEntityIdMustBeNullException() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
@@ -111,7 +111,7 @@ class ImpactStakeholderServiceImplTest {
             stakeholderDto.setId(UUID.randomUUID());
 
             // then
-            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> stakeholderService.insert(stakeholderDto));
+            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> stakeholderService.create(stakeholderDto));
         }
     }
 
@@ -119,7 +119,7 @@ class ImpactStakeholderServiceImplTest {
     class Update {
 
         @Test
-        void testUpdateStakeholder_UpdatedStakeholder_ReturnUpdatedStakeholder() {
+        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() {
             // given
             var stakeholder = saveFullDummyImpactStakeholder();
 
@@ -134,7 +134,7 @@ class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        void testUpdateStakeholder_NonExistingId_ThrowEntityNotFoundException() {
+        void testUpdate_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
             stakeholderDto.setId(UUID.randomUUID());
@@ -146,7 +146,7 @@ class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        void testUpdateStakeholder_NullId_ThrowEntityIdRequiredException() {
+        void testUpdate_NullId_ThrowEntityIdRequiredException() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
@@ -161,12 +161,12 @@ class ImpactStakeholderServiceImplTest {
     class Delete {
 
         @Test
-        void testDeleteStakeholderById_DeleteStakeholder_ReturnNoStakeholders() {
+        void testDeleteById_DeleteEntity_ReturnNoEntities() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
             // when
-            var insertedStakeholder = stakeholderService.insert(stakeholderDto);
+            var insertedStakeholder = stakeholderService.create(stakeholderDto);
             stakeholderService.deleteById(insertedStakeholder.getId());
 
             // then
@@ -175,7 +175,7 @@ class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        void testDeleteStakeholderById_NonExistingId_ThrowEntityNotFoundException() {
+        void testDeleteById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholder = createDummyStakeholder();
             stakeholder.setId(UUID.randomUUID());
@@ -193,7 +193,7 @@ class ImpactStakeholderServiceImplTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testDeleteAll_InsertStakeholders_ReturnNoStakeholders(int value) {
+        void testDeleteAll_InsertedEntities_ReturnNoEntities(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyImpactStakeholder();

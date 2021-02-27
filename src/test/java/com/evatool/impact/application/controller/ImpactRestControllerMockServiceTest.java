@@ -45,10 +45,10 @@ public class ImpactRestControllerMockServiceTest {
     private ImpactService impactService;
 
     @Nested
-    class GetById {
+    class FindById {
 
         @Test
-        void testGetImpactById_ExistingImpact_ReturnImpact() throws Exception {
+        void testFindById_ExistingEntity_ReturnEntity() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
 
@@ -64,7 +64,7 @@ public class ImpactRestControllerMockServiceTest {
         }
 
         @Test
-        void testGetImpact_ExistingImpact_CorrectRestLevel3() throws Exception {
+        void testFindById_ExistingEntity_CorrectRestLevel3() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
             impactDto.getDimension().setId(UUID.randomUUID());
@@ -96,7 +96,7 @@ public class ImpactRestControllerMockServiceTest {
         }
 
         @Test
-        void testGetImpactById_NonExistingImpact_ReturnErrorMessage() throws Exception {
+        void testFindById_NonExistingEntity_ReturnErrorMessage() throws Exception {
             // given
             var id = UUID.randomUUID().toString();
 
@@ -119,11 +119,11 @@ public class ImpactRestControllerMockServiceTest {
     }
 
     @Nested
-    class GetAll {
+    class FindAll {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testGetAllImpacts_ExistingImpacts_ReturnImpacts(int value) throws Exception {
+        void testFindAll_ExistingEntities_ReturnEntities(int value) throws Exception {
             var impactDtoList = new ArrayList<ImpactDto>();
             for (int i = 0; i < value; i++) {
                 // given
@@ -143,17 +143,17 @@ public class ImpactRestControllerMockServiceTest {
     }
 
     @Nested
-    class Insert {
+    class Create {
 
         @Test
-        void testInsertImpact_InsertedImpact_ReturnInsertedImpact() throws Exception {
+        void testCreate_InsertedEntity_ReturnInsertedEntity() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
             var id = UUID.randomUUID();
             impactDto.setId(id);
 
             // when
-            when(impactService.insert(any(ImpactDto.class))).thenReturn(impactDto);
+            when(impactService.create(any(ImpactDto.class))).thenReturn(impactDto);
 
             // then
             mvc.perform(post(IMPACTS).content(new ObjectMapper().writeValueAsString(impactDto))
@@ -167,13 +167,13 @@ public class ImpactRestControllerMockServiceTest {
     class Update {
 
         @Test
-        void testUpdateImpact_UpdatedImpact_ReturnUpdatedImpact() throws Exception {
+        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
             impactDto.setId(UUID.randomUUID());
 
             // when
-            when(impactService.insert(any(ImpactDto.class))).thenReturn(impactDto);
+            when(impactService.create(any(ImpactDto.class))).thenReturn(impactDto);
             impactDto.setValue(0.75);
             when(impactService.update(any(ImpactDto.class))).thenReturn(impactDto);
 
@@ -188,10 +188,10 @@ public class ImpactRestControllerMockServiceTest {
     }
 
     @Nested
-    class Delete {
+    class DeleteById {
 
         @Test
-        void testDeleteImpact_DeletedImpact_ReturnNoImpacts() throws Exception {
+        void testDeleteById_DeletedEntity_ReturnNoEntities() throws Exception {
             // given
 
             // when

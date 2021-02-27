@@ -49,7 +49,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public ImpactStakeholderDto insert(ImpactStakeholderDto impactStakeholderDto) {
+    public ImpactStakeholderDto create(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Create Stakeholder");
         if (impactStakeholderDto.getId() != null) {
             throw new EntityIdMustBeNullException(ImpactStakeholder.class.getSimpleName());
