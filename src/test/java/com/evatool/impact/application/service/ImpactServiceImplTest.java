@@ -96,7 +96,7 @@ class ImpactServiceImplTest {
     class FindAll {
 
         @ParameterizedTest
-        @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+        @ValueSource(ints = {0, 1, 2, 3})
         void testFindAll_ExistingImpacts_ReturnImpact(int value) {
             // given
             for (int i = 0; i < value; i++) {
@@ -218,7 +218,7 @@ class ImpactServiceImplTest {
     class DeleteAll {
 
         @ParameterizedTest
-        @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+        @ValueSource(ints = {0, 1, 2, 3})
         void testDeleteAll_ExistingImpacts_ReturnNoImpact(int value) {
             // given
             for (int i = 0; i < value; i++) {

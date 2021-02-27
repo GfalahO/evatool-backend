@@ -98,7 +98,7 @@ public class ImpactRestControllerTest {
     class FindAll {
 
         @ParameterizedTest
-        @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+        @ValueSource(ints = {0, 1, 2, 3})
         void testFindAll_ExistingEntities_ReturnEntities(int value) {
             for (int i = 0; i < value; i++) {
                 // given

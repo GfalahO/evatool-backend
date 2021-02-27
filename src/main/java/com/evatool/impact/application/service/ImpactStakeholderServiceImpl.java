@@ -49,32 +49,6 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     }
 
     @Override
-    public ImpactStakeholderDto create(ImpactStakeholderDto impactStakeholderDto) {
-        logger.info("Create Stakeholder");
-        if (impactStakeholderDto.getId() != null) {
-            throw new EntityIdMustBeNullException(ImpactStakeholder.class.getSimpleName());
-        }
-        var stakeholder = stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactStakeholderDto));
-        return ImpactStakeholderDtoMapper.toDto(stakeholder);
-    }
-
-    @Override
-    public ImpactStakeholderDto update(ImpactStakeholderDto impactStakeholderDto) {
-        logger.info("Update Stakeholder");
-        this.findById(impactStakeholderDto.getId());
-        var stakeholder = ImpactStakeholderDtoMapper.fromDto(impactStakeholderDto);
-        return ImpactStakeholderDtoMapper.toDto(stakeholderRepository.save(stakeholder));
-    }
-
-    @Override
-    public void deleteById(UUID id) {
-        logger.info("Delete Stakeholder");
-        var stakeholderDto = this.findById(id);
-        var stakeholder = ImpactStakeholderDtoMapper.fromDto(stakeholderDto);
-        stakeholderRepository.delete(stakeholder);
-    }
-
-    @Override
     public void deleteAll() {
         logger.info("Delete Stakeholders");
         stakeholderRepository.deleteAll();

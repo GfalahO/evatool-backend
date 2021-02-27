@@ -240,7 +240,7 @@ class DimensionServiceImplTest {
     class DeleteAll {
 
         @ParameterizedTest
-        @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+        @ValueSource(ints = {0, 1, 2, 3})
         void testDeleteAll_ExistingDimensions_ReturnNoDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {

@@ -11,11 +11,5 @@ public interface ImpactStakeholderService {
 
     List<ImpactStakeholderDto> findAll();
 
-    ImpactStakeholderDto create(ImpactStakeholderDto impactStakeholderDto);
-
-    ImpactStakeholderDto update(ImpactStakeholderDto impactStakeholderDto);
-
-    void deleteById(UUID id);
-
     void deleteAll();
 }
