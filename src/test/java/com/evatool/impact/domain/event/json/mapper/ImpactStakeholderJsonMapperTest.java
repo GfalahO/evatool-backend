@@ -7,22 +7,23 @@ import java.util.UUID;
 
 import static com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper.fromJson;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ImpactStakeholderJsonMapperTest {
 
     @Test
-    void testFromJsonString_JsonString_EqualsImpactStakeholderJson() {
+    void testFromJsonString_JsonString_EqualsImpactStakeholder() {
         // given
         var id = UUID.randomUUID().toString();
         var name = "name";
         var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id, name);
 
         // when
-        var impactStakeholderJson = fromJson(json);
+        var impactStakeholder = fromJson(json);
 
         // then
-        assertThat(impactStakeholderJson.getId()).hasToString(id);
-        assertThat(impactStakeholderJson.getName()).isEqualTo(name);
+        assertThat(impactStakeholder.getId()).hasToString(id);
+        assertThat(impactStakeholder.getName()).isEqualTo(name);
     }
 
     @Test

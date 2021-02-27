@@ -2,12 +2,12 @@ package com.evatool.impact.domain.event.json.mapper;
 
 import com.evatool.impact.common.exception.EventPayloadInvalidException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
+import com.evatool.impact.domain.event.json.ImpactStakeholderJson;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.UUID;
 
 public class ImpactStakeholderJsonMapper {
 
@@ -16,6 +16,8 @@ public class ImpactStakeholderJsonMapper {
     }
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholderJsonMapper.class);
+
+    private static final ModelMapper modelMapper = new ModelMapper();
 
     /**
      * Converts a json string to a Stakeholder entity.
@@ -28,12 +30,11 @@ public class ImpactStakeholderJsonMapper {
         logger.info("Mapping Json to Entity");
         try {
             var jsonObject = new JSONObject(json);
-            var stakeholderName = jsonObject.isNull("name") ? null : jsonObject.getString("name");
-            var stakeholderId = jsonObject.getString("id");
+            var id = jsonObject.isNull("id") ? null : jsonObject.getString("id");
+            var name = jsonObject.isNull("name") ? null : jsonObject.getString("name");
 
-            var impactStakeholder = new ImpactStakeholder(stakeholderName);
-            impactStakeholder.setId(UUID.fromString(stakeholderId));
-            return impactStakeholder;
+            var impactStakeholderJson = new ImpactStakeholderJson(id, name);
+            return modelMapper.map(impactStakeholderJson, ImpactStakeholder.class);
         } catch (JSONException | IllegalArgumentException ex) {
             throw new EventPayloadInvalidException(json, ex);
         }
