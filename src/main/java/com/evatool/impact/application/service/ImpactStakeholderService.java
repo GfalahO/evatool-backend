@@ -7,15 +7,15 @@ import java.util.UUID;
 
 public interface ImpactStakeholderService {
 
-    ImpactStakeholderDto findStakeholderById(UUID id);
+    ImpactStakeholderDto findById(UUID id);
 
-    List<ImpactStakeholderDto> getAllStakeholders();
+    List<ImpactStakeholderDto> findAll();
 
-    ImpactStakeholderDto createStakeholder(ImpactStakeholderDto impactStakeholderDto);
+    ImpactStakeholderDto insert(ImpactStakeholderDto impactStakeholderDto);
 
-    ImpactStakeholderDto updateStakeholder(ImpactStakeholderDto impactStakeholderDto);
+    ImpactStakeholderDto update(ImpactStakeholderDto impactStakeholderDto);
 
-    void deleteStakeholderById(UUID id);
+    void deleteById(UUID id);
 
-    void deleteStakeholders();
+    void deleteAll();
 }

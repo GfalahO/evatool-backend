@@ -45,7 +45,7 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public ImpactDto findImpactById(UUID id) {
+    public ImpactDto findById(UUID id) {
         logger.info("Get Impact");
         if (id == null) {
             throw new EntityIdRequiredException(Impact.class.getSimpleName());
@@ -58,7 +58,7 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public List<ImpactDto> getAllImpacts() {
+    public List<ImpactDto> findAll() {
         logger.info("Get Impacts");
         var impacts = impactRepository.findAll();
         var impactDtoList = new ArrayList<ImpactDto>();
@@ -67,7 +67,7 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public ImpactDto createImpact(ImpactDto impactDto) {
+    public ImpactDto insert(ImpactDto impactDto) {
         logger.info("Create Impact");
         if (impactDto.getId() != null) {
             throw new EntityIdMustBeNullException(Impact.class.getSimpleName());
@@ -79,9 +79,9 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public ImpactDto updateImpact(ImpactDto impactDto) {
+    public ImpactDto update(ImpactDto impactDto) {
         logger.info("Update Impact");
-        this.findImpactById(impactDto.getId());
+        this.findById(impactDto.getId());
         this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactUpdatedEventPublisher.onImpactUpdated(impact);
@@ -89,22 +89,22 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public void deleteImpactById(UUID id) {
+    public void deleteById(UUID id) {
         logger.info("Delete Impact");
-        var impactDto = this.findImpactById(id);
+        var impactDto = this.findById(id);
         var impact = ImpactDtoMapper.fromDto(impactDto);
         impactRepository.delete(impact);
         impactDeletedEventPublisher.onImpactDeleted(impact);
     }
 
     @Override
-    public void deleteImpacts() {
+    public void deleteAll() {
         logger.info("Delete Impacts");
         impactRepository.deleteAll();
     }
 
     private void findImpactChildren(ImpactDto impactDto) {
-        this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
-        this.dimensionService.findDimensionById(impactDto.getDimension().getId());
+        this.impactStakeholderService.findById(impactDto.getStakeholder().getId());
+        this.dimensionService.findById(impactDto.getDimension().getId());
     }
 }

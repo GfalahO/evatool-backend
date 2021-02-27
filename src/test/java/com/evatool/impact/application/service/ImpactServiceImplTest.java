@@ -1,6 +1,5 @@
 package com.evatool.impact.application.service;
 
-import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
@@ -18,14 +17,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
-import static com.evatool.impact.application.controller.UriUtil.DIMENSIONS;
-import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -80,7 +74,7 @@ class ImpactServiceImplTest {
             var impact = saveFullDummyImpact();
 
             // when
-            var impactDto = impactService.findImpactById(impact.getId());
+            var impactDto = impactService.findById(impact.getId());
 
             // then
             assertThat(impactDto).isEqualTo(ImpactDtoMapper.toDto(impact));
@@ -89,7 +83,7 @@ class ImpactServiceImplTest {
         @Test
         void testFindImpactById_UnknownId() {
             var id = UUID.randomUUID();
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findImpactById(id));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.findById(id));
         }
     }
 
@@ -105,7 +99,7 @@ class ImpactServiceImplTest {
             }
 
             // when
-            var stakeholders = impactService.getAllImpacts();
+            var stakeholders = impactService.findAll();
 
             // then
             assertThat(stakeholders.size()).isEqualTo(value);
@@ -123,8 +117,8 @@ class ImpactServiceImplTest {
             impactDto.setStakeholder(ImpactStakeholderDtoMapper.toDto(saveDummyStakeholder()));
 
             // when
-            var insertedImpact = impactService.createImpact(impactDto);
-            var retrievedImpact = impactService.findImpactById(insertedImpact.getId());
+            var insertedImpact = impactService.insert(impactDto);
+            var retrievedImpact = impactService.findById(insertedImpact.getId());
 
             // then
             assertThat(insertedImpact).isEqualTo(retrievedImpact);
@@ -139,7 +133,7 @@ class ImpactServiceImplTest {
             impactDto.setId(UUID.randomUUID());
 
             // then
-            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> impactService.createImpact(impactDto));
+            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> impactService.insert(impactDto));
         }
     }
 
@@ -157,8 +151,8 @@ class ImpactServiceImplTest {
             impactDto.setDescription(newDescription);
 
             // then
-            var insertImpact = impactService.updateImpact(impactDto);
-            var updatedImpact = impactService.findImpactById(insertImpact.getId());
+            var insertImpact = impactService.update(impactDto);
+            var updatedImpact = impactService.findById(insertImpact.getId());
             assertThat(updatedImpact.getDescription()).isEqualTo(newDescription);
         }
 
@@ -171,7 +165,7 @@ class ImpactServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.updateImpact(impactDto));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.update(impactDto));
         }
 
         @Test
@@ -182,7 +176,7 @@ class ImpactServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> impactService.updateImpact(impactDto));
+            assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> impactService.update(impactDto));
         }
     }
 
@@ -195,10 +189,10 @@ class ImpactServiceImplTest {
             var impact = saveFullDummyImpact();
 
             // when
-            impactService.deleteImpactById(impact.getId());
+            impactService.deleteById(impact.getId());
 
             // then
-            var impacts = impactService.getAllImpacts();
+            var impacts = impactService.findAll();
             assertThat(impacts.size()).isZero();
         }
 
@@ -212,7 +206,7 @@ class ImpactServiceImplTest {
 
             // then
             var id = impact.getId();
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.deleteImpactById(id));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> impactService.deleteById(id));
         }
     }
 
@@ -228,10 +222,10 @@ class ImpactServiceImplTest {
             }
 
             // when
-            impactService.deleteImpacts();
+            impactService.deleteAll();
 
             // then
-            var impacts = impactService.getAllImpacts();
+            var impacts = impactService.findAll();
             assertThat(impacts.size()).isZero();
         }
     }

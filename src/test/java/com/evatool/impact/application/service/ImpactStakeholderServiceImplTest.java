@@ -31,7 +31,7 @@ class ImpactStakeholderServiceImplTest {
 
     @BeforeEach
     void clearDatabase() {
-        stakeholderService.deleteStakeholders();
+        stakeholderService.deleteAll();
     }
 
     private ImpactStakeholder saveFullDummyImpactStakeholder() {
@@ -48,7 +48,7 @@ class ImpactStakeholderServiceImplTest {
             var stakeholder = saveFullDummyImpactStakeholder();
 
             // when
-            var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
+            var stakeholderDto = stakeholderService.findById(stakeholder.getId());
 
             // then
             assertThat(stakeholderDto).isEqualTo(toDto(stakeholder));
@@ -64,7 +64,7 @@ class ImpactStakeholderServiceImplTest {
 
             // then
             var id = stakeholder.getId();
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.findStakeholderById(id));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.findById(id));
         }
     }
 
@@ -80,7 +80,7 @@ class ImpactStakeholderServiceImplTest {
             }
 
             // when
-            var stakeholders = stakeholderService.getAllStakeholders();
+            var stakeholders = stakeholderService.findAll();
 
             // then
             assertThat(stakeholders.size()).isEqualTo(value);
@@ -96,7 +96,7 @@ class ImpactStakeholderServiceImplTest {
             var stakeholder = saveFullDummyImpactStakeholder();
 
             // when
-            var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
+            var stakeholderDto = stakeholderService.findById(stakeholder.getId());
 
             // then
             assertThat(stakeholderDto).isEqualTo(toDto(stakeholder));
@@ -111,7 +111,7 @@ class ImpactStakeholderServiceImplTest {
             stakeholderDto.setId(UUID.randomUUID());
 
             // then
-            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> stakeholderService.createStakeholder(stakeholderDto));
+            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> stakeholderService.insert(stakeholderDto));
         }
     }
 
@@ -126,8 +126,8 @@ class ImpactStakeholderServiceImplTest {
             // when
             var newName = "new_name";
             stakeholder.setName(newName);
-            stakeholderService.updateStakeholder(toDto(stakeholder));
-            var stakeholderDto = stakeholderService.findStakeholderById(stakeholder.getId());
+            stakeholderService.update(toDto(stakeholder));
+            var stakeholderDto = stakeholderService.findById(stakeholder.getId());
 
             // then
             assertThat(stakeholderDto.getName()).isEqualTo(newName);
@@ -142,7 +142,7 @@ class ImpactStakeholderServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.updateStakeholder(stakeholderDto));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.update(stakeholderDto));
         }
 
         @Test
@@ -153,7 +153,7 @@ class ImpactStakeholderServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> stakeholderService.updateStakeholder(stakeholderDto));
+            assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> stakeholderService.update(stakeholderDto));
         }
     }
 
@@ -166,11 +166,11 @@ class ImpactStakeholderServiceImplTest {
             var stakeholderDto = createDummyStakeholderDto();
 
             // when
-            var insertedStakeholder = stakeholderService.createStakeholder(stakeholderDto);
-            stakeholderService.deleteStakeholderById(insertedStakeholder.getId());
+            var insertedStakeholder = stakeholderService.insert(stakeholderDto);
+            stakeholderService.deleteById(insertedStakeholder.getId());
 
             // then
-            var stakeholders = stakeholderService.getAllStakeholders();
+            var stakeholders = stakeholderService.findAll();
             assertThat(stakeholders.size()).isZero();
         }
 
@@ -184,7 +184,7 @@ class ImpactStakeholderServiceImplTest {
 
             // then
             var id = stakeholder.getId();
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.deleteStakeholderById(id));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> stakeholderService.deleteById(id));
         }
     }
 
@@ -200,10 +200,10 @@ class ImpactStakeholderServiceImplTest {
             }
 
             // when
-            stakeholderService.deleteStakeholders();
+            stakeholderService.deleteAll();
 
             // then
-            var stakeholders = stakeholderService.getAllStakeholders();
+            var stakeholders = stakeholderService.findAll();
             assertThat(stakeholders.size()).isZero();
         }
     }

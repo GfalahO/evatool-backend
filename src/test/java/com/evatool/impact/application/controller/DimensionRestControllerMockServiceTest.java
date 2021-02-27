@@ -51,7 +51,7 @@ class DimensionRestControllerMockServiceTest {
             var dimensionDto = createDummyDimensionDto();
 
             // when
-            when(dimensionService.findDimensionById(any(UUID.class))).thenReturn(dimensionDto);
+            when(dimensionService.findById(any(UUID.class))).thenReturn(dimensionDto);
 
             // then
             mvc.perform(get(DIMENSIONS + "/" + UUID.randomUUID().toString())
@@ -68,7 +68,7 @@ class DimensionRestControllerMockServiceTest {
             dimensionDto.setId(UUID.randomUUID());
 
             // when
-            given(dimensionService.findDimensionById(any(UUID.class))).willReturn(dimensionDto);
+            given(dimensionService.findById(any(UUID.class))).willReturn(dimensionDto);
 
             // then
             mvc.perform(get(DIMENSIONS + "/" + UUID.randomUUID().toString())
@@ -93,7 +93,7 @@ class DimensionRestControllerMockServiceTest {
             var id = UUID.randomUUID().toString();
 
             // when
-            when(dimensionService.findDimensionById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
+            when(dimensionService.findById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
 
             // then
             mvc.perform(get(DIMENSIONS + "/" + id)
@@ -123,7 +123,7 @@ class DimensionRestControllerMockServiceTest {
                 dimensionDtoList.add(dimensionDto);
             }
             // when
-            given(dimensionService.getAllDimensions()).willReturn(dimensionDtoList);
+            given(dimensionService.findAll()).willReturn(dimensionDtoList);
 
             // then
             mvc.perform(get(DIMENSIONS)
@@ -155,8 +155,8 @@ class DimensionRestControllerMockServiceTest {
             }
 
             // when
-            given(dimensionService.findDimensionsByType(Dimension.Type.SOCIAL)).willReturn(socialDimensions);
-            given(dimensionService.findDimensionsByType(Dimension.Type.ECONOMIC)).willReturn(economicDimensions);
+            given(dimensionService.findAllByType(Dimension.Type.SOCIAL)).willReturn(socialDimensions);
+            given(dimensionService.findAllByType(Dimension.Type.ECONOMIC)).willReturn(economicDimensions);
 
             // then
             mvc.perform(get(DIMENSIONS).param("type", Dimension.Type.SOCIAL.toString())
@@ -184,7 +184,7 @@ class DimensionRestControllerMockServiceTest {
             dimensionDto.setId(id);
 
             // when
-            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+            when(dimensionService.insert(any(DimensionDto.class))).thenReturn(dimensionDto);
 
             // then
             mvc.perform(post(DIMENSIONS).content(new ObjectMapper().writeValueAsString(dimensionDto))
@@ -204,9 +204,9 @@ class DimensionRestControllerMockServiceTest {
             dimensionDto.setId(UUID.randomUUID());
 
             // when
-            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+            when(dimensionService.insert(any(DimensionDto.class))).thenReturn(dimensionDto);
             dimensionDto.setName("new_name");
-            when(dimensionService.updateDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+            when(dimensionService.update(any(DimensionDto.class))).thenReturn(dimensionDto);
 
             // then
             mvc.perform(put(DIMENSIONS).content(new ObjectMapper().writeValueAsString(dimensionDto))
@@ -226,7 +226,7 @@ class DimensionRestControllerMockServiceTest {
             // given
 
             // when
-            doNothing().when(dimensionService).deleteDimensionById(any(UUID.class));
+            doNothing().when(dimensionService).deleteById(any(UUID.class));
 
             // then
             mvc.perform(delete(DIMENSIONS + "/" + UUID.randomUUID().toString())

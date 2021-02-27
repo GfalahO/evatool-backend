@@ -40,7 +40,7 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public DimensionDto findDimensionById(UUID id) {
+    public DimensionDto findById(UUID id) {
         logger.info("Get Dimension");
         if (id == null) {
             throw new EntityIdRequiredException(Dimension.class.getSimpleName());
@@ -53,16 +53,16 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public List<DimensionDto> findDimensionsByType(Dimension.Type type) {
+    public List<DimensionDto> findAllByType(Dimension.Type type) {
         logger.info("Get Dimensions by type");
-        var dimensions = dimensionRepository.findDimensionsByType(type);
+        var dimensions = dimensionRepository.findAllByType(type);
         var dimensionDtoList = new ArrayList<DimensionDto>();
         dimensions.forEach(dimension -> dimensionDtoList.add(DimensionDtoMapper.toDto(dimension)));
         return dimensionDtoList;
     }
 
     @Override
-    public List<DimensionDto> getAllDimensions() {
+    public List<DimensionDto> findAll() {
         logger.info("Get Dimensions");
         var dimensions = dimensionRepository.findAll();
         var dimensionDtoList = new ArrayList<DimensionDto>();
@@ -71,13 +71,13 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public List<Dimension.Type> getAllDimensionTypes() {
+    public List<Dimension.Type> findAllTypes() {
         logger.info("Get Dimension Types");
         return Arrays.asList(Dimension.Type.values());
     }
 
     @Override
-    public DimensionDto createDimension(DimensionDto dimensionDto) {
+    public DimensionDto insert(DimensionDto dimensionDto) {
         logger.info("Create Dimension");
         if (dimensionDto.getId() != null) {
             throw new EntityIdMustBeNullException(Dimension.class.getSimpleName());
@@ -88,25 +88,25 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public DimensionDto updateDimension(DimensionDto dimensionDto) {
+    public DimensionDto update(DimensionDto dimensionDto) {
         logger.info("Update Dimension");
-        this.findDimensionById(dimensionDto.getId());
+        this.findById(dimensionDto.getId());
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
         dimensionUpdatedEventPublisher.onDimensionUpdated(dimension);
         return DimensionDtoMapper.toDto(dimension);
     }
 
     @Override
-    public void deleteDimensionById(UUID id) {
+    public void deleteById(UUID id) {
         logger.info("Delete Dimension");
-        var dimensionDto = this.findDimensionById(id);
+        var dimensionDto = this.findById(id);
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);
         dimensionRepository.delete(dimension);
         dimensionDeletedEventPublisher.onDimensionDeleted(dimension);
     }
 
     @Override
-    public void deleteDimensions() {
+    public void deleteAll() {
         logger.info("Delete Dimensions");
         dimensionRepository.deleteAll();
     }

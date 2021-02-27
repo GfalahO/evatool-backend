@@ -1,8 +1,6 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.ImpactDto;
-import com.evatool.impact.application.dto.ImpactStakeholderDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
@@ -19,7 +17,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
-import java.util.Objects;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.*;
@@ -46,7 +43,7 @@ public class ImpactRestControllerTest {
     @BeforeEach
     @AfterAll
     private void clearDatabase() {
-        impactService.deleteImpacts();
+        impactService.deleteAll();
         stakeholderRepository.deleteAll();
         dimensionRepository.deleteAll();
     }
@@ -55,7 +52,7 @@ public class ImpactRestControllerTest {
         var impact = createDummyImpact();
         impact.setDimension(dimensionRepository.save(impact.getDimension()));
         impact.setStakeholder(stakeholderRepository.save(impact.getStakeholder()));
-        return impactService.createImpact(toDto(impact));
+        return impactService.insert(toDto(impact));
     }
 
     private ImpactDto saveDummyImpactDtoChildren() {
@@ -167,7 +164,7 @@ public class ImpactRestControllerTest {
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(impactService.findImpactById(impactDto.getId())).isEqualTo(impactDto);
+            assertThat(impactService.findById(impactDto.getId())).isEqualTo(impactDto);
         }
 
         @Test
@@ -212,7 +209,7 @@ public class ImpactRestControllerTest {
             // when
             var response = testRestTemplate.exchange(
                     IMPACTS + "/" + impactDto.getId(), HttpMethod.DELETE, null, Void.class);
-            var impacts = impactService.getAllImpacts();
+            var impacts = impactService.findAll();
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

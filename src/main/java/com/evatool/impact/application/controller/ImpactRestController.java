@@ -39,9 +39,9 @@ public class ImpactRestController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    public ResponseEntity<EntityModel<ImpactDto>> getImpact(@ApiParam("Impact ID") @Valid @PathVariable UUID id) {
+    public ResponseEntity<EntityModel<ImpactDto>> findById(@ApiParam("Impact ID") @Valid @PathVariable UUID id) {
         logger.info("GET " + IMPACTS_ID);
-        var impactDto = impactService.findImpactById(id);
+        var impactDto = impactService.findById(id);
         return new ResponseEntity<>(getImpactWithLinks(impactDto), HttpStatus.OK);
     }
 
@@ -49,9 +49,9 @@ public class ImpactRestController {
     @ApiOperation(value = "Get all Impacts")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
-    public ResponseEntity<List<EntityModel<ImpactDto>>> getAllImpacts() {
+    public ResponseEntity<List<EntityModel<ImpactDto>>> findAll() {
         logger.info("GET " + IMPACTS);
-        return new ResponseEntity<>(getImpactsWithLinks(impactService.getAllImpacts()), HttpStatus.OK);
+        return new ResponseEntity<>(getImpactsWithLinks(impactService.findAll()), HttpStatus.OK);
     }
 
     @PostMapping(IMPACTS)
@@ -61,9 +61,9 @@ public class ImpactRestController {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 422, message = "Unprocessable")})
-    public ResponseEntity<EntityModel<ImpactDto>> createImpact(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
+    public ResponseEntity<EntityModel<ImpactDto>> insert(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("POST " + IMPACTS);
-        var insertedImpactDto = impactService.createImpact(impactDto);
+        var insertedImpactDto = impactService.insert(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(insertedImpactDto), HttpStatus.CREATED);
     }
 
@@ -73,9 +73,9 @@ public class ImpactRestController {
             @ApiResponse(code = 200, message = "Updated"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 422, message = "Unprocessable")})
-    public ResponseEntity<EntityModel<ImpactDto>> updateImpact(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
+    public ResponseEntity<EntityModel<ImpactDto>> update(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("PUT " + IMPACTS);
-        var updatedImpactDto = impactService.updateImpact(impactDto);
+        var updatedImpactDto = impactService.update(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(updatedImpactDto), HttpStatus.OK);
     }
 
@@ -85,18 +85,18 @@ public class ImpactRestController {
             @ApiResponse(code = 200, message = "Deleted"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    public ResponseEntity<Void> deleteImpact(@ApiParam("Impact ID") @Valid @PathVariable UUID id) {
+    public ResponseEntity<Void> deleteById(@ApiParam("Impact ID") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + IMPACTS_ID);
-        impactService.deleteImpactById(id);
+        impactService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
     private EntityModel<ImpactDto> getImpactWithLinks(ImpactDto impactDto) {
         logger.debug("Adding HATEOAS Rest Level 3 links");
         var entityModel = EntityModel.of(impactDto);
-        entityModel.add(linkTo(methodOn(ImpactRestController.class).getImpact(impactDto.getId())).withSelfRel());
-        entityModel.add(linkTo(methodOn(ImpactRestController.class).updateImpact(impactDto)).withRel(UPDATE_IMPACT));
-        entityModel.add(linkTo(methodOn(ImpactRestController.class).deleteImpact(impactDto.getId())).withRel(DELETE_IMPACT));
+        entityModel.add(linkTo(methodOn(ImpactRestController.class).findById(impactDto.getId())).withSelfRel());
+        entityModel.add(linkTo(methodOn(ImpactRestController.class).update(impactDto)).withRel(UPDATE_IMPACT));
+        entityModel.add(linkTo(methodOn(ImpactRestController.class).deleteById(impactDto.getId())).withRel(DELETE_IMPACT));
         entityModel.add(linkTo(ImpactRestController.class).slash(STAKEHOLDERS).slash(impactDto.getStakeholder().getId()).withRel(GET_STAKEHOLDER));
         entityModel.add(linkTo(ImpactRestController.class).slash(DIMENSIONS).slash(impactDto.getDimension().getId()).withRel(GET_DIMENSION));
         return entityModel;

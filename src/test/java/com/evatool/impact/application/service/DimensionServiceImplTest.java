@@ -32,7 +32,7 @@ class DimensionServiceImplTest {
 
     @BeforeEach
     void clearDatabase() {
-        dimensionService.deleteDimensions();
+        dimensionService.deleteAll();
     }
 
     private Dimension saveFullDummyDimension() {
@@ -49,7 +49,7 @@ class DimensionServiceImplTest {
             var dimension = saveFullDummyDimension();
 
             // when
-            var dimensionDto = dimensionService.findDimensionById(dimension.getId());
+            var dimensionDto = dimensionService.findById(dimension.getId());
 
             // then
             assertThat(dimensionDto).isEqualTo(toDto(dimension));
@@ -65,7 +65,7 @@ class DimensionServiceImplTest {
 
             // then
             var id = dimension.getId();
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.findDimensionById(id));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.findById(id));
         }
     }
 
@@ -79,19 +79,19 @@ class DimensionServiceImplTest {
             for (int i = 0; i < n_socialDimensions; i++) {
                 var socialDimension = createDummyDimensionDto();
                 socialDimension.setType(Dimension.Type.SOCIAL);
-                dimensionService.createDimension(socialDimension);
+                dimensionService.insert(socialDimension);
             }
 
             int n_economicDimensions = 4;
             for (int i = 0; i < n_economicDimensions; i++) {
                 var economicDimension = createDummyDimensionDto();
                 economicDimension.setType(Dimension.Type.ECONOMIC);
-                dimensionService.createDimension(economicDimension);
+                dimensionService.insert(economicDimension);
             }
 
             // when
-            var socialDimensions = dimensionService.findDimensionsByType(Dimension.Type.SOCIAL);
-            var economicDimension = dimensionService.findDimensionsByType(Dimension.Type.ECONOMIC);
+            var socialDimensions = dimensionService.findAllByType(Dimension.Type.SOCIAL);
+            var economicDimension = dimensionService.findAllByType(Dimension.Type.ECONOMIC);
 
             // then
             assertThat(socialDimensions.size()).isEqualTo(n_socialDimensions);
@@ -108,11 +108,11 @@ class DimensionServiceImplTest {
             // given
             for (int i = 0; i < value; i++) {
                 var dimensionDto = createDummyDimensionDto();
-                dimensionService.createDimension(dimensionDto);
+                dimensionService.insert(dimensionDto);
             }
 
             // when
-            var dimensions = dimensionService.getAllDimensions();
+            var dimensions = dimensionService.findAll();
 
             // then
             assertThat(dimensions.size()).isEqualTo(value);
@@ -127,7 +127,7 @@ class DimensionServiceImplTest {
             // given
 
             // when
-            var dimensionTypes = dimensionService.getAllDimensionTypes();
+            var dimensionTypes = dimensionService.findAllTypes();
 
             // then
             assertThat(dimensionTypes.size()).isEqualTo(Dimension.Type.values().length);
@@ -144,8 +144,8 @@ class DimensionServiceImplTest {
             var dimensionDto = createDummyDimensionDto();
 
             // when
-            var insertedDimension = dimensionService.createDimension(dimensionDto);
-            var retrievedDimension = dimensionService.findDimensionById(insertedDimension.getId());
+            var insertedDimension = dimensionService.insert(dimensionDto);
+            var retrievedDimension = dimensionService.findById(insertedDimension.getId());
 
             // then
             assertThat(insertedDimension).isEqualTo(retrievedDimension);
@@ -160,7 +160,7 @@ class DimensionServiceImplTest {
             dimensionDto.setId(UUID.randomUUID());
 
             // then
-            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> dimensionService.createDimension(dimensionDto));
+            assertThatExceptionOfType(EntityIdMustBeNullException.class).isThrownBy(() -> dimensionService.insert(dimensionDto));
         }
     }
 
@@ -175,8 +175,8 @@ class DimensionServiceImplTest {
             // when
             var newName = "new_name";
             dimension.setName(newName);
-            dimensionService.updateDimension(toDto(dimension));
-            var dimensionDto = dimensionService.findDimensionById(dimension.getId());
+            dimensionService.update(toDto(dimension));
+            var dimensionDto = dimensionService.findById(dimension.getId());
 
             // then
             assertThat(dimensionDto.getName()).isEqualTo(newName);
@@ -191,7 +191,7 @@ class DimensionServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.updateDimension(dimensionDto));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.update(dimensionDto));
         }
 
         @Test
@@ -202,7 +202,7 @@ class DimensionServiceImplTest {
             // when
 
             // then
-            assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> dimensionService.updateDimension(dimensionDto));
+            assertThatExceptionOfType(EntityIdRequiredException.class).isThrownBy(() -> dimensionService.update(dimensionDto));
         }
     }
 
@@ -215,10 +215,10 @@ class DimensionServiceImplTest {
             var dimension = saveFullDummyDimension();
 
             // when
-            dimensionService.deleteDimensionById(dimension.getId());
+            dimensionService.deleteById(dimension.getId());
 
             // then
-            var dimensions = dimensionService.getAllDimensions();
+            var dimensions = dimensionService.findAll();
             assertThat(dimensions.size()).isZero();
         }
 
@@ -232,7 +232,7 @@ class DimensionServiceImplTest {
 
             // then
             var id = dimension.getId();
-            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.deleteDimensionById(id));
+            assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> dimensionService.deleteById(id));
         }
     }
 
@@ -248,10 +248,10 @@ class DimensionServiceImplTest {
             }
 
             // when
-            dimensionService.deleteDimensions();
+            dimensionService.deleteAll();
 
             // then
-            var dimensions = dimensionService.getAllDimensions();
+            var dimensions = dimensionService.findAll();
             assertThat(dimensions.size()).isZero();
         }
     }

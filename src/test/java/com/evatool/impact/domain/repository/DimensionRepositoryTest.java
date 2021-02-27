@@ -32,8 +32,8 @@ class DimensionRepositoryTest {
         }
 
         // when
-        var socialDimensions = dimensionRepository.findDimensionsByType(Dimension.Type.SOCIAL);
-        var economicDimension = dimensionRepository.findDimensionsByType(Dimension.Type.ECONOMIC);
+        var socialDimensions = dimensionRepository.findAllByType(Dimension.Type.SOCIAL);
+        var economicDimension = dimensionRepository.findAllByType(Dimension.Type.ECONOMIC);
 
         // then
         assertThat(socialDimensions.size()).isEqualTo(n_socialDimensions);

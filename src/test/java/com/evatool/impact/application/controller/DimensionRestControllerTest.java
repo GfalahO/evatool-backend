@@ -35,13 +35,13 @@ class DimensionRestControllerTest {
 
     @BeforeEach
     public void clearDatabase() {
-        dimensionService.deleteDimensions();
+        dimensionService.deleteAll();
     }
 
     private DimensionDto saveFullDummyDimensionDto() {
         var dimension = createDummyDimension();
         var dimensionDto = toDto(dimension);
-        return dimensionService.createDimension(dimensionDto);
+        return dimensionService.insert(dimensionDto);
 
     }
 
@@ -107,14 +107,14 @@ class DimensionRestControllerTest {
             for (int i = 0; i < n_socialDimensions; i++) {
                 var socialDimension = createDummyDimensionDto();
                 socialDimension.setType(Dimension.Type.SOCIAL);
-                dimensionService.createDimension(socialDimension);
+                dimensionService.insert(socialDimension);
             }
 
             int n_economicDimensions = 4;
             for (int i = 0; i < n_economicDimensions; i++) {
                 var economicDimension = createDummyDimensionDto();
                 economicDimension.setType(Dimension.Type.ECONOMIC);
-                dimensionService.createDimension(economicDimension);
+                dimensionService.insert(economicDimension);
             }
 
             // when
@@ -197,7 +197,7 @@ class DimensionRestControllerTest {
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(dimensionService.findDimensionById(dimensionDto.getId())).isEqualTo(dimensionDto);
+            assertThat(dimensionService.findById(dimensionDto.getId())).isEqualTo(dimensionDto);
         }
 
         @Test
@@ -242,7 +242,7 @@ class DimensionRestControllerTest {
             // when
             var response = testRestTemplate.exchange(
                     DIMENSIONS + "/" + dimensionDto.getId(), HttpMethod.DELETE, null, Void.class);
-            var dimensions = dimensionService.getAllDimensions();
+            var dimensions = dimensionService.findAll();
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

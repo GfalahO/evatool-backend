@@ -8,19 +8,19 @@ import java.util.UUID;
 
 public interface DimensionService {
 
-    DimensionDto findDimensionById(UUID id);
+    DimensionDto findById(UUID id);
 
-    List<DimensionDto> findDimensionsByType(Dimension.Type type);
+    List<DimensionDto> findAllByType(Dimension.Type type);
 
-    List<DimensionDto> getAllDimensions();
+    List<DimensionDto> findAll();
 
-    List<Dimension.Type> getAllDimensionTypes();
+    List<Dimension.Type> findAllTypes();
 
-    DimensionDto createDimension(DimensionDto dimensionDto);
+    DimensionDto insert(DimensionDto dimensionDto);
 
-    DimensionDto updateDimension(DimensionDto dimensionDto);
+    DimensionDto update(DimensionDto dimensionDto);
 
-    void deleteDimensionById(UUID id);
+    void deleteById(UUID id);
 
-    void deleteDimensions();
+    void deleteAll();
 }

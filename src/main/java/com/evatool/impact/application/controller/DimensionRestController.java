@@ -38,9 +38,9 @@ public class DimensionRestController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    public ResponseEntity<EntityModel<DimensionDto>> getDimension(@ApiParam("Dimension ID") @Valid @PathVariable UUID id) {
+    public ResponseEntity<EntityModel<DimensionDto>> findById(@ApiParam("Dimension ID") @Valid @PathVariable UUID id) {
         logger.info("GET " + DIMENSIONS_ID);
-        var dimensionDto = dimensionService.findDimensionById(id);
+        var dimensionDto = dimensionService.findById(id);
         return new ResponseEntity<>(getDimensionWithLinks(dimensionDto), HttpStatus.OK);
     }
 
@@ -49,14 +49,14 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request")})
-    public ResponseEntity<List<EntityModel<DimensionDto>>> getAllDimensions(@ApiParam(value = "Dimension Type") @Valid @RequestParam(value = "type", required = false) Dimension.Type type) {
+    public ResponseEntity<List<EntityModel<DimensionDto>>> findAll(@ApiParam(value = "Dimension Type") @Valid @RequestParam(value = "type", required = false) Dimension.Type type) {
         List<DimensionDto> dimensionDtoList;
         if (type == null) {
             logger.info("GET " + DIMENSIONS);
-            dimensionDtoList = dimensionService.getAllDimensions();
+            dimensionDtoList = dimensionService.findAll();
         } else {
             logger.info("GET " + DIMENSIONS + "?type={}", type);
-            dimensionDtoList = dimensionService.findDimensionsByType(type);
+            dimensionDtoList = dimensionService.findAllByType(type);
         }
         return new ResponseEntity<>(getDimensionsWithLinks(dimensionDtoList), HttpStatus.OK);
     }
@@ -68,9 +68,9 @@ public class DimensionRestController {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 422, message = "Unprocessable")})
-    public ResponseEntity<EntityModel<DimensionDto>> createDimension(@ApiParam("Dimension") @Valid @RequestBody DimensionDto dimensionDto) {
+    public ResponseEntity<EntityModel<DimensionDto>> insert(@ApiParam("Dimension") @Valid @RequestBody DimensionDto dimensionDto) {
         logger.info("POST " + DIMENSIONS);
-        var insertedDimensionDto = dimensionService.createDimension(dimensionDto);
+        var insertedDimensionDto = dimensionService.insert(dimensionDto);
         return new ResponseEntity<>(getDimensionWithLinks(insertedDimensionDto), HttpStatus.CREATED);
     }
 
@@ -81,9 +81,9 @@ public class DimensionRestController {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 422, message = "Unprocessable")})
-    public ResponseEntity<EntityModel<DimensionDto>> updateDimension(@ApiParam("Dimension") @Valid @RequestBody DimensionDto dimensionDto) {
+    public ResponseEntity<EntityModel<DimensionDto>> update(@ApiParam("Dimension") @Valid @RequestBody DimensionDto dimensionDto) {
         logger.info("PUT " + DIMENSIONS);
-        var updatedDimensionDto = dimensionService.updateDimension(dimensionDto);
+        var updatedDimensionDto = dimensionService.update(dimensionDto);
         return new ResponseEntity<>(getDimensionWithLinks(updatedDimensionDto), HttpStatus.OK);
     }
 
@@ -93,9 +93,9 @@ public class DimensionRestController {
             @ApiResponse(code = 200, message = "Deleted"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    public ResponseEntity<Void> deleteDimension(@ApiParam("Dimension ID") @Valid @PathVariable UUID id) {
+    public ResponseEntity<Void> deleteById(@ApiParam("Dimension ID") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + DIMENSIONS_ID);
-        dimensionService.deleteDimensionById(id);
+        dimensionService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
@@ -103,17 +103,17 @@ public class DimensionRestController {
     @ApiOperation(value = "Get all Dimension Types")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
-    public ResponseEntity<List<Dimension.Type>> getDimensionTypes() {
+    public ResponseEntity<List<Dimension.Type>> findAllTypes() {
         logger.info("GET " + DIMENSION_TYPES);
-        return new ResponseEntity<>(dimensionService.getAllDimensionTypes(), HttpStatus.OK);
+        return new ResponseEntity<>(dimensionService.findAllTypes(), HttpStatus.OK);
     }
 
     private EntityModel<DimensionDto> getDimensionWithLinks(DimensionDto dimensionDto) {
         logger.debug("Adding HATEOAS Rest Level 3 links");
         var entityModel = EntityModel.of(dimensionDto);
-        entityModel.add(linkTo(methodOn(DimensionRestController.class).getDimension(dimensionDto.getId())).withSelfRel());
-        entityModel.add(linkTo(methodOn(DimensionRestController.class).updateDimension(dimensionDto)).withRel(UPDATE_DIMENSION));
-        entityModel.add(linkTo(methodOn(DimensionRestController.class).deleteDimension(dimensionDto.getId())).withRel(DELETE_DIMENSION));
+        entityModel.add(linkTo(methodOn(DimensionRestController.class).findById(dimensionDto.getId())).withSelfRel());
+        entityModel.add(linkTo(methodOn(DimensionRestController.class).update(dimensionDto)).withRel(UPDATE_DIMENSION));
+        entityModel.add(linkTo(methodOn(DimensionRestController.class).deleteById(dimensionDto.getId())).withRel(DELETE_DIMENSION));
         return entityModel;
     }
 

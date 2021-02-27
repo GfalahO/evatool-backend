@@ -53,7 +53,7 @@ public class ImpactRestControllerMockServiceTest {
             var impactDto = createDummyImpactDto();
 
             // when
-            when(impactService.findImpactById(any(UUID.class))).thenReturn(impactDto);
+            when(impactService.findById(any(UUID.class))).thenReturn(impactDto);
 
             // then
             mvc.perform(get(IMPACTS + "/" + UUID.randomUUID().toString())
@@ -72,7 +72,7 @@ public class ImpactRestControllerMockServiceTest {
             impactDto.setId(UUID.randomUUID());
 
             // when
-            given(impactService.findImpactById(any(UUID.class))).willReturn(impactDto);
+            given(impactService.findById(any(UUID.class))).willReturn(impactDto);
 
             // then
             mvc.perform(get(IMPACTS + "/" + UUID.randomUUID().toString())
@@ -101,7 +101,7 @@ public class ImpactRestControllerMockServiceTest {
             var id = UUID.randomUUID().toString();
 
             // when
-            when(impactService.findImpactById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
+            when(impactService.findById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
 
             // then
             mvc.perform(get(IMPACTS + "/" + id)
@@ -131,7 +131,7 @@ public class ImpactRestControllerMockServiceTest {
                 impactDtoList.add(impactDto);
             }
             // when
-            given(impactService.getAllImpacts()).willReturn(impactDtoList);
+            given(impactService.findAll()).willReturn(impactDtoList);
 
             // then
             mvc.perform(get(IMPACTS)
@@ -153,7 +153,7 @@ public class ImpactRestControllerMockServiceTest {
             impactDto.setId(id);
 
             // when
-            when(impactService.createImpact(any(ImpactDto.class))).thenReturn(impactDto);
+            when(impactService.insert(any(ImpactDto.class))).thenReturn(impactDto);
 
             // then
             mvc.perform(post(IMPACTS).content(new ObjectMapper().writeValueAsString(impactDto))
@@ -173,9 +173,9 @@ public class ImpactRestControllerMockServiceTest {
             impactDto.setId(UUID.randomUUID());
 
             // when
-            when(impactService.createImpact(any(ImpactDto.class))).thenReturn(impactDto);
+            when(impactService.insert(any(ImpactDto.class))).thenReturn(impactDto);
             impactDto.setValue(0.75);
-            when(impactService.updateImpact(any(ImpactDto.class))).thenReturn(impactDto);
+            when(impactService.update(any(ImpactDto.class))).thenReturn(impactDto);
 
             // then
             mvc.perform(put(IMPACTS).content(new ObjectMapper().writeValueAsString(impactDto))
@@ -195,7 +195,7 @@ public class ImpactRestControllerMockServiceTest {
             // given
 
             // when
-            doNothing().when(impactService).deleteImpactById(any(UUID.class));
+            doNothing().when(impactService).deleteById(any(UUID.class));
 
             // then
             mvc.perform(delete(IMPACTS + "/" + UUID.randomUUID().toString())

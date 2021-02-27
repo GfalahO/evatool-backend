@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface DimensionRepository extends CrudRepository<Dimension, UUID> {
 
-    List<Dimension> findDimensionsByType(Dimension.Type type);
+    List<Dimension> findAllByType(Dimension.Type type);
 
 }
