@@ -1,20 +1,20 @@
 package com.evatool.variants.entities;
 
 import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.UUID;
 
-// renamed because the entity is owned by another module and they have already used up the name 'Requirement'
 @Entity(name = "VARIANTS_REQUIREMENT")
 @Getter
-public class VariantsRequirement {
+public class VariantsRequirement extends RepresentationModel<VariantsRequirement> {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String title;
 }

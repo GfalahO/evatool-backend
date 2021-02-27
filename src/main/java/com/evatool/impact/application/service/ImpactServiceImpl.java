@@ -48,7 +48,7 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto findImpactById(UUID id) {
         logger.info("Get Impact");
         if (id == null) {
-            throw new EntityIdRequiredException();
+            throw new EntityIdRequiredException(Impact.class.getSimpleName());
         }
         var impact = impactRepository.findById(id);
         if (impact.isEmpty()) {
@@ -70,9 +70,9 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto createImpact(ImpactDto impactDto) {
         logger.info("Create Impact");
         if (impactDto.getId() != null) {
-            throw new EntityIdMustBeNullException();
+            throw new EntityIdMustBeNullException(Impact.class.getSimpleName());
         }
-        this.validateImpactRelations(impactDto);
+        this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactCreatedEventPublisher.onImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -82,7 +82,7 @@ public class ImpactServiceImpl implements ImpactService {
     public ImpactDto updateImpact(ImpactDto impactDto) {
         logger.info("Update Impact");
         this.findImpactById(impactDto.getId());
-        this.validateImpactRelations(impactDto);
+        this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
         impactUpdatedEventPublisher.onImpactUpdated(impact);
         return ImpactDtoMapper.toDto(impact);
@@ -103,9 +103,7 @@ public class ImpactServiceImpl implements ImpactService {
         impactRepository.deleteAll();
     }
 
-    // TODO Set to retrieved value? What if front end changes DimensionDto or ImpactStakeholderDto values?
-    //  Only the id of the child entities should matter at this point
-    private void validateImpactRelations(ImpactDto impactDto) {
+    private void findImpactChildren(ImpactDto impactDto) {
         this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
         this.dimensionService.findDimensionById(impactDto.getDimension().getId());
     }

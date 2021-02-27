@@ -114,7 +114,7 @@ class DimensionRestControllerMockServiceTest {
     class GetAll {
 
         @ParameterizedTest
-        @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+        @ValueSource(ints = {0, 1, 2, 3})
         void testGetAllDimensions_ExistingDimensions_ReturnDimensions(int value) throws Exception {
             var dimensionDtoList = new ArrayList<DimensionDto>();
             for (int i = 0; i < value; i++) {

@@ -1,20 +1,20 @@
 package com.evatool.variants.entities;
 
 import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.UUID;
 
-// renamed entity because analysis is owner of the entity and they had already used up the name 'Stakeholder'
 @Entity(name = "VARIANTS_STAKEHOLDER")
 @Getter
-public class VariantsStakeholder {
+public class VariantsStakeholder extends RepresentationModel<VariantsStakeholder> {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     private String title;
 }
