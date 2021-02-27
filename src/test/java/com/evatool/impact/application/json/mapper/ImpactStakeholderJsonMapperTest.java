@@ -26,7 +26,7 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
-    void testFromJsonString_JsonStringMissingColon_ThrowInvalidEventPayloadException() {
+    void testFromJsonString_JsonStringMissingColon_ThrowEventPayloadInvalidException() {
         // given
         var id = UUID.randomUUID().toString();
         var name = "name";
@@ -39,7 +39,7 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
-    void testFromJsonString_JsonStringMissingIdField_ThrowInvalidEventPayloadException() {
+    void testFromJsonString_JsonStringMissingIdField_ThrowEventPayloadInvalidException() {
         // given
         var name = "name";
 
@@ -51,7 +51,7 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
-    void testFromJsonString_JsonStringMissingNameField_ThrowInvalidEventPayloadException() {
+    void testFromJsonString_JsonStringMissingNameField_ThrowEventPayloadInvalidException() {
         // given
         var id = UUID.randomUUID().toString();
 
@@ -63,7 +63,7 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
-    void testFromJsonString_JsonStringNullIdField_ThrowInvalidEventPayloadException() {
+    void testFromJsonString_JsonStringNullIdField_ThrowEventPayloadInvalidException() {
         // given
         var name = "name";
 
@@ -75,7 +75,7 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
-    void testFromJsonString_JsonStringNullNameField_ThrowInvalidEventPayloadException() {
+    void testFromJsonString_JsonStringNullNameField_ThrowEventPayloadInvalidException() {
         // given
         var id = UUID.randomUUID().toString();
 

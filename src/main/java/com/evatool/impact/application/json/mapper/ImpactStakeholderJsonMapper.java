@@ -17,16 +17,24 @@ public class ImpactStakeholderJsonMapper {
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholderJsonMapper.class);
 
+    /**
+     * Converts a json string to a Stakeholder entity.
+     *
+     * @param json of the stakeholder.
+     * @return the stakeholder entity.
+     * @throws EventPayloadInvalidException if the json is invalid or contains invalid values.
+     */
     public static ImpactStakeholder fromJson(String json) {
         logger.info("Mapping Json to Entity");
         try {
-            // JSONException could occur.
             var jsonObject = new JSONObject(json);
             var stakeholderName = jsonObject.isNull("name") ? null : jsonObject.getString("name");
-            var stakeholderId = jsonObject.getString("id");
+            var stakeholderId = jsonObject.isNull("id") ? null : jsonObject.getString("id");
 
-            // IllegalArgumentException could occur.
             var impactStakeholder = new ImpactStakeholder(stakeholderName);
+            if(stakeholderId == null){
+                throw new IllegalArgumentException("Id cannot be null.");
+            }
             impactStakeholder.setId(UUID.fromString(stakeholderId));
             return impactStakeholder;
         } catch (JSONException | IllegalArgumentException ex) {

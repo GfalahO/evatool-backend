@@ -21,6 +21,12 @@ public class ImpactStakeholderCreatedEventListener implements ApplicationListene
         this.stakeholderRepository = stakeholderRepository;
     }
 
+    /**
+     * Inserts the stakeholder received in the event.
+     *
+     * @param event that was received.
+     * @throws EventEntityAlreadyExistsException if a Stakeholder with that id already exists.
+     */
     @Override
     public void onApplicationEvent(final StakeholderCreatedEvent event) {
         logger.info("Event received");

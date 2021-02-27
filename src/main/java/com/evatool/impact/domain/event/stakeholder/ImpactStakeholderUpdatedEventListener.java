@@ -21,6 +21,12 @@ public class ImpactStakeholderUpdatedEventListener implements ApplicationListene
         this.stakeholderRepository = stakeholderRepository;
     }
 
+    /**
+     * Deletes the stakeholder received in the event.
+     *
+     * @param event that was received.
+     * @throws EventEntityDoesNotExistException if a Stakeholder with that id does not exist.
+     */
     @Override
     public void onApplicationEvent(final StakeholderUpdatedEvent event) {
         logger.info("Event received");
