@@ -1,8 +1,10 @@
 package com.evatool.analysis.common;
 
 import com.evatool.analysis.dto.AnalysisDTO;
+import com.evatool.analysis.enums.Dimension;
 import com.evatool.analysis.enums.StakeholderLevel;
 import com.evatool.analysis.model.Analysis;
+import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.model.Stakeholder;
 import com.evatool.analysis.model.User;
 
@@ -30,5 +32,9 @@ public class TestDataGenerator {
         analysisDTO.setAnalysisDescription(description);
         return analysisDTO;
 
+    }
+
+    public static AnalysisImpacts getAnalysisImpacts(Dimension dimension) {
+        return new AnalysisImpacts("title", "description", 1, dimension);
     }
 }
