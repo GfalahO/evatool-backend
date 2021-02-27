@@ -1,6 +1,6 @@
-package com.evatool.impact.application.json.mapper;
+package com.evatool.impact.domain.event.json.mapper;
 
-import com.evatool.impact.application.json.ImpactJson;
+import com.evatool.impact.domain.event.json.ImpactJson;
 import com.evatool.impact.domain.entity.Impact;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;

@@ -1,11 +1,11 @@
-package com.evatool.impact.application.json.mapper;
+package com.evatool.impact.domain.event.json.mapper;
 
 import com.evatool.impact.common.exception.EventPayloadInvalidException;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper.fromJson;
+import static com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper.fromJson;
 import static org.assertj.core.api.Assertions.*;
 
 class ImpactStakeholderJsonMapperTest {

@@ -1,4 +1,4 @@
-package com.evatool.impact.application.json.mapper;
+package com.evatool.impact.domain.event.json.mapper;
 
 import com.evatool.impact.common.exception.EventPayloadInvalidException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;

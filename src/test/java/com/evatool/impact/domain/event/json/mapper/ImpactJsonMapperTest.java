@@ -1,10 +1,10 @@
-package com.evatool.impact.application.json.mapper;
+package com.evatool.impact.domain.event.json.mapper;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static com.evatool.impact.application.json.mapper.ImpactJsonMapper.toJson;
+import static com.evatool.impact.domain.event.json.mapper.ImpactJsonMapper.toJson;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

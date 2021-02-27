@@ -1,4 +1,4 @@
-package com.evatool.impact.application.json;
+package com.evatool.impact.domain.event.json;
 
 import com.evatool.impact.domain.entity.Dimension;
 import com.google.gson.Gson;

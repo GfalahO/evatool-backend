@@ -1,7 +1,7 @@
 package com.evatool.impact.domain.event.impact;
 
 import com.evatool.global.event.impact.ImpactCreatedEvent;
-import com.evatool.impact.application.json.mapper.ImpactJsonMapper;
+import com.evatool.impact.domain.event.json.mapper.ImpactJsonMapper;
 import com.evatool.impact.domain.entity.Impact;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
