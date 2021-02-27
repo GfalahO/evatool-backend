@@ -5,7 +5,11 @@ import org.hibernate.annotations.GenericGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import java.util.Objects;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -15,6 +19,19 @@ public class SuperEntity {
 
     protected SuperEntity() {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        var that = (SuperEntity) o;
+        return Objects.equals(this.id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id);
     }
 
     @Getter

@@ -39,16 +39,24 @@ public class ImpactJson {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ImpactJson that = (ImpactJson) o;
-        return Double.compare(that.value, value) == 0 && Objects.equals(id, that.id) && Objects.equals(stakeholderId, that.stakeholderId) && Objects.equals(dimensionId, that.dimensionId) && Objects.equals(description, that.description);
+        var that = (ImpactJson) o;
+        return Double.compare(this.value, that.value) == 0
+                && Objects.equals(this.id, that.id)
+                && Objects.equals(this.stakeholderId, that.stakeholderId)
+                && Objects.equals(this.dimensionId, that.dimensionId)
+                && Objects.equals(description, that.description);
+    }
+
+    public boolean equals(Impact that) {
+        return Double.compare(that.getValue(), value) == 0
+                && Objects.equals(id, that.getId().toString())
+                && Objects.equals(stakeholderId, that.getStakeholder().getId().toString())
+                && Objects.equals(dimensionId, that.getDimension().getId().toString())
+                && Objects.equals(description, that.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, stakeholderId, dimensionId, value, description);
-    }
-
-    public boolean equals(Impact that) {
-        return Double.compare(that.getValue(), value) == 0 && Objects.equals(id, that.getId().toString()) && Objects.equals(stakeholderId, that.getStakeholder().getId().toString()) && Objects.equals(dimensionId, that.getDimension().getId().toString()) && Objects.equals(description, that.getDescription());
+        return Objects.hash(this.id, this.stakeholderId, this.dimensionId, this.value, this.description);
     }
 }

@@ -35,16 +35,22 @@ public class DimensionJson {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DimensionJson that = (DimensionJson) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(description, that.description);
+        var that = (DimensionJson) o;
+        return Objects.equals(this.id, that.id)
+                && Objects.equals(this.name, that.name)
+                && Objects.equals(this.type, that.type)
+                && Objects.equals(this.description, that.description);
+    }
+
+    public boolean equals(Dimension that) {
+        return Objects.equals(this.id, that.getId().toString())
+                && Objects.equals(this.name, that.getName())
+                && Objects.equals(this.type, that.getType().toString())
+                && Objects.equals(this.description, that.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, description);
-    }
-
-    public boolean equals(Dimension that) {
-        return Objects.equals(id, that.getId().toString()) && Objects.equals(name, that.getName()) && Objects.equals(type, that.getType().toString()) && Objects.equals(description, that.getDescription());
+        return Objects.hash(this.id, this.name, this.type, this.description);
     }
 }

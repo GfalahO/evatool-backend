@@ -48,28 +48,29 @@ public class Impact extends SuperEntity {
     @Override
     public String toString() {
         return "Impact{" +
-                "value=" + value +
-                ", description='" + description + '\'' +
-                ", dimension=" + dimension +
-                ", stakeholder=" + stakeholder +
-                ", id=" + id +
+                "id=" + this.id +
+                ", value=" + this.value +
+                ", description='" + this.description + '\'' +
+                ", dimension=" + this.dimension +
+                ", stakeholder=" + this.stakeholder +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Impact impact = (Impact) o;
-        return Double.compare(impact.value, value) == 0 && Objects.equals(description, impact.description)
-                && Objects.equals(dimension, impact.dimension) && Objects.equals(stakeholder, impact.stakeholder);
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        var that = (Impact) o;
+        return super.equals(that)
+                && Double.compare(this.value, that.value) == 0
+                && Objects.equals(this.description, that.description)
+                && Objects.equals(this.dimension, that.dimension)
+                && Objects.equals(this.stakeholder, that.stakeholder);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, description, dimension, stakeholder);
+        return Objects.hash(super.hashCode(), this.value, this.description, this.dimension, this.stakeholder);
     }
 
     public void setValue(double value) {

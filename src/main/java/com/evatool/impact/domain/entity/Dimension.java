@@ -47,24 +47,27 @@ public class Dimension extends SuperEntity {
     @Override
     public String toString() {
         return "Dimension{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
-                ", id='" + id + '\'' +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Dimension dimension = (Dimension) o;
-        return Objects.equals(name, dimension.name) && type == dimension.type && Objects.equals(description, dimension.description);
+        if (o == null || this.getClass() != o.getClass()) return false;
+        var that = (Dimension) o;
+        return super.equals(that)
+                && Objects.equals(this.name, that.name)
+                && this.type == that.type
+                && Objects.equals(this.description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, type, description);
+        return Objects.hash(super.hashCode(), this.name, this.type, this.description);
     }
 
     public void setName(String name) {

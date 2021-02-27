@@ -32,22 +32,23 @@ public class ImpactStakeholder extends SuperEntity {
     @Override
     public String toString() {
         return "Stakeholder{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
+                "id='" + this.id + '\'' +
+                ", name='" + this.name + '\'' +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ImpactStakeholder that = (ImpactStakeholder) o;
-        return Objects.equals(name, that.name);
+        if (o == null || this.getClass() != o.getClass()) return false;
+        var that = (ImpactStakeholder) o;
+        return super.equals(that)
+                && Objects.equals(this.name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(super.hashCode(), this.name);
     }
 
     public void setName(String name) {
