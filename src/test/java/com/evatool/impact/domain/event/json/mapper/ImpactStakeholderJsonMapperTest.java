@@ -5,25 +5,25 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper.fromJson;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class ImpactStakeholderJsonMapperTest {
 
     @Test
     void testFromJsonString_JsonString_EqualsImpactStakeholder() {
         // given
-        var id = UUID.randomUUID().toString();
-        var name = "name";
-        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id, name);
+        var stakeholder = createDummyStakeholder();
+        stakeholder.setId(UUID.randomUUID());
+        var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", stakeholder.getId(), stakeholder.getName());
 
         // when
-        var impactStakeholder = fromJson(json);
+        var eventStakeholder = fromJson(json);
 
         // then
-        assertThat(impactStakeholder.getId()).hasToString(id);
-        assertThat(impactStakeholder.getName()).isEqualTo(name);
+        assertThat(eventStakeholder).isEqualTo(stakeholder);
     }
 
     @Test

@@ -22,7 +22,7 @@ public class DimensionDeletedEventPublisher {
     public void onDimensionDeleted(final Dimension dimension) {
         logger.info("Preparing to publish event");
         var dimensionJson = DimensionJsonMapper.toJson(dimension);
-        var dimensionDeletedEvent = new DimensionDeletedEvent(this, dimensionJson.toString());
+        var dimensionDeletedEvent = new DimensionDeletedEvent(this, dimensionJson);
         applicationEventPublisher.publishEvent(dimensionDeletedEvent);
         logger.info("Event published");
     }

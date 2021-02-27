@@ -22,7 +22,7 @@ public class ImpactUpdatedEventPublisher {
     public void onImpactUpdated(final Impact impact) {
         logger.info("Preparing to publish event");
         var impactJson = ImpactJsonMapper.toJson(impact);
-        var impactUpdatedEvent = new ImpactUpdatedEvent(this, impactJson.toString());
+        var impactUpdatedEvent = new ImpactUpdatedEvent(this, impactJson);
         applicationEventPublisher.publishEvent(impactUpdatedEvent);
         logger.info("Event published");
     }

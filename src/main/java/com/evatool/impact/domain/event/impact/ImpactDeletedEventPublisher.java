@@ -22,7 +22,7 @@ public class ImpactDeletedEventPublisher {
     public void onImpactDeleted(final Impact impact) {
         logger.info("Preparing to publish event");
         var impactJson = ImpactJsonMapper.toJson(impact);
-        var impactDeletedEvent = new ImpactDeletedEvent(this, impactJson.toString());
+        var impactDeletedEvent = new ImpactDeletedEvent(this, impactJson);
         applicationEventPublisher.publishEvent(impactDeletedEvent);
         logger.info("Event published");
     }

@@ -19,14 +19,14 @@ public class ImpactStakeholderJson {
 
     public void setId(String id) {
         if (id == null) {
-            throw new IllegalArgumentException("id cannot be null.");
+            throw new IllegalArgumentException("Id cannot be null.");
         }
         this.id = UUID.fromString(id);
     }
 
     public void setName(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("id cannot be null.");
+            throw new IllegalArgumentException("Name cannot be null.");
         }
         this.name = name;
     }
