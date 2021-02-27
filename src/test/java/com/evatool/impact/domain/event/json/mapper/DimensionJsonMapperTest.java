@@ -1,6 +1,6 @@
 package com.evatool.impact.domain.event.json.mapper;
 
-import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.domain.event.json.DimensionJson;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
 import static com.evatool.impact.domain.event.json.mapper.DimensionJsonMapper.toJson;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DimensionJsonMapperTest {
 
@@ -19,9 +19,9 @@ class DimensionJsonMapperTest {
         dimension.setId(UUID.randomUUID());
 
         // when
-        var dimensionJson = toJson(dimension);
+        var dimensionJson = new Gson().fromJson(toJson(dimension), DimensionJson.class);
 
         // then
-        assertThat(dimension).isEqualTo(new Gson().fromJson(dimensionJson, Dimension.class));
+        assertTrue(dimensionJson.equalsEntity(dimension));
     }
 }

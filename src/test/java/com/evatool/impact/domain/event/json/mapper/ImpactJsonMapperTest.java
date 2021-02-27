@@ -1,6 +1,6 @@
 package com.evatool.impact.domain.event.json.mapper;
 
-import com.evatool.impact.domain.entity.Impact;
+import com.evatool.impact.domain.event.json.ImpactJson;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
 import static com.evatool.impact.domain.event.json.mapper.ImpactJsonMapper.toJson;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ImpactJsonMapperTest {
 
@@ -21,9 +21,9 @@ class ImpactJsonMapperTest {
         impact.getStakeholder().setId(UUID.randomUUID());
 
         // when
-        var impactJson = toJson(impact);
+        var impactJson = new Gson().fromJson(toJson(impact), ImpactJson.class);
 
         // then
-        assertThat(impact).isEqualTo(new Gson().fromJson(impactJson, Impact.class));
+        assertTrue(impactJson.equalsEntity(impact));
     }
 }

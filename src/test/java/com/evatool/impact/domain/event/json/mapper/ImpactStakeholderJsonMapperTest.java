@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class ImpactStakeholderJsonMapperTest {
 
     @Test
-    void testFromJsonString_JsonString_EqualsImpactStakeholder() {
+    void testFromJsonString_ImpactStakeholderFromJson_EqualsImpactStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
         stakeholder.setId(UUID.randomUUID());
