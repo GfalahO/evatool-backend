@@ -87,12 +87,12 @@ class DimensionRestControllerTest {
             }
 
             // when
-            var getResponse = testRestTemplate.getForEntity(
+            var response = testRestTemplate.getForEntity(
                     DIMENSIONS, DimensionDto[].class);
-            var dimensionDtoList = getResponse.getBody();
+            var dimensionDtoList = response.getBody();
 
             // then
-            assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(dimensionDtoList).isNotNull().hasSize(value);
         }
     }
@@ -192,8 +192,8 @@ class DimensionRestControllerTest {
 
             // when
             dimensionDto.setName("new_name");
-            var putEntity = new HttpEntity<>(dimensionDto);
-            var response = testRestTemplate.exchange(DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
+            var httpEntity = new HttpEntity<>(dimensionDto);
+            var response = testRestTemplate.exchange(DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -209,11 +209,11 @@ class DimensionRestControllerTest {
             var httpEntity = new HttpEntity<>(dimensionDto);
 
             // when
-            var putResponse = testRestTemplate.exchange(
+            var response = testRestTemplate.exchange(
                     DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
 
         @Test
@@ -223,11 +223,11 @@ class DimensionRestControllerTest {
 
             // when
             var httpEntity = new HttpEntity<>(dimensionDto);
-            var putResponse = testRestTemplate.exchange(
+            var response = testRestTemplate.exchange(
                     DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 

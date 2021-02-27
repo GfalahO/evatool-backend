@@ -159,8 +159,8 @@ public class ImpactRestControllerTest {
 
             // when
             impactDto.setDescription("new_desc");
-            var putEntity = new HttpEntity<>(impactDto);
-            var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, putEntity, ImpactDto.class);
+            var httpEntity = new HttpEntity<>(impactDto);
+            var response = testRestTemplate.exchange(IMPACTS, HttpMethod.PUT, httpEntity, ImpactDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -176,11 +176,11 @@ public class ImpactRestControllerTest {
             var httpEntity = new HttpEntity<>(impactDto);
 
             // when
-            var putResponse = testRestTemplate.exchange(
+            var response = testRestTemplate.exchange(
                     IMPACTS, HttpMethod.PUT, httpEntity, ImpactDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
 
         @Test
@@ -190,11 +190,11 @@ public class ImpactRestControllerTest {
 
             // when
             var httpEntity = new HttpEntity<>(impactDto);
-            var putResponse = testRestTemplate.exchange(
+            var response = testRestTemplate.exchange(
                     IMPACTS, HttpMethod.PUT, httpEntity, ImpactDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
