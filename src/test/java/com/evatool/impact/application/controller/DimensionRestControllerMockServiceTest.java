@@ -46,7 +46,7 @@ class DimensionRestControllerMockServiceTest {
     class FindById {
 
         @Test
-        void testFindById_ExistingEntity_ReturnEntity() throws Exception {
+        void testFindById_ExistingDimension_ReturnDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -62,7 +62,7 @@ class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        void testFindById_ExistingEntity_CorrectRestLevel3() throws Exception {
+        void testFindById_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
@@ -88,7 +88,7 @@ class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        void testFindById_NonExistingEntity_ReturnErrorMessage() throws Exception {
+        void testFindById_NonExistingDimension_ReturnErrorMessage() throws Exception {
             // given
             var id = UUID.randomUUID().toString();
 
@@ -115,7 +115,7 @@ class DimensionRestControllerMockServiceTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testFindAll_ExistingEntities_ReturnEntities(int value) throws Exception {
+        void testFindAll_ExistingDimensions_ReturnDimensions(int value) throws Exception {
             var dimensionDtoList = new ArrayList<DimensionDto>();
             for (int i = 0; i < value; i++) {
                 // given
@@ -138,7 +138,7 @@ class DimensionRestControllerMockServiceTest {
     class FindAllByType {
 
         @Test
-        void testFindAllByType_ExistingEntities_ReturnEntities() throws Exception {
+        void testFindAllByType_ExistingDimensions_ReturnDimensions() throws Exception {
             // given
             var socialDimensions = new ArrayList<DimensionDto>();
             for (int i = 0; i < 3; i++) {
@@ -177,7 +177,7 @@ class DimensionRestControllerMockServiceTest {
     class Create {
 
         @Test
-        void testCreate_InsertedEntity_ReturnInsertedEntity() throws Exception {
+        void testCreate_CreatedDimension_ReturnCreatedDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID();
@@ -198,7 +198,7 @@ class DimensionRestControllerMockServiceTest {
     class Update {
 
         @Test
-        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() throws Exception {
+        void testUpdate_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
@@ -222,7 +222,7 @@ class DimensionRestControllerMockServiceTest {
     class DeleteById {
 
         @Test
-        void testDeleteById_DeletedEntity_ReturnNoEntities() throws Exception {
+        void testDeleteById_DeletedDimension_ReturnNoDimensions() throws Exception {
             // given
 
             // when

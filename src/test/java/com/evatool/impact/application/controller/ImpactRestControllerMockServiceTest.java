@@ -48,7 +48,7 @@ public class ImpactRestControllerMockServiceTest {
     class FindById {
 
         @Test
-        void testFindById_ExistingEntity_ReturnEntity() throws Exception {
+        void testFindById_ExistingImpact_ReturnImpact() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
 
@@ -64,7 +64,7 @@ public class ImpactRestControllerMockServiceTest {
         }
 
         @Test
-        void testFindById_ExistingEntity_CorrectRestLevel3() throws Exception {
+        void testFindById_ExistingImpact_CorrectRestLevel3() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
             impactDto.getDimension().setId(UUID.randomUUID());
@@ -96,7 +96,7 @@ public class ImpactRestControllerMockServiceTest {
         }
 
         @Test
-        void testFindById_NonExistingEntity_ReturnErrorMessage() throws Exception {
+        void testFindById_NonExistingImpact_ReturnErrorMessage() throws Exception {
             // given
             var id = UUID.randomUUID().toString();
 
@@ -123,7 +123,7 @@ public class ImpactRestControllerMockServiceTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testFindAll_ExistingEntities_ReturnEntities(int value) throws Exception {
+        void testFindAll_ExistingImpacts_ReturnImpacts(int value) throws Exception {
             var impactDtoList = new ArrayList<ImpactDto>();
             for (int i = 0; i < value; i++) {
                 // given
@@ -146,7 +146,7 @@ public class ImpactRestControllerMockServiceTest {
     class Create {
 
         @Test
-        void testCreate_InsertedEntity_ReturnInsertedEntity() throws Exception {
+        void testCreate_CreatedImpact_ReturnCreatedImpact() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
             var id = UUID.randomUUID();
@@ -167,7 +167,7 @@ public class ImpactRestControllerMockServiceTest {
     class Update {
 
         @Test
-        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() throws Exception {
+        void testUpdate_UpdatedImpact_ReturnUpdatedImpact() throws Exception {
             // given
             var impactDto = createDummyImpactDto();
             impactDto.setId(UUID.randomUUID());
@@ -191,7 +191,7 @@ public class ImpactRestControllerMockServiceTest {
     class DeleteById {
 
         @Test
-        void testDeleteById_DeletedEntity_ReturnNoEntities() throws Exception {
+        void testDeleteById_DeletedImpact_ReturnNoImpacts() throws Exception {
             // given
 
             // when

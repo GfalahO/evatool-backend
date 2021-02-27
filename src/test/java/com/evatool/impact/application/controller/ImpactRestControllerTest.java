@@ -68,7 +68,7 @@ public class ImpactRestControllerTest {
     class FindById {
 
         @Test
-        void testFindById_InsertedEntity_ReturnEntity() {
+        void testFindById_CreatedImpact_ReturnImpact() {
             // given
             var impactDto = saveFullDummyImpactDto();
 
@@ -82,7 +82,7 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testFindById_NonExistingEntity_ReturnHttpStatusNotFound() {
+        void testFindById_NonExistingImpact_ReturnHttpStatusNotFound() {
             // given
             var response = testRestTemplate.getForEntity(
                     IMPACTS + "/" + UUID.randomUUID().toString(), ImpactDto.class);
@@ -120,32 +120,32 @@ public class ImpactRestControllerTest {
     class Create {
 
         @Test
-        void testCreate_InsertEntity_ReturnInsertedEntity() {
+        void testCreate_CreatedImpact_ReturnCreatedImpact() {
             // given
             var impactDto = saveDummyImpactDtoChildren();
 
             // when
             var httpEntity = new HttpEntity<>(impactDto);
-            var responseEntity = testRestTemplate.postForEntity(
+            var response = testRestTemplate.postForEntity(
                     IMPACTS, httpEntity, ImpactDto.class);
 
             // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         }
 
         @Test
-        void testCreate_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
+        void testCreate_NotNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var impactDto = saveDummyImpactDtoChildren();
             impactDto.setId(UUID.randomUUID());
 
             // when
             var httpEntity = new HttpEntity<>(impactDto);
-            var responseEntity = testRestTemplate.postForEntity(
+            var response = testRestTemplate.postForEntity(
                     IMPACTS, httpEntity, ImpactDto.class);
 
             // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -153,7 +153,7 @@ public class ImpactRestControllerTest {
     class Update {
 
         @Test
-        void testUpdate_InsertedEntity_ReturnUpdatedEntity() {
+        void testUpdate_CreatedImpact_ReturnUpdatedImpact() {
             // given
             var impactDto = saveFullDummyImpactDto();
 
@@ -202,7 +202,7 @@ public class ImpactRestControllerTest {
     class DeleteById {
 
         @Test
-        void testDeleteById_ExistingEntity_ReturnHttpStatusOK() {
+        void testDeleteById_ExistingImpact_ReturnHttpStatusOK() {
             // given
             var impactDto = saveFullDummyImpactDto();
 
