@@ -4,9 +4,9 @@ import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.Requirement;
 import com.evatool.requirements.entity.RequirementsAnalysis;
 import com.evatool.requirements.entity.RequirementsVariant;
+import com.evatool.requirements.error.exceptions.EntityNotFoundException;
 import com.evatool.requirements.repository.RequirementAnalysisRepository;
 import com.evatool.requirements.repository.RequirementsVariantsRepository;
-import com.evatool.variants.entities.VariantsRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.*;
 @Service
 public class RequirementDTOService {
 
-    Logger logger = LoggerFactory.getLogger(RequirementDTOService.class);
+    final Logger logger = LoggerFactory.getLogger(RequirementDTOService.class);
 
     @Autowired
     RequirementMapper requirementMapper;
@@ -44,13 +44,15 @@ public class RequirementDTOService {
         requirement.setTitle(requirementDTO.getRequirementTitle());
         requirement.setDescription(requirementDTO.getRequirementDescription());
         Optional<RequirementsAnalysis> requirementsAnalysis = requirementAnalysisRepository.findById(requirementDTO.getProjectID());
-        if(!requirementsAnalysis.isEmpty())
+        if(requirementsAnalysis.isPresent())
         {
             requirement.setRequirementsAnalysis(requirementsAnalysis.get());
         }
         Collection<RequirementsVariant> requirementsVariantCollection = new ArrayList<>();
         for( Map.Entry<UUID, String> entry:requirementDTO.getVariantsTitle().entrySet()) {
-            requirementsVariantCollection.add(requirementsVariantsRepository.getOne(entry.getKey()));
+            Optional<RequirementsVariant> requirementsVariant = requirementsVariantsRepository.findById(entry.getKey());
+            if(requirementsVariant.isEmpty()) throw new EntityNotFoundException(RequirementsVariant.class,entry.getKey());
+            requirementsVariantCollection.add(requirementsVariant.get());
         }
         requirement.setVariants(requirementsVariantCollection);
         return requirement;

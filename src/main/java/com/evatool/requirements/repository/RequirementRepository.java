@@ -12,6 +12,6 @@ import java.util.UUID;
 @Repository
 public interface RequirementRepository extends JpaRepository<Requirement, UUID> {
 
-    public Collection<Requirement> findByRequirementsAnalysis(RequirementsAnalysis requirementsAnalysis);
+    Collection<Requirement> findByRequirementsAnalysis(RequirementsAnalysis requirementsAnalysis);
 }
 

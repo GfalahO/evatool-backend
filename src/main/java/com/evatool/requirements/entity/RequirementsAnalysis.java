@@ -1,5 +1,7 @@
 package com.evatool.requirements.entity;
 
+import com.google.gson.Gson;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,5 +20,9 @@ public class RequirementsAnalysis {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public static  RequirementsAnalysis fromJson(String json){
+        return  new Gson().fromJson(json, RequirementsAnalysis.class);
     }
 }
