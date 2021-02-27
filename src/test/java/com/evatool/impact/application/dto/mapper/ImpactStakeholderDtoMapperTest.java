@@ -27,7 +27,7 @@ class ImpactStakeholderDtoMapperTest {
     }
 
     @Test
-    void testFromDto_RecreatedDto_EqualsDto() {
+    void testFromDto_RecreatedStakeholderDto_EqualsStakeholderDto() {
         // given
         var stakeholderDto = createDummyStakeholderDto();
         stakeholderDto.setId(UUID.randomUUID());

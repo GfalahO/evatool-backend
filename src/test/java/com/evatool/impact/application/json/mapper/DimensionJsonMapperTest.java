@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class DimensionJsonMapperTest {
 
     @Test
-    void testToJson_EntityJson_EqualsEntity() {
+    void testToJson_DimensionJson_EqualsDimension() {
         // given
         var dimension = createDummyDimension();
         dimension.setId(UUID.randomUUID());
