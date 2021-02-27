@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class DimensionTest {
 
     @Test
-    void testSetName_NullValue_ThrowPropertyViolationException() {
+    void testSetName_NullValue_ThrowIllegalArgumentException() {
         // given
         var dimension = createDummyDimension();
 
@@ -19,7 +19,7 @@ class DimensionTest {
     }
 
     @Test
-    void testSetTypeString_NullValue_ThrowPropertyViolationException() {
+    void testSetTypeString_NullValue_ThrowIllegalArgumentException() {
         // given
         var dimension = createDummyDimension();
 
@@ -30,7 +30,7 @@ class DimensionTest {
     }
 
     @Test
-    void testSetDescription_NullValue_ThrowPropertyViolationException() {
+    void testSetDescription_NullValue_ThrowIllegalArgumentException() {
         // given
         var dimension = createDummyDimension();
 

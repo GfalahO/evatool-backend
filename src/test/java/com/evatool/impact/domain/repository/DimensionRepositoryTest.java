@@ -15,7 +15,7 @@ class DimensionRepositoryTest {
     private DimensionRepository dimensionRepository;
 
     @Test
-    void testFindAllByType_ExistingEntities_ReturnEntitiesByType() {
+    void testFindAllByType_ExistingDimensions_ReturnDimensionsByType() {
         // given
         int n_socialDimensions = 3;
         for (int i = 0; i < n_socialDimensions; i++) {

@@ -25,7 +25,7 @@ class ImpactTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {-Double.MAX_VALUE, -2.0, -1.5, -1.1, -1.000001, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
-    void testSetValue_IllegalValue_ThrowPropertyViolationException(double value) {
+    void testSetValue_IllegalValue_ThrowIllegalArgumentException(double value) {
         // given
         var impact = createDummyImpact();
 
@@ -36,7 +36,7 @@ class ImpactTest {
     }
 
     @Test
-    void testSetDescription_NullValue_ThrowPropertyViolationException() {
+    void testSetDescription_NullValue_ThrowIllegalArgumentException() {
         // given
         var impact = createDummyImpact();
 
@@ -47,7 +47,7 @@ class ImpactTest {
     }
 
     @Test
-    void testSetDimension_NullValue_ThrowPropertyViolationException() {
+    void testSetDimension_NullValue_ThrowIllegalArgumentException() {
         // given
         var impact = createDummyImpact();
 
@@ -58,7 +58,7 @@ class ImpactTest {
     }
 
     @Test
-    void testSetStakeholder_NullValue_ThrowPropertyViolationException() {
+    void testSetStakeholder_NullValue_ThrowIllegalArgumentException() {
         // given
         var impact = createDummyImpact();
 

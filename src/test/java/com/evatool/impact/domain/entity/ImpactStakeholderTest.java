@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class ImpactStakeholderTest {
 
     @Test
-    void testSetName_NullValue_ThrowPropertyViolationException() {
+    void testSetName_NullValue_ThrowIllegalArgumentException() {
         // given
         var stakeholder = createDummyStakeholder();
 
