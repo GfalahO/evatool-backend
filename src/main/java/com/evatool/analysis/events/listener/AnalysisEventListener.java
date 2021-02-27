@@ -30,7 +30,7 @@ public class AnalysisEventListener {
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
 
         if (analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
-            throw new EventEntityAlreadyExistsException();
+            throw new EventEntityAlreadyExistsException(event.getSource().toString());
         }
         analysisImpactRepository.save(AnalysisImpacts.fromJson(event.getJsonPayload()));
     }
@@ -42,7 +42,7 @@ public class AnalysisEventListener {
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
 
         if (!analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
-            throw new EventEntityDoesNotExistException();
+            throw new EventEntityDoesNotExistException(event.getSource().toString());
         }
         analysisImpactRepository.save(AnalysisImpacts.fromJson(event.getJsonPayload()));
     }
@@ -54,7 +54,7 @@ public class AnalysisEventListener {
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
 
         if (!analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
-            throw new EventEntityDoesNotExistException();
+            throw new EventEntityDoesNotExistException(event.getSource().toString());
         }
         analysisImpactRepository.delete(AnalysisImpacts.fromJson(event.getJsonPayload()));
     }
