@@ -1,7 +1,6 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
-import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactStakeholderDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;

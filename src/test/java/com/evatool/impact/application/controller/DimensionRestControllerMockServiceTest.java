@@ -24,7 +24,6 @@ import static com.evatool.impact.application.controller.UriUtil.*;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
