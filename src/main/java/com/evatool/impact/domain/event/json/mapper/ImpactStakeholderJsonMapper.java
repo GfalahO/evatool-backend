@@ -29,12 +29,9 @@ public class ImpactStakeholderJsonMapper {
         try {
             var jsonObject = new JSONObject(json);
             var stakeholderName = jsonObject.isNull("name") ? null : jsonObject.getString("name");
-            var stakeholderId = jsonObject.isNull("id") ? null : jsonObject.getString("id");
+            var stakeholderId = jsonObject.getString("id");
 
             var impactStakeholder = new ImpactStakeholder(stakeholderName);
-            if (stakeholderId == null) {
-                throw new IllegalArgumentException("Id cannot be null.");
-            }
             impactStakeholder.setId(UUID.fromString(stakeholderId));
             return impactStakeholder;
         } catch (JSONException | IllegalArgumentException ex) {
