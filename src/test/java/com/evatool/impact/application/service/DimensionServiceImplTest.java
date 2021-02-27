@@ -44,7 +44,7 @@ class DimensionServiceImplTest {
     class FindById {
 
         @Test
-        void testFindById_ExistingEntity_ReturnEntity() {
+        void testFindById_ExistingDimension_ReturnDimension() {
             // given
             var dimension = saveFullDummyDimension();
 
@@ -73,7 +73,7 @@ class DimensionServiceImplTest {
     class FindByType {
 
         @Test
-        void testFindByType_ExistingEntities_ReturnEntities() {
+        void testFindByType_ExistingDimensions_ReturnDimensions() {
             // given
             int n_socialDimensions = 3;
             for (int i = 0; i < n_socialDimensions; i++) {
@@ -104,7 +104,7 @@ class DimensionServiceImplTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testFindAll_InsertedEntities_ReturnEntities(int value) {
+        void testFindAll_CreatedDimensions_ReturnDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 var dimensionDto = createDummyDimensionDto();
@@ -139,20 +139,20 @@ class DimensionServiceImplTest {
     class Create {
 
         @Test
-        void testCreate_InsertedEntity_ReturnInsertedEntity() {
+        void testCreate_CreatedDimension_ReturnCreatedDimension() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
             // when
-            var insertedDimension = dimensionService.create(dimensionDto);
-            var retrievedDimension = dimensionService.findById(insertedDimension.getId());
+            var createdDimension = dimensionService.create(dimensionDto);
+            var retrievedDimension = dimensionService.findById(createdDimension.getId());
 
             // then
-            assertThat(insertedDimension).isEqualTo(retrievedDimension);
+            assertThat(createdDimension).isEqualTo(retrievedDimension);
         }
 
         @Test
-        void testInsert_ExistingId_ThrowEntityIdMustBeNullException() {
+        void testCreate_ExistingId_ThrowEntityIdMustBeNullException() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
@@ -168,7 +168,7 @@ class DimensionServiceImplTest {
     class Update {
 
         @Test
-        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() {
+        void testUpdate_UpdatedDimension_ReturnUpdatedDimension() {
             // given
             var dimension = saveFullDummyDimension();
 
@@ -210,7 +210,7 @@ class DimensionServiceImplTest {
     class Delete {
 
         @Test
-        void testDeleteById_DeleteEntity_ReturnNoEntities() {
+        void testDeleteById_DeleteDimension_ReturnNoDimensions() {
             // given
             var dimension = saveFullDummyDimension();
 
@@ -241,7 +241,7 @@ class DimensionServiceImplTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testDeleteAll_InsertEntities_ReturnNoEntities(int value) {
+        void testDeleteAll_ExistingDimensions_ReturnNoDimensions(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyDimension();

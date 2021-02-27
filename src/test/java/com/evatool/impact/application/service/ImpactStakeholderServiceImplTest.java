@@ -43,7 +43,7 @@ class ImpactStakeholderServiceImplTest {
     class FindById {
 
         @Test
-        void testFindById_ExistingEntity_ReturnEntity() {
+        void testFindById_ExistingStakeholder_ReturnStakeholder() {
             // given
             var stakeholder = saveFullDummyImpactStakeholder();
 
@@ -73,7 +73,7 @@ class ImpactStakeholderServiceImplTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testFindAll_ExistingEntities_ReturnEntities(int value) {
+        void testFindAll_ExistingStakeholders_ReturnStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyImpactStakeholder();
@@ -88,10 +88,10 @@ class ImpactStakeholderServiceImplTest {
     }
 
     @Nested
-    class Created {
+    class Create {
 
         @Test
-        void testCreate_CreatedEntity_ReturnCreatedEntity() {
+        void testCreate_CreatedStakeholder_ReturnCreatedStakeholder() {
             // given
             var stakeholder = saveFullDummyImpactStakeholder();
 
@@ -103,7 +103,7 @@ class ImpactStakeholderServiceImplTest {
         }
 
         @Test
-        void testInsert_ExistingId_ThrowEntityIdMustBeNullException() {
+        void testCreate_ExistingId_ThrowEntityIdMustBeNullException() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
@@ -119,7 +119,7 @@ class ImpactStakeholderServiceImplTest {
     class Update {
 
         @Test
-        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() {
+        void testUpdate_UpdatedStakeholder_ReturnUpdatedStakeholder() {
             // given
             var stakeholder = saveFullDummyImpactStakeholder();
 
@@ -161,13 +161,13 @@ class ImpactStakeholderServiceImplTest {
     class Delete {
 
         @Test
-        void testDeleteById_DeleteEntity_ReturnNoEntities() {
+        void testDeleteById_DeleteStakeholder_ReturnNoStakeholders() {
             // given
             var stakeholderDto = createDummyStakeholderDto();
 
             // when
-            var insertedStakeholder = stakeholderService.create(stakeholderDto);
-            stakeholderService.deleteById(insertedStakeholder.getId());
+            var createdStakeholder = stakeholderService.create(stakeholderDto);
+            stakeholderService.deleteById(createdStakeholder.getId());
 
             // then
             var stakeholders = stakeholderService.findAll();
@@ -193,7 +193,7 @@ class ImpactStakeholderServiceImplTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testDeleteAll_InsertedEntities_ReturnNoEntities(int value) {
+        void testDeleteAll_ExistingStakeholders_ReturnNoStakeholders(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyImpactStakeholder();

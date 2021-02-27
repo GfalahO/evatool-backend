@@ -20,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
+import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
 import static com.evatool.impact.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -69,7 +70,7 @@ class ImpactServiceImplTest {
     class FindById {
 
         @Test
-        void testFindById_ExistingEntity_ReturnEntity() {
+        void testFindById_ExistingImpact_ReturnImpact() {
             // given
             var impact = saveFullDummyImpact();
 
@@ -77,7 +78,7 @@ class ImpactServiceImplTest {
             var impactDto = impactService.findById(impact.getId());
 
             // then
-            assertThat(impactDto).isEqualTo(ImpactDtoMapper.toDto(impact));
+            assertThat(impactDto).isEqualTo(toDto(impact));
         }
 
         @Test
@@ -97,7 +98,7 @@ class ImpactServiceImplTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testFindAll_InsertedEntities_ReturnEntities(int value) {
+        void testFindAll_ExistingImpacts_ReturnImpact(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyImpact();
@@ -115,18 +116,18 @@ class ImpactServiceImplTest {
     class Create {
 
         @Test
-        void testCreate_InsertedEntity_ReturnInsertedEntity() {
+        void testCreate_CreatedImpact_ReturnCreatedImpact() {
             // given
             var impactDto = createDummyImpactDto();
             impactDto.setDimension(DimensionDtoMapper.toDto(saveDummyDimension()));
             impactDto.setStakeholder(ImpactStakeholderDtoMapper.toDto(saveDummyStakeholder()));
 
             // when
-            var insertedImpact = impactService.create(impactDto);
-            var retrievedImpact = impactService.findById(insertedImpact.getId());
+            var createdImpact = impactService.create(impactDto);
+            var retrievedImpact = impactService.findById(createdImpact.getId());
 
             // then
-            assertThat(insertedImpact).isEqualTo(retrievedImpact);
+            assertThat(createdImpact).isEqualTo(retrievedImpact);
         }
 
         @Test
@@ -146,19 +147,18 @@ class ImpactServiceImplTest {
     class Update {
 
         @Test
-        void testUpdate_UpdatedEntity_ReturnUpdatedEntity() {
+        void testUpdate_UpdatedImpact_ReturnUpdatedImpact() {
             // given
             var impact = saveFullDummyImpact();
 
             // when
-            var impactDto = ImpactDtoMapper.toDto(impact);
             var newDescription = "new_desc";
-            impactDto.setDescription(newDescription);
+            impact.setDescription(newDescription);
+            impactService.update(toDto(impact));
+            var impactDto = impactService.findById(impact.getId());
 
             // then
-            var insertImpact = impactService.update(impactDto);
-            var updatedImpact = impactService.findById(insertImpact.getId());
-            assertThat(updatedImpact.getDescription()).isEqualTo(newDescription);
+            assertThat(impactDto.getDescription()).isEqualTo(newDescription);
         }
 
         @Test
@@ -189,7 +189,7 @@ class ImpactServiceImplTest {
     class Delete {
 
         @Test
-        void testDeleteById_DeleteEntity_ReturnNoEntities() {
+        void testDeleteById_DeleteImpact_ReturnNoImpacts() {
             // given
             var impact = saveFullDummyImpact();
 
@@ -220,7 +220,7 @@ class ImpactServiceImplTest {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testDeleteAll_InsertedEntities_ReturnNoEntities(int value) {
+        void testDeleteAll_ExistingImpacts_ReturnNoImpact(int value) {
             // given
             for (int i = 0; i < value; i++) {
                 saveFullDummyImpact();
