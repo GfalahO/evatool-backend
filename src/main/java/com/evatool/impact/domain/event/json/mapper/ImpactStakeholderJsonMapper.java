@@ -32,7 +32,7 @@ public class ImpactStakeholderJsonMapper {
             var stakeholderId = jsonObject.isNull("id") ? null : jsonObject.getString("id");
 
             var impactStakeholder = new ImpactStakeholder(stakeholderName);
-            if(stakeholderId == null){
+            if (stakeholderId == null) {
                 throw new IllegalArgumentException("Id cannot be null.");
             }
             impactStakeholder.setId(UUID.fromString(stakeholderId));
