@@ -57,7 +57,6 @@ public class ImpactServiceImpl implements ImpactService {
         return ImpactDtoMapper.toDto(impact.get());
     }
 
-    @SuppressWarnings("unused")
     @Override
     public List<ImpactDto> findAll() {
         logger.info("Get Impacts");
@@ -67,7 +66,6 @@ public class ImpactServiceImpl implements ImpactService {
         return impactDtoList;
     }
 
-    @SuppressWarnings("unused")
     @Override
     public ImpactDto create(ImpactDto impactDto) {
         logger.info("Create Impact");
@@ -80,7 +78,6 @@ public class ImpactServiceImpl implements ImpactService {
         return ImpactDtoMapper.toDto(impact);
     }
 
-    @SuppressWarnings("unused")
     @Override
     public ImpactDto update(ImpactDto impactDto) {
         logger.info("Update Impact");
@@ -91,7 +88,6 @@ public class ImpactServiceImpl implements ImpactService {
         return ImpactDtoMapper.toDto(impact);
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void deleteById(UUID id) {
         logger.info("Delete Impact");
@@ -101,7 +97,6 @@ public class ImpactServiceImpl implements ImpactService {
         impactDeletedEventPublisher.onImpactDeleted(impact);
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void deleteAll() {
         logger.info("Delete Impacts");

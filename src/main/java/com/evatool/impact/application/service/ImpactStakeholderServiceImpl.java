@@ -39,7 +39,6 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         return ImpactStakeholderDtoMapper.toDto(stakeholder.get());
     }
 
-    @SuppressWarnings("unused")
     @Override
     public List<ImpactStakeholderDto> findAll() {
         logger.info("Get Stakeholders");
@@ -49,7 +48,6 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         return stakeholderDtoList;
     }
 
-    @SuppressWarnings("unused")
     @Override
     public ImpactStakeholderDto create(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Create Stakeholder");
@@ -60,7 +58,6 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         return ImpactStakeholderDtoMapper.toDto(stakeholder);
     }
 
-    @SuppressWarnings("unused")
     @Override
     public ImpactStakeholderDto update(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Update Stakeholder");
@@ -69,7 +66,6 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         return ImpactStakeholderDtoMapper.toDto(stakeholderRepository.save(stakeholder));
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void deleteById(UUID id) {
         logger.info("Delete Stakeholder");
@@ -78,7 +74,6 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
         stakeholderRepository.delete(stakeholder);
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void deleteAll() {
         logger.info("Delete Stakeholders");

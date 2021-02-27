@@ -45,7 +45,6 @@ public class ImpactRestController {
         return new ResponseEntity<>(getImpactWithLinks(impactDto), HttpStatus.OK);
     }
 
-    @SuppressWarnings("unused")
     @GetMapping(IMPACTS)
     @ApiOperation(value = "Get all Impacts")
     @ApiResponses({
@@ -55,7 +54,6 @@ public class ImpactRestController {
         return new ResponseEntity<>(getImpactsWithLinks(impactService.findAll()), HttpStatus.OK);
     }
 
-    @SuppressWarnings("unused")
     @PostMapping(IMPACTS)
     @ApiOperation(value = "Create a new Impact")
     @ApiResponses({

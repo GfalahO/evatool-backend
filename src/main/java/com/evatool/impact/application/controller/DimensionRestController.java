@@ -44,7 +44,6 @@ public class DimensionRestController {
         return new ResponseEntity<>(getDimensionWithLinks(dimensionDto), HttpStatus.OK);
     }
 
-    @SuppressWarnings("unused")
     @GetMapping(DIMENSIONS)
     @ApiOperation(value = "Get all Dimensions")
     @ApiResponses({
@@ -62,7 +61,6 @@ public class DimensionRestController {
         return new ResponseEntity<>(getDimensionsWithLinks(dimensionDtoList), HttpStatus.OK);
     }
 
-    @SuppressWarnings("unused")
     @PostMapping(DIMENSIONS)
     @ApiOperation(value = "Create a new Dimension")
     @ApiResponses({
@@ -101,7 +99,6 @@ public class DimensionRestController {
         return ResponseEntity.ok().build();
     }
 
-    @SuppressWarnings("unused")
     @GetMapping(DIMENSION_TYPES)
     @ApiOperation(value = "Get all Dimension Types")
     @ApiResponses({

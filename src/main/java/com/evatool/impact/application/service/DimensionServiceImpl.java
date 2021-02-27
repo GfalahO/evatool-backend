@@ -52,7 +52,6 @@ public class DimensionServiceImpl implements DimensionService {
         return DimensionDtoMapper.toDto(dimension.get());
     }
 
-    @SuppressWarnings("unused")
     @Override
     public List<DimensionDto> findAllByType(Dimension.Type type) {
         logger.info("Get Dimensions by type");
@@ -62,7 +61,6 @@ public class DimensionServiceImpl implements DimensionService {
         return dimensionDtoList;
     }
 
-    @SuppressWarnings("unused")
     @Override
     public List<DimensionDto> findAll() {
         logger.info("Get Dimensions");
@@ -72,14 +70,12 @@ public class DimensionServiceImpl implements DimensionService {
         return dimensionDtoList;
     }
 
-    @SuppressWarnings("unused")
     @Override
     public List<Dimension.Type> findAllTypes() {
         logger.info("Get Dimension Types");
         return Arrays.asList(Dimension.Type.values());
     }
 
-    @SuppressWarnings("unused")
     @Override
     public DimensionDto create(DimensionDto dimensionDto) {
         logger.info("Create Dimension");
@@ -91,7 +87,6 @@ public class DimensionServiceImpl implements DimensionService {
         return DimensionDtoMapper.toDto(dimension);
     }
 
-    @SuppressWarnings("unused")
     @Override
     public DimensionDto update(DimensionDto dimensionDto) {
         logger.info("Update Dimension");
@@ -101,7 +96,6 @@ public class DimensionServiceImpl implements DimensionService {
         return DimensionDtoMapper.toDto(dimension);
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void deleteById(UUID id) {
         logger.info("Delete Dimension");
@@ -111,7 +105,6 @@ public class DimensionServiceImpl implements DimensionService {
         dimensionDeletedEventPublisher.onDimensionDeleted(dimension);
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void deleteAll() {
         logger.info("Delete Dimensions");

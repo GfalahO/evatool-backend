@@ -15,7 +15,6 @@ public class DimensionUpdatedEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @SuppressWarnings("unused")
     public DimensionUpdatedEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
