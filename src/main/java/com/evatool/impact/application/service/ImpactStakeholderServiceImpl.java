@@ -30,7 +30,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     public ImpactStakeholderDto findStakeholderById(UUID id) {
         logger.info("Get Stakeholder");
         if (id == null) {
-            throw new EntityIdRequiredException();
+            throw new EntityIdRequiredException(ImpactStakeholder.class.getSimpleName());
         }
         var stakeholder = stakeholderRepository.findById(id);
         if (stakeholder.isEmpty()) {
@@ -52,7 +52,7 @@ public class ImpactStakeholderServiceImpl implements ImpactStakeholderService {
     public ImpactStakeholderDto createStakeholder(ImpactStakeholderDto impactStakeholderDto) {
         logger.info("Create Stakeholder");
         if (impactStakeholderDto.getId() != null) {
-            throw new EntityIdMustBeNullException();
+            throw new EntityIdMustBeNullException(ImpactStakeholder.class.getSimpleName());
         }
         var stakeholder = stakeholderRepository.save(ImpactStakeholderDtoMapper.fromDto(impactStakeholderDto));
         return ImpactStakeholderDtoMapper.toDto(stakeholder);
