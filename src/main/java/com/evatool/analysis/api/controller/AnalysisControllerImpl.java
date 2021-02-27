@@ -2,6 +2,8 @@ package com.evatool.analysis.api.controller;
 
 import com.evatool.analysis.api.interfaces.AnalysisController;
 import com.evatool.analysis.dto.AnalysisDTO;
+import com.evatool.analysis.model.AnalysisImpacts;
+import com.evatool.analysis.repository.AnalysisImpactRepository;
 import com.evatool.global.event.analysis.AnalysisCreatedEvent;
 import com.evatool.analysis.events.AnalysisEventPublisher;
 import com.evatool.analysis.model.Analysis;
@@ -34,6 +36,9 @@ public class AnalysisControllerImpl implements AnalysisController {
 
     @Autowired
     private AnalysisDTOService analysisDTOService;
+
+    @Autowired
+    private AnalysisImpactRepository analysisImpactRepository;
 
 
     Logger logger = LoggerFactory.getLogger(AnalysisControllerImpl.class);
