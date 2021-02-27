@@ -15,6 +15,7 @@ public class ImpactCreatedEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
+    @SuppressWarnings("unused")
     public ImpactCreatedEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
