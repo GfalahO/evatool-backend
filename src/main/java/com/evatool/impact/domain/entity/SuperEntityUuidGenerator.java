@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 public class SuperEntityUuidGenerator extends UUIDGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(SuperEntityUuidGenerator.class);
