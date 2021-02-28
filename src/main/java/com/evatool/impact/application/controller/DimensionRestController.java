@@ -64,7 +64,7 @@ public class DimensionRestController {
     }
 
     @PostMapping(DIMENSIONS)
-    @ApiOperation(value = "Create a new Dimension")
+    @ApiOperation(value = "Create a new dimension")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -77,7 +77,7 @@ public class DimensionRestController {
     }
 
     @PutMapping(DIMENSIONS)
-    @ApiOperation(value = "Update a Dimension")
+    @ApiOperation(value = "Update a dimension")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Updated"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -90,7 +90,7 @@ public class DimensionRestController {
     }
 
     @DeleteMapping(DIMENSIONS_ID)
-    @ApiOperation(value = "Delete Dimension by ID")
+    @ApiOperation(value = "Delete dimension by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Deleted"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -102,7 +102,7 @@ public class DimensionRestController {
     }
 
     @GetMapping(DIMENSION_TYPES)
-    @ApiOperation(value = "Get all Dimension Types")
+    @ApiOperation(value = "Read all dimension types")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
     public ResponseEntity<List<DimensionType>> findAllTypes() {
