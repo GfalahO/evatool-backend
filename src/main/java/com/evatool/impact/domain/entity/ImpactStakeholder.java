@@ -25,8 +25,9 @@ public class ImpactStakeholder extends SuperEntity {
         logger.debug("{} created", ImpactStakeholder.class.getSimpleName());
     }
 
-    public ImpactStakeholder(String name) {
+    public ImpactStakeholder(UUID id, String name) {
         this();
+        this.setId(id);
         this.setName(name);
     }
 

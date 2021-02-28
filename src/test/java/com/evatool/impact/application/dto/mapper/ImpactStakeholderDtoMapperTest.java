@@ -16,7 +16,6 @@ class ImpactStakeholderDtoMapperTest {
     void testToDto_RecreatedStakeholder_EqualsStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
-        stakeholder.setId(UUID.randomUUID());
 
         // when
         var stakeholderDto = toDto(stakeholder);

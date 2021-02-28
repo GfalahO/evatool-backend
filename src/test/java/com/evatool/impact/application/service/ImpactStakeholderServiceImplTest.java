@@ -56,7 +56,6 @@ class ImpactStakeholderServiceImplTest {
         void testFindById_NonExistingId_ThrowEntityNotFoundException() {
             // given
             var stakeholder = createDummyStakeholder();
-            stakeholder.setId(UUID.randomUUID());
 
             // when
 

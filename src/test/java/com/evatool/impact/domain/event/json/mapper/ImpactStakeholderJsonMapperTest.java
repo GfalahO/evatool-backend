@@ -16,7 +16,6 @@ class ImpactStakeholderJsonMapperTest {
     void testFromJsonString_ImpactStakeholderFromJson_EqualsImpactStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
-        stakeholder.setId(UUID.randomUUID());
         var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", stakeholder.getId(), stakeholder.getName());
 
         // when

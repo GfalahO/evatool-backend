@@ -17,7 +17,6 @@ class ImpactDtoMapperTest {
         var impact = createDummyImpact();
         impact.setId(UUID.randomUUID());
         impact.getDimension().setId(UUID.randomUUID());
-        impact.getStakeholder().setId(UUID.randomUUID());
 
         // when
         var impactDto = toDto(impact);

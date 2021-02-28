@@ -18,7 +18,6 @@ class ImpactJsonMapperTest {
         var impact = createDummyImpact();
         impact.setId(UUID.randomUUID());
         impact.getDimension().setId(UUID.randomUUID());
-        impact.getStakeholder().setId(UUID.randomUUID());
 
         // when
         var impactJson = new Gson().fromJson(toJson(impact), ImpactJson.class);

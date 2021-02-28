@@ -41,8 +41,7 @@ class ImpactStakeholderUpdatedEventListenerTest {
         var name = "name";
         var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
-        var stakeholder = new ImpactStakeholder("old_name");
-        stakeholder.setId(id);
+        var stakeholder = new ImpactStakeholder(id, "old_name");
         stakeholderRepository.save(stakeholder);
 
         // when

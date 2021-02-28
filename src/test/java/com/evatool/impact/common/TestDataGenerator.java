@@ -7,6 +7,8 @@ import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 
+import java.util.UUID;
+
 public class TestDataGenerator {
 
     public static Dimension createDummyDimension() {
@@ -14,7 +16,7 @@ public class TestDataGenerator {
     }
 
     public static ImpactStakeholder createDummyStakeholder() {
-        return new ImpactStakeholder("dummyStakeholder");
+        return new ImpactStakeholder(UUID.randomUUID(), "dummyStakeholder");
     }
 
     public static Impact createDummyImpact() {
