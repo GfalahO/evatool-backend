@@ -7,15 +7,15 @@ import java.util.UUID;
 
 public interface ImpactService {
 
-    ImpactDto findImpactById(UUID id);
+    ImpactDto findById(UUID id);
 
-    List<ImpactDto> getAllImpacts();
+    List<ImpactDto> findAll();
 
-    ImpactDto createImpact(ImpactDto impactDto);
+    ImpactDto create(ImpactDto impactDto);
 
-    ImpactDto updateImpact(ImpactDto impactDto);
+    ImpactDto update(ImpactDto impactDto);
 
-    void deleteImpactById(UUID id);
+    void deleteById(UUID id);
 
-    void deleteImpacts();
+    void deleteAll();
 }

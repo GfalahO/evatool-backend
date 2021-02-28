@@ -1,7 +1,7 @@
 package com.evatool.impact.domain.event.stakeholder;
 
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
-import com.evatool.impact.application.json.mapper.ImpactStakeholderJsonMapper;
+import com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +22,6 @@ class ImpactStakeholderCreatedEventListenerTest {
 
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
-
-    @Autowired
-    private ImpactStakeholderCreatedEventListener impactStakeholderCreatedEventListener;
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;

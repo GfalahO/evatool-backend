@@ -3,12 +3,10 @@ package com.evatool.impact.application.service;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.ImpactDtoMapper;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
-import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
+import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.Impact;
-import com.evatool.impact.domain.event.impact.ImpactCreatedEventPublisher;
-import com.evatool.impact.domain.event.impact.ImpactDeletedEventPublisher;
-import com.evatool.impact.domain.event.impact.ImpactUpdatedEventPublisher;
+import com.evatool.impact.domain.event.ImpactEventPublisher;
 import com.evatool.impact.domain.repository.ImpactRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,27 +23,21 @@ public class ImpactServiceImpl implements ImpactService {
 
     private final ImpactRepository impactRepository;
 
-    private final ImpactStakeholderServiceImpl impactStakeholderService;
+    private final ImpactStakeholderService impactStakeholderService;
 
-    private final DimensionServiceImpl dimensionService;
+    private final DimensionService dimensionService;
 
-    private final ImpactCreatedEventPublisher impactCreatedEventPublisher;
+    private final ImpactEventPublisher impactEventPublisher;
 
-    private final ImpactUpdatedEventPublisher impactUpdatedEventPublisher;
-
-    private final ImpactDeletedEventPublisher impactDeletedEventPublisher;
-
-    public ImpactServiceImpl(ImpactRepository impactRepository, ImpactStakeholderServiceImpl impactStakeholderService, DimensionServiceImpl dimensionService, ImpactCreatedEventPublisher impactCreatedEventPublisher, ImpactUpdatedEventPublisher impactUpdatedEventPublisher, ImpactDeletedEventPublisher impactDeletedEventPublisher) {
+    public ImpactServiceImpl(ImpactRepository impactRepository, ImpactStakeholderService impactStakeholderService, DimensionService dimensionService, ImpactEventPublisher impactEventPublisher) {
         this.impactRepository = impactRepository;
         this.impactStakeholderService = impactStakeholderService;
         this.dimensionService = dimensionService;
-        this.impactCreatedEventPublisher = impactCreatedEventPublisher;
-        this.impactUpdatedEventPublisher = impactUpdatedEventPublisher;
-        this.impactDeletedEventPublisher = impactDeletedEventPublisher;
+        this.impactEventPublisher = impactEventPublisher;
     }
 
     @Override
-    public ImpactDto findImpactById(UUID id) {
+    public ImpactDto findById(UUID id) {
         logger.info("Get Impact");
         if (id == null) {
             throw new EntityIdRequiredException(Impact.class.getSimpleName());
@@ -58,7 +50,7 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public List<ImpactDto> getAllImpacts() {
+    public List<ImpactDto> findAll() {
         logger.info("Get Impacts");
         var impacts = impactRepository.findAll();
         var impactDtoList = new ArrayList<ImpactDto>();
@@ -67,44 +59,44 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public ImpactDto createImpact(ImpactDto impactDto) {
+    public ImpactDto create(ImpactDto impactDto) {
         logger.info("Create Impact");
         if (impactDto.getId() != null) {
             throw new EntityIdMustBeNullException(Impact.class.getSimpleName());
         }
         this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
-        impactCreatedEventPublisher.onImpactCreated(impact);
+        impactEventPublisher.publishImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);
     }
 
     @Override
-    public ImpactDto updateImpact(ImpactDto impactDto) {
+    public ImpactDto update(ImpactDto impactDto) {
         logger.info("Update Impact");
-        this.findImpactById(impactDto.getId());
+        this.findById(impactDto.getId());
         this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
-        impactUpdatedEventPublisher.onImpactUpdated(impact);
+        impactEventPublisher.publishImpactUpdated(impact);
         return ImpactDtoMapper.toDto(impact);
     }
 
     @Override
-    public void deleteImpactById(UUID id) {
+    public void deleteById(UUID id) {
         logger.info("Delete Impact");
-        var impactDto = this.findImpactById(id);
+        var impactDto = this.findById(id);
         var impact = ImpactDtoMapper.fromDto(impactDto);
         impactRepository.delete(impact);
-        impactDeletedEventPublisher.onImpactDeleted(impact);
+        impactEventPublisher.publishImpactDeleted(impact);
     }
 
     @Override
-    public void deleteImpacts() {
+    public void deleteAll() {
         logger.info("Delete Impacts");
         impactRepository.deleteAll();
     }
 
     private void findImpactChildren(ImpactDto impactDto) {
-        this.impactStakeholderService.findStakeholderById(impactDto.getStakeholder().getId());
-        this.dimensionService.findDimensionById(impactDto.getDimension().getId());
+        this.impactStakeholderService.findById(impactDto.getStakeholder().getId());
+        this.dimensionService.findById(impactDto.getDimension().getId());
     }
 }

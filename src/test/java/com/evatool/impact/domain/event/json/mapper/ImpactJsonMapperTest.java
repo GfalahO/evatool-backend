@@ -1,27 +1,28 @@
-package com.evatool.impact.application.json.mapper;
+package com.evatool.impact.domain.event.json.mapper;
 
+import com.evatool.impact.domain.event.json.ImpactJson;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static com.evatool.impact.application.json.mapper.ImpactJsonMapper.toJson;
 import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
+import static com.evatool.impact.domain.event.json.mapper.ImpactJsonMapper.toJson;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ImpactJsonMapperTest {
 
     @Test
-    void testToJson_NewImpact_EqualsImpactJson() {
+    void testToJson_ImpactJson_EqualsImpact() {
         // given
         var impact = createDummyImpact();
         impact.setId(UUID.randomUUID());
         impact.getDimension().setId(UUID.randomUUID());
-        impact.getStakeholder().setId(UUID.randomUUID());
 
         // when
-        var impactJson = toJson(impact);
+        var impactJson = new Gson().fromJson(toJson(impact), ImpactJson.class);
 
         // then
-        assertTrue(impactJson.equals(impact));
+        assertTrue(impactJson.equalsEntity(impact));
     }
 }

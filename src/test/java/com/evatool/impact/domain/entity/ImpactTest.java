@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -26,46 +25,46 @@ class ImpactTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {-Double.MAX_VALUE, -2.0, -1.5, -1.1, -1.000001, 1.000001, 1.1, 1.5, 2.0, Double.MAX_VALUE})
-    void testSetValue_IllegalValue_ThrowPropertyViolationException(double value) {
+    void testSetValue_IllegalValue_ThrowIllegalArgumentException(double value) {
         // given
         var impact = createDummyImpact();
 
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> impact.setValue(value));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setValue(value));
     }
 
     @Test
-    void testSetDescription_NullValue_ThrowPropertyViolationException() {
+    void testSetDescription_NullValue_ThrowIllegalArgumentException() {
         // given
         var impact = createDummyImpact();
 
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> impact.setDescription(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setDescription(null));
     }
 
     @Test
-    void testSetDimension_NullValue_ThrowPropertyViolationException() {
+    void testSetDimension_NullValue_ThrowIllegalArgumentException() {
         // given
         var impact = createDummyImpact();
 
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> impact.setDimension(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setDimension(null));
     }
 
     @Test
-    void testSetStakeholder_NullValue_ThrowPropertyViolationException() {
+    void testSetStakeholder_NullValue_ThrowIllegalArgumentException() {
         // given
         var impact = createDummyImpact();
 
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> impact.setStakeholder(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> impact.setStakeholder(null));
     }
 }

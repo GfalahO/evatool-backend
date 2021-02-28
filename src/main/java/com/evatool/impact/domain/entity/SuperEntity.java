@@ -1,12 +1,15 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import java.util.Objects;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -14,9 +17,7 @@ public class SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(SuperEntity.class);
 
-    protected SuperEntity() {
-
-    }
+    protected SuperEntity() {}
 
     @Getter
     @Id
@@ -29,12 +30,25 @@ public class SuperEntity {
         logger.debug("Set id");
         if (this.idAlreadySet()) {
             logger.error("Attempted to set existing id");
-            throw new PropertyViolationException("Existing id cannot be set.");
+            throw new IllegalArgumentException("Existing id cannot be set.");
         }
         this.id = id;
     }
 
     private boolean idAlreadySet() {
         return this.id != null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        var that = (SuperEntity) o;
+        return Objects.equals(this.id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id);
     }
 }

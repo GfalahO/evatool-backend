@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.entity;
 
-import com.evatool.impact.common.exception.PropertyViolationException;
 import org.junit.jupiter.api.Test;
 
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
@@ -9,13 +8,24 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class ImpactStakeholderTest {
 
     @Test
-    void testSetName_NullValue_ThrowPropertyViolationException() {
+    void testSetId_NullValue_ThrowIllegalArgumentException() {
         // given
         var stakeholder = createDummyStakeholder();
 
         // when
 
         // then
-        assertThatExceptionOfType(PropertyViolationException.class).isThrownBy(() -> stakeholder.setName(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setId(null));
+    }
+
+    @Test
+    void testSetName_NullValue_ThrowIllegalArgumentException() {
+        // given
+        var stakeholder = createDummyStakeholder();
+
+        // when
+
+        // then
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> stakeholder.setName(null));
     }
 }

@@ -2,13 +2,12 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
+import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
-import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
+import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.domain.entity.Dimension;
-import com.evatool.impact.domain.event.dimension.DimensionCreatedEventPublisher;
-import com.evatool.impact.domain.event.dimension.DimensionDeletedEventPublisher;
-import com.evatool.impact.domain.event.dimension.DimensionUpdatedEventPublisher;
+import com.evatool.impact.domain.event.DimensionEventPublisher;
 import com.evatool.impact.domain.repository.DimensionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,21 +25,15 @@ public class DimensionServiceImpl implements DimensionService {
 
     private final DimensionRepository dimensionRepository;
 
-    private final DimensionCreatedEventPublisher dimensionCreatedEventPublisher;
+    private final DimensionEventPublisher dimensionEventPublisher;
 
-    private final DimensionUpdatedEventPublisher dimensionUpdatedEventPublisher;
-
-    private final DimensionDeletedEventPublisher dimensionDeletedEventPublisher;
-
-    public DimensionServiceImpl(DimensionRepository dimensionRepository, DimensionCreatedEventPublisher dimensionCreatedEventPublisher, DimensionUpdatedEventPublisher dimensionupdatedEventPublisher, DimensionDeletedEventPublisher dimensionDeletedEventPublisher) {
+    public DimensionServiceImpl(DimensionRepository dimensionRepository, DimensionEventPublisher dimensionEventPublisher) {
         this.dimensionRepository = dimensionRepository;
-        this.dimensionCreatedEventPublisher = dimensionCreatedEventPublisher;
-        this.dimensionUpdatedEventPublisher = dimensionupdatedEventPublisher;
-        this.dimensionDeletedEventPublisher = dimensionDeletedEventPublisher;
+        this.dimensionEventPublisher = dimensionEventPublisher;
     }
 
     @Override
-    public DimensionDto findDimensionById(UUID id) {
+    public DimensionDto findById(UUID id) {
         logger.info("Get Dimension");
         if (id == null) {
             throw new EntityIdRequiredException(Dimension.class.getSimpleName());
@@ -53,16 +46,16 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public List<DimensionDto> findDimensionsByType(Dimension.Type type) {
+    public List<DimensionDto> findAllByType(DimensionType type) {
         logger.info("Get Dimensions by type");
-        var dimensions = dimensionRepository.findDimensionsByType(type);
+        var dimensions = dimensionRepository.findAllByType(type);
         var dimensionDtoList = new ArrayList<DimensionDto>();
         dimensions.forEach(dimension -> dimensionDtoList.add(DimensionDtoMapper.toDto(dimension)));
         return dimensionDtoList;
     }
 
     @Override
-    public List<DimensionDto> getAllDimensions() {
+    public List<DimensionDto> findAll() {
         logger.info("Get Dimensions");
         var dimensions = dimensionRepository.findAll();
         var dimensionDtoList = new ArrayList<DimensionDto>();
@@ -71,42 +64,42 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public List<Dimension.Type> getAllDimensionTypes() {
+    public List<DimensionType> findAllTypes() {
         logger.info("Get Dimension Types");
-        return Arrays.asList(Dimension.Type.values());
+        return Arrays.asList(DimensionType.values());
     }
 
     @Override
-    public DimensionDto createDimension(DimensionDto dimensionDto) {
+    public DimensionDto create(DimensionDto dimensionDto) {
         logger.info("Create Dimension");
         if (dimensionDto.getId() != null) {
             throw new EntityIdMustBeNullException(Dimension.class.getSimpleName());
         }
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
-        dimensionCreatedEventPublisher.onDimensionCreated(dimension);
+        dimensionEventPublisher.publishDimensionCreated(dimension);
         return DimensionDtoMapper.toDto(dimension);
     }
 
     @Override
-    public DimensionDto updateDimension(DimensionDto dimensionDto) {
+    public DimensionDto update(DimensionDto dimensionDto) {
         logger.info("Update Dimension");
-        this.findDimensionById(dimensionDto.getId());
+        this.findById(dimensionDto.getId());
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
-        dimensionUpdatedEventPublisher.onDimensionUpdated(dimension);
+        dimensionEventPublisher.publishDimensionUpdated(dimension);
         return DimensionDtoMapper.toDto(dimension);
     }
 
     @Override
-    public void deleteDimensionById(UUID id) {
+    public void deleteById(UUID id) {
         logger.info("Delete Dimension");
-        var dimensionDto = this.findDimensionById(id);
+        var dimensionDto = this.findById(id);
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);
         dimensionRepository.delete(dimension);
-        dimensionDeletedEventPublisher.onDimensionDeleted(dimension);
+        dimensionEventPublisher.publishDimensionDeleted(dimension);
     }
 
     @Override
-    public void deleteDimensions() {
+    public void deleteAll() {
         logger.info("Delete Dimensions");
         dimensionRepository.deleteAll();
     }

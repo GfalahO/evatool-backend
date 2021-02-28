@@ -13,10 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ImpactStakeholderDtoMapperTest {
 
     @Test
-    void testToDto_NewStakeholder_EqualsRecreatedStakeholder() {
+    void testToDto_RecreatedStakeholder_EqualsStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
-        stakeholder.setId(UUID.randomUUID());
 
         // when
         var stakeholderDto = toDto(stakeholder);
@@ -27,7 +26,7 @@ class ImpactStakeholderDtoMapperTest {
     }
 
     @Test
-    void testFromDto_NewStakeholderDto_EqualsRecreatedStakeholderDto() {
+    void testFromDto_RecreatedStakeholderDto_EqualsStakeholderDto() {
         // given
         var stakeholderDto = createDummyStakeholderDto();
         stakeholderDto.setId(UUID.randomUUID());
