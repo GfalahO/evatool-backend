@@ -16,7 +16,10 @@ public class VariantRequirementUpdatedEventListener implements ApplicationListen
 
     @Override
     public void onApplicationEvent(RequirementUpdatedEvent requirementUpdatedEvent) {
-        VariantsRequirement variantsRequirement = gson.fromJson(requirementUpdatedEvent.getJsonPayload(), VariantsRequirement.class);
-        variantsRequirementRepository.save(variantsRequirement);
+        logger.info("Listening Event in VariantRequirementDeleted from " + requirementUpdatedEvent.getClass());
+
+        // TODO uncomment once the event has been correctly implemented
+//        VariantsRequirement variantsRequirement = gson.fromJson(requirementUpdatedEvent.getJsonPayload(), VariantsRequirement.class);
+//        variantsRequirementRepository.save(variantsRequirement);
     }
 }
