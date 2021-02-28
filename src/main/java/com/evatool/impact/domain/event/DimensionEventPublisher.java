@@ -21,7 +21,7 @@ public class DimensionEventPublisher {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
-    public void onDimensionCreated(final Dimension dimension) {
+    public void publishDimensionCreated(final Dimension dimension) {
         logger.info("Preparing to publish create dimension event");
         var dimensionJson = DimensionJsonMapper.toJson(dimension);
         var dimensionCreatedEvent = new DimensionCreatedEvent(this, dimensionJson);
@@ -29,7 +29,7 @@ public class DimensionEventPublisher {
         logger.info("Create dimension event published");
     }
 
-    public void onDimensionDeleted(final Dimension dimension) {
+    public void publishDimensionDeleted(final Dimension dimension) {
         logger.info("Preparing to publish delete dimension event");
         var dimensionJson = DimensionJsonMapper.toJson(dimension);
         var dimensionDeletedEvent = new DimensionDeletedEvent(this, dimensionJson);
@@ -37,7 +37,7 @@ public class DimensionEventPublisher {
         logger.info("Delete dimension event published");
     }
 
-    public void onDimensionUpdated(final Dimension dimension) {
+    public void publishDimensionUpdated(final Dimension dimension) {
         logger.info("Preparing to publish update dimension event");
         var dimensionJson = DimensionJsonMapper.toJson(dimension);
         var dimensionUpdatedEvent = new DimensionUpdatedEvent(this, dimensionJson);

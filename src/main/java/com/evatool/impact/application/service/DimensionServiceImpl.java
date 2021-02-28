@@ -76,7 +76,7 @@ public class DimensionServiceImpl implements DimensionService {
             throw new EntityIdMustBeNullException(Dimension.class.getSimpleName());
         }
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
-        dimensionEventPublisher.onDimensionCreated(dimension);
+        dimensionEventPublisher.publishDimensionCreated(dimension);
         return DimensionDtoMapper.toDto(dimension);
     }
 
@@ -85,7 +85,7 @@ public class DimensionServiceImpl implements DimensionService {
         logger.info("Update Dimension");
         this.findById(dimensionDto.getId());
         var dimension = dimensionRepository.save(DimensionDtoMapper.fromDto(dimensionDto));
-        dimensionEventPublisher.onDimensionUpdated(dimension);
+        dimensionEventPublisher.publishDimensionUpdated(dimension);
         return DimensionDtoMapper.toDto(dimension);
     }
 
@@ -95,7 +95,7 @@ public class DimensionServiceImpl implements DimensionService {
         var dimensionDto = this.findById(id);
         var dimension = DimensionDtoMapper.fromDto(dimensionDto);
         dimensionRepository.delete(dimension);
-        dimensionEventPublisher.onDimensionDeleted(dimension);
+        dimensionEventPublisher.publishDimensionDeleted(dimension);
     }
 
     @Override

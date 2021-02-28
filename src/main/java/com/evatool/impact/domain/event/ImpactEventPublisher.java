@@ -21,7 +21,7 @@ public class ImpactEventPublisher {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
-    public void onImpactCreated(final Impact impact) {
+    public void publishImpactCreated(final Impact impact) {
         logger.info("Preparing to publish create impact event");
         var impactJson = ImpactJsonMapper.toJson(impact);
         var impactCreatedEvent = new ImpactCreatedEvent(this, impactJson);
@@ -29,7 +29,7 @@ public class ImpactEventPublisher {
         logger.info("Create impact event published");
     }
 
-    public void onImpactDeleted(final Impact impact) {
+    public void publishImpactDeleted(final Impact impact) {
         logger.info("Preparing to publish delete impact event");
         var impactJson = ImpactJsonMapper.toJson(impact);
         var impactDeletedEvent = new ImpactDeletedEvent(this, impactJson);
@@ -37,7 +37,7 @@ public class ImpactEventPublisher {
         logger.info("Delete impact event published");
     }
 
-    public void onImpactUpdated(final Impact impact) {
+    public void publishImpactUpdated(final Impact impact) {
         logger.info("Preparing to publish update impact event");
         var impactJson = ImpactJsonMapper.toJson(impact);
         var impactUpdatedEvent = new ImpactUpdatedEvent(this, impactJson);

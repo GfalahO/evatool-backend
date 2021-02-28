@@ -66,7 +66,7 @@ public class ImpactServiceImpl implements ImpactService {
         }
         this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
-        impactEventPublisher.onImpactCreated(impact);
+        impactEventPublisher.publishImpactCreated(impact);
         return ImpactDtoMapper.toDto(impact);
     }
 
@@ -76,7 +76,7 @@ public class ImpactServiceImpl implements ImpactService {
         this.findById(impactDto.getId());
         this.findImpactChildren(impactDto);
         var impact = impactRepository.save(ImpactDtoMapper.fromDto(impactDto));
-        impactEventPublisher.onImpactUpdated(impact);
+        impactEventPublisher.publishImpactUpdated(impact);
         return ImpactDtoMapper.toDto(impact);
     }
 
@@ -86,7 +86,7 @@ public class ImpactServiceImpl implements ImpactService {
         var impactDto = this.findById(id);
         var impact = ImpactDtoMapper.fromDto(impactDto);
         impactRepository.delete(impact);
-        impactEventPublisher.onImpactDeleted(impact);
+        impactEventPublisher.publishImpactDeleted(impact);
     }
 
     @Override
