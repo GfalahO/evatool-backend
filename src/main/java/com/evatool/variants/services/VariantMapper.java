@@ -1,8 +1,5 @@
 package com.evatool.variants.services;
 
-import com.evatool.analysis.api.interfaces.AnalysisController;
-import com.evatool.analysis.api.interfaces.StakeholderController;
-import com.evatool.requirements.controller.RequirementsController;
 import com.evatool.variants.controller.VariantController;
 import com.evatool.variants.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static com.evatool.variants.services.VariantsUriHelper.*;
 
 @Service
 public class VariantMapper {
@@ -40,7 +38,7 @@ public class VariantMapper {
         variantDto.setCriterion(variant.getCriterion());
 
         if (variant.getVariantsStakeholder() != null) {
-            Link stakeholderLink = linkTo(methodOn(StakeholderController.class).getStakeholderList()).withSelfRel();
+            Link stakeholderLink = linkTo(VariantController.class).slash(STAKEHOLDERS).withSelfRel();
             EntityModel<VariantsStakeholder> variantsStakeholder = EntityModel.of(variant.getVariantsStakeholder());
             variantsStakeholder.add(stakeholderLink);
             variantDto.setVariantsStakeholder(variantsStakeholder);
@@ -60,7 +58,7 @@ public class VariantMapper {
         }
 
         if (variant.getVariantsAnalyses() != null){
-            Link variantAnalysisLink = linkTo(methodOn(AnalysisController.class).getAnalysisList()).withSelfRel();
+            Link variantAnalysisLink = linkTo(VariantController.class).slash(ANALYSIS).withSelfRel();
             List<VariantsAnalysis> variantsAnalysisList = new ArrayList<>();
             variantsAnalysisList.addAll(variant.getVariantsAnalyses());
             CollectionModel<VariantsAnalysis> analysisCollectionModel = CollectionModel.of(variantsAnalysisList);
@@ -68,7 +66,7 @@ public class VariantMapper {
         }
 
         if (variant.getVariantsRequirements() != null) {
-            Link variantRequirementLink = linkTo(methodOn(RequirementsController.class).getRequirementList()).withSelfRel();
+            Link variantRequirementLink = linkTo(VariantController.class).slash(REQUIREMENTS).withSelfRel();
             List<VariantsRequirement> variantsRequirementsList = new ArrayList<>();
             variantsRequirementsList.addAll(variant.getVariantsRequirements());
             CollectionModel<VariantsRequirement> variantsRequirementCollectionModel = CollectionModel.of(variantsRequirementsList);
