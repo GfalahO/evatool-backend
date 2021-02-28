@@ -2,8 +2,6 @@ package com.evatool.impact.domain.entity;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
 import static com.evatool.impact.common.TestDataGenerator.createDummyStakeholder;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
