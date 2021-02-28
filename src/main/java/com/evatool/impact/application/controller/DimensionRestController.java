@@ -47,7 +47,7 @@ public class DimensionRestController {
     }
 
     @GetMapping(DIMENSIONS)
-    @ApiOperation(value = "Get all Dimensions")
+    @ApiOperation(value = "Read all dimensions")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request")})
