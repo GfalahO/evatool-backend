@@ -1,5 +1,6 @@
 package com.evatool.impact.domain.entity;
 
+import com.evatool.impact.common.DimensionType;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,18 +16,13 @@ public class Dimension extends SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(Dimension.class);
 
-    public enum Type {
-        SOCIAL,
-        ECONOMIC
-    }
-
     @Getter
     @Column(name = "NAME", nullable = false)
     private String name;
 
     @Getter
     @Column(name = "TYPE", nullable = false)
-    private Type type;
+    private DimensionType type;
 
     @Getter
     @Column(name = "DESCRIPTION", nullable = false)
@@ -37,7 +33,7 @@ public class Dimension extends SuperEntity {
         logger.debug("{} created", Dimension.class.getSimpleName());
     }
 
-    public Dimension(String name, Type type, String description) {
+    public Dimension(String name, DimensionType type, String description) {
         this();
         this.setName(name);
         this.setType(type);
@@ -79,7 +75,7 @@ public class Dimension extends SuperEntity {
         this.name = name;
     }
 
-    public void setType(Type type) {
+    public void setType(DimensionType type) {
         if (type == null) {
             logger.error("Attempted to set type to null");
             throw new IllegalArgumentException("Type cannot be null.");

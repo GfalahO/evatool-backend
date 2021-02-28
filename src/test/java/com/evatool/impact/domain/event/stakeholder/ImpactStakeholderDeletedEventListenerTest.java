@@ -24,9 +24,6 @@ class ImpactStakeholderDeletedEventListenerTest {
     private ImpactStakeholderRepository stakeholderRepository;
 
     @Autowired
-    private ImpactStakeholderDeletedEventListener impactStakeholderDeletedEventListener;
-
-    @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
     @BeforeEach

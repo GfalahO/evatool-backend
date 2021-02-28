@@ -2,7 +2,7 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
-import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.common.DimensionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -106,24 +106,24 @@ class DimensionRestControllerTest {
             int n_socialDimensions = 3;
             for (int i = 0; i < n_socialDimensions; i++) {
                 var socialDimension = createDummyDimensionDto();
-                socialDimension.setType(Dimension.Type.SOCIAL);
+                socialDimension.setType(DimensionType.SOCIAL);
                 dimensionService.create(socialDimension);
             }
 
             int n_economicDimensions = 4;
             for (int i = 0; i < n_economicDimensions; i++) {
                 var economicDimension = createDummyDimensionDto();
-                economicDimension.setType(Dimension.Type.ECONOMIC);
+                economicDimension.setType(DimensionType.ECONOMIC);
                 dimensionService.create(economicDimension);
             }
 
             // when
             var getSocialResponse = testRestTemplate.getForEntity(
-                    DIMENSIONS + "?type=" + Dimension.Type.SOCIAL.toString(), DimensionDto[].class);
+                    DIMENSIONS + "?type=" + DimensionType.SOCIAL.toString(), DimensionDto[].class);
             var socialDimensions = getSocialResponse.getBody();
 
             var getEconomicResponse = testRestTemplate.getForEntity(
-                    DIMENSIONS + "?type=" + Dimension.Type.ECONOMIC.toString(), DimensionDto[].class);
+                    DIMENSIONS + "?type=" + DimensionType.ECONOMIC.toString(), DimensionDto[].class);
             var economicDimensions = getEconomicResponse.getBody();
 
             // then
@@ -141,11 +141,11 @@ class DimensionRestControllerTest {
 
             // when
             var dimensionTypes = testRestTemplate.getForEntity(
-                    DIMENSION_TYPES, Dimension.Type[].class);
+                    DIMENSION_TYPES, DimensionType[].class);
 
             // then
             assertThat(dimensionTypes.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(dimensionTypes.getBody()).isEqualTo(Dimension.Type.values());
+            assertThat(dimensionTypes.getBody()).isEqualTo(DimensionType.values());
         }
     }
 

@@ -34,7 +34,7 @@ public class ImpactRestController {
     }
 
     @GetMapping(IMPACTS_ID)
-    @ApiOperation(value = "Get Impact by ID")
+    @ApiOperation(value = "Read impact by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -46,7 +46,7 @@ public class ImpactRestController {
     }
 
     @GetMapping(IMPACTS)
-    @ApiOperation(value = "Get all Impacts")
+    @ApiOperation(value = "Read all impacts")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
     public ResponseEntity<List<EntityModel<ImpactDto>>> findAll() {
@@ -55,7 +55,7 @@ public class ImpactRestController {
     }
 
     @PostMapping(IMPACTS)
-    @ApiOperation(value = "Create a new Impact")
+    @ApiOperation(value = "Create a new impact")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -68,7 +68,7 @@ public class ImpactRestController {
     }
 
     @PutMapping(IMPACTS)
-    @ApiOperation(value = "Update an Impact")
+    @ApiOperation(value = "Update an impact")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Updated"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -80,7 +80,7 @@ public class ImpactRestController {
     }
 
     @DeleteMapping(IMPACTS_ID)
-    @ApiOperation(value = "Delete Impact by ID")
+    @ApiOperation(value = "Delete impact by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Deleted"),
             @ApiResponse(code = 400, message = "Bad Request"),

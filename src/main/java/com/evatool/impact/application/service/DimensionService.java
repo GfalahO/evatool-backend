@@ -1,7 +1,7 @@
 package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.DimensionDto;
-import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.common.DimensionType;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,11 +10,11 @@ public interface DimensionService {
 
     DimensionDto findById(UUID id);
 
-    List<DimensionDto> findAllByType(Dimension.Type type);
+    List<DimensionDto> findAllByType(DimensionType type);
 
     List<DimensionDto> findAll();
 
-    List<Dimension.Type> findAllTypes();
+    List<DimensionType> findAllTypes();
 
     DimensionDto create(DimensionDto dimensionDto);
 

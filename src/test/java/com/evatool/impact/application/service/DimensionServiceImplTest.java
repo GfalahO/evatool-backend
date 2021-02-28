@@ -1,5 +1,6 @@
 package com.evatool.impact.application.service;
 
+import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
@@ -17,7 +18,8 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.DimensionDtoMapper.toDto;
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimension;
+import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -78,20 +80,20 @@ class DimensionServiceImplTest {
             int n_socialDimensions = 3;
             for (int i = 0; i < n_socialDimensions; i++) {
                 var socialDimension = createDummyDimensionDto();
-                socialDimension.setType(Dimension.Type.SOCIAL);
+                socialDimension.setType(DimensionType.SOCIAL);
                 dimensionService.create(socialDimension);
             }
 
             int n_economicDimensions = 4;
             for (int i = 0; i < n_economicDimensions; i++) {
                 var economicDimension = createDummyDimensionDto();
-                economicDimension.setType(Dimension.Type.ECONOMIC);
+                economicDimension.setType(DimensionType.ECONOMIC);
                 dimensionService.create(economicDimension);
             }
 
             // when
-            var socialDimensions = dimensionService.findAllByType(Dimension.Type.SOCIAL);
-            var economicDimension = dimensionService.findAllByType(Dimension.Type.ECONOMIC);
+            var socialDimensions = dimensionService.findAllByType(DimensionType.SOCIAL);
+            var economicDimension = dimensionService.findAllByType(DimensionType.ECONOMIC);
 
             // then
             assertThat(socialDimensions.size()).isEqualTo(n_socialDimensions);
@@ -130,8 +132,8 @@ class DimensionServiceImplTest {
             var dimensionTypes = dimensionService.findAllTypes();
 
             // then
-            assertThat(dimensionTypes.size()).isEqualTo(Dimension.Type.values().length);
-            assertThat(dimensionTypes).isEqualTo(Arrays.asList(Dimension.Type.values()));
+            assertThat(dimensionTypes.size()).isEqualTo(DimensionType.values().length);
+            assertThat(dimensionTypes).isEqualTo(Arrays.asList(DimensionType.values()));
         }
     }
 

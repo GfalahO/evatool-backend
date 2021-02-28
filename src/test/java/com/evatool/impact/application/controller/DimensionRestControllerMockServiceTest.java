@@ -1,11 +1,11 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.EvaToolApp;
+import com.evatool.global.config.SwaggerConfig;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
-import com.evatool.global.config.SwaggerConfig;
+import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.domain.entity.Dimension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.*;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
@@ -142,29 +143,29 @@ class DimensionRestControllerMockServiceTest {
             var socialDimensions = new ArrayList<DimensionDto>();
             for (int i = 0; i < 3; i++) {
                 var socialDimension = createDummyDimensionDto();
-                socialDimension.setType(Dimension.Type.SOCIAL);
+                socialDimension.setType(DimensionType.SOCIAL);
                 socialDimensions.add(socialDimension);
             }
 
             var economicDimensions = new ArrayList<DimensionDto>();
             for (int i = 0; i < 4; i++) {
                 var economicDimension = createDummyDimensionDto();
-                economicDimension.setType(Dimension.Type.ECONOMIC);
+                economicDimension.setType(DimensionType.ECONOMIC);
                 economicDimensions.add(economicDimension);
             }
 
             // when
-            given(dimensionService.findAllByType(Dimension.Type.SOCIAL)).willReturn(socialDimensions);
-            given(dimensionService.findAllByType(Dimension.Type.ECONOMIC)).willReturn(economicDimensions);
+            given(dimensionService.findAllByType(DimensionType.SOCIAL)).willReturn(socialDimensions);
+            given(dimensionService.findAllByType(DimensionType.ECONOMIC)).willReturn(economicDimensions);
 
             // then
-            mvc.perform(get(DIMENSIONS).param("type", Dimension.Type.SOCIAL.toString())
+            mvc.perform(get(DIMENSIONS).param("type", DimensionType.SOCIAL.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(socialDimensions.size())));
 
-            mvc.perform(get(DIMENSIONS + "?type=" + Dimension.Type.ECONOMIC.toString())
+            mvc.perform(get(DIMENSIONS + "?type=" + DimensionType.ECONOMIC.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())

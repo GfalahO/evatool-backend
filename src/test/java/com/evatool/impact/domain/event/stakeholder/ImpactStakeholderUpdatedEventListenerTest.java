@@ -24,9 +24,6 @@ class ImpactStakeholderUpdatedEventListenerTest {
     private ImpactStakeholderRepository stakeholderRepository;
 
     @Autowired
-    private ImpactStakeholderUpdatedEventListener impactStakeholderUpdatedEventListener;
-
-    @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
     @BeforeEach

@@ -108,4 +108,5 @@ public class Impact extends SuperEntity {
         }
         this.stakeholder = stakeholder;
     }
+
 }

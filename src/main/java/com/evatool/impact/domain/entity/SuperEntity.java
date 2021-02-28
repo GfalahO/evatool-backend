@@ -17,22 +17,7 @@ public class SuperEntity {
 
     private static final Logger logger = LoggerFactory.getLogger(SuperEntity.class);
 
-    protected SuperEntity() {
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        var that = (SuperEntity) o;
-        return Objects.equals(this.id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id);
-    }
+    protected SuperEntity() {}
 
     @Getter
     @Id
@@ -52,5 +37,18 @@ public class SuperEntity {
 
     private boolean idAlreadySet() {
         return this.id != null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        var that = (SuperEntity) o;
+        return Objects.equals(this.id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id);
     }
 }

@@ -1,5 +1,6 @@
 package com.evatool.impact.domain.repository;
 
+import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.domain.entity.Dimension;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,6 @@ import java.util.UUID;
 @Repository
 public interface DimensionRepository extends CrudRepository<Dimension, UUID> {
 
-    List<Dimension> findAllByType(Dimension.Type type);
+    List<Dimension> findAllByType(DimensionType type);
 
 }
