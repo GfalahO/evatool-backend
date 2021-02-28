@@ -4,6 +4,8 @@ import com.evatool.global.event.requirements.RequirementUpdatedEvent;
 import com.evatool.variants.entities.VariantsRequirement;
 import com.evatool.variants.repositories.VariantsRequirementRepository;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,7 @@ public class VariantRequirementUpdatedEventListener implements ApplicationListen
     @Autowired
     VariantsRequirementRepository variantsRequirementRepository;
     Gson gson = new Gson();
+    Logger logger = LoggerFactory.getLogger(VariantRequirementDeletedEventListener.class);
 
     @Override
     public void onApplicationEvent(RequirementUpdatedEvent requirementUpdatedEvent) {
