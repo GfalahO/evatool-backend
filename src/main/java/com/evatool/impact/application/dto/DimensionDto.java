@@ -1,6 +1,6 @@
 package com.evatool.impact.application.dto;
 
-import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.common.DimensionType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -28,7 +28,7 @@ public class DimensionDto {
     @Getter
     @Setter
     @NotNull
-    private Dimension.Type type;
+    private DimensionType type;
 
     @ApiModelProperty(required = true)
     @Getter

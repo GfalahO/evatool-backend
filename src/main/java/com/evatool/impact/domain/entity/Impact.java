@@ -108,4 +108,10 @@ public class Impact extends SuperEntity {
         }
         this.stakeholder = stakeholder;
     }
+
+
+    // TODO: [tzaika] Dimension.Type in DTO
+    // TODO: [tzaika] DimensionType-Enum in common
+    // see: https://stackoverflow.com/questions/24482646/which-layer-should-i-declare-enums
+    //
 }

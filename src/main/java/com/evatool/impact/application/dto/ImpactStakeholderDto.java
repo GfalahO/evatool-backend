@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.UUID;
 
-@ApiModel(value = "Stakeholder", description = "Stakeholder of an impact")
+@ApiModel(value = "ImpactStakeholder", description = "Stakeholder of an impact")
 public class ImpactStakeholderDto {
 
     @ApiModelProperty

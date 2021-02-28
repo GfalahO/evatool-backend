@@ -2,9 +2,11 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
-import com.evatool.impact.domain.entity.Dimension;
-
-import io.swagger.annotations.*;
+import com.evatool.impact.common.DimensionType;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
@@ -33,7 +35,7 @@ public class DimensionRestController {
     }
 
     @GetMapping(DIMENSIONS_ID)
-    @ApiOperation(value = "Get Dimension by ID")
+    @ApiOperation(value = "Read dimension by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
@@ -49,7 +51,7 @@ public class DimensionRestController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request")})
-    public ResponseEntity<List<EntityModel<DimensionDto>>> findAll(@ApiParam(value = "Dimension Type") @Valid @RequestParam(value = "type", required = false) Dimension.Type type) {
+    public ResponseEntity<List<EntityModel<DimensionDto>>> findAll(@ApiParam(value = "Dimension Type") @RequestParam(value = "type", required = false) DimensionType type) {
         List<DimensionDto> dimensionDtoList;
         if (type == null) {
             logger.info("GET " + DIMENSIONS);
@@ -103,7 +105,7 @@ public class DimensionRestController {
     @ApiOperation(value = "Get all Dimension Types")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
-    public ResponseEntity<List<Dimension.Type>> findAllTypes() {
+    public ResponseEntity<List<DimensionType>> findAllTypes() {
         logger.info("GET " + DIMENSION_TYPES);
         return new ResponseEntity<>(dimensionService.findAllTypes(), HttpStatus.OK);
     }

@@ -2,6 +2,7 @@ package com.evatool.impact.application.service;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
+import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.common.exception.EntityIdMustBeNullException;
 import com.evatool.impact.common.exception.EntityNotFoundException;
 import com.evatool.impact.common.exception.EntityIdRequiredException;
@@ -53,7 +54,7 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public List<DimensionDto> findAllByType(Dimension.Type type) {
+    public List<DimensionDto> findAllByType(DimensionType type) {
         logger.info("Get Dimensions by type");
         var dimensions = dimensionRepository.findAllByType(type);
         var dimensionDtoList = new ArrayList<DimensionDto>();
@@ -71,9 +72,9 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public List<Dimension.Type> findAllTypes() {
+    public List<DimensionType> findAllTypes() {
         logger.info("Get Dimension Types");
-        return Arrays.asList(Dimension.Type.values());
+        return Arrays.asList(DimensionType.values());
     }
 
     @Override
