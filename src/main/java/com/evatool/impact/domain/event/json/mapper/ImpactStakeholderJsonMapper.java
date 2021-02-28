@@ -12,21 +12,12 @@ import org.slf4j.LoggerFactory;
 
 public class ImpactStakeholderJsonMapper {
 
-    private ImpactStakeholderJsonMapper() {
-
-    }
+    private ImpactStakeholderJsonMapper() {}
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactStakeholderJsonMapper.class);
 
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    /**
-     * Converts a json string to a Stakeholder entity.
-     *
-     * @param json of the stakeholder.
-     * @return the stakeholder entity.
-     * @throws EventPayloadInvalidException if the json is invalid or contains invalid values.
-     */
     public static ImpactStakeholder fromJson(String json) {
         logger.info("Mapping Json to Entity");
         try {
