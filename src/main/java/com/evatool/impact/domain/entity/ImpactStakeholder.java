@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity(name = "IMP_STAKEHOLDER")
 @Table(name = "IMP_STAKEHOLDER")
@@ -49,6 +50,16 @@ public class ImpactStakeholder extends SuperEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), this.name);
+    }
+
+    @Override
+    public void setId(UUID id) {
+        logger.debug("Set id");
+        if (id == null) {
+            logger.error("Attempted to set id to null");
+            throw new IllegalArgumentException("Id cannot be null.");
+        }
+        super.setId(id);
     }
 
     public void setName(String name) {
