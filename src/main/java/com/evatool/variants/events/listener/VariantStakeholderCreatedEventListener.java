@@ -18,7 +18,6 @@ public class VariantStakeholderCreatedEventListener implements ApplicationListen
 
     @Override
     public void onApplicationEvent(StakeholderCreatedEvent stakeholderCreatedEvent) {
-
         logger.info("Listening Event in VariantRequirementDeleted from " + stakeholderCreatedEvent.getClass());
 
         // TODO Uncomment once weird test cases get solved

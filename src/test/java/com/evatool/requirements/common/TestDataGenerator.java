@@ -1,6 +1,5 @@
 package com.evatool.requirements.common;
 
-import com.evatool.impact.domain.entity.Impact;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.*;
 

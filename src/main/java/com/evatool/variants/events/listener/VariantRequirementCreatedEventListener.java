@@ -22,7 +22,8 @@ public class VariantRequirementCreatedEventListener implements ApplicationListen
     public void onApplicationEvent(RequirementCreatedEvent requirementCreatedEvent) {
         logger.info("Listening Event in VariantRequirementCreated from " + requirementCreatedEvent.getClass());
 
-        VariantsRequirement variantsRequirement = gson.fromJson(requirementCreatedEvent.getJsonPayload(), VariantsRequirement.class);
-        variantsRequirementRepository.save(variantsRequirement);
+        // TODO uncomment once the event has been correctly implemented
+//        VariantsRequirement variantsRequirement = gson.fromJson(requirementCreatedEvent.getJsonPayload(), VariantsRequirement.class);
+//        variantsRequirementRepository.save(variantsRequirement);
     }
 }
