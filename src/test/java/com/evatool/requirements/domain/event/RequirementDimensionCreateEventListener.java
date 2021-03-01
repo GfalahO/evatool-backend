@@ -47,7 +47,7 @@ public class RequirementDimensionCreateEventListener {
         // then
         Optional<RequirementDimension> createdByEvent = requirementDimensionRepository.findById(id);
         assertThat(createdByEvent).isPresent();
-        assertThat(createdByEvent.get().getTitle()).isEqualTo(title);
+        assertThat(createdByEvent.get().getName()).isEqualTo(title);
     }
 
 
@@ -64,7 +64,7 @@ public class RequirementDimensionCreateEventListener {
         try {
             var jsonObject = new JSONObject(json);
             requirementDimension = new RequirementDimension();
-            requirementDimension.setTitle(jsonObject.getString("title"));
+            requirementDimension.setName(jsonObject.getString("title"));
             requirementDimension.setId(UUID.fromString(jsonObject.getString("id")));
         } catch (JSONException jex) {
             throw new InvalidEventPayloadException(json, jex);

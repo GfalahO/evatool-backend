@@ -49,7 +49,7 @@ public class RequirementDimensionUpdateEventListener {
         Optional<RequirementDimension> optionalRequirementDimension = requirementDimensionRepository.findById(id);
         assertThat(optionalRequirementDimension).isPresent();
         assertThat(optionalRequirementDimension.get().getId()).isEqualTo(id);
-        assertThat(optionalRequirementDimension.get().getTitle()).isEqualTo(title);
+        assertThat(optionalRequirementDimension.get().getName()).isEqualTo(title);
     }
 
     @Test
