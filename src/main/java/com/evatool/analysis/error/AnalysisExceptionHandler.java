@@ -1,7 +1,7 @@
 package com.evatool.analysis.error;
 
 import com.evatool.analysis.error.exceptions.IllegalDtoValueExcpetion;
-import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.analysis.error.exceptions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
