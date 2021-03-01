@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
-import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
+
 
 
 @Component

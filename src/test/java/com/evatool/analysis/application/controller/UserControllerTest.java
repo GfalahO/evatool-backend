@@ -1,17 +1,20 @@
 package com.evatool.analysis.application.controller;
 
 import com.evatool.analysis.api.interfaces.UserController;
-import com.evatool.analysis.model.Stakeholder;
+import com.evatool.analysis.dto.UserDTO;
+import com.evatool.analysis.error.exceptions.EntityNotFoundException;
 import com.evatool.analysis.model.User;
+import com.evatool.analysis.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
 import java.util.UUID;
 
-import static com.evatool.analysis.common.TestDataGenerator.getUser;
+import static com.evatool.analysis.common.TestDataGenerator.getUserDTO;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class UserControllerTest {
 

@@ -1,11 +1,8 @@
 package com.evatool.analysis.application.controller;
 
-
-
 import com.evatool.analysis.api.interfaces.AnalysisController;
 import com.evatool.analysis.dto.AnalysisDTO;
 import com.evatool.analysis.enums.Dimension;
-import com.evatool.analysis.error.exceptions.EntityNotFoundException;
 import com.evatool.analysis.model.Analysis;
 import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.repository.AnalysisImpactRepository;
@@ -13,8 +10,8 @@ import com.evatool.analysis.repository.AnalysisRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.hateoas.*;
 import java.util.UUID;
+import com.evatool.analysis.error.exceptions.EntityNotFoundException;
 
 import static com.evatool.analysis.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;

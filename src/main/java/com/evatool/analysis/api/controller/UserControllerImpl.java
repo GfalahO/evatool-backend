@@ -15,7 +15,7 @@ import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.global.event.user.UserCreatedEvent;
 import com.evatool.global.event.user.UserDeletedEvent;
-import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.analysis.error.exceptions.*;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

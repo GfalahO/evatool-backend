@@ -11,7 +11,7 @@ import com.evatool.analysis.repository.AnalysisRepository;
 import com.evatool.analysis.services.AnalysisDTOService;
 import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
-import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.analysis.error.exceptions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +107,7 @@ public class AnalysisControllerImpl implements AnalysisController {
 
     private List<EntityModel<AnalysisDTO>> generateLinks(List<AnalysisDTO> analysisDTOList){
         List<EntityModel<AnalysisDTO>> returnList = new ArrayList<>();
-        analysisDTOList.stream().forEach(e -> returnList.add(generateLinks(e)));
+        analysisDTOList.stream().forEach(element -> returnList.add(generateLinks(element)));
         return returnList;
 
     }

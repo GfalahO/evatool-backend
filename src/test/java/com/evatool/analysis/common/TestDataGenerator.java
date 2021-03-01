@@ -50,4 +50,13 @@ public class TestDataGenerator {
     public static AnalysisImpacts getAnalysisImpacts(Dimension dimension) {
         return new AnalysisImpacts("title", "description", 1, dimension);
     }
+
+    public static UserDTO getUserDTO(String userName, String userPassword, String userEmail){
+        var userDTO = new UserDTO();
+
+        userDTO.setUserName(userName);
+        userDTO.setPassword(userPassword);
+        userDTO.setEmail(userEmail);
+        return userDTO;
+    }
 }

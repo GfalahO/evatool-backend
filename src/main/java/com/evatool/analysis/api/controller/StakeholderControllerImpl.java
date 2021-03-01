@@ -18,7 +18,7 @@ import com.evatool.global.event.analysis.AnalysisDeletedEvent;
 import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderCreatedEvent;
 import com.evatool.global.event.stakeholder.StakeholderDeletedEvent;
-import com.evatool.impact.common.exception.EntityNotFoundException;
+import com.evatool.analysis.error.exceptions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

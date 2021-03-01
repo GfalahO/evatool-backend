@@ -6,8 +6,6 @@ import com.evatool.analysis.events.listener.AnalysisEventListener;
 import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.repository.AnalysisImpactRepository;
 import com.evatool.global.event.impact.ImpactCreatedEvent;
-import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
-import com.evatool.impact.common.exception.InvalidEventPayloadException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
