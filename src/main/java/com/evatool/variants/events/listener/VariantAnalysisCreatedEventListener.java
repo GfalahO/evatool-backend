@@ -23,7 +23,8 @@ public class VariantAnalysisCreatedEventListener implements ApplicationListener<
 
         logger.info("Listening Event in VariantAnalysisCreated from " + analysisCreatedEvent.getClass());
 
-        VariantsAnalysis variantsAnalysis = gson.fromJson(analysisCreatedEvent.getJsonPayload(), VariantsAnalysis.class);
-        variantsAnalysisRepository.save(variantsAnalysis);
+        // TODO uncomment once the event has been correctly implemented
+//        VariantsAnalysis variantsAnalysis = gson.fromJson(analysisCreatedEvent.getMessage(), VariantsAnalysis.class);
+//        variantsAnalysisRepository.save(variantsAnalysis);
     }
 }

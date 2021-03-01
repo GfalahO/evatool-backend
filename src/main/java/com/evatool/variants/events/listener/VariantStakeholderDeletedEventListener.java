@@ -16,11 +16,9 @@ public class VariantStakeholderDeletedEventListener implements ApplicationListen
     Gson gson = new Gson();
     Logger logger = LoggerFactory.getLogger(VariantStakeholderDeletedEventListener.class);
 
-
     @Override
     public void onApplicationEvent(StakeholderDeletedEvent stakeholderDeletedEvent) {
         logger.info("Listening Event in VariantStakeholderDeleted from " + stakeholderDeletedEvent.getClass());
-
 
         // TODO Uncomment once weird test cases get solved
 //        VariantsStakeholder variantsStakeholder = gson.fromJson(stakeholderDeletedEvent.getJsonPayload(), VariantsStakeholder.class);

@@ -12,7 +12,7 @@ public class RequirementEventPublisher {
 
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
-    Logger logger = LoggerFactory.getLogger(RequirementEventPublisher.class);
+    final Logger logger = LoggerFactory.getLogger(RequirementEventPublisher.class);
 
     public void publishEvent(ApplicationEvent applicationEvent){
         logger.info("Publishing Event: "+ applicationEvent.getClass());

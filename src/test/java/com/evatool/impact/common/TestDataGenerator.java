@@ -7,14 +7,16 @@ import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
 
+import java.util.UUID;
+
 public class TestDataGenerator {
 
     public static Dimension createDummyDimension() {
-        return new Dimension("dummyDimension", Dimension.Type.ECONOMIC, "dummyDimensionDescription");
+        return new Dimension("dummyDimension", DimensionType.ECONOMIC, "dummyDimensionDescription");
     }
 
     public static ImpactStakeholder createDummyStakeholder() {
-        return new ImpactStakeholder("dummyStakeholder");
+        return new ImpactStakeholder(UUID.randomUUID(), "dummyStakeholder");
     }
 
     public static Impact createDummyImpact() {
@@ -24,7 +26,7 @@ public class TestDataGenerator {
     public static DimensionDto createDummyDimensionDto() {
         var dimensionDto = new DimensionDto();
         dimensionDto.setName("dummyDimension");
-        dimensionDto.setType(Dimension.Type.ECONOMIC);
+        dimensionDto.setType(DimensionType.ECONOMIC);
         dimensionDto.setDescription("dummyDimensionDescription");
         return dimensionDto;
     }

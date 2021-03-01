@@ -1,11 +1,11 @@
 package com.evatool.impact.application.controller;
 
 import com.evatool.EvaToolApp;
+import com.evatool.global.config.SwaggerConfig;
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
-import com.evatool.global.config.SwaggerConfig;
+import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.common.exception.EntityNotFoundException;
-import com.evatool.impact.domain.entity.Dimension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,13 +18,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.*;
 import static com.evatool.impact.common.TestDataGenerator.createDummyDimensionDto;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -43,15 +43,15 @@ class DimensionRestControllerMockServiceTest {
     private DimensionService dimensionService;
 
     @Nested
-    class GetById {
+    class FindById {
 
         @Test
-        void testGetDimensionById_ExistingDimension_ReturnDimension() throws Exception {
+        void testFindById_ExistingDimension_ReturnDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
 
             // when
-            when(dimensionService.findDimensionById(any(UUID.class))).thenReturn(dimensionDto);
+            when(dimensionService.findById(any(UUID.class))).thenReturn(dimensionDto);
 
             // then
             mvc.perform(get(DIMENSIONS + "/" + UUID.randomUUID().toString())
@@ -62,13 +62,13 @@ class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        void testGetDimension_ExistingDimension_CorrectRestLevel3() throws Exception {
+        void testFindById_ExistingDimension_CorrectRestLevel3() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
 
             // when
-            given(dimensionService.findDimensionById(any(UUID.class))).willReturn(dimensionDto);
+            given(dimensionService.findById(any(UUID.class))).willReturn(dimensionDto);
 
             // then
             mvc.perform(get(DIMENSIONS + "/" + UUID.randomUUID().toString())
@@ -88,12 +88,12 @@ class DimensionRestControllerMockServiceTest {
         }
 
         @Test
-        void testGetDimensionById_NonExistingDimension_ReturnErrorMessage() throws Exception {
+        void testFindById_NonExistingDimension_ReturnErrorMessage() throws Exception {
             // given
             var id = UUID.randomUUID().toString();
 
             // when
-            when(dimensionService.findDimensionById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
+            when(dimensionService.findById(any(UUID.class))).thenThrow(EntityNotFoundException.class);
 
             // then
             mvc.perform(get(DIMENSIONS + "/" + id)
@@ -111,11 +111,11 @@ class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    class GetAll {
+    class FindAll {
 
         @ParameterizedTest
         @ValueSource(ints = {0, 1, 2, 3})
-        void testGetAllDimensions_ExistingDimensions_ReturnDimensions(int value) throws Exception {
+        void testFindAll_ExistingDimensions_ReturnDimensions(int value) throws Exception {
             var dimensionDtoList = new ArrayList<DimensionDto>();
             for (int i = 0; i < value; i++) {
                 // given
@@ -123,7 +123,7 @@ class DimensionRestControllerMockServiceTest {
                 dimensionDtoList.add(dimensionDto);
             }
             // when
-            given(dimensionService.getAllDimensions()).willReturn(dimensionDtoList);
+            given(dimensionService.findAll()).willReturn(dimensionDtoList);
 
             // then
             mvc.perform(get(DIMENSIONS)
@@ -135,37 +135,37 @@ class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    class GetByType {
+    class FindAllByType {
 
         @Test
-        void testGetByType_ExistingDimensions_ReturnDimensions() throws Exception {
+        void testFindAllByType_ExistingDimensions_ReturnDimensions() throws Exception {
             // given
             var socialDimensions = new ArrayList<DimensionDto>();
             for (int i = 0; i < 3; i++) {
                 var socialDimension = createDummyDimensionDto();
-                socialDimension.setType(Dimension.Type.SOCIAL);
+                socialDimension.setType(DimensionType.SOCIAL);
                 socialDimensions.add(socialDimension);
             }
 
             var economicDimensions = new ArrayList<DimensionDto>();
             for (int i = 0; i < 4; i++) {
                 var economicDimension = createDummyDimensionDto();
-                economicDimension.setType(Dimension.Type.ECONOMIC);
+                economicDimension.setType(DimensionType.ECONOMIC);
                 economicDimensions.add(economicDimension);
             }
 
             // when
-            given(dimensionService.findDimensionsByType(Dimension.Type.SOCIAL)).willReturn(socialDimensions);
-            given(dimensionService.findDimensionsByType(Dimension.Type.ECONOMIC)).willReturn(economicDimensions);
+            given(dimensionService.findAllByType(DimensionType.SOCIAL)).willReturn(socialDimensions);
+            given(dimensionService.findAllByType(DimensionType.ECONOMIC)).willReturn(economicDimensions);
 
             // then
-            mvc.perform(get(DIMENSIONS).param("type", Dimension.Type.SOCIAL.toString())
+            mvc.perform(get(DIMENSIONS).param("type", DimensionType.SOCIAL.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(socialDimensions.size())));
 
-            mvc.perform(get(DIMENSIONS + "?type=" + Dimension.Type.ECONOMIC.toString())
+            mvc.perform(get(DIMENSIONS + "?type=" + DimensionType.ECONOMIC.toString())
                     .contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
@@ -174,17 +174,17 @@ class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    class Insert {
+    class Create {
 
         @Test
-        void testInsertDimension_InsertedDimension_ReturnInsertedDimension() throws Exception {
+        void testCreate_CreatedDimension_ReturnCreatedDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             var id = UUID.randomUUID();
             dimensionDto.setId(id);
 
             // when
-            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+            when(dimensionService.create(any(DimensionDto.class))).thenReturn(dimensionDto);
 
             // then
             mvc.perform(post(DIMENSIONS).content(new ObjectMapper().writeValueAsString(dimensionDto))
@@ -198,15 +198,15 @@ class DimensionRestControllerMockServiceTest {
     class Update {
 
         @Test
-        void testUpdateDimension_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
+        void testUpdate_UpdatedDimension_ReturnUpdatedDimension() throws Exception {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
 
             // when
-            when(dimensionService.createDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+            when(dimensionService.create(any(DimensionDto.class))).thenReturn(dimensionDto);
             dimensionDto.setName("new_name");
-            when(dimensionService.updateDimension(any(DimensionDto.class))).thenReturn(dimensionDto);
+            when(dimensionService.update(any(DimensionDto.class))).thenReturn(dimensionDto);
 
             // then
             mvc.perform(put(DIMENSIONS).content(new ObjectMapper().writeValueAsString(dimensionDto))
@@ -219,14 +219,14 @@ class DimensionRestControllerMockServiceTest {
     }
 
     @Nested
-    class Delete {
+    class DeleteById {
 
         @Test
-        void testDeleteDimension_DeletedDimension_ReturnNoDimensions() throws Exception {
+        void testDeleteById_DeletedDimension_ReturnNoDimensions() throws Exception {
             // given
 
             // when
-            doNothing().when(dimensionService).deleteDimensionById(any(UUID.class));
+            doNothing().when(dimensionService).deleteById(any(UUID.class));
 
             // then
             mvc.perform(delete(DIMENSIONS + "/" + UUID.randomUUID().toString())

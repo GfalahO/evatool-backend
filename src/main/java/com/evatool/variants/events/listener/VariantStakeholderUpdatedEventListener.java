@@ -16,10 +16,8 @@ public class VariantStakeholderUpdatedEventListener implements ApplicationListen
     Gson gson = new Gson();
     Logger logger = LoggerFactory.getLogger(VariantStakeholderUpdatedEventListener.class);
 
-
     @Override
     public void onApplicationEvent(StakeholderUpdatedEvent stakeholderUpdatedEvent) {
-
         logger.info("Listening Event in VariantStakeholderUpdated from " + stakeholderUpdatedEvent.getClass());
 
 

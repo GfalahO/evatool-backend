@@ -1,7 +1,6 @@
 package com.evatool.requirements.application.controller;
 
 
-import com.evatool.requirements.common.TestDataGenerator;
 import com.evatool.requirements.controller.RequirementsController;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.*;
@@ -11,12 +10,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 
 import java.util.*;
 
 import static com.evatool.requirements.common.TestDataGenerator.*;
-import static com.evatool.requirements.common.TestDataGenerator.getRequirementsVariant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -72,7 +69,7 @@ public class RequirementsControllerTest {
         RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId(),variantsTitle);
 
         //create requirement
-        RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO).getContent();
+        RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO).getBody().getContent();
 
         //check is requirement created
         assertThat(requirementsController.getRequirementById(requirementDTOObj.getRootEntityId())).isNotNull();

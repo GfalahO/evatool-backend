@@ -2,6 +2,8 @@
 package com.evatool.requirements.entity;
 
 
+import com.evatool.requirements.error.exceptions.IllegalDtoValueExcpetion;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -10,7 +12,7 @@ import java.util.UUID;
 public class RequirementPoint {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
     @ManyToOne
     private RequirementsImpact requirementsImpact;
     @ManyToOne
@@ -55,7 +57,7 @@ public class RequirementPoint {
 
     public void setPoints(int points) throws IllegalArgumentException {
         if (points < -1 || points > 1) {
-            throw new IllegalArgumentException("Value must be in range [-1, 1]");
+            throw new IllegalDtoValueExcpetion("Value must be in range [-1, 1]");
         }
 
         this.points = points;

@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.UUID;
 
 import static com.evatool.requirements.common.TestDataGenerator.*;
-import static com.evatool.requirements.common.TestDataGenerator.getRequirementsVariant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest

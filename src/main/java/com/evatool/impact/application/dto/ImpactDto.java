@@ -1,5 +1,7 @@
 package com.evatool.impact.application.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,28 +11,34 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.UUID;
 
+@ApiModel(value = "Impact")
 public class ImpactDto {
 
+    @ApiModelProperty
     @Getter
     @Setter
     private UUID id;
 
+    @ApiModelProperty(required = true, allowableValues = "range[-1.0,1.0]")
     @Getter
     @Setter
     @DecimalMin("-1.0")
     @DecimalMax("1.0")
     private double value;
 
+    @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
     private String description;
 
+    @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull
     private ImpactStakeholderDto stakeholder;
 
+    @ApiModelProperty(required = true)
     @Getter
     @Setter
     @NotNull

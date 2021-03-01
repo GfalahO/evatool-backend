@@ -2,7 +2,7 @@ package com.evatool.impact.application.controller;
 
 import com.evatool.impact.application.dto.DimensionDto;
 import com.evatool.impact.application.service.DimensionService;
-import com.evatool.impact.domain.entity.Dimension;
+import com.evatool.impact.common.DimensionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -35,21 +35,21 @@ class DimensionRestControllerTest {
 
     @BeforeEach
     public void clearDatabase() {
-        dimensionService.deleteDimensions();
+        dimensionService.deleteAll();
     }
 
     private DimensionDto saveFullDummyDimensionDto() {
         var dimension = createDummyDimension();
         var dimensionDto = toDto(dimension);
-        return dimensionService.createDimension(dimensionDto);
+        return dimensionService.create(dimensionDto);
 
     }
 
     @Nested
-    class GetById {
+    class FindById {
 
         @Test
-        void testGetDimensionById_InsertedDimension_ReturnDimension() {
+        void testFindById_CreatedDimension_ReturnDimension() {
             // given
             var dimensionDto = saveFullDummyDimensionDto();
 
@@ -63,67 +63,67 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testGetDimensionById_NonExistingDimension_ReturnHttpStatusNotFound() {
+        void testFindById_NonExistingDimension_ReturnHttpStatusNotFound() {
             // given
-            var responseEntity = testRestTemplate.getForEntity(
+            var response = testRestTemplate.getForEntity(
                     DIMENSIONS + "/" + UUID.randomUUID().toString(), DimensionDto.class);
 
             // when
 
             // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
     }
 
     @Nested
-    class GetAll {
+    class FindAll {
 
         @ParameterizedTest
-        @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-        void testGetDimensions_ExistingDimensions_ReturnDimensions(int value) {
+        @ValueSource(ints = {0, 1, 2, 3})
+        void testFindAll_ExistingDimensions_ReturnDimensions(int value) {
             for (int i = 0; i < value; i++) {
                 // given
                 saveFullDummyDimensionDto();
             }
 
             // when
-            var getResponse = testRestTemplate.getForEntity(
+            var response = testRestTemplate.getForEntity(
                     DIMENSIONS, DimensionDto[].class);
-            var dimensionDtoList = getResponse.getBody();
+            var dimensionDtoList = response.getBody();
 
             // then
-            assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(dimensionDtoList).isNotNull().hasSize(value);
         }
     }
 
     @Nested
-    class GetByType {
+    class FindAllByType {
 
         @Test
-        void testGetByType_ExistingDimensions_ReturnDimensions() {
+        void testFindAllByType_ExistingDimension_ReturnDimensions() {
             // given
             int n_socialDimensions = 3;
             for (int i = 0; i < n_socialDimensions; i++) {
                 var socialDimension = createDummyDimensionDto();
-                socialDimension.setType(Dimension.Type.SOCIAL);
-                dimensionService.createDimension(socialDimension);
+                socialDimension.setType(DimensionType.SOCIAL);
+                dimensionService.create(socialDimension);
             }
 
             int n_economicDimensions = 4;
             for (int i = 0; i < n_economicDimensions; i++) {
                 var economicDimension = createDummyDimensionDto();
-                economicDimension.setType(Dimension.Type.ECONOMIC);
-                dimensionService.createDimension(economicDimension);
+                economicDimension.setType(DimensionType.ECONOMIC);
+                dimensionService.create(economicDimension);
             }
 
             // when
             var getSocialResponse = testRestTemplate.getForEntity(
-                    DIMENSIONS + "?type=" + Dimension.Type.SOCIAL.toString(), DimensionDto[].class);
+                    DIMENSIONS + "?type=" + DimensionType.SOCIAL.toString(), DimensionDto[].class);
             var socialDimensions = getSocialResponse.getBody();
 
             var getEconomicResponse = testRestTemplate.getForEntity(
-                    DIMENSIONS + "?type=" + Dimension.Type.ECONOMIC.toString(), DimensionDto[].class);
+                    DIMENSIONS + "?type=" + DimensionType.ECONOMIC.toString(), DimensionDto[].class);
             var economicDimensions = getEconomicResponse.getBody();
 
             // then
@@ -133,52 +133,52 @@ class DimensionRestControllerTest {
     }
 
     @Nested
-    class GetDimensionTypes {
+    class findAllTypes {
 
         @Test
-        void testGetDimensionTypes_ReturnDimensionTypes() {
+        void testFindAllTypes_ReturnAllPossibleTypes() {
             // given
 
             // when
             var dimensionTypes = testRestTemplate.getForEntity(
-                    DIMENSION_TYPES, Dimension.Type[].class);
+                    DIMENSION_TYPES, DimensionType[].class);
 
             // then
             assertThat(dimensionTypes.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(dimensionTypes.getBody()).isEqualTo(Dimension.Type.values());
+            assertThat(dimensionTypes.getBody()).isEqualTo(DimensionType.values());
         }
     }
 
     @Nested
-    class Insert {
+    class Create {
 
         @Test
-        void testInsertDimension_InsertDimension_ReturnInsertedDimension() {
+        void testCreate_CreatedDimension_ReturnCreatedDimension() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
             // when
             var httpEntity = new HttpEntity<>(dimensionDto);
-            var responseEntity = testRestTemplate.postForEntity(
+            var response = testRestTemplate.postForEntity(
                     DIMENSIONS, httpEntity, DimensionDto.class);
 
             // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         }
 
         @Test
-        void testInsertDimension_InsertNotNullId_ReturnHttpStatusUnprocessableEntity() {
+        void testCreate_NotNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
 
             // when
             var httpEntity = new HttpEntity<>(dimensionDto);
-            var responseEntity = testRestTemplate.postForEntity(
+            var response = testRestTemplate.postForEntity(
                     DIMENSIONS, httpEntity, DimensionDto.class);
 
             // then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
@@ -186,22 +186,22 @@ class DimensionRestControllerTest {
     class Update {
 
         @Test
-        void testUpdateDimension_InsertedDimension_ReturnUpdatedDimension() {
+        void testUpdate_CreatedDimension_ReturnUpdatedDimension() {
             // given
             var dimensionDto = saveFullDummyDimensionDto();
 
             // when
             dimensionDto.setName("new_name");
-            var putEntity = new HttpEntity<>(dimensionDto);
-            var response = testRestTemplate.exchange(DIMENSIONS, HttpMethod.PUT, putEntity, DimensionDto.class);
+            var httpEntity = new HttpEntity<>(dimensionDto);
+            var response = testRestTemplate.exchange(DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(dimensionService.findDimensionById(dimensionDto.getId())).isEqualTo(dimensionDto);
+            assertThat(dimensionService.findById(dimensionDto.getId())).isEqualTo(dimensionDto);
         }
 
         @Test
-        void testUpdateDimension_UpdateNonExistingId_ReturnHttpStatusNotFound() {
+        void testUpdate_UpdateNonExistingId_ReturnHttpStatusNotFound() {
             // given
             var dimension = createDummyDimension();
             dimension.setId(UUID.randomUUID());
@@ -209,40 +209,40 @@ class DimensionRestControllerTest {
             var httpEntity = new HttpEntity<>(dimensionDto);
 
             // when
-            var putResponse = testRestTemplate.exchange(
+            var response = testRestTemplate.exchange(
                     DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         }
 
         @Test
-        void testUpdateDimension_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
+        void testUpdate_UpdateNullId_ReturnHttpStatusUnprocessableEntity() {
             // given
             var dimensionDto = createDummyDimensionDto();
 
             // when
             var httpEntity = new HttpEntity<>(dimensionDto);
-            var putResponse = testRestTemplate.exchange(
+            var response = testRestTemplate.exchange(
                     DIMENSIONS, HttpMethod.PUT, httpEntity, DimensionDto.class);
 
             // then
-            assertThat(putResponse.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
     @Nested
-    class Delete {
+    class DeleteById {
 
         @Test
-        void testDeleteDimension_ExistingDimension_DeleteDimensionAndReturnHttpStatusOK() {
+        void testDeleteById_ExistingDimension_ReturnHttpStatusOK() {
             // given
             var dimensionDto = saveFullDummyDimensionDto();
 
             // when
             var response = testRestTemplate.exchange(
                     DIMENSIONS + "/" + dimensionDto.getId(), HttpMethod.DELETE, null, Void.class);
-            var dimensions = dimensionService.getAllDimensions();
+            var dimensions = dimensionService.findAll();
 
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -250,7 +250,7 @@ class DimensionRestControllerTest {
         }
 
         @Test
-        void testDeleteDimension_DeleteNonExistingId_ReturnHttpStatusNotFound() {
+        void testDeleteById_DeleteNonExistingId_ReturnHttpStatusNotFound() {
             // given
             var dimensionDto = createDummyDimensionDto();
             dimensionDto.setId(UUID.randomUUID());
