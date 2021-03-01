@@ -2,9 +2,11 @@ package com.evatool.analysis.services;
 
 import com.evatool.analysis.model.User;
 import com.evatool.analysis.dto.*;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class UserMapper {
 
     public List<UserDTO> map(List<User> resultList) {

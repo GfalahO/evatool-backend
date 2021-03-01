@@ -40,7 +40,7 @@ public class AnalysisControllerTest {
         AnalysisImpacts analysisImpacts = getAnalysisImpacts(Dimension.SAFETY);
         analysisImpactRepository.save(analysisImpacts);
 
-        Analysis analysis = new Analysis("name", "description");
+        Analysis analysis = new Analysis("TestName", "description");
 
         //create analysis
         AnalysisDTO analysisDTO = getAnalysisDTO(analysis.getAnalysisName(), analysis.getDescription());

@@ -42,8 +42,8 @@ class ImpactStakeholderCreatedEventListenerTest {
         var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
         // when
-        var stakeholderCreatedEvent = new StakeholderCreatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
+        var stakeholderCreatedEvent = new StakeholderCreatedEvent(json);
+        //applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
 
         // then
         var createdByEvent = stakeholderRepository.findById(id);
@@ -63,7 +63,7 @@ class ImpactStakeholderCreatedEventListenerTest {
         stakeholderRepository.save(stakeholder);
 
         // when
-        var stakeholderCreatedEvent = new StakeholderCreatedEvent(applicationEventPublisher, json);
+        var stakeholderCreatedEvent = new StakeholderCreatedEvent(json);
 
         // then
         assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(stakeholderCreatedEvent));
