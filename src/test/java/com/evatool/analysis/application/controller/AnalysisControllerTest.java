@@ -37,9 +37,6 @@ public class AnalysisControllerTest {
     @Test
     public void testAnalysisController_ThrowException() {
 
-        AnalysisImpacts analysisImpacts = getAnalysisImpacts(Dimension.SAFETY);
-        analysisImpactRepository.save(analysisImpacts);
-
         Analysis analysis = new Analysis("TestName", "description");
 
         //create analysis

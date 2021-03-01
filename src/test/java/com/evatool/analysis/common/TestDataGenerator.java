@@ -1,6 +1,8 @@
 package com.evatool.analysis.common;
 
 import com.evatool.analysis.dto.AnalysisDTO;
+import com.evatool.analysis.dto.StakeholderDTO;
+import com.evatool.analysis.dto.UserDTO;
 import com.evatool.analysis.enums.Dimension;
 import com.evatool.analysis.enums.StakeholderLevel;
 import com.evatool.analysis.model.Analysis;
@@ -32,6 +34,17 @@ public class TestDataGenerator {
         analysisDTO.setAnalysisDescription(description);
         return analysisDTO;
 
+    }
+
+    public static StakeholderDTO getStakeholderDTO(String stakeholderName, int priority, StakeholderLevel stakeholderLevel, AnalysisImpacts impacts) {
+        var stakeholderDTO = new StakeholderDTO();
+
+        stakeholderDTO.setStakeholderName(stakeholderName);
+        stakeholderDTO.setPriority(priority);
+        stakeholderDTO.setStakeholderLevel(stakeholderLevel);
+        stakeholderDTO.setImpacts(impacts);
+
+        return stakeholderDTO;
     }
 
     public static AnalysisImpacts getAnalysisImpacts(Dimension dimension) {

@@ -32,8 +32,8 @@ public class UserDTOService {
         logger.debug("create [{}]",userDTO);
         User user = new User();
         user.setUserEmail(userDTO.getEmail());
-        user.setUserPassword(user.getUserPassword());
-        user.setUserName(user.getUserName());
+        user.setUserPassword(userDTO.getPassword());
+        user.setUserName(userDTO.getUserName());
         return user;
     }
 }

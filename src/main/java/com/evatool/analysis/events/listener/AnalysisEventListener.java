@@ -1,5 +1,7 @@
 package com.evatool.analysis.events.listener;
 
+import com.evatool.analysis.error.exceptions.EventEntityAlreadyExistsException;
+import com.evatool.analysis.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.repository.AnalysisImpactRepository;
 import com.evatool.global.event.impact.ImpactCreatedEvent;
@@ -42,7 +44,7 @@ public class AnalysisEventListener {
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
 
         if (!analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
-            throw new EventEntityDoesNotExistException(event.getSource().toString());
+            throw new EventEntityDoesNotExistException();
         }
         analysisImpactRepository.save(AnalysisImpacts.fromJson(event.getJsonPayload()));
     }
@@ -54,7 +56,7 @@ public class AnalysisEventListener {
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
 
         if (!analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
-            throw new EventEntityDoesNotExistException(event.getSource().toString());
+            throw new EventEntityDoesNotExistException();
         }
         analysisImpactRepository.delete(AnalysisImpacts.fromJson(event.getJsonPayload()));
     }
