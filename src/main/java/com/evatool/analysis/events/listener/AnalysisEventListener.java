@@ -31,7 +31,7 @@ public class AnalysisEventListener {
         logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
 
         if (analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
-            throw new EventEntityAlreadyExistsException(event.getSource().toString());
+            throw new EventEntityAlreadyExistsException();
         }
         analysisImpactRepository.save(AnalysisImpacts.fromJson(event.getJsonPayload()));
     }
