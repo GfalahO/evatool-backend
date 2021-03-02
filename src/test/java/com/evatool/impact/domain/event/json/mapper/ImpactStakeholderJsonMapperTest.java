@@ -85,4 +85,26 @@ class ImpactStakeholderJsonMapperTest {
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
     }
+
+    @Test
+    void testFromJsonString_JsonStringEmpty_ThrowEventPayloadInvalidException() {
+        // given
+
+        // when
+        var json = "";
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+    @Test
+    void testFromJsonString_JsonStringNull_ThrowEventPayloadInvalidException() {
+        // given
+
+        // when
+        String json = null;
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
 }

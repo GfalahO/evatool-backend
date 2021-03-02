@@ -6,7 +6,6 @@ import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -68,7 +67,7 @@ class ImpactStakeholderEventListenerTest {
             var name = "name";
             var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
-            var stakeholder = ImpactStakeholderJsonMapper.fromJson(json);
+            var stakeholder = new ImpactStakeholder(id, name);
             stakeholderRepository.save(stakeholder);
 
             // when

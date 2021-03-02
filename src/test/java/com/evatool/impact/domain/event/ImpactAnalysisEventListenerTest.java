@@ -6,7 +6,6 @@ import com.evatool.global.event.analysis.AnalysisUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
-import com.evatool.impact.domain.event.json.mapper.ImpactAnalysisJsonMapper;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -66,7 +65,7 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
             var id = UUID.randomUUID();
             var json = String.format("{\"id\":\"%s\"}", id.toString());
 
-            var analysis = ImpactAnalysisJsonMapper.fromJson(json);
+            var analysis = new ImpactAnalysis(id);
             analysisRepository.save(analysis);
 
             // when
