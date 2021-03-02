@@ -51,7 +51,7 @@ public class ImpactRestController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")})
-    public ResponseEntity<List<EntityModel<ImpactDto>>> findAll(@ApiParam(value = "Analysis Id") @RequestParam(value = "analysis id", required = false) UUID analysisId) {
+    public ResponseEntity<List<EntityModel<ImpactDto>>> findAll(@ApiParam(value = "Analysis Id") @Valid @RequestParam(value = "analysisId", required = false) UUID analysisId) {
         logger.info("GET " + IMPACTS);
         List<ImpactDto> impactDtoList;
         if (analysisId == null) {
