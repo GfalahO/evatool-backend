@@ -11,6 +11,8 @@ public interface ImpactService {
 
     List<ImpactDto> findAll();
 
+    List<ImpactDto> findAllByAnalysisId();
+
     ImpactDto create(ImpactDto impactDto);
 
     ImpactDto update(ImpactDto impactDto);
