@@ -9,5 +9,7 @@ public interface ImpactAnalysisService {
 
     ImpactAnalysisDto findById(UUID id);
 
+    List<ImpactAnalysisDto> findAll();
+
     void deleteAll();
 }
