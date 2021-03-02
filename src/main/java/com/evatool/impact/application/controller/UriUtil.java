@@ -20,4 +20,7 @@ public class UriUtil {
 
     public static final String STAKEHOLDERS = "/stakeholders";
     public static final String GET_STAKEHOLDER = "get stakeholder";
+
+    public static final String ANALYSES = "/analysis";
+    public static final String GET_ANALYSIS = "get analysis";
 }
