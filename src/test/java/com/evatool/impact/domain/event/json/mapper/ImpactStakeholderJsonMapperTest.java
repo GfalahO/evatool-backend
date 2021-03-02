@@ -59,7 +59,7 @@ class ImpactStakeholderJsonMapperTest {
     }
 
     @Test
-    void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactStakeholder(){
+    void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactStakeholder() {
         // given
         var stakeholder = createDummyStakeholder();
         var json = String.format("{\"id\":\"%s\",\"name\":\"%s\",\"not required\":\"useless\"}", stakeholder.getId(), stakeholder.getName());

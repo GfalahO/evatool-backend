@@ -58,7 +58,7 @@ class ImpactAnalysisJsonMapperTest {
     }
 
     @Test
-    void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactAnalysis(){
+    void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactAnalysis() {
         // given
         var analysis = createDummyAnalysis();
         var json = String.format("{\"id\":\"%s\",\"not required\":\"useless\"}", analysis.getId());
