@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.Objects;
 import java.util.UUID;
 
-@ApiModel(value = "ImpactStakeholder", description = "Analysis an impact belongs to")
+@ApiModel(value = "ImpactAnalysis", description = "Analysis an impact belongs to")
 public class ImpactAnalysisDto {
 
     @ApiModelProperty
@@ -18,7 +18,7 @@ public class ImpactAnalysisDto {
 
     @Override
     public String toString() {
-        return "ImpactStakeholderDto{" +
+        return "AnalysisDto{" +
                 "id='" + id + '\'' +
                 '}';
     }

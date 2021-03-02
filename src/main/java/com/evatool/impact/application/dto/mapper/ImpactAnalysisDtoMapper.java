@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 public class ImpactAnalysisDtoMapper {
 
     private ImpactAnalysisDtoMapper() {
-
     }
 
     private static final Logger logger = LoggerFactory.getLogger(ImpactAnalysisDtoMapper.class);

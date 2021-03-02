@@ -25,7 +25,7 @@ public class ImpactAnalysis extends SuperEntity {
 
     @Override
     public String toString() {
-        return "Stakeholder{" +
+        return "Analysis{" +
                 "id='" + this.id + '\'' +
                 '}';
     }

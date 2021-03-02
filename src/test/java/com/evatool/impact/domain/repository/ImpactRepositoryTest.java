@@ -1,6 +1,5 @@
 package com.evatool.impact.domain.repository;
 
-import com.evatool.impact.common.DimensionType;
 import com.evatool.impact.domain.entity.Dimension;
 import com.evatool.impact.domain.entity.Impact;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.Arrays;
 
 import static com.evatool.impact.common.TestDataGenerator.*;
-import static com.evatool.impact.common.TestDataGenerator.createDummyAnalysis;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest

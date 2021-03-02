@@ -19,7 +19,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
@@ -139,7 +138,7 @@ public class ImpactRestControllerTest {
             var impactsOfAnalysis = response.getBody();
 
             // then
-            assertThat(Arrays.asList(impactsOfAnalysis)).isEqualTo(Arrays.asList(impact1, impact2));
+            assertThat(impactsOfAnalysis).isEqualTo(new ImpactDto[]{impact1, impact2});
         }
     }
 

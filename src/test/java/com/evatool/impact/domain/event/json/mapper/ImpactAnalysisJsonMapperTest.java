@@ -30,10 +30,9 @@ class ImpactAnalysisJsonMapperTest {
         // given
 
         // when
-        var json = "";
 
         // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(""));
     }
 
     @Test
@@ -41,10 +40,9 @@ class ImpactAnalysisJsonMapperTest {
         // given
 
         // when
-        String json = null;
 
         // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(null));
     }
 
     @Test

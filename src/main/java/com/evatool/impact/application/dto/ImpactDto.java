@@ -54,11 +54,11 @@ public class ImpactDto {
     public String toString() {
         return "ImpactDto{" +
                 "id='" + id + '\'' +
-                ", stakeholder=" + stakeholder +
-                ", dimension=" + dimension +
-                ", analysis=" + analysis +
                 ", value=" + value +
                 ", description='" + description + '\'' +
+                ", dimension=" + dimension +
+                ", stakeholder=" + stakeholder +
+                ", analysis=" + analysis +
                 '}';
     }
 
