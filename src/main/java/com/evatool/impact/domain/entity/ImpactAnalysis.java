@@ -15,6 +15,7 @@ public class ImpactAnalysis extends SuperEntity {
 
     public ImpactAnalysis() {
         super();
+        logger.debug("{} created", ImpactAnalysis.class.getSimpleName());
     }
 
     public ImpactAnalysis(UUID id) {
