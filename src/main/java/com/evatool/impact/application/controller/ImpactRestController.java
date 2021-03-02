@@ -49,9 +49,15 @@ public class ImpactRestController {
     @ApiOperation(value = "Read all impacts")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK")})
-    public ResponseEntity<List<EntityModel<ImpactDto>>> findAll() {
+    public ResponseEntity<List<EntityModel<ImpactDto>>> findAll(@ApiParam(value = "Analysis Id") @RequestParam(value = "analysis id", required = false) UUID analysisId) {
         logger.info("GET " + IMPACTS);
-        return new ResponseEntity<>(getImpactsWithLinks(impactService.findAll()), HttpStatus.OK);
+        List<ImpactDto> impactDtoList;
+        if (analysisId == null) {
+            impactDtoList = impactService.findAll();
+        } else {
+            impactDtoList = null;
+        }
+        return new ResponseEntity<>(getImpactsWithLinks(impactDtoList), HttpStatus.OK);
     }
 
     @PostMapping(IMPACTS)
