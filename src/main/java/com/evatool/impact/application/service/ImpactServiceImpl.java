@@ -59,9 +59,9 @@ public class ImpactServiceImpl implements ImpactService {
     }
 
     @Override
-    public List<ImpactDto> findAllByAnalysisId() {
+    public List<ImpactDto> findAllByAnalysisId(UUID analysisId) {
         logger.info("Get Impacts By Analysis Id");
-        var impacts = impactRepository.findAll();
+        var impacts = impactRepository.findAll(); // TODO
         var impactDtoList = new ArrayList<ImpactDto>();
         impacts.forEach(impact -> impactDtoList.add(ImpactDtoMapper.toDto(impact)));
         return impactDtoList;

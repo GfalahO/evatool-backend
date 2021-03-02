@@ -57,7 +57,7 @@ public class ImpactRestController {
         if (analysisId == null) {
             impactDtoList = impactService.findAll();
         } else {
-            impactDtoList = null;
+            impactDtoList = impactService.findAllByAnalysisId(analysisId);
         }
         return new ResponseEntity<>(getImpactsWithLinks(impactDtoList), HttpStatus.OK);
     }

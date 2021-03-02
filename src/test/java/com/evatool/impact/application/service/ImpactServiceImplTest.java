@@ -109,6 +109,16 @@ class ImpactServiceImplTest {
             // then
             assertThat(impacts.size()).isEqualTo(value);
         }
+
+        @Test
+        void testFindAllByAnalysisId_() { // TODO
+            // given
+
+            // when
+
+            // then
+
+        }
     }
 
     @Nested

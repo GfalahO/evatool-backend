@@ -19,9 +19,10 @@ import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
-import static com.evatool.impact.application.controller.UriUtil.*;
+import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
 import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
-import static com.evatool.impact.common.TestDataGenerator.*;
+import static com.evatool.impact.common.TestDataGenerator.createDummyImpact;
+import static com.evatool.impact.common.TestDataGenerator.createDummyImpactDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -113,6 +114,16 @@ public class ImpactRestControllerTest {
             // then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(impactDtoList).isNotNull().hasSize(value);
+        }
+
+        @Test
+        void testFindAllByAnalysisId_() { // TODO
+            // given
+
+            // when
+
+            // then
+
         }
     }
 
