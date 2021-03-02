@@ -133,7 +133,7 @@ class ImpactServiceImplTest {
             // when
             impact2.setAnalysis(impact1.getAnalysis());
             impactRepository.save(impact2);
-// TODO add analysis rest link to impact DTO entitymodel
+
             // then
             var impactsOfAnalysis = impactService.findAllByAnalysisId(impact1.getAnalysis().getId());
             assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(toDto(impact1), toDto(impact2)));

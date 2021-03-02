@@ -125,7 +125,7 @@ public class ImpactRestControllerTest {
         }
 
         @Test
-        void testFindAllByAnalysisId_() { // TODO
+        void testFindAllByAnalysisId_AnalysisWithTwoImpacts_ReturnImpactsByAnalysisId() {
             // given
             var impact1 = saveFullDummyImpactDto();
             var impact2 = saveFullDummyImpactDto();
