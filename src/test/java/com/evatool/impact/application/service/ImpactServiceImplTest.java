@@ -20,6 +20,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.application.dto.mapper.ImpactDtoMapper.toDto;
@@ -124,13 +125,18 @@ class ImpactServiceImplTest {
         }
 
         @Test
-        void testFindAllByAnalysisId_() { // TODO
+        void testFindAllByAnalysisId_AnalysisWithTwoImpacts_ReturnImpactsByAnalysisId() {
             // given
+            var impact1 = saveFullDummyImpact();
+            var impact2 = saveFullDummyImpact();
 
             // when
-
+            impact2.setAnalysis(impact1.getAnalysis());
+            impactRepository.save(impact2);
+// TODO add analysis rest link to impact DTO entitymodel
             // then
-
+            var impactsOfAnalysis = impactService.findAllByAnalysisId(impact1.getAnalysis().getId());
+            assertThat(impactsOfAnalysis).isEqualTo(Arrays.asList(toDto(impact1), toDto(impact2)));
         }
     }
 

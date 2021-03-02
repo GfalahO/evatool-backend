@@ -1,6 +1,5 @@
 package com.evatool.impact.application.controller;
 
-import com.evatool.impact.application.dto.ImpactAnalysisDto;
 import com.evatool.impact.application.dto.ImpactDto;
 import com.evatool.impact.application.dto.mapper.DimensionDtoMapper;
 import com.evatool.impact.application.dto.mapper.ImpactAnalysisDtoMapper;
@@ -20,6 +19,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import static com.evatool.impact.application.controller.UriUtil.IMPACTS;
@@ -127,11 +127,19 @@ public class ImpactRestControllerTest {
         @Test
         void testFindAllByAnalysisId_() { // TODO
             // given
+            var impact1 = saveFullDummyImpactDto();
+            var impact2 = saveFullDummyImpactDto();
 
             // when
+            impact2.setAnalysis(impact1.getAnalysis());
+            impactService.update(impact2);
+
+            var response = testRestTemplate.getForEntity(
+                    IMPACTS + "?analysisId=" + impact1.getAnalysis().getId(), ImpactDto[].class);
+            var impactsOfAnalysis = response.getBody();
 
             // then
-
+            assertThat(Arrays.asList(impactsOfAnalysis)).isEqualTo(Arrays.asList(impact1, impact2));
         }
     }
 
