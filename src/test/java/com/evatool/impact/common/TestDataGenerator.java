@@ -26,7 +26,7 @@ public class TestDataGenerator {
     }
 
     public static Impact createDummyImpact() {
-        return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder());
+        return new Impact(0.0, "dummyImpactDescription", createDummyDimension(), createDummyStakeholder(), createDummyAnalysis());
     }
 
     public static ImpactAnalysis createDummyAnalysis() {
