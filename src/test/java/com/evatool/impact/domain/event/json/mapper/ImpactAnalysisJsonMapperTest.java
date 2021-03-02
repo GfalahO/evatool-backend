@@ -26,6 +26,28 @@ class ImpactAnalysisJsonMapperTest {
     }
 
     @Test
+    void testFromJsonString_JsonStringEmpty_ThrowEventPayloadInvalidException() {
+        // given
+
+        // when
+        var json = "";
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+    @Test
+    void testFromJsonString_JsonStringNull_ThrowEventPayloadInvalidException() {
+        // given
+
+        // when
+        String json = null;
+
+        // then
+        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+    @Test
     void testFromJsonString_JsonStringMissingColon_ThrowEventPayloadInvalidException() {
         // given
         var id = UUID.randomUUID().toString();
@@ -35,6 +57,19 @@ class ImpactAnalysisJsonMapperTest {
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
+    }
+
+    @Test
+    void testFromJsonString_JsonHasNotRequiredFields_EqualsImpactAnalysis(){
+        // given
+        var analysis = createDummyAnalysis();
+        var json = String.format("{\"id\":\"%s\",\"not required\":\"useless\"}", analysis.getId());
+
+        // when
+        var eventAnalysis = fromJson(json);
+
+        // then
+        assertThat(eventAnalysis).isEqualTo(analysis);
     }
 
     @Test
@@ -54,28 +89,6 @@ class ImpactAnalysisJsonMapperTest {
 
         // when
         var json = "{\"id\":null}";
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringEmpty_ThrowEventPayloadInvalidException() {
-        // given
-
-        // when
-        var json = "";
-
-        // then
-        assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> ImpactStakeholderJsonMapper.fromJson(json));
-    }
-
-    @Test
-    void testFromJsonString_JsonStringNull_ThrowEventPayloadInvalidException() {
-        // given
-
-        // when
-        String json = null;
 
         // then
         assertThatExceptionOfType(EventPayloadInvalidException.class).isThrownBy(() -> fromJson(json));
