@@ -7,14 +7,12 @@ import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 public class UserCreatedEvent extends ApplicationEvent {
-    private UserDTO dto;
 
-    public UserCreatedEvent(UserDTO dto) {
-        super(dto);
-        this.dto = dto;
-    }
+    @Getter
+    private String jsonPayload;
 
-    public UserDTO getValue(){
-        return this.dto;
+    public UserCreatedEvent(String jsonPayload) {
+        super(jsonPayload);
+        this.jsonPayload = jsonPayload;
     }
 }

@@ -1,6 +1,7 @@
 package com.evatool.analysis.model;
 
 import com.evatool.analysis.enums.Dimension;
+import com.google.gson.Gson;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -14,19 +15,24 @@ import java.util.UUID;
 public class AnalysisImpacts {
 
     @Id
-    private UUID Id = UUID.randomUUID();
+    private UUID id = UUID.randomUUID();
     private String title;
-    private int value;
+    private double value;
     private String description;
     private Dimension dimension;
 
     public AnalysisImpacts(){}
 
-    public AnalysisImpacts(String title, String description, int value, Dimension dimension) {
+    public AnalysisImpacts(String title, String description, double value, Dimension dimension) {
         this.title = title;
         this.description = description;
         this.value = value;
         this.dimension = dimension;
+    }
+
+    public static AnalysisImpacts fromJson(String json){
+        return new Gson().fromJson(json, AnalysisImpacts.class);
+
     }
 
     public String getTitle() {
@@ -51,7 +57,7 @@ public class AnalysisImpacts {
         this.description = description;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -60,5 +66,13 @@ public class AnalysisImpacts {
             throw new IllegalArgumentException("Value must be in range [-1, 1]");
         }
         this.value = value;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

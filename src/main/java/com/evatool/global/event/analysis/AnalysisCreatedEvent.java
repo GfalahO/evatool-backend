@@ -1,21 +1,20 @@
 package com.evatool.global.event.analysis;
 
-import com.evatool.analysis.dto.AnalysisDTO;
-import com.evatool.analysis.model.Analysis;
-import com.evatool.analysis.model.Stakeholder;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 public class AnalysisCreatedEvent extends ApplicationEvent {
 
-    private String msg;
+    @Getter
+    private String jsonPayload;
 
-    public AnalysisCreatedEvent(String msg) {
-        super(msg);
-        this.msg = msg;
-    }
+//    public AnalysisCreatedEvent(Object source, String jsonPayload) {
+//        super(source);
+//        this.jsonPayload = jsonPayload;
+//    }
 
-    public String getMessage(){
-        return this.msg;
+    public AnalysisCreatedEvent(String jsonPayload) {
+        super(jsonPayload);
+        this.jsonPayload = jsonPayload;
     }
 }

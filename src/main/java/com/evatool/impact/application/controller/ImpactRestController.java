@@ -36,65 +36,67 @@ public class ImpactRestController {
     @GetMapping(IMPACTS_ID)
     @ApiOperation(value = "Read impact by ID")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "The entity was found"),
-            @ApiResponse(code = 400, message = "The id was invalid"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<EntityModel<ImpactDto>> getImpact(@ApiParam("id") @Valid @PathVariable UUID id) {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found")})
+    public ResponseEntity<EntityModel<ImpactDto>> findById(@ApiParam("Impact ID") @Valid @PathVariable UUID id) {
         logger.info("GET " + IMPACTS_ID);
-        var impactDto = impactService.findImpactById(id);
+        var impactDto = impactService.findById(id);
         return new ResponseEntity<>(getImpactWithLinks(impactDto), HttpStatus.OK);
     }
 
     @GetMapping(IMPACTS)
     @ApiOperation(value = "Read all impacts")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "All entities returned")})
-    public ResponseEntity<List<EntityModel<ImpactDto>>> getAllImpacts() {
+            @ApiResponse(code = 200, message = "OK")})
+    public ResponseEntity<List<EntityModel<ImpactDto>>> findAll() {
         logger.info("GET " + IMPACTS);
-        return new ResponseEntity<>(getImpactsWithLinks(impactService.getAllImpacts()), HttpStatus.OK);
+        return new ResponseEntity<>(getImpactsWithLinks(impactService.findAll()), HttpStatus.OK);
     }
 
     @PostMapping(IMPACTS)
     @ApiOperation(value = "Create a new impact")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "The entity was inserted"),
-            @ApiResponse(code = 400, message = "The entity was invalid"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<EntityModel<ImpactDto>> createImpact(@ApiParam("entity") @Valid @RequestBody ImpactDto impactDto) {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 422, message = "Unprocessable")})
+    public ResponseEntity<EntityModel<ImpactDto>> create(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("POST " + IMPACTS);
-        var insertedImpactDto = impactService.createImpact(impactDto);
+        var insertedImpactDto = impactService.create(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(insertedImpactDto), HttpStatus.CREATED);
     }
 
     @PutMapping(IMPACTS)
     @ApiOperation(value = "Update an impact")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "The entity was updated"),
-            @ApiResponse(code = 400, message = "The entity was invalid"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<EntityModel<ImpactDto>> updateImpact(@ApiParam("entity") @Valid @RequestBody ImpactDto impactDto) {
+            @ApiResponse(code = 200, message = "Updated"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 422, message = "Unprocessable")})
+    public ResponseEntity<EntityModel<ImpactDto>> update(@ApiParam("Impact") @Valid @RequestBody ImpactDto impactDto) {
         logger.info("PUT " + IMPACTS);
-        var updatedImpactDto = impactService.updateImpact(impactDto);
+        var updatedImpactDto = impactService.update(impactDto);
         return new ResponseEntity<>(getImpactWithLinks(updatedImpactDto), HttpStatus.OK);
     }
 
     @DeleteMapping(IMPACTS_ID)
     @ApiOperation(value = "Delete impact by ID")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "The entity was deleted"),
-            @ApiResponse(code = 404, message = "The entity was not found")})
-    public ResponseEntity<Void> deleteImpact(@ApiParam("id") @Valid @PathVariable UUID id) {
+            @ApiResponse(code = 200, message = "Deleted"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Not Found")})
+    public ResponseEntity<Void> deleteById(@ApiParam("Impact ID") @Valid @PathVariable UUID id) {
         logger.info("DELETE " + IMPACTS_ID);
-        impactService.deleteImpactById(id);
+        impactService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
     private EntityModel<ImpactDto> getImpactWithLinks(ImpactDto impactDto) {
         logger.debug("Adding HATEOAS Rest Level 3 links");
         var entityModel = EntityModel.of(impactDto);
-        entityModel.add(linkTo(methodOn(ImpactRestController.class).getImpact(impactDto.getId())).withSelfRel());
-        entityModel.add(linkTo(methodOn(ImpactRestController.class).updateImpact(impactDto)).withRel(UPDATE_IMPACT));
-        entityModel.add(linkTo(methodOn(ImpactRestController.class).deleteImpact(impactDto.getId())).withRel(DELETE_IMPACT));
+        entityModel.add(linkTo(methodOn(ImpactRestController.class).findById(impactDto.getId())).withSelfRel());
+        entityModel.add(linkTo(methodOn(ImpactRestController.class).update(impactDto)).withRel(UPDATE_IMPACT));
+        entityModel.add(linkTo(methodOn(ImpactRestController.class).deleteById(impactDto.getId())).withRel(DELETE_IMPACT));
         entityModel.add(linkTo(ImpactRestController.class).slash(STAKEHOLDERS).slash(impactDto.getStakeholder().getId()).withRel(GET_STAKEHOLDER));
         entityModel.add(linkTo(ImpactRestController.class).slash(DIMENSIONS).slash(impactDto.getDimension().getId()).withRel(GET_DIMENSION));
         return entityModel;

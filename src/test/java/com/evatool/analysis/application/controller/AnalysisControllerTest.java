@@ -1,23 +1,23 @@
 package com.evatool.analysis.application.controller;
 
-import com.evatool.analysis.api.controller.UserControllerImpl;
 import com.evatool.analysis.api.interfaces.AnalysisController;
-import com.evatool.analysis.api.interfaces.StakeholderController;
-import com.evatool.analysis.api.interfaces.UserController;
 import com.evatool.analysis.dto.AnalysisDTO;
+import com.evatool.analysis.enums.Dimension;
 import com.evatool.analysis.model.Analysis;
-import com.evatool.analysis.model.Stakeholder;
-import com.evatool.analysis.model.User;
-import com.evatool.analysis.repository.StakeholderRepository;
+import com.evatool.analysis.model.AnalysisImpacts;
+import com.evatool.analysis.repository.AnalysisImpactRepository;
+import com.evatool.analysis.repository.AnalysisRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Optional;
 import java.util.UUID;
+import com.evatool.analysis.error.exceptions.EntityNotFoundException;
 
-import static com.evatool.analysis.common.TestDataGenerator.getAnalysis;
+import static com.evatool.analysis.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class AnalysisControllerTest {
@@ -25,37 +25,40 @@ public class AnalysisControllerTest {
     @Autowired
     private AnalysisController analysisController;
 
+    @Autowired
+    private AnalysisImpactRepository analysisImpactRepository;
 
+    @Autowired
+    private AnalysisRepository analysisRepository;
 
     @Test
-    public void testAnalysisController(){
+    public void testAnalysisController_ThrowException() {
+
+        Analysis analysis = new Analysis("TestName", "description");
 
         //create analysis
-        Analysis analysis = analysisController.addAnalysis(getAnalysis());
+        AnalysisDTO analysisDTO = getAnalysisDTO(analysis.getAnalysisName(), analysis.getDescription());
+        AnalysisDTO analysisDTOObj = analysisController.addAnalysis(analysisDTO).getContent();
 
         //check is analysis created
-        assertThat(analysisController.getAnalysisById(analysis.getAnalysisId()).get()).isNotNull();
+        assertThat(analysisController.getAnalysisById(analysisDTOObj.getRootEntityID())).isNotNull();
 
-        //change requirement title
-        String testTitle = "Stani";
-        analysis.setAnalysisName(testTitle);
-        analysisController.updateAnalysis(analysis);
+        //change analysis title
+        String testName = "TestName";
+        analysisDTOObj.setAnalysisName(testName);
+        analysisController.updateAnalysis(analysisDTOObj);
 
         //check is analysis title changed
-        Optional<Analysis> analysisAfterUpdate = analysisController.getAnalysisById(analysis.getAnalysisId());
+        AnalysisDTO analysisAfterUpdate = analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent();
 
-        assertThat(analysisAfterUpdate.get().getAnalysisName()).isEqualTo(testTitle);
+        assertThat(analysisAfterUpdate.getAnalysisName()).isEqualTo(testName);
 
-        assertThat(analysisAfterUpdate.get().getAnalysisName()).isEqualTo(testTitle);
-
-        // delete analysis
-        UUID idAnalysis = analysis.getAnalysisId();
-        analysisController.deleteAnalysis(idAnalysis);
+        //delete analysis
+        UUID id = analysisDTOObj.getRootEntityID();
+        analysisController.deleteAnalysis(id);
 
         //check is analysis deleted
-        Optional<Analysis> deletedAnalysis = analysisController.getAnalysisById(idAnalysis);
-        assertThat(deletedAnalysis.isEmpty()).isEqualTo(true);
+        Exception exception = assertThrows(EntityNotFoundException.class, ()->analysisController.getAnalysisById(analysisDTOObj.getRootEntityID()).getContent());
 
     }
-
 }

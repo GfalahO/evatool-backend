@@ -2,9 +2,11 @@ package com.evatool.analysis.services;
 
 import com.evatool.analysis.model.User;
 import com.evatool.analysis.dto.*;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class UserMapper {
 
     public List<UserDTO> map(List<User> resultList) {
@@ -15,7 +17,7 @@ public class UserMapper {
         return userDTOList;
     }
 
-    private UserDTO map(User user) {
+    public UserDTO map(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserName(user.getUserName());
         userDTO.setRootEntityID(user.getUserId());

@@ -12,12 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ImpactDtoMapperTest {
 
     @Test
-    void testToDto_NewImpact_EqualsRecreatedImpact() {
+    void testToDto_RecreatedImpact_EqualsImpact() {
         // given
         var impact = createDummyImpact();
         impact.setId(UUID.randomUUID());
         impact.getDimension().setId(UUID.randomUUID());
-        impact.getStakeholder().setId(UUID.randomUUID());
 
         // when
         var impactDto = toDto(impact);
@@ -29,7 +28,7 @@ class ImpactDtoMapperTest {
     }
 
     @Test
-    void testFromDto_NewImpactDto_EqualsRecreatedImpactDto() {
+    void testFromDto_RecreatedImpactDto_EqualsImpactDto() {
         // given
         var impactDto = createDummyImpactDto();
         impactDto.setId(UUID.randomUUID());

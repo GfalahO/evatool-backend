@@ -7,14 +7,12 @@ import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 public class AnalysisUpdatedEvent extends ApplicationEvent {
-    private AnalysisDTO dto;
 
-    public AnalysisUpdatedEvent(AnalysisDTO dto) {
-        super(dto);
-        this.dto = dto;
-    }
+    @Getter
+    private String jsonPayload;
 
-    public AnalysisDTO getValue(){
-        return this.dto;
+    public AnalysisUpdatedEvent(String jsonPayload) {
+        super(jsonPayload);
+        this.jsonPayload = jsonPayload;
     }
 }

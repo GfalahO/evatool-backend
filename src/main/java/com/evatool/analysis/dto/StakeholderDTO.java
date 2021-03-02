@@ -14,6 +14,7 @@ public class StakeholderDTO {
     private StakeholderLevel stakeholderLevel;
     private Integer priority;
     private AnalysisImpacts impacts;
+    private String value;
     private UUID impactsUUID;
     private Map<UUID, String> impactsTitles = new HashMap<>();
 
