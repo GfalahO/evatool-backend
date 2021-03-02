@@ -19,7 +19,7 @@ public class TestDataGenerator {
     }
 
     public static RequirementsImpact getRequirementsImpacts(RequirementDimension requirementDimension) {
-        return new RequirementsImpact("Title","Description",10, requirementDimension);
+        return new RequirementsImpact("Description",10, requirementDimension);
     }
 
     public static RequirementsVariant getRequirementsVariant() {
@@ -53,7 +53,7 @@ public class TestDataGenerator {
     public static RequirementDTO getRequirementDTO(Map<UUID,String> impactTitles,UUID projectID,Map<UUID,String> variantsTitle) {
         var requirementDTO = new RequirementDTO();
 
-        requirementDTO.setImpactTitles(impactTitles);
+        requirementDTO.setImpactDescription(impactTitles);
         requirementDTO.setProjectID(projectID);
 
         requirementDTO.setRequirementTitle("Title");

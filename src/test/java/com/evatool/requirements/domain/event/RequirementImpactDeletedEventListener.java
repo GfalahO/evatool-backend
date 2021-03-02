@@ -37,7 +37,7 @@ public class RequirementImpactDeletedEventListener {
         String title = "title";
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
-        RequirementsImpact requirementsImpact = new RequirementsImpact("Title","Description",10,null);
+        RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10,null);
         requirementsImpact.setId(id);
         requirementsImpactsRepository.save(requirementsImpact);
 

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class RequirementDTO {
 
-    private Map<UUID,String> impactTitles = new HashMap<>();
+    private Map<UUID,String> impactDescription = new HashMap<>();
     private UUID rootEntityId;
     private UUID projectID;
     private String requirementTitle;
@@ -43,12 +43,12 @@ public class RequirementDTO {
         this.requirementDescription = requirementDescription;
     }
 
-    public Map<UUID,String> getImpactTitles() {
-        return impactTitles;
+    public Map<UUID,String> getImpactDescription() {
+        return impactDescription;
     }
 
-    public void setImpactTitles(Map<UUID,String> impactTitles) {
-        this.impactTitles = impactTitles;
+    public void setImpactDescription(Map<UUID,String> impactDescription) {
+        this.impactDescription = impactDescription;
     }
 
     public Set getDimensions() {

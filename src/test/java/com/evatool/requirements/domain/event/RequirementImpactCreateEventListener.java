@@ -63,7 +63,7 @@ public class RequirementImpactCreateEventListener {
         try {
             var jsonObject = new JSONObject(json);
             requirementsImpact = new RequirementsImpact();
-            requirementsImpact.setTitle(jsonObject.getString("title"));
+            requirementsImpact.setDescription(jsonObject.getString("title"));
             requirementsImpact.setId(UUID.fromString(jsonObject.getString("id")));
         } catch (JSONException jex) {
             throw new InvalidEventPayloadException(json, jex);

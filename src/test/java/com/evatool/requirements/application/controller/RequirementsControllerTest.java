@@ -50,7 +50,7 @@ public class RequirementsControllerTest {
         requirementsImpactsRepository.save(requirementsImpact);
 
         Map<UUID,String> impactTitles = new HashMap<>();
-        impactTitles.put(requirementsImpact.getId(),requirementsImpact.getTitle());
+        impactTitles.put(requirementsImpact.getId(),requirementsImpact.getDescription());
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);

@@ -34,10 +34,10 @@ public class RequirementImpactUpdateEventListener {
     void testOnApplicationEvent_PublishEvent_ImpactUpdated() {
         // given
         UUID id = UUID.randomUUID();
-        String  title = "title";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
+        String  description = "description";
+        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), description);
 
-        RequirementsImpact requirementsImpact = new RequirementsImpact("Title","Description",10,null);
+        RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10,null);
         requirementsImpact.setId(id);
         requirementsImpactsRepository.save(requirementsImpact);
 
@@ -49,7 +49,7 @@ public class RequirementImpactUpdateEventListener {
         Optional<RequirementsImpact> requirementsImpactsRepositoryById = requirementsImpactsRepository.findById(id);
         assertThat(requirementsImpactsRepositoryById).isPresent();
         assertThat(requirementsImpactsRepositoryById.get().getId()).isEqualTo(id);
-        assertThat(requirementsImpactsRepositoryById.get().getTitle()).isEqualTo(title);
+        assertThat(requirementsImpactsRepositoryById.get().getDescription()).isEqualTo(description);
     }
 
     @Test
