@@ -6,8 +6,10 @@ import com.evatool.analysis.model.AnalysisImpacts;
 import com.evatool.analysis.repository.AnalysisImpactRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 
@@ -19,6 +21,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
+@EnableAutoConfiguration
+@ComponentScan(basePackages = {"com.evatool.analysis", "com.evatool.global"})
 public class AnalysisImpactUpdatedEventListener {
 
     @Autowired
