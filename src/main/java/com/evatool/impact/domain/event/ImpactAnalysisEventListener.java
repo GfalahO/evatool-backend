@@ -39,7 +39,7 @@ public class ImpactAnalysisEventListener {
     @EventListener
     public void onAnalysisDeletedEvent(final AnalysisDeletedEvent event) {
         logger.info("Analysis deleted event received");
-        var jsonPayload = ""; //event.getMessage(); // TODO Fix when event is fixed
+        var jsonPayload = event.getJsonPayload();
         var analysis = ImpactAnalysisJsonMapper.fromJson(jsonPayload);
         if (!analysisRepository.existsById(analysis.getId())) {
             throw new EventEntityDoesNotExistException(ImpactAnalysis.class.getSimpleName());
@@ -51,7 +51,7 @@ public class ImpactAnalysisEventListener {
     @EventListener
     public void onAnalysisUpdatedEvent(final AnalysisUpdatedEvent event) {
         logger.info("Analysis updated event received");
-        var jsonPayload = ""; //event.getMessage(); // TODO Fix when event is fixed
+        var jsonPayload = event.getJsonPayload();
         var analysis = ImpactAnalysisJsonMapper.fromJson(jsonPayload);
         if (!analysisRepository.existsById(analysis.getId())) {
             throw new EventEntityDoesNotExistException(ImpactAnalysis.class.getSimpleName());

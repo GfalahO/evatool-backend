@@ -8,7 +8,6 @@ import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactAnalysis;
 import com.evatool.impact.domain.repository.ImpactAnalysisRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
+public class ImpactAnalysisEventListenerTest {
 
     @Autowired
     private ImpactAnalysisRepository analysisRepository;
@@ -71,7 +70,6 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
         }
     }
 
-    @Disabled
     @Nested
     class Deleted {
 
@@ -79,13 +77,14 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
         void testOnAnalysisDeletedEvent_PublishEvent_AnalysisDeleted() {
             // given
             var id = UUID.randomUUID();
+            // TODO [hbuhl] See actual jsonPayload published by the analysis domain
             var json = String.format("{\"id\":\"%s\"}", id.toString());
 
             var analysis = new ImpactAnalysis(id);
             analysisRepository.save(analysis);
 
             // when
-            AnalysisDeletedEvent analysisDeletedEvent = null;//new AnalysisDeletedEvent(json);
+            AnalysisDeletedEvent analysisDeletedEvent = new AnalysisDeletedEvent(json);
             impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent);
 
             // then
@@ -97,17 +96,17 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
         void testOnAnalysisDeletedEvent_AnalysisDoesNotExist_ThrowEventEntityDoesNotExistException() {
             // given
             var id = UUID.randomUUID();
+            // TODO [hbuhl] See actual jsonPayload published by the analysis domain
             var json = String.format("{\"id\":\"%s\"}", id.toString());
 
             // when
-            AnalysisDeletedEvent analysisDeletedEvent = null;//new AnalysisDeletedEvent(json);
+            AnalysisDeletedEvent analysisDeletedEvent = new AnalysisDeletedEvent(json);
 
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent));
         }
     }
 
-    @Disabled
     @Nested
     class Updated {
 
@@ -121,7 +120,7 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
             analysisRepository.save(analysis);
 
             // when
-            AnalysisUpdatedEvent analysisUpdatedEvent = null;// new AnalysisUpdatedEvent(json);
+            AnalysisUpdatedEvent analysisUpdatedEvent =  new AnalysisUpdatedEvent(json);
             impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent);
 
             // then
@@ -137,7 +136,7 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
             var json = String.format("{\"id\":\"%s\"}", id.toString());
 
             // when
-            AnalysisUpdatedEvent analysisUpdatedEvent = null;// new AnalysisUpdatedEvent(json);
+            AnalysisUpdatedEvent analysisUpdatedEvent = new AnalysisUpdatedEvent(json);
 
             // then
             assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent));
