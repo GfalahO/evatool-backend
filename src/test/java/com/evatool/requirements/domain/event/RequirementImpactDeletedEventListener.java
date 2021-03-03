@@ -61,6 +61,6 @@ public class RequirementImpactDeletedEventListener {
         ImpactDeletedEvent impactDeletedEvent = new ImpactDeletedEvent(applicationEventPublisher, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(impactDeletedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.impactDeleted(impactDeletedEvent));
     }
 }

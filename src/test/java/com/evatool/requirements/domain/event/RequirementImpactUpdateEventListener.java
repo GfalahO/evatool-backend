@@ -61,10 +61,10 @@ public class RequirementImpactUpdateEventListener {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
         // when
-        ImpactUpdatedEvent impactCreatedEvent = new ImpactUpdatedEvent(applicationEventPublisher, json);
+        ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(applicationEventPublisher, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(impactCreatedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.impactUpdated(impactUpdatedEvent));
 
    }
 }

@@ -37,9 +37,9 @@ public class RequirementDimensionUpdateEventListener {
         String  title = "title";
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
-        RequirementDimension requirementsImpact = new RequirementDimension("Title");
-        requirementsImpact.setId(id);
-        requirementDimensionRepository.save(requirementsImpact);
+        RequirementDimension requirementDimension = new RequirementDimension("Title");
+        requirementDimension.setId(id);
+        requirementDimensionRepository.save(requirementDimension);
 
         // when
         DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(applicationEventPublisher, json);
@@ -64,7 +64,7 @@ public class RequirementDimensionUpdateEventListener {
         DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(applicationEventPublisher, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(dimensionUpdatedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.dimensionUpdated(dimensionUpdatedEvent));
 
     }
 
