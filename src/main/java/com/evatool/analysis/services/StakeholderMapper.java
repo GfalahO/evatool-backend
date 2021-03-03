@@ -22,7 +22,7 @@ public class StakeholderMapper {
         return stakeholderDTOList;
     }
 
-    private StakeholderDTO map(Stakeholder stakeholder) {
+    public StakeholderDTO map(Stakeholder stakeholder) {
         StakeholderDTO stakeholderDTO = new StakeholderDTO();
         stakeholderDTO.setPriority(stakeholder.getPriority());
         stakeholderDTO.setStakeholderName(stakeholder.getStakeholderName());

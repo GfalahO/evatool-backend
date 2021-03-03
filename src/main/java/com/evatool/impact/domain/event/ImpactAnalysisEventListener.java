@@ -27,7 +27,7 @@ public class ImpactAnalysisEventListener {
     @EventListener
     public void onAnalysisCreatedEvent(final AnalysisCreatedEvent event) {
         logger.info("Analysis created event received");
-        var jsonPayload = event.getMessage();
+        var jsonPayload = event.getJsonPayload();
         var analysis = ImpactAnalysisJsonMapper.fromJson(jsonPayload);
         if (analysisRepository.existsById(analysis.getId())) {
             throw new EventEntityAlreadyExistsException(ImpactAnalysis.class.getSimpleName());

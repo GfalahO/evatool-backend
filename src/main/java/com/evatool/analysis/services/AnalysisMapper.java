@@ -20,7 +20,7 @@ public class AnalysisMapper {
         return analysisDTOList;
     }
 
-    private AnalysisDTO map(Analysis analysis) {
+    public AnalysisDTO map(Analysis analysis) {
         AnalysisDTO analysisDTO = new AnalysisDTO();
         analysisDTO.setAnalysisName(analysis.getAnalysisName());
         analysisDTO.setAnalysisDescription(analysis.getDescription());
