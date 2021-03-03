@@ -6,16 +6,12 @@ import com.evatool.global.event.stakeholder.StakeholderUpdatedEvent;
 import com.evatool.impact.common.exception.EventEntityAlreadyExistsException;
 import com.evatool.impact.common.exception.EventEntityDoesNotExistException;
 import com.evatool.impact.domain.entity.ImpactStakeholder;
-import com.evatool.impact.domain.event.json.mapper.ImpactStakeholderJsonMapper;
 import com.evatool.impact.domain.repository.ImpactStakeholderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.UUID;
@@ -25,15 +21,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-@EnableAutoConfiguration
-@ComponentScan(basePackages = {"com.evatool.impact", "com.evatool.global"})
 class ImpactStakeholderEventListenerTest {
 
     @Autowired
     private ImpactStakeholderRepository stakeholderRepository;
 
     @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+    private ImpactStakeholderEventListener impactStakeholderEventListener;
 
     @BeforeEach
     void clearData() {
@@ -51,8 +45,8 @@ class ImpactStakeholderEventListenerTest {
             var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
             // when
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(json);
-            applicationEventPublisher.publishEvent(stakeholderCreatedEvent);
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, json);
+            impactStakeholderEventListener.onStakeholderCreatedEvent(stakeholderCreatedEvent);
 
             // then
             var createdByEvent = stakeholderRepository.findById(id);
@@ -68,14 +62,14 @@ class ImpactStakeholderEventListenerTest {
             var name = "name";
             var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
-            var stakeholder = ImpactStakeholderJsonMapper.fromJson(json);
+            var stakeholder = new ImpactStakeholder(id, name);
             stakeholderRepository.save(stakeholder);
 
             // when
-            var stakeholderCreatedEvent = new StakeholderCreatedEvent(json);
+            var stakeholderCreatedEvent = new StakeholderCreatedEvent(this, json);
 
             // then
-            assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(stakeholderCreatedEvent));
+            assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> impactStakeholderEventListener.onStakeholderCreatedEvent(stakeholderCreatedEvent));
         }
     }
 
@@ -93,8 +87,8 @@ class ImpactStakeholderEventListenerTest {
             stakeholderRepository.save(stakeholder);
 
             // when
-            var stakeholderDeletedEvent = new StakeholderDeletedEvent(json);
-            applicationEventPublisher.publishEvent(stakeholderDeletedEvent);
+            var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, json);
+            impactStakeholderEventListener.onStakeholderDeletedEvent(stakeholderDeletedEvent);
 
             // then
             var deletedByEventStakeholder = stakeholderRepository.findById(id);
@@ -109,10 +103,10 @@ class ImpactStakeholderEventListenerTest {
             var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
             // when
-            var stakeholderDeletedEvent = new StakeholderDeletedEvent(json);
+            var stakeholderDeletedEvent = new StakeholderDeletedEvent(this, json);
 
             // then
-            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(stakeholderDeletedEvent));
+            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactStakeholderEventListener.onStakeholderDeletedEvent(stakeholderDeletedEvent));
         }
     }
 
@@ -130,8 +124,8 @@ class ImpactStakeholderEventListenerTest {
             stakeholderRepository.save(stakeholder);
 
             // when
-            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(applicationEventPublisher, json);
-            applicationEventPublisher.publishEvent(stakeholderUpdatedEvent);
+            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(this, json);
+            impactStakeholderEventListener.onStakeholderUpdatedEvent(stakeholderUpdatedEvent);
 
             // then
             var updatedByEventStakeholder = stakeholderRepository.findById(id);
@@ -148,10 +142,10 @@ class ImpactStakeholderEventListenerTest {
             var json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
             // when
-            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(applicationEventPublisher, json);
+            var stakeholderUpdatedEvent = new StakeholderUpdatedEvent(this, json);
 
             // then
-            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(stakeholderUpdatedEvent));
+            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactStakeholderEventListener.onStakeholderUpdatedEvent(stakeholderUpdatedEvent));
         }
     }
 }
