@@ -12,10 +12,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.UUID;
@@ -25,15 +22,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-@EnableAutoConfiguration
-@ComponentScan(basePackages = {"com.evatool.impact", "com.evatool.global"})
 public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
 
     @Autowired
     private ImpactAnalysisRepository analysisRepository;
 
     @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+    private ImpactAnalysisEventListener impactAnalysisEventListener;
 
     @BeforeEach
     void clearData() {
@@ -51,7 +46,7 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
 
             // when
             var analysisCreatedEvent = new AnalysisCreatedEvent(json);
-            applicationEventPublisher.publishEvent(analysisCreatedEvent);
+            impactAnalysisEventListener.onAnalysisCreatedEvent(analysisCreatedEvent);
 
             // then
             var createdByEvent = analysisRepository.findById(id);
@@ -72,7 +67,7 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
             var analysisCreatedEvent = new AnalysisCreatedEvent(json);
 
             // then
-            assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(analysisCreatedEvent));
+            assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisCreatedEvent(analysisCreatedEvent));
         }
     }
 
@@ -91,7 +86,7 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
 
             // when
             AnalysisDeletedEvent analysisDeletedEvent = null;//new AnalysisDeletedEvent(json);
-            applicationEventPublisher.publishEvent(analysisDeletedEvent);
+            impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent);
 
             // then
             var deletedByEventAnalysis = analysisRepository.findById(id);
@@ -108,7 +103,7 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
             AnalysisDeletedEvent analysisDeletedEvent = null;//new AnalysisDeletedEvent(json);
 
             // then
-            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(analysisDeletedEvent));
+            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisDeletedEvent(analysisDeletedEvent));
         }
     }
 
@@ -127,7 +122,7 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
 
             // when
             AnalysisUpdatedEvent analysisUpdatedEvent = null;// new AnalysisUpdatedEvent(json);
-            applicationEventPublisher.publishEvent(analysisUpdatedEvent);
+            impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent);
 
             // then
             var updatedByEventAnalysis = analysisRepository.findById(id);
@@ -145,7 +140,7 @@ public class ImpactAnalysisEventListenerTest { // TODO Fix when event is fixed
             AnalysisUpdatedEvent analysisUpdatedEvent = null;// new AnalysisUpdatedEvent(json);
 
             // then
-            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(analysisUpdatedEvent));
+            assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> impactAnalysisEventListener.onAnalysisUpdatedEvent(analysisUpdatedEvent));
         }
     }
 }
