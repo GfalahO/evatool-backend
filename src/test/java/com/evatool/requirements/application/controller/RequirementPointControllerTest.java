@@ -75,7 +75,7 @@ public class RequirementPointControllerTest {
 
         int newPoint = -1;
         requirementPoint1.setPoints(newPoint);
-        requirementPointController.updateRequirementPoint(requirementPoint1);
+        requirementPointController.updateRequirementPoint(Arrays.asList(requirementPoint1));
 
         RequirementPoint requirementPoint2 = requirementPointController.getRequirementPointByRequirementAndRequirementsImpact(requirement,requirementsImpact);
         assertThat(requirementPoint1.getPoints()).isEqualTo(newPoint);

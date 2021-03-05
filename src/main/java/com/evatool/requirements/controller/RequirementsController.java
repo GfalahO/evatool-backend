@@ -68,6 +68,7 @@ public class RequirementsController {
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public ResponseEntity<EntityModel<RequirementDTO>> newRequirement(@RequestBody RequirementDTO requirementDTO) {
 		logger.info("[POST] /requirements");
+		this.dtoService.checkDto(requirementDTO);
 		return new ResponseEntity<>(getRequirementById(dtoService.create(requirementDTO)), HttpStatus.CREATED);
 	}
 
@@ -78,6 +79,7 @@ public class RequirementsController {
 			@ApiResponse(code = 404, message = "The entity was not found")})
 	public EntityModel<RequirementDTO> updateRequirement(@RequestBody RequirementDTO requirementDTO) {
 		logger.info("[PUT] /requirements");
+		this.dtoService.checkDto(requirementDTO);
 		dtoService.update(requirementDTO);
 		return getRequirementById(requirementDTO.getRootEntityId());
 	}

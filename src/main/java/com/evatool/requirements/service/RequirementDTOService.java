@@ -90,8 +90,8 @@ public class RequirementDTOService {
             }
         });
         requirement.setVariants(newCollection);
-        requirement = requirementRepository.save(requirement);
         requirementPointController.updatePoints(requirement,requirementDTO);
+        requirement = requirementRepository.save(requirement);
         eventPublisher.publishEvent(new RequirementUpdatedEvent(requirement.toJson()));
     }
 
@@ -115,5 +115,13 @@ public class RequirementDTOService {
         requirementPointController.createPoints(requirement,requirementDTO);
         eventPublisher.publishEvent(new RequirementCreatedEvent(requirement.toJson()));
         return requirement.getId();
+    }
+
+    public void checkDto(RequirementDTO requirementDTO) {
+        if(requirementDTO.getProjectID()==null){
+            throw new IllegalArgumentException("RequirementsAnalysis cannot be null.");
+        }else if(requirementDTO.getRequirementImpactPoints()==null || requirementDTO.getRequirementImpactPoints().size()==0){
+            throw new IllegalArgumentException("RequirementImpactPoints cannot be empty.");
+        }
     }
 }
