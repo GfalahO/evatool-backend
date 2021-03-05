@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementDimensionCreateEventListener {
+public class RequirementsDimensionCreateEventListener {
 
     @Autowired
     private RequirementDimensionRepository requirementDimensionRepository;
@@ -37,8 +37,8 @@ public class RequirementDimensionCreateEventListener {
     void testOnApplicationEvent_PublishEvent_DimensionCreated() {
         // given
         UUID id = UUID.randomUUID();
-        String  title = "name";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
+        String  name = "name";
+        String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
         // when
         DimensionCreatedEvent dimensionCreatedEvent = new DimensionCreatedEvent(applicationEventPublisher, json);
@@ -47,7 +47,7 @@ public class RequirementDimensionCreateEventListener {
         // then
         Optional<RequirementDimension> createdByEvent = requirementDimensionRepository.findById(id);
         assertThat(createdByEvent).isPresent();
-        assertThat(createdByEvent.get().getTitle()).isEqualTo(title);
+        assertThat(createdByEvent.get().getName()).isEqualTo(name);
     }
 
 
@@ -56,15 +56,15 @@ public class RequirementDimensionCreateEventListener {
 
         // given
         UUID id = UUID.randomUUID();
-        String title = "title";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
+        String name = "name";
+        String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
         RequirementDimension requirementDimension;
 
         try {
-            var jsonObject = new JSONObject(json);
+            JSONObject jsonObject = new JSONObject(json);
             requirementDimension = new RequirementDimension();
-            requirementDimension.setTitle(jsonObject.getString("title"));
+            requirementDimension.setName(jsonObject.getString("name"));
             requirementDimension.setId(UUID.fromString(jsonObject.getString("id")));
         } catch (JSONException jex) {
             throw new InvalidEventPayloadException(json, jex);
@@ -76,7 +76,7 @@ public class RequirementDimensionCreateEventListener {
         DimensionCreatedEvent dimensionCreatedEvent = new DimensionCreatedEvent(applicationEventPublisher, json);
 
         // then
-        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(dimensionCreatedEvent));
+        assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.dimensionCreated(dimensionCreatedEvent));
 
     }
 

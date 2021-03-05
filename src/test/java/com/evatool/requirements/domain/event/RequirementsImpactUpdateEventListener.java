@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementImpactUpdateEventListener {
+public class RequirementsImpactUpdateEventListener {
 
     @Autowired
     private RequirementsImpactsRepository requirementsImpactsRepository;
@@ -33,23 +33,20 @@ public class RequirementImpactUpdateEventListener {
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactUpdated() {
         // given
-        UUID id = UUID.randomUUID();
-        String  title = "title";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
-
-        RequirementsImpact requirementsImpact = new RequirementsImpact("Title","Description",10,null);
-        requirementsImpact.setId(id);
+        RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10,null);
         requirementsImpactsRepository.save(requirementsImpact);
+        String newDescription = "newDescription";
 
         // when
-        ImpactUpdatedEvent impactCreatedEvent = new ImpactUpdatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(impactCreatedEvent);
+        String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", requirementsImpact.getId().toString(), newDescription);
+        ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(applicationEventPublisher, json);
+        requirementEventListener.impactUpdated(impactUpdatedEvent);
 
         // then
-        Optional<RequirementsImpact> requirementsImpactsRepositoryById = requirementsImpactsRepository.findById(id);
+        Optional<RequirementsImpact> requirementsImpactsRepositoryById = requirementsImpactsRepository.findById(requirementsImpact.getId());
         assertThat(requirementsImpactsRepositoryById).isPresent();
-        assertThat(requirementsImpactsRepositoryById.get().getId()).isEqualTo(id);
-        assertThat(requirementsImpactsRepositoryById.get().getTitle()).isEqualTo(title);
+        assertThat(requirementsImpactsRepositoryById.get().getId()).isEqualTo(requirementsImpact.getId());
+        assertThat(requirementsImpactsRepositoryById.get().getDescription()).isEqualTo(newDescription);
     }
 
     @Test
@@ -57,14 +54,14 @@ public class RequirementImpactUpdateEventListener {
 
         // given
         UUID id = UUID.randomUUID();
-        String  title = "name";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
+        String description = "description";
+        String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", id.toString(), description);
 
         // when
-        ImpactUpdatedEvent impactCreatedEvent = new ImpactUpdatedEvent(applicationEventPublisher, json);
+        ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(applicationEventPublisher, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(impactCreatedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.impactUpdated(impactUpdatedEvent));
 
    }
 }

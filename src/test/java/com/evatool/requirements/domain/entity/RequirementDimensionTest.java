@@ -16,6 +16,6 @@ public class RequirementDimensionTest {
         // when
 
         // then
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDimension.setTitle(null));
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDimension.setName(null));
     }
 }

@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementDimensionDeletedEventListener {
+public class RequirementsDimensionDeletedEventListener {
 
     @Autowired
     private RequirementDimensionRepository requirementDimensionRepository;
@@ -34,20 +34,18 @@ public class RequirementDimensionDeletedEventListener {
     @Test
     void testOnApplicationEvent_PublishEvent_DimensionDeleted() {
         // given
-        UUID id = UUID.randomUUID();
-        String title = "title";
-        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
-
         RequirementDimension requirementDimension = new RequirementDimension("Title");
-        requirementDimension.setId(id);
         requirementDimensionRepository.save(requirementDimension);
+
+        String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", requirementDimension.getId().toString(), "Title");
+        UUID tempId = requirementDimension.getId();
 
         // when
         DimensionDeletedEvent dimensionDeletedEvent = new DimensionDeletedEvent(applicationEventPublisher, json);
         applicationEventPublisher.publishEvent(dimensionDeletedEvent);
 
         // then
-        Optional<RequirementDimension> optionalRequirementDimension = requirementDimensionRepository.findById(id);
+        Optional<RequirementDimension> optionalRequirementDimension = requirementDimensionRepository.findById(tempId);
         assertThat(optionalRequirementDimension).isNotPresent();
     }
 
@@ -62,7 +60,7 @@ public class RequirementDimensionDeletedEventListener {
         DimensionDeletedEvent dimensionDeletedEvent = new DimensionDeletedEvent(applicationEventPublisher, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> applicationEventPublisher.publishEvent(dimensionDeletedEvent));
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.dimensionDeleted(dimensionDeletedEvent));
     }
 
 }

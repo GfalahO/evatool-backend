@@ -50,7 +50,7 @@ public class RequirementsControllerTest {
         requirementsImpactsRepository.save(requirementsImpact);
 
         Map<UUID,String> impactTitles = new HashMap<>();
-        impactTitles.put(requirementsImpact.getId(),requirementsImpact.getTitle());
+        impactTitles.put(requirementsImpact.getId(),requirementsImpact.getDescription());
 
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
         requirementAnalysisRepository.save(requirementsAnalysis);
@@ -66,7 +66,8 @@ public class RequirementsControllerTest {
         Map<UUID,String> variantsTitle = new HashMap<>();
         variantsTitle.put(requirementsVariant.getId(),requirementsVariant.getTitle());
 
-        RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId(),variantsTitle);
+        RequirementDTO requirementDTO = getRequirementDTO(requirementImpactPoints,impactTitles,requirementsAnalysis.getId(),variantsTitle);
+        //RequirementDTO requirementDTO = getRequirementDTO(impactTitles,requirementsAnalysis.getId(),variantsTitle);
 
         //create requirement
         RequirementDTO requirementDTOObj = requirementsController.newRequirement(requirementDTO).getBody().getContent();
