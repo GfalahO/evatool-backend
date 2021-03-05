@@ -1,6 +1,5 @@
 package com.evatool.requirements.application.service;
 
-import com.evatool.requirements.controller.RequirementsController;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.*;
 import com.evatool.requirements.error.exceptions.EntityNotFoundException;

@@ -1,11 +1,9 @@
 package com.evatool.requirements.application.dto;
 
 import com.evatool.requirements.dto.RequirementDTO;
-import com.evatool.requirements.entity.RequirementDimension;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.evatool.requirements.common.TestDataGenerator.getRequirementDimension;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest

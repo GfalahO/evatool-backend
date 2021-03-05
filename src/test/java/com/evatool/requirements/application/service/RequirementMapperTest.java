@@ -1,7 +1,5 @@
 package com.evatool.requirements.application.service;
 
-import com.evatool.requirements.controller.RequirementPointController;
-import com.evatool.requirements.controller.RequirementsController;
 import com.evatool.requirements.dto.RequirementDTO;
 import com.evatool.requirements.entity.*;
 import com.evatool.requirements.repository.*;
@@ -10,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
 
 import static com.evatool.requirements.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
