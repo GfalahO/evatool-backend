@@ -74,7 +74,6 @@ public class RequirementDTOService {
 
     public void update(RequirementDTO requirementDTO) {
         logger.debug("update [{}]",requirementDTO);
-        //eventPublisher.publishEvent(new RequirementUpdatedEvent(null));
         Optional<Requirement> requirementOptional = requirementRepository.findById(requirementDTO.getRootEntityId());
         if(requirementOptional.isEmpty()) throw new EntityNotFoundException(Requirement.class, requirementDTO.getRootEntityId());
         Requirement requirement = requirementOptional.get();
@@ -82,7 +81,7 @@ public class RequirementDTOService {
         requirement.setTitle(requirementDTO.getRequirementTitle());
         Collection<RequirementsVariant> requirementsVariantCollectionDTO = requirementsVariantsRepository.findAllById(requirementDTO.getVariantsTitle().keySet());
         //Remove the Variants which are removed
-        Collection<RequirementsVariant> newCollection = requirement.getVariants().stream().filter(e-> requirementsVariantCollectionDTO.contains(e)).collect(Collectors.toList());
+        Collection<RequirementsVariant> newCollection = requirement.getVariants().stream().filter(requirementsVariantCollectionDTO::contains).collect(Collectors.toList());
         //Add the new Variants
         requirementsVariantCollectionDTO.stream().forEach(e->{
             if(!newCollection.contains(e)){

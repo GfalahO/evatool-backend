@@ -21,7 +21,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@Api(description = "API-endpoint RequirementsController!")
+@Api("API-endpoint RequirementsController!")
 public class RequirementsController {
 
 	final Logger logger = LoggerFactory.getLogger(RequirementsController.class);

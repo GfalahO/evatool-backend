@@ -47,7 +47,7 @@ public class RequirementPointController {
 	public Collection<RequirementsImpact> getRequirementImpactByRequirement(UUID id) {
 		logger.debug("getRequirementImpactByRequirement [{}]",id);
 		Optional<Requirement> requirement = requirementRepository.findById(id);
-		if(requirement.isEmpty()) return null;
+		if(requirement.isEmpty()) return Collections.emptyList();
 		List<RequirementsImpact> requirementsImpactList = new ArrayList<>();
 		requirementPointRepository.findByRequirement(requirement.get()).forEach(e-> requirementsImpactList.add(e.getRequirementsImpact()));
 		return requirementsImpactList;
