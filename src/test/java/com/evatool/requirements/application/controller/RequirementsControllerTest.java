@@ -17,7 +17,7 @@ import static com.evatool.requirements.common.TestDataGenerator.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class RequirementsControllerTest {
+class RequirementsControllerTest {
 
     @Autowired
     private RequirementsController requirementsController;
@@ -41,7 +41,7 @@ public class RequirementsControllerTest {
     RequirementRepository requirementRepository;
 
     @Test
-    public void testRequirementController_ThrowException() {
+    void testRequirementController_ThrowException() {
 
         RequirementDimension requirementDimension = getRequirementDimension();
         requirementDimensionRepository.save(requirementDimension);
@@ -92,10 +92,8 @@ public class RequirementsControllerTest {
         //check is requirement deleted
 
 
-
-        Exception exception = assertThrows(EntityNotFoundException.class, ()->requirementsController.getRequirementById(requirementDTOObj.getRootEntityId()).getContent());
-
-
+        UUID uuidRootEntity = requirementDTOObj.getRootEntityId();
+        assertThrows(EntityNotFoundException.class, ()-> requirementsController.getRequirementById(uuidRootEntity));
 
     }
 

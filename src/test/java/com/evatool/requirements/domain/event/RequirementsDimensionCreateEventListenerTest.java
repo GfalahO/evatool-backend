@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsDimensionCreateEventListener {
+class RequirementsDimensionCreateEventListenerTest {
 
     @Autowired
     private RequirementDimensionRepository requirementDimensionRepository;
@@ -30,8 +29,6 @@ public class RequirementsDimensionCreateEventListener {
     @Autowired
     private RequirementEventListener requirementEventListener;
 
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_DimensionCreated() {
@@ -41,8 +38,8 @@ public class RequirementsDimensionCreateEventListener {
         String json = String.format("{\"id\":\"%s\",\"name\":\"%s\"}", id.toString(), name);
 
         // when
-        DimensionCreatedEvent dimensionCreatedEvent = new DimensionCreatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(dimensionCreatedEvent);
+        DimensionCreatedEvent dimensionCreatedEvent = new DimensionCreatedEvent(requirementEventListener, json);
+        requirementEventListener.dimensionCreated(dimensionCreatedEvent);
 
         // then
         Optional<RequirementDimension> createdByEvent = requirementDimensionRepository.findById(id);
@@ -73,7 +70,7 @@ public class RequirementsDimensionCreateEventListener {
         requirementDimensionRepository.save(requirementDimension);
 
         // when
-        DimensionCreatedEvent dimensionCreatedEvent = new DimensionCreatedEvent(applicationEventPublisher, json);
+        DimensionCreatedEvent dimensionCreatedEvent = new DimensionCreatedEvent(requirementEventListener, json);
 
         // then
         assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.dimensionCreated(dimensionCreatedEvent));

@@ -8,7 +8,6 @@ import com.evatool.requirements.repository.RequirementsVariantsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -19,16 +18,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsVariantsUpdateEventListener {
+class RequirementsVariantsUpdateEventListenerTest {
 
     @Autowired
     private RequirementsVariantsRepository requirementsVariantsRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_VariantsUpdated() {
@@ -41,8 +37,8 @@ public class RequirementsVariantsUpdateEventListener {
         UUID tempId = requirementsVariant.getId();
 
         // when
-        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(variantUpdatedEvent);
+        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(requirementEventListener, json);
+        requirementEventListener.variantsUpdated(variantUpdatedEvent);
 
         // then
         Optional<RequirementsVariant> optionalRequirementsVariant = requirementsVariantsRepository.findById(tempId);
@@ -62,7 +58,7 @@ public class RequirementsVariantsUpdateEventListener {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", id.toString(),newTitle,newDescription);
 
         // when
-        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(applicationEventPublisher, json);
+        VariantUpdatedEvent variantUpdatedEvent = new VariantUpdatedEvent(requirementEventListener, json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.variantsUpdated(variantUpdatedEvent));

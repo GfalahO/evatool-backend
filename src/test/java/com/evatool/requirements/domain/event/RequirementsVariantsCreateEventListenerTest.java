@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -22,16 +21,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsVariantsCreateEventListener {
+class RequirementsVariantsCreateEventListenerTest {
 
     @Autowired
     private RequirementsVariantsRepository requirementsVariantsRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_VariantsCreated() {
@@ -43,8 +39,8 @@ public class RequirementsVariantsCreateEventListener {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", id.toString(),title,description);
 
         // when
-        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(applicationEventPublisher,json);
-        applicationEventPublisher.publishEvent(variantCreatedEvent);
+        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(requirementEventListener,json);
+        requirementEventListener.variantsCreated(variantCreatedEvent);
 
         // then
         Optional<RequirementsVariant> createdByEvent = requirementsVariantsRepository.findById(id);
@@ -77,7 +73,7 @@ public class RequirementsVariantsCreateEventListener {
         requirementsVariantsRepository.save(requirementsVariant);
 
         // when
-        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(applicationEventPublisher,json);
+        VariantCreatedEvent variantCreatedEvent = new VariantCreatedEvent(requirementEventListener,json);
 
         // then
         assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.variantsCreated(variantCreatedEvent));

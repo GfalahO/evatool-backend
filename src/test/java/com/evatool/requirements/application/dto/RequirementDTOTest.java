@@ -7,10 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
-public class RequirementDTOTest {
+class RequirementDTOTest {
 
     @Test
-    public void testSetRootEntityId_NullValue_ThrowException() {
+    void testSetRootEntityId_NullValue_ThrowException() {
         // given
         RequirementDTO requirementDTO = new RequirementDTO();
 
@@ -21,7 +21,7 @@ public class RequirementDTOTest {
     }
 
     @Test
-    public void testSetRequirementTitle_NullValue_ThrowException() {
+    void testSetRequirementTitle_NullValue_ThrowException() {
         // given
         RequirementDTO requirementDTO = new RequirementDTO();
 
@@ -32,7 +32,7 @@ public class RequirementDTOTest {
     }
 
     @Test
-    public void testSetRequirementDescription_NullValue_ThrowException() {
+    void testSetRequirementDescription_NullValue_ThrowException() {
         // given
         RequirementDTO requirementDTO = new RequirementDTO();
 
@@ -43,7 +43,7 @@ public class RequirementDTOTest {
     }
 
     @Test
-    public void testSetDimensions_NullValue_ThrowException() {
+    void testSetDimensions_NullValue_ThrowException() {
         // given
         RequirementDTO requirementDTO = new RequirementDTO();
 
@@ -54,7 +54,7 @@ public class RequirementDTOTest {
     }
 
     @Test
-    public void testSetVariantsTitle_NullValue_ThrowException() {
+    void testSetVariantsTitle_NullValue_ThrowException() {
         // given
         RequirementDTO requirementDTO = new RequirementDTO();
 
@@ -65,7 +65,7 @@ public class RequirementDTOTest {
     }
 
     @Test
-    public void testSetRequirementImpactPoints_NullValue_ThrowException() {
+    void testSetRequirementImpactPoints_NullValue_ThrowException() {
         // given
         RequirementDTO requirementDTO = new RequirementDTO();
 
@@ -76,7 +76,7 @@ public class RequirementDTOTest {
     }
 
     @Test
-    public void testSetProjectID_NullValue_ThrowException() {
+    void testSetProjectID_NullValue_ThrowException() {
         // given
         RequirementDTO requirementDTO = new RequirementDTO();
 

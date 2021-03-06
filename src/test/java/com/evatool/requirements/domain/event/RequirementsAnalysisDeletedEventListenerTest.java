@@ -8,7 +8,6 @@ import com.evatool.requirements.repository.RequirementAnalysisRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -19,16 +18,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsAnalysisDeletedEventListener {
+class RequirementsAnalysisDeletedEventListenerTest {
 
     @Autowired
     private RequirementAnalysisRepository requirementAnalysisRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_AnalysisDeleted() {
@@ -41,7 +37,7 @@ public class RequirementsAnalysisDeletedEventListener {
 
         // when
         AnalysisDeletedEvent analysisDeletedEvent = new AnalysisDeletedEvent(json);
-        applicationEventPublisher.publishEvent(analysisDeletedEvent);
+        requirementEventListener.analyseDeleted(analysisDeletedEvent);
 
         // then
         Optional<RequirementsAnalysis> optionalRequirementsAnalysis = requirementAnalysisRepository.findById(tempId);

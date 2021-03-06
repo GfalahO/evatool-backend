@@ -16,7 +16,7 @@ import java.util.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RequirementMapperTest {
+class RequirementMapperTest {
 
     @Autowired
     private RequirementAnalysisRepository requirementAnalysisRepository;
@@ -100,8 +100,7 @@ public class RequirementMapperTest {
         requirements.add(requirement);
         List<RequirementDTO> requirementDTOs = requirementMapper.mapList(requirements);
 
-        assertThat(requirementDTOs).isNotNull();
-        assertThat(requirementDTOs).isNotEmpty();
+        assertThat(requirementDTOs).isNotNull().isNotEmpty();
         assertThat(requirementDTOs.get(0).getRootEntityId()).isEqualTo(requirement.getId());
 
     }

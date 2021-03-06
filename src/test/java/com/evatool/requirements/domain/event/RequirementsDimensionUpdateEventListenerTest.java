@@ -8,7 +8,6 @@ import com.evatool.requirements.repository.RequirementDimensionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsDimensionUpdateEventListener {
+class RequirementsDimensionUpdateEventListenerTest {
 
     @Autowired
     private RequirementDimensionRepository requirementDimensionRepository;
@@ -27,8 +26,6 @@ public class RequirementsDimensionUpdateEventListener {
     @Autowired
     private RequirementEventListener requirementEventListener;
 
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_DimensionUpdated() {
@@ -40,8 +37,8 @@ public class RequirementsDimensionUpdateEventListener {
         UUID tempId = requirementDimension.getId();
 
         // when
-        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(dimensionUpdatedEvent);
+        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(requirementEventListener, json);
+        requirementEventListener.dimensionUpdated(dimensionUpdatedEvent);
 
         // then
         Optional<RequirementDimension> optionalRequirementDimension = requirementDimensionRepository.findById(tempId);
@@ -59,7 +56,7 @@ public class RequirementsDimensionUpdateEventListener {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), name);
 
         // when
-        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(applicationEventPublisher, json);
+        DimensionUpdatedEvent dimensionUpdatedEvent = new DimensionUpdatedEvent(requirementEventListener, json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.dimensionUpdated(dimensionUpdatedEvent));

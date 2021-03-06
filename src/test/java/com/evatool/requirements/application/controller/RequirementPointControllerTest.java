@@ -15,7 +15,7 @@ import java.util.*;
 import static com.evatool.requirements.common.TestDataGenerator.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class RequirementPointControllerTest {
+class RequirementPointControllerTest {
 
     @Autowired
     private RequirementPointController requirementPointController;
@@ -39,7 +39,7 @@ public class RequirementPointControllerTest {
     private RequirementDimensionRepository requirementDimensionRepository;
 
     @Test
-    public void testRequirementPointController_ThrowException() {
+    void testRequirementPointController_ThrowException() {
 
         //create
         RequirementsAnalysis requirementsAnalysis = getRequirementsAnalysis();
@@ -90,7 +90,7 @@ public class RequirementPointControllerTest {
     }
 
     @Test
-    public void testRequirementPointController_createPoints_DTO() {
+    void testRequirementPointController_createPoints_DTO() {
 
         RequirementDimension requirementDimension = getRequirementDimension();
         requirementDimensionRepository.save(requirementDimension);

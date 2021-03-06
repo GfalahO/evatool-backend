@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsAnalysisCreateEventListener {
+class RequirementsAnalysisCreateEventListenerTest {
 
     @Autowired
     private RequirementAnalysisRepository requirementAnalysisRepository;
@@ -30,8 +29,6 @@ public class RequirementsAnalysisCreateEventListener {
     @Autowired
     private RequirementEventListener requirementEventListener;
 
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_AnalysisCreated() {
@@ -42,7 +39,7 @@ public class RequirementsAnalysisCreateEventListener {
 
         // when
         AnalysisCreatedEvent analysisCreatedEvent = new AnalysisCreatedEvent(json);
-        applicationEventPublisher.publishEvent(analysisCreatedEvent);
+        requirementEventListener.analyseCreated(analysisCreatedEvent);
 
         // then
         Optional<RequirementsAnalysis> createdByEvent = requirementAnalysisRepository.findById(id);

@@ -1,6 +1,6 @@
 package com.evatool.requirements.domain.event;
 
-import com.evatool.global.event.impact.ImpactDeletedEvent;
+import com.evatool.global.event.impact.ImpactUpdatedEvent;
 import com.evatool.requirements.entity.RequirementsImpact;
 import com.evatool.requirements.error.exceptions.EventEntityDoesNotExistException;
 import com.evatool.requirements.events.listener.RequirementEventListener;
@@ -8,7 +8,6 @@ import com.evatool.requirements.repository.RequirementsImpactsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsImpactDeletedEventListener {
+class RequirementsImpactUpdateEventListenerTest {
 
     @Autowired
     private RequirementsImpactsRepository requirementsImpactsRepository;
@@ -27,37 +26,38 @@ public class RequirementsImpactDeletedEventListener {
     @Autowired
     private RequirementEventListener requirementEventListener;
 
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
-
     @Test
-    void testOnApplicationEvent_PublishEvent_ImpactDeleted() {
+    void testOnApplicationEvent_PublishEvent_ImpactUpdated() {
         // given
         RequirementsImpact requirementsImpact = new RequirementsImpact("Description",10,null);
         requirementsImpactsRepository.save(requirementsImpact);
-        UUID tempId = requirementsImpact.getId();
-        String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", requirementsImpact.getId().toString(), requirementsImpact.getDescription());
+        String newDescription = "newDescription";
 
         // when
-        ImpactDeletedEvent impactDeletedEvent = new ImpactDeletedEvent(applicationEventPublisher, json);
-        requirementEventListener.impactDeleted(impactDeletedEvent);
+        String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", requirementsImpact.getId().toString(), newDescription);
+        ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(requirementEventListener, json);
+        requirementEventListener.impactUpdated(impactUpdatedEvent);
 
         // then
-        Optional<RequirementsImpact> optionalRequirementsImpact = requirementsImpactsRepository.findById(tempId);
-        assertThat(optionalRequirementsImpact).isNotPresent();
+        Optional<RequirementsImpact> requirementsImpactsRepositoryById = requirementsImpactsRepository.findById(requirementsImpact.getId());
+        assertThat(requirementsImpactsRepositoryById).isPresent();
+        assertThat(requirementsImpactsRepositoryById.get().getId()).isEqualTo(requirementsImpact.getId());
+        assertThat(requirementsImpactsRepositoryById.get().getDescription()).isEqualTo(newDescription);
     }
 
     @Test
-    void testOnApplicationEvent_ImpactDoesNotExist_ThrowEventEntityDoesNotExistException() {
+    void testOnApplicationEvent_ImpactDoesNotExists_ThrowEventEntityDoesNotExistException() {
+
         // given
         UUID id = UUID.randomUUID();
         String description = "description";
         String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", id.toString(), description);
 
         // when
-        ImpactDeletedEvent impactDeletedEvent = new ImpactDeletedEvent(applicationEventPublisher, json);
+        ImpactUpdatedEvent impactUpdatedEvent = new ImpactUpdatedEvent(requirementEventListener, json);
 
         // then
-        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.impactDeleted(impactDeletedEvent));
-    }
+        assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.impactUpdated(impactUpdatedEvent));
+
+   }
 }

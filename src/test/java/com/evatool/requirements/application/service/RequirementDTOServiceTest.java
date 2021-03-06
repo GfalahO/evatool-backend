@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
-public class RequirementDTOServiceTest {
+class RequirementDTOServiceTest {
 
     @Autowired
     private RequirementAnalysisRepository requirementAnalysisRepository;
@@ -41,7 +41,7 @@ public class RequirementDTOServiceTest {
 
 
     @Test
-    public void testRequirementDTOService_ThrowException() {
+    void testRequirementDTOService_ThrowException() {
         RequirementDimension requirementDimension = getRequirementDimension();
         requirementDimensionRepository.save(requirementDimension);
 
@@ -84,18 +84,18 @@ public class RequirementDTOServiceTest {
         assertThat(requirementDTO3.getRequirementTitle()).isEqualTo(newTitle);
 
         List<RequirementDTO> requirementDTOList = requirementDTOService.findAllForAnalysis(requirementDTO3.getProjectID());
-        assertThat(requirementDTOList).isNotNull();
-        assertThat(requirementDTOList).isNotEmpty();
+        assertThat(requirementDTOList).isNotNull().isNotEmpty();
         assertThat(requirementDTOList.get(0).getProjectID()).isEqualTo(requirementDTO3.getProjectID());
 
         requirementDTOService.deleteRequirement(requirementDTOList.get(0).getRootEntityId());
-        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> requirementDTOService.findById(requirementDTOList.get(0).getRootEntityId()));
 
+        UUID uuidRootId = requirementDTOList.get(0).getRootEntityId();
 
+        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> requirementDTOService.findById(uuidRootId));
     }
 
     @Test
-    public void testRequirementDTOService_checkDto_ThrowException() {
+    void testRequirementDTOService_checkDto_ThrowException() {
         RequirementDTO requirementDTO = new RequirementDTO();
 
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> requirementDTOService.checkDto(requirementDTO));

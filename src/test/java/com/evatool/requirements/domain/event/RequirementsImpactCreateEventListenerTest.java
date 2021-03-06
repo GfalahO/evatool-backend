@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -22,16 +21,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsImpactCreateEventListener {
+class RequirementsImpactCreateEventListenerTest {
 
     @Autowired
     private RequirementsImpactsRepository requirementsImpactsRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_ImpactCreated() {
@@ -41,8 +37,8 @@ public class RequirementsImpactCreateEventListener {
         String json = String.format("{\"id\":\"%s\",\"description\":\"%s\"}", id.toString(), description);
 
         // when
-        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(impactCreatedEvent);
+        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(requirementEventListener, json);
+        requirementEventListener.impactCreated(impactCreatedEvent);
 
         // then
         Optional<RequirementsImpact> createdByEvent = requirementsImpactsRepository.findById(id);
@@ -72,7 +68,7 @@ public class RequirementsImpactCreateEventListener {
         requirementsImpactsRepository.save(requirementsImpact);
 
         // when
-        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(applicationEventPublisher, json);
+        ImpactCreatedEvent impactCreatedEvent = new ImpactCreatedEvent(requirementEventListener, json);
 
         // then
         assertThatExceptionOfType(EventEntityAlreadyExistsException.class).isThrownBy(() -> requirementEventListener.impactCreated(impactCreatedEvent));

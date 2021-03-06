@@ -8,7 +8,6 @@ import com.evatool.requirements.repository.RequirementsVariantsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsVariantsDeletedEventListener {
+class RequirementsVariantsDeletedEventListenerTest {
 
     @Autowired
     private RequirementsVariantsRepository requirementsVariantsRepository;
@@ -27,8 +26,6 @@ public class RequirementsVariantsDeletedEventListener {
     @Autowired
     private RequirementEventListener requirementEventListener;
 
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @Test
     void testOnApplicationEvent_PublishEvent_VariantsDeleted() {
@@ -41,7 +38,7 @@ public class RequirementsVariantsDeletedEventListener {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", tempId,title,description);
 
         // when
-        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(applicationEventPublisher, json);
+        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(requirementEventListener, json);
         requirementEventListener.variantsDeleted(variantDeletedEvent);
 
         // then
@@ -58,7 +55,7 @@ public class RequirementsVariantsDeletedEventListener {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\",\"description\":\"%s\"}", id,title,description);
 
         // when
-        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(applicationEventPublisher, json);
+        VariantDeletedEvent variantDeletedEvent = new VariantDeletedEvent(requirementEventListener, json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.variantsDeleted(variantDeletedEvent));

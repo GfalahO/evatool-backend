@@ -8,7 +8,6 @@ import com.evatool.requirements.repository.RequirementDimensionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
@@ -19,16 +18,13 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "non-async")
-public class RequirementsDimensionDeletedEventListener {
+class RequirementsDimensionDeletedEventListenerTest {
 
     @Autowired
     private RequirementDimensionRepository requirementDimensionRepository;
 
     @Autowired
     private RequirementEventListener requirementEventListener;
-
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
 
     @Test
@@ -41,8 +37,8 @@ public class RequirementsDimensionDeletedEventListener {
         UUID tempId = requirementDimension.getId();
 
         // when
-        DimensionDeletedEvent dimensionDeletedEvent = new DimensionDeletedEvent(applicationEventPublisher, json);
-        applicationEventPublisher.publishEvent(dimensionDeletedEvent);
+        DimensionDeletedEvent dimensionDeletedEvent = new DimensionDeletedEvent(requirementEventListener, json);
+        requirementEventListener.dimensionDeleted(dimensionDeletedEvent);
 
         // then
         Optional<RequirementDimension> optionalRequirementDimension = requirementDimensionRepository.findById(tempId);
@@ -57,7 +53,7 @@ public class RequirementsDimensionDeletedEventListener {
         String json = String.format("{\"id\":\"%s\",\"title\":\"%s\"}", id.toString(), title);
 
         // when
-        DimensionDeletedEvent dimensionDeletedEvent = new DimensionDeletedEvent(applicationEventPublisher, json);
+        DimensionDeletedEvent dimensionDeletedEvent = new DimensionDeletedEvent(requirementEventListener, json);
 
         // then
         assertThatExceptionOfType(EventEntityDoesNotExistException.class).isThrownBy(() -> requirementEventListener.dimensionDeleted(dimensionDeletedEvent));
