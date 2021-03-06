@@ -1,5 +1,4 @@
 package com.evatool.requirements.dto;
-
 import com.google.gson.Gson;
 
 import java.util.*;
@@ -11,13 +10,9 @@ public class RequirementDTO {
     private UUID projectID;
     private String requirementTitle;
     private String requirementDescription;
-    private Set dimensions = new HashSet();
+    private Set<String> dimensions = new HashSet<>();
     private Map<UUID,Integer> requirementImpactPoints = new HashMap<>();
     private Map<UUID,String> variantsTitle = new HashMap<>();
-
-    public RequirementDTO() {
-
-    }
 
     public UUID getRootEntityId() {
         return rootEntityId;
@@ -63,11 +58,11 @@ public class RequirementDTO {
         this.impactDescription = impactDescription;
     }
 
-    public Set getDimensions() {
+    public Set<String> getDimensions() {
         return dimensions;
     }
 
-    public void setDimensions(Set dimensions) {
+    public void setDimensions(Set<String> dimensions) {
         if (dimensions == null) {
             throw new IllegalArgumentException("Dimensions cannot be null.");
         }
