@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequirementEventListener {
 
-    private static String debugformat = "EVENT: {1} With Payload {2}";
+    private static final String debugformat = "EVENT: %s With Payload %s";
     final Logger logger = LoggerFactory.getLogger(RequirementEventListener.class);
 
     @Autowired
