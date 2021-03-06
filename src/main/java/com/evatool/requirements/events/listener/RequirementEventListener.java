@@ -47,7 +47,7 @@ public class RequirementEventListener {
     @Async
     public void impactCreated(ImpactCreatedEvent event) {
         logger.info("impact created event ");
-        logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
+        if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
 
         if (requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityAlreadyExistsException();
@@ -59,7 +59,7 @@ public class RequirementEventListener {
     @Async
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("Impact updated event");
-        logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
+        if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
         if (!requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -70,7 +70,7 @@ public class RequirementEventListener {
     @Async
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("Impact deleted event");
-        logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
+        if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
         if (!requirementsImpactsRepository.existsById(RequirementsImpact.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -80,7 +80,7 @@ public class RequirementEventListener {
     @Async
     public void dimensionCreated(DimensionCreatedEvent event) {
         logger.info("dimension created event");
-        logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
+        if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
         if (requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityAlreadyExistsException();
         }
@@ -91,7 +91,7 @@ public class RequirementEventListener {
     @Async
     public void dimensionUpdated(DimensionUpdatedEvent event) {
         logger.info("dimension updated event");
-        logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
+        if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
         if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -102,7 +102,7 @@ public class RequirementEventListener {
     @Async
     public void dimensionDeleted(DimensionDeletedEvent event) {
         logger.info("dimension deleted event");
-        logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
+        if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
         if (!requirementDimensionRepository.existsById(RequirementDimension.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -113,7 +113,7 @@ public class RequirementEventListener {
      @Async
         public void variantsCreated(VariantCreatedEvent event){
         logger.info("Variant created event");
-        logger.debug(String.format(debugformat,event.getClass(), event.getVariantJson()));
+         if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getVariantJson()));
         if (requirementsVariantsRepository.existsById(RequirementsVariant.fromJson(event.getVariantJson()).getId())) {
             throw new EventEntityAlreadyExistsException();
         }
@@ -124,7 +124,7 @@ public class RequirementEventListener {
      @Async
         public void variantsUpdated (VariantUpdatedEvent event){
         logger.info("variant updated event");
-         logger.debug(String.format(debugformat,event.getClass(), event.getVariantJson()));
+         if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getVariantJson()));
         if (!requirementsVariantsRepository.existsById(RequirementsVariant.fromJson(event.getVariantJson()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
@@ -135,7 +135,7 @@ public class RequirementEventListener {
      @Async
         public void variantsDeleted(VariantDeletedEvent event){
         logger.info("variant deleted event");
-        logger.debug(String.format(debugformat,event.getClass(), event.getVariantJson()));
+         if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getVariantJson()));
         if (!requirementsVariantsRepository.existsById(RequirementsVariant.fromJson(event.getVariantJson()).getId())) {
              throw new EventEntityDoesNotExistException();
         }
@@ -146,7 +146,7 @@ public class RequirementEventListener {
     @Async
     public void analyseCreated(AnalysisCreatedEvent event){
         logger.info("analyse created event");
-        logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
+        if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getJsonPayload()));
         if (requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityAlreadyExistsException();
         }
@@ -158,7 +158,7 @@ public class RequirementEventListener {
     @Async
     public void analyseDeleted(AnalysisDeletedEvent event){
         logger.info("analyse deleted event");
-        logger.debug(String.format(debugformat,event.getClass(), event.getSource().toString() ));
+        if(logger.isDebugEnabled())logger.debug(String.format(debugformat,event.getClass(), event.getSource().toString() ));
         if (!requirementAnalysisRepository.existsById(RequirementsAnalysis.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
         }
