@@ -10,19 +10,19 @@ import com.sun.istack.NotNull;
  */
 public enum StakeholderLevel {
 
-    naturalPerson("natural person"),
-    organization("organization"),
-    society("society");
+    NATURALPERSON("natural person"),
+    ORGANIZATION("organization"),
+    SOCIETY("society");
 
-    private String stakeholderLevel;
+    private String stakeholder;
 
-    StakeholderLevel(String stakeholderLevel) {
-        this.stakeholderLevel = stakeholderLevel;
+    StakeholderLevel(String stakeholder) {
+        this.stakeholder = stakeholder;
     }
 
     @NotNull
-    public String getStakeholderLevel() {
-        return this.stakeholderLevel;
+    public String getStakeholder() {
+        return this.stakeholder;
     }
 }
 
