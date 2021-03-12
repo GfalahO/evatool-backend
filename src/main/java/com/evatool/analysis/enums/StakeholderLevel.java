@@ -1,6 +1,6 @@
 package com.evatool.analysis.enums;
 
-import com.sun.istack.NotNull;
+
 
 /**
  * This Enum represents the Stakeholder Level
@@ -20,7 +20,7 @@ public enum StakeholderLevel {
         this.stakeholder = stakeholder;
     }
 
-    @NotNull
+
     public String getStakeholder() {
         return this.stakeholder;
     }

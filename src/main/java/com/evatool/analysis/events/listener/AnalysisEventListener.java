@@ -20,6 +20,8 @@ import org.springframework.stereotype.Component;
 public class AnalysisEventListener {
 
     final Logger logger = LoggerFactory.getLogger(AnalysisEventListener.class);
+    private static final String EVENTMESSAGE = "Events";
+    private static final String PAYLOADMESSAGE = "With Payload:";
 
     @Autowired
     AnalysisImpactRepository analysisImpactRepository;
@@ -28,7 +30,7 @@ public class AnalysisEventListener {
     @Async
     public void impactCreated(ImpactCreatedEvent event) {
         logger.info("impact created event ");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
+        logger.debug(EVENTMESSAGE + event.getSource() + PAYLOADMESSAGE + event.getSource().toString());
 
         if (analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityAlreadyExistsException();
@@ -40,7 +42,7 @@ public class AnalysisEventListener {
     @Async
     public void impactUpdated(ImpactUpdatedEvent event) {
         logger.info("Impact updated event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
+        logger.debug(EVENTMESSAGE + event.getSource() + PAYLOADMESSAGE + event.getSource().toString());
 
         if (!analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
@@ -52,7 +54,7 @@ public class AnalysisEventListener {
     @Async
     public void impactDeleted(ImpactDeletedEvent event) {
         logger.info("Impact deleted event");
-        logger.debug("Event " + event.getSource() + " With Payload: " + event.getSource().toString());
+        logger.debug(EVENTMESSAGE + event.getSource() + PAYLOADMESSAGE + event.getSource().toString());
 
         if (!analysisImpactRepository.existsById(AnalysisImpacts.fromJson(event.getJsonPayload()).getId())) {
             throw new EventEntityDoesNotExistException();
