@@ -50,7 +50,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public EntityModel<UserDTO> getUserById(UUID id) {
-        logger.info("[GET] /user/{id}");
+        logger.info("[GET] /users/{id}");
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isEmpty()){
             throw new EntityNotFoundException(Analysis.class, id);
@@ -60,7 +60,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public EntityModel<UserDTO> addUser(UserDTO userDTO) {
-        logger.info("[POST] /addUser");
+        logger.info("[POST] /users");
         User user = userRepository.save(userDTOService.create(userDTO));
 
         userEventPublisher.publishEvent(new UserCreatedEvent(user.toString()));
@@ -69,7 +69,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public EntityModel<UserDTO> updateUser(UserDTO userDTO) {
-        logger.info("[PUT] /user");
+        logger.info("[PUT] /users");
         Optional<User> userOptional = userRepository.findById(userDTO.getRootEntityID());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -83,7 +83,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public ResponseEntity<Void> deleteUser(UUID id) {
-        logger.info("[DELETE] /user/{id}");
+        logger.info("[DELETE] /users/{id}");
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isEmpty()){
             throw new EntityNotFoundException(User.class, id);
